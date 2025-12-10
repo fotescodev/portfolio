@@ -1992,7 +1992,7 @@ export default function Portfolio() {
 
             {[
               { platform: 'X / Twitter', handle: '@kolob0kk', url: 'https://x.com/kolob0kk' },
-              { platform: 'LinkedIn', handle: '/in/dmitrii-fotesco', url: 'https://linkedin.com/in/dmitrii-fotesco' }
+              { platform: 'LinkedIn', handle: '/in/0xdmitri', url: 'https://www.linkedin.com/in/0xdmitri/' }
             ].map((social, i) => (
               <a
                 key={i}
@@ -2403,7 +2403,7 @@ export default function Portfolio() {
             <span>Share an Opportunity</span>
             <span style={{ fontFamily: "'Instrument Serif', serif", fontStyle: 'italic' }}>→</span>
           </a>
-          <a href="https://linkedin.com/in/dmitrii-fotesco" target="_blank" rel="noopener noreferrer" style={{
+          <a href="https://www.linkedin.com/in/0xdmitri/" target="_blank" rel="noopener noreferrer" style={{
             color: '#6b6966',
             padding: '18px 40px',
             textDecoration: 'none',
@@ -2426,7 +2426,7 @@ export default function Portfolio() {
         }}>
           {[
             { name: 'X', url: 'https://x.com/kolob0kk' },
-            { name: 'LinkedIn', url: 'https://linkedin.com/in/dmitrii-fotesco' },
+            { name: 'LinkedIn', url: 'https://www.linkedin.com/in/0xdmitri/' },
             { name: 'Email', url: 'mailto:dmitrii.fotesco@gmail.com' }
           ].map((social, i) => (
             <a
