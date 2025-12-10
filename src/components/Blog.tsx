@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { BlogPost } from '../types/blog';
 import BlogPostModal from './BlogPostModal';
+import { useTheme } from '../context/ThemeContext';
 
 // Import blog posts statically (we'll parse these)
 import aiAgentsPost from '../../content/blog/2024-12-01-ai-agents-meet-onchain.md?raw';
@@ -83,6 +84,7 @@ function parseBlogPosts(): BlogPost[] {
 }
 
 export default function Blog({ isMobile, isTablet }: BlogProps) {
+    const { colors, isDark } = useTheme();
     const [hoveredPost, setHoveredPost] = useState<string | null>(null);
     const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
 
@@ -129,14 +131,14 @@ export default function Blog({ isMobile, isTablet }: BlogProps) {
                         fontWeight: 600,
                         letterSpacing: '0.15em',
                         textTransform: 'uppercase',
-                        color: '#4a4a4c'
+                        color: colors.textMuted
                     }}>
                         Insights
                     </span>
                     <div style={{
                         flex: 1,
                         height: '1px',
-                        background: 'rgba(232, 230, 227, 0.08)'
+                        background: colors.borderLight
                     }} />
                 </div>
 
@@ -149,7 +151,7 @@ export default function Blog({ isMobile, isTablet }: BlogProps) {
                         fontFamily: "'Instrument Serif', Georgia, serif",
                         fontWeight: 400,
                         fontStyle: 'italic',
-                        color: '#e8e6e3',
+                        color: colors.textPrimary,
                         marginBottom: '16px',
                         letterSpacing: '-0.02em',
                         lineHeight: 1.2
@@ -158,7 +160,7 @@ export default function Blog({ isMobile, isTablet }: BlogProps) {
                     </h2>
                     <p style={{
                         fontSize: '15px',
-                        color: '#6b6966',
+                        color: colors.textTertiary,
                         maxWidth: '600px',
                         lineHeight: 1.6
                     }}>
@@ -176,12 +178,12 @@ export default function Blog({ isMobile, isTablet }: BlogProps) {
                         <article
                             key={post.slug}
                             style={{
-                                borderTop: index === 0 ? '1px solid rgba(232, 230, 227, 0.1)' : 'none',
-                                borderBottom: '1px solid rgba(232, 230, 227, 0.1)',
+                                borderTop: index === 0 ? `1px solid ${colors.border}` : 'none',
+                                borderBottom: `1px solid ${colors.border}`,
                                 padding: isMobile ? '28px 0' : '36px 0',
                                 cursor: 'pointer',
                                 transition: 'all 0.3s ease',
-                                background: hoveredPost === post.slug ? 'rgba(194, 154, 108, 0.02)' : 'transparent'
+                                background: hoveredPost === post.slug ? (isDark ? 'rgba(194, 154, 108, 0.02)' : 'rgba(166, 124, 82, 0.03)') : 'transparent'
                             }}
                             onMouseEnter={() => !isMobile && setHoveredPost(post.slug)}
                             onMouseLeave={() => !isMobile && setHoveredPost(null)}
@@ -198,13 +200,13 @@ export default function Blog({ isMobile, isTablet }: BlogProps) {
                                     fontSize: '12px',
                                     fontWeight: 500,
                                     letterSpacing: '0.05em',
-                                    color: '#4a4a4c',
+                                    color: colors.textMuted,
                                     display: 'flex',
                                     alignItems: 'center',
                                     gap: '12px'
                                 }}>
                                     <span>{formatDate(post.date)}</span>
-                                    <span style={{ color: '#3a3a3c' }}>•</span>
+                                    <span style={{ color: isDark ? '#3a3a3c' : '#9a9a9c' }}>•</span>
                                     <span>{post.readingTime} min</span>
                                 </div>
 
@@ -215,7 +217,7 @@ export default function Blog({ isMobile, isTablet }: BlogProps) {
                                         fontFamily: "'Instrument Serif', Georgia, serif",
                                         fontWeight: 400,
                                         fontStyle: 'italic',
-                                        color: '#e8e6e3',
+                                        color: colors.textPrimary,
                                         marginBottom: '12px',
                                         letterSpacing: '-0.02em',
                                         lineHeight: 1.2,
@@ -226,7 +228,7 @@ export default function Blog({ isMobile, isTablet }: BlogProps) {
 
                                     <p style={{
                                         fontSize: '14px',
-                                        color: '#6b6966',
+                                        color: colors.textTertiary,
                                         lineHeight: 1.6,
                                         marginBottom: '16px',
                                         maxWidth: '600px'
@@ -246,11 +248,11 @@ export default function Blog({ isMobile, isTablet }: BlogProps) {
                                                 fontWeight: 500,
                                                 letterSpacing: '0.05em',
                                                 textTransform: 'uppercase',
-                                                color: '#4a4a4c',
+                                                color: colors.textMuted,
                                                 padding: '4px 8px',
-                                                border: '1px solid rgba(232, 230, 227, 0.08)',
+                                                border: `1px solid ${colors.borderLight}`,
                                                 transition: 'all 0.2s ease',
-                                                background: hoveredPost === post.slug ? 'rgba(194, 154, 108, 0.05)' : 'transparent'
+                                                background: hoveredPost === post.slug ? (isDark ? 'rgba(194, 154, 108, 0.05)' : 'rgba(166, 124, 82, 0.05)') : 'transparent'
                                             }}>
                                                 {tag}
                                             </span>
@@ -264,7 +266,7 @@ export default function Blog({ isMobile, isTablet }: BlogProps) {
                                         display: 'flex',
                                         alignItems: 'center',
                                         gap: '8px',
-                                        color: hoveredPost === post.slug ? '#c29a6c' : '#4a4a4c',
+                                        color: hoveredPost === post.slug ? colors.accent : colors.textMuted,
                                         transition: 'color 0.2s ease',
                                         alignSelf: 'center'
                                     }}>

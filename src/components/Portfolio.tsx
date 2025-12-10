@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import Blog from './Blog';
+import ThemeToggle from './ThemeToggle';
+import { useTheme } from '../context/ThemeContext';
 
 interface CaseStudy {
   id: number;
@@ -70,6 +72,7 @@ interface ExplorerLink {
 }
 
 export default function Portfolio() {
+  const { colors, isDark } = useTheme();
   const [isLoaded, setIsLoaded] = useState(false);
   const [hoveredCase, setHoveredCase] = useState<number | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -299,10 +302,11 @@ export default function Portfolio() {
   return (
     <div style={{
       minHeight: '100vh',
-      background: '#08080a',
-      color: '#e8e6e3',
+      background: colors.background,
+      color: colors.textPrimary,
       fontFamily: "'Instrument Sans', -apple-system, BlinkMacSystemFont, sans-serif",
-      overflowX: 'hidden'
+      overflowX: 'hidden',
+      transition: 'background 0.4s cubic-bezier(0.16, 1, 0.3, 1), color 0.4s cubic-bezier(0.16, 1, 0.3, 1)'
     }}>
       {/* Subtle grid texture overlay */}
       <div style={{
@@ -311,10 +315,11 @@ export default function Portfolio() {
         left: 0,
         right: 0,
         bottom: 0,
-        backgroundImage: `radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px)`,
+        backgroundImage: `radial-gradient(${colors.gridOverlay} 1px, transparent 1px)`,
         backgroundSize: '32px 32px',
         pointerEvents: 'none',
-        zIndex: 0
+        zIndex: 0,
+        transition: 'background-image 0.4s ease'
       }} />
 
       {/* Animated gradient orbs for hero visual interest */}
@@ -336,12 +341,13 @@ export default function Portfolio() {
         right: isMobile ? '-20%' : '5%',
         width: isMobile ? '300px' : '500px',
         height: isMobile ? '300px' : '500px',
-        background: 'radial-gradient(circle, rgba(194, 154, 108, 0.15) 0%, rgba(194, 154, 108, 0.05) 40%, transparent 70%)',
+        background: `radial-gradient(circle, ${colors.orbAccent} 0%, ${isDark ? 'rgba(194, 154, 108, 0.05)' : 'rgba(166, 124, 82, 0.03)'} 40%, transparent 70%)`,
         borderRadius: '50%',
         filter: 'blur(60px)',
         pointerEvents: 'none',
         zIndex: 0,
-        animation: 'float 20s ease-in-out infinite, pulse 8s ease-in-out infinite'
+        animation: 'float 20s ease-in-out infinite, pulse 8s ease-in-out infinite',
+        transition: 'background 0.4s ease'
       }} />
       <div style={{
         position: 'absolute',
@@ -349,12 +355,13 @@ export default function Portfolio() {
         left: isMobile ? '-30%' : '-5%',
         width: isMobile ? '250px' : '400px',
         height: isMobile ? '250px' : '400px',
-        background: 'radial-gradient(circle, rgba(74, 222, 128, 0.08) 0%, rgba(74, 222, 128, 0.02) 40%, transparent 70%)',
+        background: `radial-gradient(circle, ${colors.orbSecondary} 0%, ${isDark ? 'rgba(74, 222, 128, 0.02)' : 'rgba(34, 197, 94, 0.02)'} 40%, transparent 70%)`,
         borderRadius: '50%',
         filter: 'blur(80px)',
         pointerEvents: 'none',
         zIndex: 0,
-        animation: 'float 25s ease-in-out infinite reverse, pulse 10s ease-in-out infinite'
+        animation: 'float 25s ease-in-out infinite reverse, pulse 10s ease-in-out infinite',
+        transition: 'background 0.4s ease'
       }} />
 
       {/* Navigation */}
@@ -368,7 +375,7 @@ export default function Portfolio() {
         justifyContent: 'space-between',
         alignItems: 'center',
         zIndex: 100,
-        background: 'linear-gradient(180deg, rgba(8,8,10,1) 0%, rgba(8,8,10,0) 100%)',
+        background: colors.navGradient,
         opacity: isLoaded ? 1 : 0,
         transform: isLoaded ? 'translateY(0)' : 'translateY(-20px)',
         transition: 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)'
@@ -377,18 +384,19 @@ export default function Portfolio() {
           fontFamily: "'Instrument Serif', Georgia, serif",
           fontStyle: 'italic',
           fontSize: isMobile ? '18px' : '20px',
-          color: '#e8e6e3',
-          letterSpacing: '-0.02em'
+          color: colors.textPrimary,
+          letterSpacing: '-0.02em',
+          transition: 'color 0.3s ease'
         }}>
           dmitriif.eth
         </div>
 
         {/* Desktop Navigation */}
         {!isMobile && (
-          <div style={{ display: 'flex', gap: '40px', alignItems: 'center' }}>
+          <div style={{ display: 'flex', gap: '32px', alignItems: 'center' }}>
             {['Work', 'About'].map((item) => (
               <a key={item} href={`#${item.toLowerCase()}`} style={{
-                color: '#6b6966',
+                color: colors.textTertiary,
                 textDecoration: 'none',
                 fontSize: '13px',
                 fontWeight: 500,
@@ -397,15 +405,15 @@ export default function Portfolio() {
                 transition: 'color 0.2s ease',
                 cursor: 'pointer'
               }}
-                onMouseEnter={(e) => (e.target as HTMLElement).style.color = '#e8e6e3'}
-                onMouseLeave={(e) => (e.target as HTMLElement).style.color = '#6b6966'}
+                onMouseEnter={(e) => (e.target as HTMLElement).style.color = colors.textPrimary}
+                onMouseLeave={(e) => (e.target as HTMLElement).style.color = colors.textTertiary}
               >
                 {item}
               </a>
             ))}
             {/* Blog with Coming Soon badge */}
             <span style={{
-              color: '#4a4a4c',
+              color: colors.textMuted,
               fontSize: '13px',
               fontWeight: 500,
               letterSpacing: '0.05em',
@@ -420,16 +428,18 @@ export default function Portfolio() {
                 fontSize: '9px',
                 fontWeight: 600,
                 letterSpacing: '0.08em',
-                color: '#3a3a3c',
+                color: isDark ? '#3a3a3c' : '#9a9a9c',
                 padding: '3px 6px',
-                border: '1px solid rgba(232, 230, 227, 0.1)',
+                border: `1px solid ${colors.border}`,
                 fontStyle: 'normal'
               }}>
                 SOON
               </span>
-            </span>            <a href="mailto:dmitrii.fotesco@gmail.com" style={{
-              color: '#08080a',
-              background: '#e8e6e3',
+            </span>
+            <ThemeToggle />
+            <a href="mailto:dmitrii.fotesco@gmail.com" style={{
+              color: colors.background,
+              background: colors.textPrimary,
               padding: '12px 24px',
               textDecoration: 'none',
               fontSize: '13px',
@@ -438,10 +448,10 @@ export default function Portfolio() {
               transition: 'all 0.2s ease'
             }}
               onMouseEnter={(e) => {
-                (e.target as HTMLElement).style.background = '#c29a6c';
+                (e.target as HTMLElement).style.background = colors.accent;
               }}
               onMouseLeave={(e) => {
-                (e.target as HTMLElement).style.background = '#e8e6e3';
+                (e.target as HTMLElement).style.background = colors.textPrimary;
               }}
             >
               Get in Touch
@@ -451,40 +461,43 @@ export default function Portfolio() {
 
         {/* Mobile Menu Button */}
         {isMobile && (
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            style={{
-              background: 'none',
-              border: 'none',
-              padding: '8px',
-              cursor: 'pointer',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '6px'
-            }}
-          >
-            <span style={{
-              width: '24px',
-              height: '1px',
-              background: '#e8e6e3',
-              transition: 'all 0.3s ease',
-              transform: mobileMenuOpen ? 'rotate(45deg) translateY(5px)' : 'none'
-            }} />
-            <span style={{
-              width: '24px',
-              height: '1px',
-              background: '#e8e6e3',
-              transition: 'all 0.3s ease',
-              opacity: mobileMenuOpen ? 0 : 1
-            }} />
-            <span style={{
-              width: '24px',
-              height: '1px',
-              background: '#e8e6e3',
-              transition: 'all 0.3s ease',
-              transform: mobileMenuOpen ? 'rotate(-45deg) translateY(-5px)' : 'none'
-            }} />
-          </button>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <ThemeToggle isMobile />
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              style={{
+                background: 'none',
+                border: 'none',
+                padding: '8px',
+                cursor: 'pointer',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '6px'
+              }}
+            >
+              <span style={{
+                width: '24px',
+                height: '1px',
+                background: colors.textPrimary,
+                transition: 'all 0.3s ease',
+                transform: mobileMenuOpen ? 'rotate(45deg) translateY(5px)' : 'none'
+              }} />
+              <span style={{
+                width: '24px',
+                height: '1px',
+                background: colors.textPrimary,
+                transition: 'all 0.3s ease',
+                opacity: mobileMenuOpen ? 0 : 1
+              }} />
+              <span style={{
+                width: '24px',
+                height: '1px',
+                background: colors.textPrimary,
+                transition: 'all 0.3s ease',
+                transform: mobileMenuOpen ? 'rotate(-45deg) translateY(-5px)' : 'none'
+              }} />
+            </button>
+          </div>
         )}
       </nav>
 
@@ -496,7 +509,7 @@ export default function Portfolio() {
           left: 0,
           right: 0,
           bottom: 0,
-          background: '#08080a',
+          background: colors.background,
           zIndex: 99,
           display: 'flex',
           flexDirection: 'column',
@@ -504,7 +517,7 @@ export default function Portfolio() {
           padding: '0 24px',
           opacity: mobileMenuOpen ? 1 : 0,
           pointerEvents: mobileMenuOpen ? 'auto' : 'none',
-          transition: 'opacity 0.3s ease'
+          transition: 'opacity 0.3s ease, background 0.4s ease'
         }}>
           {['Work', 'About', 'Contact'].map((item, i) => (
             <a
@@ -512,13 +525,13 @@ export default function Portfolio() {
               href={item === 'Contact' ? 'mailto:dmitrii.fotesco@gmail.com' : `#${item.toLowerCase()}`}
               onClick={() => setMobileMenuOpen(false)}
               style={{
-                color: '#e8e6e3',
+                color: colors.textPrimary,
                 textDecoration: 'none',
                 fontFamily: "'Instrument Serif', Georgia, serif",
                 fontSize: '42px',
                 fontStyle: 'italic',
                 padding: '16px 0',
-                borderBottom: '1px solid rgba(232, 230, 227, 0.1)',
+                borderBottom: `1px solid ${colors.border}`,
                 transform: mobileMenuOpen ? 'translateX(0)' : 'translateX(-20px)',
                 opacity: mobileMenuOpen ? 1 : 0,
                 transition: `all 0.4s ease ${i * 0.08}s`
@@ -530,12 +543,12 @@ export default function Portfolio() {
           {/* Blog with Coming Soon */}
           <div
             style={{
-              color: '#4a4a4c',
+              color: colors.textMuted,
               fontFamily: "'Instrument Serif', Georgia, serif",
               fontSize: '42px',
               fontStyle: 'italic',
               padding: '16px 0',
-              borderBottom: '1px solid rgba(232, 230, 227, 0.1)',
+              borderBottom: `1px solid ${colors.border}`,
               transform: mobileMenuOpen ? 'translateX(0)' : 'translateX(-20px)',
               opacity: mobileMenuOpen ? 1 : 0,
               transition: `all 0.4s ease ${3 * 0.08}s`,
@@ -551,9 +564,9 @@ export default function Portfolio() {
               fontStyle: 'normal',
               fontFamily: "'Instrument Sans', sans-serif",
               letterSpacing: '0.08em',
-              color: '#3a3a3c',
+              color: isDark ? '#3a3a3c' : '#9a9a9c',
               padding: '4px 8px',
-              border: '1px solid rgba(232, 230, 227, 0.1)'
+              border: `1px solid ${colors.border}`
             }}>
               SOON
             </span>
@@ -587,7 +600,7 @@ export default function Portfolio() {
             <div style={{
               width: '8px',
               height: '8px',
-              background: '#4ade80',
+              background: colors.success,
               borderRadius: '50%'
             }} />
             <span style={{
@@ -595,7 +608,7 @@ export default function Portfolio() {
               fontWeight: 500,
               letterSpacing: '0.1em',
               textTransform: 'uppercase',
-              color: '#6b6966'
+              color: colors.textTertiary
             }}>
               Open to PM roles — AI, Infrastructure, Web3
             </span>
@@ -610,17 +623,18 @@ export default function Portfolio() {
             lineHeight: 0.95,
             margin: 0,
             letterSpacing: '-0.03em',
-            color: '#e8e6e3'
+            color: colors.textPrimary,
+            transition: 'color 0.4s ease'
           }}>
             Building
             <br />
             <span style={{
               fontStyle: 'normal',
-              color: '#6b6966'
+              color: colors.textTertiary
             }}>at the edge of</span>
             <br />
             <span style={{
-              color: '#c29a6c'
+              color: colors.accent
             }}>
               trust
             </span>
@@ -636,7 +650,7 @@ export default function Portfolio() {
           }}>
             <p style={{
               fontSize: isMobile ? '17px' : '19px',
-              color: '#a8a5a0',
+              color: colors.textSecondary,
               lineHeight: 1.6,
               fontWeight: 400,
               maxWidth: '480px'
@@ -652,8 +666,8 @@ export default function Portfolio() {
               gap: '16px'
             }}>
               <a href="#work" style={{
-                background: '#e8e6e3',
-                color: '#08080a',
+                background: colors.textPrimary,
+                color: colors.background,
                 padding: isMobile ? '16px 28px' : '18px 32px',
                 textDecoration: 'none',
                 fontSize: '14px',
@@ -675,7 +689,7 @@ export default function Portfolio() {
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{
-                  color: '#6b6966',
+                  color: colors.textTertiary,
                   padding: '18px 0',
                   textDecoration: 'none',
                   fontSize: '14px',
@@ -684,12 +698,12 @@ export default function Portfolio() {
                   display: 'inline-flex',
                   alignItems: 'center',
                   gap: '12px',
-                  borderBottom: '1px solid rgba(232, 230, 227, 0.1)',
+                  borderBottom: `1px solid ${colors.border}`,
                   transition: 'all 0.2s ease',
                   width: 'fit-content'
                 }}
-                onMouseEnter={(e) => (e.target as HTMLElement).style.color = '#e8e6e3'}
-                onMouseLeave={(e) => (e.target as HTMLElement).style.color = '#6b6966'}
+                onMouseEnter={(e) => (e.target as HTMLElement).style.color = colors.textPrimary}
+                onMouseLeave={(e) => (e.target as HTMLElement).style.color = colors.textTertiary}
               >
                 Download Resume
               </a>
@@ -719,14 +733,14 @@ export default function Portfolio() {
             fontWeight: 600,
             letterSpacing: '0.15em',
             textTransform: 'uppercase',
-            color: '#4a4a4c'
+            color: colors.textMuted
           }}>
             About
           </span>
           <div style={{
             flex: 1,
             height: '1px',
-            background: 'rgba(232, 230, 227, 0.08)'
+            background: colors.borderLight
           }} />
         </div>
 
@@ -740,8 +754,8 @@ export default function Portfolio() {
           <div style={{
             aspectRatio: '3/4',
             maxWidth: isMobile ? '180px' : '100%',
-            background: 'linear-gradient(135deg, #141416 0%, #1a1a1c 100%)',
-            border: '1px solid rgba(232, 230, 227, 0.06)',
+            background: `linear-gradient(135deg, ${colors.backgroundSecondary} 0%, ${colors.backgroundTertiary} 100%)`,
+            border: `1px solid ${isDark ? 'rgba(232, 230, 227, 0.06)' : 'rgba(26, 26, 28, 0.06)'}`,
             position: 'relative',
             overflow: 'hidden'
           }}>
@@ -771,7 +785,7 @@ export default function Portfolio() {
               bottom: '0',
               left: '0',
               right: '0',
-              background: 'rgba(8, 8, 10, 0.9)',
+              background: isDark ? 'rgba(8, 8, 10, 0.9)' : 'rgba(250, 250, 250, 0.9)',
               backdropFilter: 'blur(8px)',
               padding: '14px 16px',
               display: 'flex',
@@ -782,7 +796,7 @@ export default function Portfolio() {
                 fontFamily: "'Instrument Serif', Georgia, serif",
                 fontStyle: 'italic',
                 fontSize: '14px',
-                color: '#c29a6c'
+                color: colors.accent
               }}>
                 dmitriif.eth
               </span>
@@ -791,7 +805,7 @@ export default function Portfolio() {
                 fontWeight: 600,
                 letterSpacing: '0.1em',
                 textTransform: 'uppercase',
-                color: '#4ade80'
+                color: colors.success
               }}>
                 Verified
               </span>
@@ -806,7 +820,7 @@ export default function Portfolio() {
               fontWeight: 400,
               fontStyle: 'italic',
               lineHeight: 1.3,
-              color: '#e8e6e3',
+              color: colors.textPrimary,
               marginBottom: '28px',
               letterSpacing: '-0.02em'
             }}>
@@ -820,7 +834,7 @@ export default function Portfolio() {
               <p style={{
                 fontSize: '15px',
                 lineHeight: 1.75,
-                color: '#8a8885',
+                color: isDark ? '#8a8885' : '#5a5a5c',
                 marginBottom: '20px'
               }}>
                 Currently at Anchorage Digital, I lead protocol integrations and staking
@@ -831,7 +845,7 @@ export default function Portfolio() {
               <p style={{
                 fontSize: '15px',
                 lineHeight: 1.75,
-                color: '#8a8885'
+                color: isDark ? '#8a8885' : '#5a5a5c'
               }}>
                 I started in enterprise blockchain at Microsoft, shipping Xbox royalties
                 on Ethereum before "Web3" was a term. I'm drawn to problems at the
@@ -846,7 +860,7 @@ export default function Portfolio() {
               gap: isMobile ? '32px' : '48px',
               marginTop: '32px',
               paddingTop: '24px',
-              borderTop: '1px solid rgba(232, 230, 227, 0.08)',
+              borderTop: `1px solid ${colors.borderLight}`,
               flexWrap: 'wrap'
             }}>
               {[
@@ -859,7 +873,7 @@ export default function Portfolio() {
                     fontSize: isMobile ? '36px' : '48px',
                     fontFamily: "'Instrument Serif', Georgia, serif",
                     fontWeight: 400,
-                    color: '#e8e6e3',
+                    color: colors.textPrimary,
                     lineHeight: 1
                   }}>{stat.value}</div>
                   <div style={{
@@ -867,7 +881,7 @@ export default function Portfolio() {
                     fontWeight: 500,
                     letterSpacing: '0.08em',
                     textTransform: 'uppercase',
-                    color: '#4a4a4c',
+                    color: colors.textMuted,
                     marginTop: '8px'
                   }}>{stat.label}</div>
                 </div>
@@ -2360,7 +2374,7 @@ export default function Portfolio() {
           fontFamily: "'Instrument Serif', Georgia, serif",
           fontWeight: 400,
           fontStyle: 'italic',
-          color: '#e8e6e3',
+          color: colors.textPrimary,
           letterSpacing: '-0.03em',
           lineHeight: 1,
           marginBottom: '32px'
@@ -2370,7 +2384,7 @@ export default function Portfolio() {
 
         <p style={{
           fontSize: '16px',
-          color: '#6b6966',
+          color: colors.textTertiary,
           maxWidth: '440px',
           margin: '0 auto 32px',
           lineHeight: 1.6
@@ -2387,8 +2401,8 @@ export default function Portfolio() {
           justifyContent: 'center'
         }}>
           <a href="mailto:dmitrii.fotesco@gmail.com" style={{
-            background: '#e8e6e3',
-            color: '#08080a',
+            background: colors.textPrimary,
+            color: colors.background,
             padding: '18px 40px',
             textDecoration: 'none',
             fontSize: '14px',
@@ -2404,13 +2418,13 @@ export default function Portfolio() {
             <span style={{ fontFamily: "'Instrument Serif', serif", fontStyle: 'italic' }}>→</span>
           </a>
           <a href="https://www.linkedin.com/in/0xdmitri/" target="_blank" rel="noopener noreferrer" style={{
-            color: '#6b6966',
+            color: colors.textTertiary,
             padding: '18px 40px',
             textDecoration: 'none',
             fontSize: '14px',
             fontWeight: 600,
             letterSpacing: '0.02em',
-            border: '1px solid rgba(232, 230, 227, 0.15)',
+            border: `1px solid ${isDark ? 'rgba(232, 230, 227, 0.15)' : 'rgba(26, 26, 28, 0.15)'}`,
             transition: 'all 0.2s ease'
           }}>
             Connect on LinkedIn
@@ -2435,7 +2449,7 @@ export default function Portfolio() {
               target={social.url.startsWith('http') ? '_blank' : undefined}
               rel="noopener noreferrer"
               style={{
-                color: '#3a3a3c',
+                color: isDark ? '#3a3a3c' : '#9a9a9c',
                 textDecoration: 'none',
                 fontSize: '12px',
                 fontWeight: 500,
@@ -2443,8 +2457,8 @@ export default function Portfolio() {
                 textTransform: 'uppercase',
                 transition: 'color 0.2s ease'
               }}
-              onMouseEnter={(e) => (e.target as HTMLElement).style.color = '#6b6966'}
-              onMouseLeave={(e) => (e.target as HTMLElement).style.color = '#3a3a3c'}
+              onMouseEnter={(e) => (e.target as HTMLElement).style.color = colors.textTertiary}
+              onMouseLeave={(e) => (e.target as HTMLElement).style.color = isDark ? '#3a3a3c' : '#9a9a9c'}
             >
               {social.name}
             </a>
@@ -2461,7 +2475,7 @@ export default function Portfolio() {
             zIndex: 1000,
             display: 'flex',
             flexDirection: 'column',
-            background: '#08080a',
+            background: colors.background,
             animation: 'modalSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1)'
           }}
         >
@@ -2477,27 +2491,27 @@ export default function Portfolio() {
                 transform: translateY(0);
               }
             }
-            
+
             .modal-scroll::-webkit-scrollbar {
               width: 6px;
             }
-            
+
             .modal-scroll::-webkit-scrollbar-track {
               background: transparent;
             }
-            
+
             .modal-scroll::-webkit-scrollbar-thumb {
-              background: rgba(232, 230, 227, 0.15);
+              background: ${colors.scrollbarThumb};
               border-radius: 3px;
             }
-            
+
             .modal-scroll::-webkit-scrollbar-thumb:hover {
-              background: rgba(232, 230, 227, 0.25);
+              background: ${colors.scrollbarThumbHover};
             }
-            
+
             .modal-scroll {
               scrollbar-width: thin;
-              scrollbar-color: rgba(232, 230, 227, 0.15) transparent;
+              scrollbar-color: ${colors.scrollbarThumb} transparent;
             }
           `}</style>
 
@@ -2507,8 +2521,8 @@ export default function Portfolio() {
             justifyContent: 'space-between',
             alignItems: 'center',
             padding: isMobile ? '20px 24px' : '28px 64px',
-            borderBottom: '1px solid rgba(232, 230, 227, 0.08)',
-            background: '#08080a',
+            borderBottom: `1px solid ${colors.borderLight}`,
+            background: colors.background,
             position: 'sticky',
             top: 0,
             zIndex: 10
@@ -2521,15 +2535,15 @@ export default function Portfolio() {
                 gap: '8px',
                 background: 'none',
                 border: 'none',
-                color: '#6b6966',
+                color: colors.textTertiary,
                 fontSize: '13px',
                 fontWeight: 500,
                 cursor: 'pointer',
                 padding: 0,
                 transition: 'color 0.2s ease'
               }}
-              onMouseEnter={(e) => (e.currentTarget as HTMLButtonElement).style.color = '#e8e6e3'}
-              onMouseLeave={(e) => (e.currentTarget as HTMLButtonElement).style.color = '#6b6966'}
+              onMouseEnter={(e) => (e.currentTarget as HTMLButtonElement).style.color = colors.textPrimary}
+              onMouseLeave={(e) => (e.currentTarget as HTMLButtonElement).style.color = colors.textTertiary}
             >
               <span style={{ fontFamily: "'Instrument Serif', serif", fontStyle: 'italic' }}>←</span>
               Back to Work
@@ -2539,8 +2553,8 @@ export default function Portfolio() {
               onClick={() => setModalCase(null)}
               style={{
                 background: 'none',
-                border: '1px solid rgba(232, 230, 227, 0.1)',
-                color: '#6b6966',
+                border: `1px solid ${colors.border}`,
+                color: colors.textTertiary,
                 width: '40px',
                 height: '40px',
                 cursor: 'pointer',
@@ -2551,12 +2565,12 @@ export default function Portfolio() {
                 transition: 'all 0.2s ease'
               }}
               onMouseEnter={(e) => {
-                (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(232, 230, 227, 0.3)';
-                (e.currentTarget as HTMLButtonElement).style.color = '#e8e6e3';
+                (e.currentTarget as HTMLButtonElement).style.borderColor = isDark ? 'rgba(232, 230, 227, 0.3)' : 'rgba(26, 26, 28, 0.3)';
+                (e.currentTarget as HTMLButtonElement).style.color = colors.textPrimary;
               }}
               onMouseLeave={(e) => {
-                (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(232, 230, 227, 0.1)';
-                (e.currentTarget as HTMLButtonElement).style.color = '#6b6966';
+                (e.currentTarget as HTMLButtonElement).style.borderColor = colors.border;
+                (e.currentTarget as HTMLButtonElement).style.color = colors.textTertiary;
               }}
             >
               ✕
@@ -3017,7 +3031,7 @@ export default function Portfolio() {
       {/* Footer */}
       <footer style={{
         padding: isMobile ? '32px 24px' : '40px 64px',
-        borderTop: '1px solid rgba(232, 230, 227, 0.06)',
+        borderTop: `1px solid ${isDark ? 'rgba(232, 230, 227, 0.06)' : 'rgba(26, 26, 28, 0.06)'}`,
         display: 'flex',
         flexDirection: isMobile ? 'column' : 'row',
         justifyContent: 'space-between',
@@ -3028,14 +3042,14 @@ export default function Portfolio() {
       }}>
         <div style={{
           fontSize: '12px',
-          color: '#3a3a3c',
+          color: isDark ? '#3a3a3c' : '#9a9a9c',
           letterSpacing: '0.02em'
         }}>
           © 2025
         </div>
         <div style={{
           fontSize: '12px',
-          color: '#3a3a3c',
+          color: isDark ? '#3a3a3c' : '#9a9a9c',
           fontStyle: 'italic',
           fontFamily: "'Instrument Serif', Georgia, serif"
         }}>
