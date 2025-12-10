@@ -2,8 +2,9 @@ import { useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { oneDark, oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import type { BlogPost } from '../types/blog';
+import { useTheme } from '../context/ThemeContext';
 
 interface BlogPostModalProps {
     post: BlogPost;
@@ -26,6 +27,8 @@ export default function BlogPostModal({
     nextTitle,
     isMobile
 }: BlogPostModalProps) {
+    const { colors, isDark } = useTheme();
+
     // Handle scroll lock and ESC key
     useEffect(() => {
         document.body.style.overflow = 'hidden';
@@ -56,7 +59,7 @@ export default function BlogPostModal({
                 zIndex: 1000,
                 display: 'flex',
                 flexDirection: 'column',
-                background: '#08080a',
+                background: colors.background,
                 animation: 'modalSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1)'
             }}
         >
@@ -72,27 +75,27 @@ export default function BlogPostModal({
             transform: translateY(0);
           }
         }
-        
+
         .blog-modal-scroll::-webkit-scrollbar {
           width: 6px;
         }
-        
+
         .blog-modal-scroll::-webkit-scrollbar-track {
           background: transparent;
         }
-        
+
         .blog-modal-scroll::-webkit-scrollbar-thumb {
-          background: rgba(232, 230, 227, 0.15);
+          background: ${colors.scrollbarThumb};
           border-radius: 3px;
         }
-        
+
         .blog-modal-scroll::-webkit-scrollbar-thumb:hover {
-          background: rgba(232, 230, 227, 0.25);
+          background: ${colors.scrollbarThumbHover};
         }
-        
+
         .blog-modal-scroll {
           scrollbar-width: thin;
-          scrollbar-color: rgba(232, 230, 227, 0.15) transparent;
+          scrollbar-color: ${colors.scrollbarThumb} transparent;
         }
 
         .blog-content h1 {
@@ -100,7 +103,7 @@ export default function BlogPostModal({
           font-family: 'Instrument Serif', Georgia, serif;
           font-weight: 400;
           font-style: italic;
-          color: #e8e6e3;
+          color: ${colors.textPrimary};
           margin: 40px 0 20px;
           letter-spacing: -0.02em;
           line-height: 1.2;
@@ -111,7 +114,7 @@ export default function BlogPostModal({
           font-family: 'Instrument Serif', Georgia, serif;
           font-weight: 400;
           font-style: italic;
-          color: #e8e6e3;
+          color: ${colors.textPrimary};
           margin: 36px 0 16px;
           letter-spacing: -0.02em;
           line-height: 1.3;
@@ -120,14 +123,14 @@ export default function BlogPostModal({
         .blog-content h3 {
           font-size: ${isMobile ? '18px' : '20px'};
           font-weight: 600;
-          color: #e8e6e3;
+          color: ${colors.textPrimary};
           margin: 28px 0 12px;
           line-height: 1.4;
         }
 
         .blog-content p {
           font-size: ${isMobile ? '16px' : '17px'};
-          color: #a8a5a0;
+          color: ${colors.textSecondary};
           line-height: 1.8;
           margin: 0 0 20px;
         }
@@ -135,7 +138,7 @@ export default function BlogPostModal({
         .blog-content ul, .blog-content ol {
           margin: 0 0 20px;
           padding-left: 24px;
-          color: #a8a5a0;
+          color: ${colors.textSecondary};
         }
 
         .blog-content li {
@@ -145,7 +148,7 @@ export default function BlogPostModal({
         }
 
         .blog-content a {
-          color: #c29a6c;
+          color: ${colors.accent};
           text-decoration: none;
           transition: opacity 0.2s ease;
         }
@@ -155,7 +158,7 @@ export default function BlogPostModal({
         }
 
         .blog-content strong {
-          color: #e8e6e3;
+          color: ${colors.textPrimary};
           font-weight: 600;
         }
 
@@ -164,10 +167,10 @@ export default function BlogPostModal({
         }
 
         .blog-content blockquote {
-          border-left: 3px solid #c29a6c;
+          border-left: 3px solid ${colors.accent};
           margin: 24px 0;
           padding: 16px 24px;
-          background: rgba(194, 154, 108, 0.05);
+          background: ${isDark ? 'rgba(194, 154, 108, 0.05)' : 'rgba(166, 124, 82, 0.05)'};
         }
 
         .blog-content blockquote p {
@@ -178,21 +181,21 @@ export default function BlogPostModal({
         .blog-content hr {
           border: none;
           height: 1px;
-          background: rgba(232, 230, 227, 0.1);
+          background: ${colors.border};
           margin: 40px 0;
         }
 
         .blog-content pre {
           margin: 24px 0;
           border-radius: 0;
-          border: 1px solid rgba(232, 230, 227, 0.1);
+          border: 1px solid ${colors.border};
         }
 
         .blog-content code:not([class*="language-"]) {
-          background: rgba(232, 230, 227, 0.08);
+          background: ${isDark ? 'rgba(232, 230, 227, 0.08)' : 'rgba(26, 26, 28, 0.06)'};
           padding: 2px 6px;
           font-size: 0.9em;
-          color: #c29a6c;
+          color: ${colors.accent};
         }
       `}</style>
 
@@ -202,8 +205,8 @@ export default function BlogPostModal({
                 justifyContent: 'space-between',
                 alignItems: 'center',
                 padding: isMobile ? '20px 24px' : '28px 64px',
-                borderBottom: '1px solid rgba(232, 230, 227, 0.08)',
-                background: '#08080a',
+                borderBottom: `1px solid ${colors.borderLight}`,
+                background: colors.background,
                 position: 'sticky',
                 top: 0,
                 zIndex: 10
@@ -216,7 +219,7 @@ export default function BlogPostModal({
                         gap: '8px',
                         background: 'none',
                         border: 'none',
-                        color: '#6b6966',
+                        color: colors.textTertiary,
                         fontSize: '13px',
                         fontWeight: 500,
                         cursor: 'pointer',
@@ -224,8 +227,8 @@ export default function BlogPostModal({
                         fontFamily: "'Instrument Sans', -apple-system, BlinkMacSystemFont, sans-serif",
                         transition: 'color 0.2s ease'
                     }}
-                    onMouseEnter={(e) => (e.currentTarget as HTMLButtonElement).style.color = '#e8e6e3'}
-                    onMouseLeave={(e) => (e.currentTarget as HTMLButtonElement).style.color = '#6b6966'}
+                    onMouseEnter={(e) => (e.currentTarget as HTMLButtonElement).style.color = colors.textPrimary}
+                    onMouseLeave={(e) => (e.currentTarget as HTMLButtonElement).style.color = colors.textTertiary}
                 >
                     <span style={{ fontFamily: "'Instrument Serif', serif", fontStyle: 'italic' }}>←</span>
                     Back to Blog
@@ -235,8 +238,8 @@ export default function BlogPostModal({
                     onClick={onClose}
                     style={{
                         background: 'none',
-                        border: '1px solid rgba(232, 230, 227, 0.1)',
-                        color: '#6b6966',
+                        border: `1px solid ${colors.border}`,
+                        color: colors.textTertiary,
                         width: '40px',
                         height: '40px',
                         cursor: 'pointer',
@@ -247,12 +250,12 @@ export default function BlogPostModal({
                         transition: 'all 0.2s ease'
                     }}
                     onMouseEnter={(e) => {
-                        (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(232, 230, 227, 0.3)';
-                        (e.currentTarget as HTMLButtonElement).style.color = '#e8e6e3';
+                        (e.currentTarget as HTMLButtonElement).style.borderColor = isDark ? 'rgba(232, 230, 227, 0.3)' : 'rgba(26, 26, 28, 0.3)';
+                        (e.currentTarget as HTMLButtonElement).style.color = colors.textPrimary;
                     }}
                     onMouseLeave={(e) => {
-                        (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(232, 230, 227, 0.1)';
-                        (e.currentTarget as HTMLButtonElement).style.color = '#6b6966';
+                        (e.currentTarget as HTMLButtonElement).style.borderColor = colors.border;
+                        (e.currentTarget as HTMLButtonElement).style.color = colors.textTertiary;
                     }}
                 >
                     ✕
@@ -275,14 +278,14 @@ export default function BlogPostModal({
                 <div style={{ marginBottom: '40px' }}>
                     <div style={{
                         fontSize: '13px',
-                        color: '#6b6966',
+                        color: colors.textTertiary,
                         marginBottom: '16px',
                         display: 'flex',
                         alignItems: 'center',
                         gap: '12px'
                     }}>
                         <span>{formatDate(post.date)}</span>
-                        <span style={{ color: '#3a3a3c' }}>•</span>
+                        <span style={{ color: isDark ? '#3a3a3c' : '#9a9a9c' }}>•</span>
                         <span>{post.readingTime} min read</span>
                     </div>
 
@@ -291,7 +294,7 @@ export default function BlogPostModal({
                         fontFamily: "'Instrument Serif', Georgia, serif",
                         fontWeight: 400,
                         fontStyle: 'italic',
-                        color: '#e8e6e3',
+                        color: colors.textPrimary,
                         marginBottom: '20px',
                         letterSpacing: '-0.02em',
                         lineHeight: 1.1
@@ -311,9 +314,9 @@ export default function BlogPostModal({
                                 fontWeight: 500,
                                 letterSpacing: '0.08em',
                                 textTransform: 'uppercase',
-                                color: '#4a4a4c',
+                                color: colors.textMuted,
                                 padding: '6px 12px',
-                                border: '1px solid rgba(232, 230, 227, 0.08)'
+                                border: `1px solid ${colors.borderLight}`
                             }}>
                                 {tag}
                             </span>
@@ -326,8 +329,8 @@ export default function BlogPostModal({
                     <div style={{
                         aspectRatio: '16/9',
                         marginBottom: '48px',
-                        background: 'linear-gradient(135deg, #141416 0%, #1a1a1c 100%)',
-                        border: '1px solid rgba(232, 230, 227, 0.06)',
+                        background: `linear-gradient(135deg, ${colors.backgroundSecondary} 0%, ${colors.backgroundTertiary} 100%)`,
+                        border: `1px solid ${isDark ? 'rgba(232, 230, 227, 0.06)' : 'rgba(26, 26, 28, 0.06)'}`,
                         overflow: 'hidden'
                     }}>
                         <img
@@ -348,14 +351,14 @@ export default function BlogPostModal({
                                 const isInline = !match;
                                 return !isInline ? (
                                     <SyntaxHighlighter
-                                        style={oneDark}
+                                        style={isDark ? oneDark : oneLight}
                                         language={match[1]}
                                         PreTag="div"
                                         customStyle={{
                                             margin: '24px 0',
                                             borderRadius: 0,
-                                            border: '1px solid rgba(232, 230, 227, 0.1)',
-                                            background: '#141416'
+                                            border: `1px solid ${colors.border}`,
+                                            background: colors.codeBackground
                                         }}
                                     >
                                         {String(children).replace(/\n$/, '')}
@@ -379,7 +382,7 @@ export default function BlogPostModal({
                         justifyContent: 'space-between',
                         marginTop: '64px',
                         paddingTop: '32px',
-                        borderTop: '1px solid rgba(232, 230, 227, 0.08)',
+                        borderTop: `1px solid ${colors.borderLight}`,
                         gap: '24px',
                         flexWrap: 'wrap'
                     }}>
@@ -401,7 +404,7 @@ export default function BlogPostModal({
                                     fontWeight: 500,
                                     letterSpacing: '0.1em',
                                     textTransform: 'uppercase',
-                                    color: '#4a4a4c',
+                                    color: colors.textMuted,
                                     display: 'block',
                                     marginBottom: '8px'
                                 }}>← Previous</span>
@@ -409,7 +412,7 @@ export default function BlogPostModal({
                                     fontSize: '16px',
                                     fontFamily: "'Instrument Serif', Georgia, serif",
                                     fontStyle: 'italic',
-                                    color: '#a8a5a0'
+                                    color: colors.textSecondary
                                 }}>{prevTitle}</span>
                             </button>
                         ) : <div style={{ flex: 1 }} />}
@@ -432,7 +435,7 @@ export default function BlogPostModal({
                                     fontWeight: 500,
                                     letterSpacing: '0.1em',
                                     textTransform: 'uppercase',
-                                    color: '#4a4a4c',
+                                    color: colors.textMuted,
                                     display: 'block',
                                     marginBottom: '8px'
                                 }}>Next →</span>
@@ -440,7 +443,7 @@ export default function BlogPostModal({
                                     fontSize: '16px',
                                     fontFamily: "'Instrument Serif', Georgia, serif",
                                     fontStyle: 'italic',
-                                    color: '#a8a5a0'
+                                    color: colors.textSecondary
                                 }}>{nextTitle}</span>
                             </button>
                         ) : <div style={{ flex: 1 }} />}
