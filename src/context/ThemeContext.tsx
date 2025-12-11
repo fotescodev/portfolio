@@ -75,8 +75,8 @@ const lightColors: ThemeColors = {
   textTertiary: '#4a4a4c', // Previous secondary
   textMuted: '#666666', // Darker muted
 
-  accent: '#a67c52',
-  accentHover: '#8a6642',
+  accent: '#8a6642', // Darker gold for better contrast on white
+  accentHover: '#6d5038',
 
   border: 'rgba(26, 26, 28, 0.12)',
   borderLight: 'rgba(26, 26, 28, 0.08)',

@@ -4,6 +4,7 @@ import BlogPostModal from './BlogPostModal';
 import { useTheme } from '../context/ThemeContext';
 
 // Import blog posts statically (we'll parse these)
+import retrospectivePost from '../../content/blog/2024-12-11-portfolio-retrospective.md?raw';
 import aiAgentsPost from '../../content/blog/2024-12-01-ai-agents-meet-onchain.md?raw';
 import stakingPost from '../../content/blog/2024-11-15-etf-grade-staking.md?raw';
 
@@ -64,6 +65,7 @@ function calculateReadingTime(content: string): number {
 // Parse all blog posts
 function parseBlogPosts(): BlogPost[] {
     const posts = [
+        { raw: retrospectivePost, slug: 'portfolio-retrospective' },
         { raw: aiAgentsPost, slug: 'ai-agents-meet-onchain' },
         { raw: stakingPost, slug: 'etf-grade-staking' },
     ];

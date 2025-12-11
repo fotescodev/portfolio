@@ -842,7 +842,7 @@ export default function Portfolio() {
             fontWeight: 600,
             letterSpacing: '0.15em',
             textTransform: 'uppercase',
-            color: '#4a4a4c'
+            color: colors.textMuted
           }}>
             Experience
           </span>
@@ -937,7 +937,7 @@ export default function Portfolio() {
                   fontWeight: 600,
                   letterSpacing: '0.05em',
                   textTransform: 'uppercase',
-                  color: '#6b6966',
+                  color: colors.textTertiary,
                   marginBottom: '4px'
                 }}>
                   {job.period}
@@ -946,14 +946,14 @@ export default function Portfolio() {
                   fontSize: isMobile ? '16px' : '18px',
                   fontFamily: "'Instrument Serif', Georgia, serif",
                   fontStyle: 'italic',
-                  color: '#e8e6e3',
+                  color: colors.textSecondary,
                   marginBottom: '4px'
                 }}>
                   {job.company}
                 </div>
                 <div style={{
                   fontSize: '12px',
-                  color: '#4a4a4c'
+                  color: colors.textMuted
                 }}>
                   {job.location}
                 </div>
@@ -964,7 +964,7 @@ export default function Portfolio() {
                 <div style={{
                   fontSize: isMobile ? '15px' : '16px',
                   fontWeight: 500,
-                  color: '#a8a5a0',
+                  color: colors.textSecondary,
                   marginBottom: '12px'
                 }}>
                   {job.role}
@@ -982,7 +982,7 @@ export default function Portfolio() {
                       key={i}
                       style={{
                         fontSize: '14px',
-                        color: '#6b6966',
+                        color: colors.textTertiary,
                         lineHeight: 1.5,
                         paddingLeft: '16px',
                         position: 'relative'
@@ -1010,9 +1010,9 @@ export default function Portfolio() {
                         fontWeight: 500,
                         letterSpacing: '0.05em',
                         textTransform: 'uppercase',
-                        color: '#4a4a4c',
+                        color: colors.textMuted,
                         padding: '4px 8px',
-                        border: '1px solid rgba(232, 230, 227, 0.08)'
+                        border: `1px solid ${colors.border}`
                       }}
                     >
                       {tag}
@@ -1045,7 +1045,7 @@ export default function Portfolio() {
             fontWeight: 600,
             letterSpacing: '0.15em',
             textTransform: 'uppercase',
-            color: '#4a4a4c'
+            color: colors.textMuted
           }}>
             Certifications
           </span>
@@ -1116,7 +1116,7 @@ export default function Portfolio() {
                   fontFamily: "'Instrument Serif', Georgia, serif",
                   fontStyle: 'italic',
                   fontWeight: 400,
-                  color: '#e8e6e3',
+                  color: colors.textSecondary,
                   marginBottom: '12px',
                   lineHeight: 1.2
                 }}>
@@ -1128,8 +1128,8 @@ export default function Portfolio() {
                   lineHeight: 1.6,
                   marginBottom: '16px'
                 }}>
-                  Intensive AI PM program led by <strong style={{ color: '#a8a5a0' }}>Miqdad Jaffer</strong>,
-                  Product Leader at <strong style={{ color: '#a8a5a0' }}>OpenAI</strong> and former Head of AI Products at Shopify.
+                  Intensive AI PM program led by <strong style={{ color: colors.textSecondary }}>Miqdad Jaffer</strong>,
+                  Product Leader at <strong style={{ color: colors.textSecondary }}>OpenAI</strong> and former Head of AI Products at Shopify.
                 </p>
                 <div style={{
                   display: 'flex',
@@ -1139,7 +1139,7 @@ export default function Portfolio() {
                 }}>
                   <span style={{
                     fontSize: '12px',
-                    color: '#4a4a4c'
+                    color: colors.textMuted
                   }}>
                     Issued 2024
                   </span>
@@ -1224,7 +1224,7 @@ export default function Portfolio() {
                 fontWeight: 600,
                 letterSpacing: '0.15em',
                 textTransform: 'uppercase',
-                color: '#4a4a4c'
+                color: colors.textMuted
               }}>
                 Skills & Tools
               </span>
@@ -1264,7 +1264,7 @@ export default function Portfolio() {
                     fontWeight: 600,
                     letterSpacing: '0.1em',
                     textTransform: 'uppercase',
-                    color: '#6b6966',
+                    color: colors.textTertiary,
                     marginBottom: '20px'
                   }}>
                     {group.category}
@@ -1277,7 +1277,7 @@ export default function Portfolio() {
                     {group.skills.map((skill, j) => (
                       <span key={j} style={{
                         fontSize: '14px',
-                        color: '#a8a5a0',
+                        color: colors.textSecondary,
                         lineHeight: 1.4
                       }}>
                         {skill}
@@ -1311,7 +1311,7 @@ export default function Portfolio() {
             fontWeight: 600,
             letterSpacing: '0.15em',
             textTransform: 'uppercase',
-            color: '#4a4a4c'
+            color: colors.textMuted
           }}>
             Selected Work
           </span>
@@ -1432,7 +1432,7 @@ export default function Portfolio() {
                       fontWeight: 500,
                       letterSpacing: '0.05em',
                       textTransform: 'uppercase',
-                      color: '#6b6966'
+                      color: colors.textTertiary
                     }}>{study.company}</span>
                     <span style={{
                       color: '#3a3a3c',
@@ -1440,7 +1440,7 @@ export default function Portfolio() {
                     }}>—</span>
                     <span style={{
                       fontSize: '12px',
-                      color: '#4a4a4c'
+                      color: colors.textMuted
                     }}>{study.year}</span>
                   </div>
 
@@ -1449,7 +1449,7 @@ export default function Portfolio() {
                     fontFamily: "'Instrument Serif', Georgia, serif",
                     fontWeight: 400,
                     fontStyle: 'italic',
-                    color: '#e8e6e3',
+                    color: colors.textSecondary,
                     marginBottom: '14px',
                     letterSpacing: '-0.02em',
                     lineHeight: 1.15,
@@ -1460,7 +1460,7 @@ export default function Portfolio() {
 
                   <p style={{
                     fontSize: '15px',
-                    color: '#6b6966',
+                    color: colors.textTertiary,
                     lineHeight: 1.65,
                     marginBottom: '20px',
                     maxWidth: '520px'
@@ -1495,7 +1495,7 @@ export default function Portfolio() {
                         fontWeight: 500,
                         letterSpacing: '0.05em',
                         textTransform: 'uppercase',
-                        color: '#4a4a4c'
+                        color: colors.textMuted
                       }}>
                         {study.metrics.primary.label}
                       </span>
@@ -1514,7 +1514,7 @@ export default function Portfolio() {
                           fontSize: isMobile ? '24px' : '28px',
                           fontFamily: "'Instrument Serif', Georgia, serif",
                           fontWeight: 400,
-                          color: '#e8e6e3',
+                          color: colors.textSecondary,
                           lineHeight: 1
                         }}>
                           {study.metrics.secondary.value}
@@ -1524,7 +1524,7 @@ export default function Portfolio() {
                           fontWeight: 500,
                           letterSpacing: '0.05em',
                           textTransform: 'uppercase',
-                          color: '#4a4a4c'
+                          color: colors.textMuted
                         }}>
                           {study.metrics.secondary.label}
                         </span>
@@ -1544,7 +1544,7 @@ export default function Portfolio() {
                           fontSize: '28px',
                           fontFamily: "'Instrument Serif', Georgia, serif",
                           fontWeight: 400,
-                          color: '#a8a5a0',
+                          color: colors.textSecondary,
                           lineHeight: 1
                         }}>
                           {study.metrics.tertiary.value}
@@ -1554,7 +1554,7 @@ export default function Portfolio() {
                           fontWeight: 500,
                           letterSpacing: '0.05em',
                           textTransform: 'uppercase',
-                          color: '#4a4a4c'
+                          color: colors.textMuted
                         }}>
                           {study.metrics.tertiary.label}
                         </span>
@@ -1574,11 +1574,11 @@ export default function Portfolio() {
                         fontWeight: 500,
                         letterSpacing: '0.05em',
                         textTransform: 'uppercase',
-                        color: '#4a4a4c',
+                        color: colors.textMuted,
                         padding: '6px 12px',
-                        border: '1px solid rgba(232, 230, 227, 0.08)',
+                        border: `1px solid ${colors.border}`,
                         transition: 'all 0.2s ease',
-                        background: hoveredCase === study.id ? 'rgba(194, 154, 108, 0.05)' : 'transparent'
+                        background: hoveredCase === study.id ? (isDark ? 'rgba(194, 154, 108, 0.05)' : 'rgba(138, 102, 66, 0.05)') : 'transparent'
                       }}>
                         {tag}
                       </span>
@@ -1594,7 +1594,7 @@ export default function Portfolio() {
                         alignItems: 'center',
                         gap: '12px',
                         marginTop: '24px',
-                        color: hoveredCase === study.id ? '#c29a6c' : '#4a4a4c',
+                        color: hoveredCase === study.id ? colors.accent : colors.textMuted,
                         transition: 'color 0.2s ease',
                         cursor: 'pointer'
                       }}
@@ -1641,7 +1641,7 @@ export default function Portfolio() {
             fontWeight: 600,
             letterSpacing: '0.15em',
             textTransform: 'uppercase',
-            color: '#4a4a4c'
+            color: colors.textMuted
           }}>
             What People Say
           </span>
@@ -1682,7 +1682,7 @@ export default function Portfolio() {
                 fontSize: '16px',
                 fontFamily: "'Instrument Serif', Georgia, serif",
                 fontStyle: 'italic',
-                color: '#a8a5a0',
+                color: colors.textSecondary,
                 lineHeight: 1.7,
                 marginBottom: '24px'
               }}>
@@ -1704,7 +1704,7 @@ export default function Portfolio() {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  color: '#4a4a4c',
+                  color: colors.textMuted,
                   fontSize: '18px',
                   fontFamily: "'Instrument Serif', Georgia, serif"
                 }}>
@@ -1714,14 +1714,14 @@ export default function Portfolio() {
                   <div style={{
                     fontSize: '14px',
                     fontWeight: 500,
-                    color: '#e8e6e3',
+                    color: colors.textSecondary,
                     marginBottom: '2px'
                   }}>
                     Engineering Lead
                   </div>
                   <div style={{
                     fontSize: '12px',
-                    color: '#4a4a4c'
+                    color: colors.textMuted
                   }}>
                     Former Colleague at Anchorage Digital
                   </div>
@@ -1755,7 +1755,7 @@ export default function Portfolio() {
                 fontSize: '16px',
                 fontFamily: "'Instrument Serif', Georgia, serif",
                 fontStyle: 'italic',
-                color: '#a8a5a0',
+                color: colors.textSecondary,
                 lineHeight: 1.7,
                 marginBottom: '24px'
               }}>
@@ -1777,7 +1777,7 @@ export default function Portfolio() {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  color: '#4a4a4c',
+                  color: colors.textMuted,
                   fontSize: '18px',
                   fontFamily: "'Instrument Serif', Georgia, serif"
                 }}>
@@ -1787,14 +1787,14 @@ export default function Portfolio() {
                   <div style={{
                     fontSize: '14px',
                     fontWeight: 500,
-                    color: '#e8e6e3',
+                    color: colors.textSecondary,
                     marginBottom: '2px'
                   }}>
                     Senior Developer Advocate
                   </div>
                   <div style={{
                     fontSize: '12px',
-                    color: '#4a4a4c'
+                    color: colors.textMuted
                   }}>
                     Former Colleague at Dapper Labs
                   </div>
@@ -1825,7 +1825,7 @@ export default function Portfolio() {
             fontWeight: 600,
             letterSpacing: '0.15em',
             textTransform: 'uppercase',
-            color: '#4a4a4c'
+            color: colors.textMuted
           }}>
             Writing & Speaking
           </span>
@@ -1877,7 +1877,7 @@ export default function Portfolio() {
               fontFamily: "'Instrument Serif', Georgia, serif",
               fontStyle: 'italic',
               fontWeight: 400,
-              color: '#e8e6e3',
+              color: colors.textSecondary,
               marginBottom: '12px',
               lineHeight: 1.2
             }}>
@@ -1907,7 +1907,7 @@ export default function Portfolio() {
                   fontWeight: 500,
                   letterSpacing: '0.05em',
                   textTransform: 'uppercase',
-                  color: '#4a4a4c',
+                  color: colors.textMuted,
                   padding: '6px 10px',
                   background: 'rgba(74, 222, 128, 0.05)',
                   border: '1px solid rgba(74, 222, 128, 0.1)'
@@ -1932,7 +1932,7 @@ export default function Portfolio() {
               fontWeight: 600,
               letterSpacing: '0.1em',
               textTransform: 'uppercase',
-              color: '#6b6966'
+              color: colors.textTertiary
             }}>
               Follow Along
             </span>
@@ -1960,21 +1960,21 @@ export default function Portfolio() {
                   <div style={{
                     fontSize: '14px',
                     fontWeight: 500,
-                    color: '#a8a5a0',
+                    color: colors.textSecondary,
                     marginBottom: '2px'
                   }}>
                     {social.platform}
                   </div>
                   <div style={{
                     fontSize: '12px',
-                    color: '#4a4a4c',
+                    color: colors.textMuted,
                     fontFamily: 'monospace'
                   }}>
                     {social.handle}
                   </div>
                 </div>
                 <span style={{
-                  color: '#4a4a4c',
+                  color: colors.textMuted,
                   fontFamily: "'Instrument Serif', serif",
                   fontStyle: 'italic',
                   transition: 'color 0.2s ease'
@@ -1991,7 +1991,7 @@ export default function Portfolio() {
             }}>
               <span style={{
                 fontSize: '12px',
-                color: '#6b6966',
+                color: colors.textTertiary,
                 fontStyle: 'italic',
                 fontFamily: "'Instrument Serif', Georgia, serif"
               }}>
@@ -2024,7 +2024,7 @@ export default function Portfolio() {
                 fontWeight: 600,
                 letterSpacing: '0.15em',
                 textTransform: 'uppercase',
-                color: '#4a4a4c'
+                color: colors.textMuted
               }}>
                 Beyond Work
               </span>
@@ -2054,7 +2054,7 @@ export default function Portfolio() {
                     fontWeight: 600,
                     letterSpacing: '0.12em',
                     textTransform: 'uppercase',
-                    color: '#4a4a4c'
+                    color: colors.textMuted
                   }}>
                     {item.label}
                   </span>
@@ -2067,7 +2067,7 @@ export default function Portfolio() {
                         fontSize: isMobile ? '18px' : '22px',
                         fontFamily: "'Instrument Serif', Georgia, serif",
                         fontStyle: 'italic',
-                        color: '#a8a5a0',
+                        color: colors.textSecondary,
                         textDecoration: 'none',
                         transition: 'color 0.2s ease'
                       }}
@@ -2081,7 +2081,7 @@ export default function Portfolio() {
                       fontSize: isMobile ? '18px' : '22px',
                       fontFamily: "'Instrument Serif', Georgia, serif",
                       fontStyle: 'italic',
-                      color: '#a8a5a0'
+                      color: colors.textSecondary
                     }}>
                       {item.value}
                     </span>
@@ -2142,7 +2142,7 @@ export default function Portfolio() {
                     fontWeight: 600,
                     letterSpacing: '0.15em',
                     textTransform: 'uppercase',
-                    color: '#4a4a4c',
+                    color: colors.textMuted,
                     display: 'block',
                     marginBottom: '16px'
                   }}>
@@ -2154,7 +2154,7 @@ export default function Portfolio() {
                     fontFamily: "'Instrument Serif', Georgia, serif",
                     fontWeight: 400,
                     fontStyle: 'italic',
-                    color: '#e8e6e3',
+                    color: colors.textSecondary,
                     marginBottom: '20px',
                     letterSpacing: '-0.02em',
                     lineHeight: 1.2
@@ -2164,7 +2164,7 @@ export default function Portfolio() {
 
                   <p style={{
                     fontSize: '15px',
-                    color: '#6b6966',
+                    color: colors.textTertiary,
                     lineHeight: 1.7,
                     marginBottom: '24px'
                   }}>
@@ -2200,13 +2200,13 @@ export default function Portfolio() {
                         fontFamily: "'Instrument Serif', Georgia, serif",
                         fontSize: '18px',
                         fontStyle: 'italic',
-                        color: '#e8e6e3'
+                        color: colors.textSecondary
                       }}>
                         dmitriif.eth
                       </div>
                       <div style={{
                         fontSize: '12px',
-                        color: '#4a4a4c',
+                        color: colors.textMuted,
                         fontFamily: 'monospace',
                         marginTop: '4px'
                       }}>
@@ -2238,7 +2238,7 @@ export default function Portfolio() {
                         fontSize: isMobile ? '28px' : '36px',
                         fontFamily: "'Instrument Serif', Georgia, serif",
                         fontWeight: 400,
-                        color: '#e8e6e3',
+                        color: colors.textSecondary,
                         lineHeight: 1
                       }}>
                         {stat.value}
@@ -2248,7 +2248,7 @@ export default function Portfolio() {
                         fontWeight: 500,
                         letterSpacing: '0.08em',
                         textTransform: 'uppercase',
-                        color: '#4a4a4c',
+                        color: colors.textMuted,
                         marginTop: '10px'
                       }}>
                         {stat.label}
@@ -2274,7 +2274,7 @@ export default function Portfolio() {
                     target="_blank"
                     rel="noopener noreferrer"
                     style={{
-                      color: '#4a4a4c',
+                      color: colors.textMuted,
                       textDecoration: 'none',
                       fontSize: '13px',
                       fontWeight: 500,
@@ -2542,7 +2542,7 @@ export default function Portfolio() {
                   fontFamily: "'Instrument Serif', Georgia, serif",
                   fontWeight: 400,
                   fontStyle: 'italic',
-                  color: '#e8e6e3',
+                  color: colors.textSecondary,
                   marginTop: '16px',
                   marginBottom: '12px',
                   letterSpacing: '-0.02em',
@@ -2552,7 +2552,7 @@ export default function Portfolio() {
                 </h1>
                 <div style={{
                   fontSize: '14px',
-                  color: '#6b6966'
+                  color: colors.textTertiary
                 }}>
                   {modalCase.company} • {modalCase.year}
                 </div>
@@ -2584,7 +2584,7 @@ export default function Portfolio() {
                         {modalCase.fullContent.artifacts[0].type === 'chart' && '📊'}
                         {modalCase.fullContent.artifacts[0].type === 'wireframe' && '📱'}
                       </span>
-                      <div style={{ fontSize: '14px', color: '#4a4a4c', marginTop: '12px' }}>
+                      <div style={{ fontSize: '14px', color: colors.textMuted, marginTop: '12px' }}>
                         {modalCase.fullContent.artifacts[0].alt}
                       </div>
                       {modalCase.fullContent.artifacts[0].caption && (
@@ -2619,7 +2619,7 @@ export default function Portfolio() {
                     fontWeight: 500,
                     letterSpacing: '0.1em',
                     textTransform: 'uppercase',
-                    color: '#4a4a4c',
+                    color: colors.textMuted,
                     marginTop: '8px'
                   }}>{modalCase.metrics.primary.label}</div>
                 </div>
@@ -2628,7 +2628,7 @@ export default function Portfolio() {
                     <div style={{
                       fontSize: isMobile ? '32px' : '40px',
                       fontFamily: "'Instrument Serif', Georgia, serif",
-                      color: '#e8e6e3',
+                      color: colors.textSecondary,
                       lineHeight: 1
                     }}>{modalCase.metrics.secondary.value}</div>
                     <div style={{
@@ -2636,7 +2636,7 @@ export default function Portfolio() {
                       fontWeight: 500,
                       letterSpacing: '0.1em',
                       textTransform: 'uppercase',
-                      color: '#4a4a4c',
+                      color: colors.textMuted,
                       marginTop: '8px'
                     }}>{modalCase.metrics.secondary.label}</div>
                   </div>
@@ -2646,7 +2646,7 @@ export default function Portfolio() {
                     <div style={{
                       fontSize: isMobile ? '32px' : '40px',
                       fontFamily: "'Instrument Serif', Georgia, serif",
-                      color: '#a8a5a0',
+                      color: colors.textSecondary,
                       lineHeight: 1
                     }}>{modalCase.metrics.tertiary.value}</div>
                     <div style={{
@@ -2654,7 +2654,7 @@ export default function Portfolio() {
                       fontWeight: 500,
                       letterSpacing: '0.1em',
                       textTransform: 'uppercase',
-                      color: '#4a4a4c',
+                      color: colors.textMuted,
                       marginTop: '8px'
                     }}>{modalCase.metrics.tertiary.label}</div>
                   </div>
@@ -2676,7 +2676,7 @@ export default function Portfolio() {
                     fontWeight: 600,
                     letterSpacing: '0.12em',
                     textTransform: 'uppercase',
-                    color: '#4a4a4c'
+                    color: colors.textMuted
                   }}>My Role</span>
                   <div style={{
                     fontSize: '16px',
@@ -2692,11 +2692,11 @@ export default function Portfolio() {
                       fontWeight: 600,
                       letterSpacing: '0.12em',
                       textTransform: 'uppercase',
-                      color: '#4a4a4c'
+                      color: colors.textMuted
                     }}>Team</span>
                     <div style={{
                       fontSize: '16px',
-                      color: '#a8a5a0',
+                      color: colors.textSecondary,
                       marginTop: '6px'
                     }}>{modalCase.fullContent.teamSize}</div>
                   </div>
@@ -2708,11 +2708,11 @@ export default function Portfolio() {
                       fontWeight: 600,
                       letterSpacing: '0.12em',
                       textTransform: 'uppercase',
-                      color: '#4a4a4c'
+                      color: colors.textMuted
                     }}>Duration</span>
                     <div style={{
                       fontSize: '16px',
-                      color: '#a8a5a0',
+                      color: colors.textSecondary,
                       marginTop: '6px'
                     }}>{modalCase.fullContent.duration}</div>
                   </div>
@@ -2726,12 +2726,12 @@ export default function Portfolio() {
                   fontWeight: 600,
                   letterSpacing: '0.12em',
                   textTransform: 'uppercase',
-                  color: '#6b6966',
+                  color: colors.textTertiary,
                   marginBottom: '16px'
                 }}>The Challenge</h2>
                 <p style={{
                   fontSize: '17px',
-                  color: '#a8a5a0',
+                  color: colors.textSecondary,
                   lineHeight: 1.8
                 }}>{modalCase.fullContent.situation}</p>
               </div>
@@ -2761,7 +2761,7 @@ export default function Portfolio() {
                   </div>
                   <h3 style={{
                     fontSize: '18px',
-                    color: '#e8e6e3',
+                    color: colors.textSecondary,
                     fontWeight: 500,
                     marginBottom: '12px',
                     fontFamily: "'Instrument Serif', Georgia, serif",
@@ -2782,7 +2782,7 @@ export default function Portfolio() {
                   fontWeight: 600,
                   letterSpacing: '0.12em',
                   textTransform: 'uppercase',
-                  color: '#6b6966',
+                  color: colors.textTertiary,
                   marginBottom: '20px'
                 }}>What I Did</h2>
                 <ul style={{
@@ -2796,7 +2796,7 @@ export default function Portfolio() {
                   {modalCase.fullContent.actions.map((action: string, i: number) => (
                     <li key={i} style={{
                       fontSize: '16px',
-                      color: '#a8a5a0',
+                      color: colors.textSecondary,
                       lineHeight: 1.7,
                       paddingLeft: '28px',
                       position: 'relative'
@@ -2821,12 +2821,12 @@ export default function Portfolio() {
                   fontWeight: 600,
                   letterSpacing: '0.12em',
                   textTransform: 'uppercase',
-                  color: '#6b6966',
+                  color: colors.textTertiary,
                   marginBottom: '16px'
                 }}>Results</h2>
                 <p style={{
                   fontSize: '17px',
-                  color: '#a8a5a0',
+                  color: colors.textSecondary,
                   lineHeight: 1.8
                 }}>{modalCase.fullContent.results}</p>
               </div>
@@ -2839,7 +2839,7 @@ export default function Portfolio() {
                     fontWeight: 600,
                     letterSpacing: '0.12em',
                     textTransform: 'uppercase',
-                    color: '#6b6966',
+                    color: colors.textTertiary,
                     marginBottom: '16px'
                   }}>Tech Stack</h2>
                   <div style={{
@@ -2851,7 +2851,7 @@ export default function Portfolio() {
                       <span key={i} style={{
                         fontSize: '12px',
                         fontWeight: 500,
-                        color: '#6b6966',
+                        color: colors.textTertiary,
                         padding: '8px 14px',
                         background: 'rgba(232, 230, 227, 0.04)',
                         border: '1px solid rgba(232, 230, 227, 0.1)'
@@ -2875,7 +2875,7 @@ export default function Portfolio() {
                     fontWeight: 500,
                     letterSpacing: '0.08em',
                     textTransform: 'uppercase',
-                    color: '#4a4a4c',
+                    color: colors.textMuted,
                     padding: '8px 14px',
                     border: '1px solid rgba(232, 230, 227, 0.08)'
                   }}>{tag}</span>
@@ -2916,7 +2916,7 @@ export default function Portfolio() {
                             fontWeight: 500,
                             letterSpacing: '0.1em',
                             textTransform: 'uppercase',
-                            color: '#4a4a4c',
+                            color: colors.textMuted,
                             display: 'block',
                             marginBottom: '8px'
                           }}>← Previous</span>
@@ -2924,7 +2924,7 @@ export default function Portfolio() {
                             fontSize: '16px',
                             fontFamily: "'Instrument Serif', Georgia, serif",
                             fontStyle: 'italic',
-                            color: '#a8a5a0'
+                            color: colors.textSecondary
                           }}>{prevStudy.title}</span>
                         </button>
                       ) : <div style={{ flex: 1 }} />}
@@ -2946,7 +2946,7 @@ export default function Portfolio() {
                             fontWeight: 500,
                             letterSpacing: '0.1em',
                             textTransform: 'uppercase',
-                            color: '#4a4a4c',
+                            color: colors.textMuted,
                             display: 'block',
                             marginBottom: '8px'
                           }}>Next →</span>
@@ -2954,7 +2954,7 @@ export default function Portfolio() {
                             fontSize: '16px',
                             fontFamily: "'Instrument Serif', Georgia, serif",
                             fontStyle: 'italic',
-                            color: '#a8a5a0'
+                            color: colors.textSecondary
                           }}>{nextStudy.title}</span>
                         </button>
                       ) : <div style={{ flex: 1 }} />}
