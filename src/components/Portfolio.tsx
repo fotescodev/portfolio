@@ -109,7 +109,7 @@ export default function Portfolio() {
 
   // Section visibility flags - set to true to show, false to hide
   const SHOW_BEYOND_WORK = false;
-  const SHOW_BLOG_SECTION = false;
+  const SHOW_BLOG_SECTION = true;
   const SHOW_ONCHAIN_IDENTITY = false;
   const SHOW_SKILLS = false;
 
@@ -322,7 +322,30 @@ export default function Portfolio() {
         transition: 'background-image 0.4s ease'
       }} />
 
-      {/* Animated gradient orbs for hero visual interest */}
+      {/* Background Orbs */}
+      <div style={{
+        position: 'fixed',
+        top: '0',
+        left: '0',
+        right: '0',
+        height: '80vh',
+        background: `radial-gradient(circle at 50% 0%, ${colors.orbAccent} 0%, transparent 70%)`,
+        opacity: 0.8,
+        zIndex: 0,
+        pointerEvents: 'none'
+      }} />
+      <div style={{
+        position: 'fixed',
+        top: '20%',
+        right: '-10%',
+        width: '40vw',
+        height: '40vw',
+        background: `radial-gradient(circle, ${colors.orbSecondary} 0%, transparent 70%)`,
+        filter: 'blur(60px)',
+        opacity: 0.5,
+        zIndex: 0,
+        pointerEvents: 'none'
+      }} />
       <style>{`
         @keyframes float {
           0%, 100% { transform: translate(0, 0) scale(1); }
@@ -335,34 +358,6 @@ export default function Portfolio() {
           50% { opacity: 0.6; }
         }
       `}</style>
-      <div style={{
-        position: 'absolute',
-        top: isMobile ? '5%' : '10%',
-        right: isMobile ? '-20%' : '5%',
-        width: isMobile ? '300px' : '500px',
-        height: isMobile ? '300px' : '500px',
-        background: `radial-gradient(circle, ${colors.orbAccent} 0%, ${isDark ? 'rgba(194, 154, 108, 0.05)' : 'rgba(166, 124, 82, 0.03)'} 40%, transparent 70%)`,
-        borderRadius: '50%',
-        filter: 'blur(60px)',
-        pointerEvents: 'none',
-        zIndex: 0,
-        animation: 'float 20s ease-in-out infinite, pulse 8s ease-in-out infinite',
-        transition: 'background 0.4s ease'
-      }} />
-      <div style={{
-        position: 'absolute',
-        top: isMobile ? '60%' : '50%',
-        left: isMobile ? '-30%' : '-5%',
-        width: isMobile ? '250px' : '400px',
-        height: isMobile ? '250px' : '400px',
-        background: `radial-gradient(circle, ${colors.orbSecondary} 0%, ${isDark ? 'rgba(74, 222, 128, 0.02)' : 'rgba(34, 197, 94, 0.02)'} 40%, transparent 70%)`,
-        borderRadius: '50%',
-        filter: 'blur(80px)',
-        pointerEvents: 'none',
-        zIndex: 0,
-        animation: 'float 25s ease-in-out infinite reverse, pulse 10s ease-in-out infinite',
-        transition: 'background 0.4s ease'
-      }} />
 
       {/* Navigation */}
       <nav style={{
@@ -380,21 +375,28 @@ export default function Portfolio() {
         transform: isLoaded ? 'translateY(0)' : 'translateY(-20px)',
         transition: 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)'
       }}>
+        {/* Logo */}
         <div style={{
           fontFamily: "'Instrument Serif', Georgia, serif",
+          fontSize: '24px',
           fontStyle: 'italic',
-          fontSize: isMobile ? '18px' : '20px',
-          color: colors.textPrimary,
-          letterSpacing: '-0.02em',
-          transition: 'color 0.3s ease'
+          fontWeight: 700,
+          zIndex: 101,
+          position: 'relative'
         }}>
-          dmitriif.eth
+          <a href="#" style={{
+            textDecoration: 'none',
+            color: isMobile && mobileMenuOpen ? colors.textPrimary : colors.textPrimary,
+            transition: 'color 0.4s ease'
+          }}>
+            Dmitrii Fotesco
+          </a>
         </div>
 
         {/* Desktop Navigation */}
         {!isMobile && (
           <div style={{ display: 'flex', gap: '32px', alignItems: 'center' }}>
-            {['Work', 'About'].map((item) => (
+            {['Work', 'About', 'Blog'].map((item) => (
               <a key={item} href={`#${item.toLowerCase()}`} style={{
                 color: colors.textTertiary,
                 textDecoration: 'none',
@@ -405,37 +407,12 @@ export default function Portfolio() {
                 transition: 'color 0.2s ease',
                 cursor: 'pointer'
               }}
-                onMouseEnter={(e) => (e.target as HTMLElement).style.color = colors.textPrimary}
-                onMouseLeave={(e) => (e.target as HTMLElement).style.color = colors.textTertiary}
+                onMouseEnter={(e: React.MouseEvent<HTMLAnchorElement>) => (e.target as HTMLElement).style.color = colors.textPrimary}
+                onMouseLeave={(e: React.MouseEvent<HTMLAnchorElement>) => (e.target as HTMLElement).style.color = colors.textTertiary}
               >
                 {item}
               </a>
             ))}
-            {/* Blog with Coming Soon badge */}
-            <span style={{
-              color: colors.textMuted,
-              fontSize: '13px',
-              fontWeight: 500,
-              letterSpacing: '0.05em',
-              textTransform: 'uppercase',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              cursor: 'default'
-            }}>
-              Blog
-              <span style={{
-                fontSize: '9px',
-                fontWeight: 600,
-                letterSpacing: '0.08em',
-                color: isDark ? '#3a3a3c' : '#9a9a9c',
-                padding: '3px 6px',
-                border: `1px solid ${colors.border}`,
-                fontStyle: 'normal'
-              }}>
-                SOON
-              </span>
-            </span>
             <ThemeToggle />
             <a href="mailto:dmitrii.fotesco@gmail.com" style={{
               color: colors.background,
@@ -466,36 +443,23 @@ export default function Portfolio() {
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               style={{
-                background: 'none',
+                background: 'transparent',
                 border: 'none',
                 padding: '8px',
                 cursor: 'pointer',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '6px'
+                zIndex: 101,
+                position: 'relative',
+                color: isMobile && mobileMenuOpen ? colors.textPrimary : colors.textPrimary
               }}
             >
               <span style={{
-                width: '24px',
-                height: '1px',
-                background: colors.textPrimary,
-                transition: 'all 0.3s ease',
-                transform: mobileMenuOpen ? 'rotate(45deg) translateY(5px)' : 'none'
-              }} />
-              <span style={{
-                width: '24px',
-                height: '1px',
-                background: colors.textPrimary,
-                transition: 'all 0.3s ease',
-                opacity: mobileMenuOpen ? 0 : 1
-              }} />
-              <span style={{
-                width: '24px',
-                height: '1px',
-                background: colors.textPrimary,
-                transition: 'all 0.3s ease',
-                transform: mobileMenuOpen ? 'rotate(-45deg) translateY(-5px)' : 'none'
-              }} />
+                fontSize: '14px',
+                textTransform: 'uppercase',
+                letterSpacing: '0.1em',
+                fontWeight: 600
+              }}>
+                {mobileMenuOpen ? 'Close' : 'Menu'}
+              </span>
             </button>
           </div>
         )}
@@ -519,7 +483,7 @@ export default function Portfolio() {
           pointerEvents: mobileMenuOpen ? 'auto' : 'none',
           transition: 'opacity 0.3s ease, background 0.4s ease'
         }}>
-          {['Work', 'About', 'Contact'].map((item, i) => (
+          {['Work', 'About', 'Blog', 'Contact'].map((item, i) => (
             <a
               key={item}
               href={item === 'Contact' ? 'mailto:dmitrii.fotesco@gmail.com' : `#${item.toLowerCase()}`}
@@ -540,37 +504,6 @@ export default function Portfolio() {
               {item}
             </a>
           ))}
-          {/* Blog with Coming Soon */}
-          <div
-            style={{
-              color: colors.textMuted,
-              fontFamily: "'Instrument Serif', Georgia, serif",
-              fontSize: '42px',
-              fontStyle: 'italic',
-              padding: '16px 0',
-              borderBottom: `1px solid ${colors.border}`,
-              transform: mobileMenuOpen ? 'translateX(0)' : 'translateX(-20px)',
-              opacity: mobileMenuOpen ? 1 : 0,
-              transition: `all 0.4s ease ${3 * 0.08}s`,
-              display: 'flex',
-              alignItems: 'center',
-              gap: '16px'
-            }}
-          >
-            Blog
-            <span style={{
-              fontSize: '12px',
-              fontWeight: 600,
-              fontStyle: 'normal',
-              fontFamily: "'Instrument Sans', sans-serif",
-              letterSpacing: '0.08em',
-              color: isDark ? '#3a3a3c' : '#9a9a9c',
-              padding: '4px 8px',
-              border: `1px solid ${colors.border}`
-            }}>
-              SOON
-            </span>
-          </div>
         </div>
       )}
 
@@ -812,12 +745,10 @@ export default function Portfolio() {
             </div>
           </div>
 
-          {/* Bio content */}
           <div>
             <h2 style={{
               fontSize: isMobile ? '28px' : isTablet ? '32px' : '40px',
               fontFamily: "'Instrument Serif', Georgia, serif",
-              fontWeight: 400,
               fontStyle: 'italic',
               lineHeight: 1.3,
               color: colors.textPrimary,
@@ -1272,91 +1203,93 @@ export default function Portfolio() {
       </section>
 
       {/* Skills Section */}
-      {SHOW_SKILLS && (
-        <section style={{
-          padding: sectionPadding,
-          maxWidth: '1400px',
-          margin: '0 auto',
-          position: 'relative',
-          zIndex: 1
-        }}>
-          {/* Section label */}
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '24px',
-            marginBottom: isMobile ? '32px' : '40px'
+      {
+        SHOW_SKILLS && (
+          <section style={{
+            padding: sectionPadding,
+            maxWidth: '1400px',
+            margin: '0 auto',
+            position: 'relative',
+            zIndex: 1
           }}>
-            <span style={{
-              fontSize: '11px',
-              fontWeight: 600,
-              letterSpacing: '0.15em',
-              textTransform: 'uppercase',
-              color: '#4a4a4c'
-            }}>
-              Skills & Tools
-            </span>
+            {/* Section label */}
             <div style={{
-              flex: 1,
-              height: '1px',
-              background: 'rgba(232, 230, 227, 0.08)'
-            }} />
-          </div>
+              display: 'flex',
+              alignItems: 'center',
+              gap: '24px',
+              marginBottom: isMobile ? '32px' : '40px'
+            }}>
+              <span style={{
+                fontSize: '11px',
+                fontWeight: 600,
+                letterSpacing: '0.15em',
+                textTransform: 'uppercase',
+                color: '#4a4a4c'
+              }}>
+                Skills & Tools
+              </span>
+              <div style={{
+                flex: 1,
+                height: '1px',
+                background: 'rgba(232, 230, 227, 0.08)'
+              }} />
+            </div>
 
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: isMobile ? '1fr' : isTablet ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)',
-            gap: isMobile ? '32px' : '24px'
-          }}>
-            {[
-              {
-                category: 'Blockchain & Web3',
-                skills: ['Ethereum', 'Solidity', 'L2s (Optimism, Base, Arbitrum)', 'Staking Infrastructure', 'MPC Custody', 'ENS', 'DeFi Protocols']
-              },
-              {
-                category: 'Product Management',
-                skills: ['PRDs & Specs', 'Roadmapping', 'Agile/Scrum', 'Cross-functional Leadership', 'Stakeholder Management', 'Go-to-Market']
-              },
-              {
-                category: 'Technical',
-                skills: ['API Design', 'Docker/Kubernetes', 'Smart Contracts', 'SDK Development', 'System Architecture', 'Developer Experience']
-              },
-              {
-                category: 'Tools',
-                skills: ['Jira', 'Linear', 'Notion', 'Figma', 'GitHub', 'Dune Analytics', 'Etherscan']
-              }
-            ].map((group, i) => (
-              <div key={i}>
-                <h3 style={{
-                  fontSize: '12px',
-                  fontWeight: 600,
-                  letterSpacing: '0.1em',
-                  textTransform: 'uppercase',
-                  color: '#6b6966',
-                  marginBottom: '20px'
-                }}>
-                  {group.category}
-                </h3>
-                <div style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '12px'
-                }}>
-                  {group.skills.map((skill, j) => (
-                    <span key={j} style={{
-                      fontSize: '14px',
-                      color: '#a8a5a0',
-                      lineHeight: 1.4
-                    }}>
-                      {skill}
-                    </span>
-                  ))}
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: isMobile ? '1fr' : isTablet ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)',
+              gap: isMobile ? '32px' : '24px'
+            }}>
+              {[
+                {
+                  category: 'Blockchain & Web3',
+                  skills: ['Ethereum', 'Solidity', 'L2s (Optimism, Base, Arbitrum)', 'Staking Infrastructure', 'MPC Custody', 'ENS', 'DeFi Protocols']
+                },
+                {
+                  category: 'Product Management',
+                  skills: ['PRDs & Specs', 'Roadmapping', 'Agile/Scrum', 'Cross-functional Leadership', 'Stakeholder Management', 'Go-to-Market']
+                },
+                {
+                  category: 'Technical',
+                  skills: ['API Design', 'Docker/Kubernetes', 'Smart Contracts', 'SDK Development', 'System Architecture', 'Developer Experience']
+                },
+                {
+                  category: 'Tools',
+                  skills: ['Jira', 'Linear', 'Notion', 'Figma', 'GitHub', 'Dune Analytics', 'Etherscan']
+                }
+              ].map((group, i) => (
+                <div key={i}>
+                  <h3 style={{
+                    fontSize: '12px',
+                    fontWeight: 600,
+                    letterSpacing: '0.1em',
+                    textTransform: 'uppercase',
+                    color: '#6b6966',
+                    marginBottom: '20px'
+                  }}>
+                    {group.category}
+                  </h3>
+                  <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '12px'
+                  }}>
+                    {group.skills.map((skill, j) => (
+                      <span key={j} style={{
+                        fontSize: '14px',
+                        color: '#a8a5a0',
+                        lineHeight: 1.4
+                      }}>
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
+              ))}
+            </div>
+          </section>
+        )
+      }
 
       {/* Case Studies Section */}
       <section id="work" style={{
@@ -2070,295 +2003,299 @@ export default function Portfolio() {
       </section>
 
       {/* Credentials Section (Beyond Work) */}
-      {SHOW_BEYOND_WORK && (
-        <section style={{
-          padding: sectionPadding,
-          maxWidth: '1400px',
-          margin: '0 auto',
-          position: 'relative',
-          zIndex: 1
-        }}>
-          {/* Section label */}
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '24px',
-            marginBottom: isMobile ? '32px' : '40px'
+      {
+        SHOW_BEYOND_WORK && (
+          <section style={{
+            padding: sectionPadding,
+            maxWidth: '1400px',
+            margin: '0 auto',
+            position: 'relative',
+            zIndex: 1
           }}>
-            <span style={{
-              fontSize: '11px',
-              fontWeight: 600,
-              letterSpacing: '0.15em',
-              textTransform: 'uppercase',
-              color: '#4a4a4c'
-            }}>
-              Beyond Work
-            </span>
+            {/* Section label */}
             <div style={{
-              flex: 1,
-              height: '1px',
-              background: 'rgba(232, 230, 227, 0.08)'
-            }} />
-          </div>
-
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)',
-            gap: '1px',
-            background: 'rgba(232, 230, 227, 0.06)'
-          }}>
-            {credentials.map((item, i) => (
-              <div key={i} style={{
-                background: '#08080a',
-                padding: isMobile ? '28px 24px' : '40px',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '12px'
+              display: 'flex',
+              alignItems: 'center',
+              gap: '24px',
+              marginBottom: isMobile ? '32px' : '40px'
+            }}>
+              <span style={{
+                fontSize: '11px',
+                fontWeight: 600,
+                letterSpacing: '0.15em',
+                textTransform: 'uppercase',
+                color: '#4a4a4c'
               }}>
-                <span style={{
-                  fontSize: '11px',
-                  fontWeight: 600,
-                  letterSpacing: '0.12em',
-                  textTransform: 'uppercase',
-                  color: '#4a4a4c'
+                Beyond Work
+              </span>
+              <div style={{
+                flex: 1,
+                height: '1px',
+                background: 'rgba(232, 230, 227, 0.08)'
+              }} />
+            </div>
+
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)',
+              gap: '1px',
+              background: 'rgba(232, 230, 227, 0.06)'
+            }}>
+              {credentials.map((item, i) => (
+                <div key={i} style={{
+                  background: '#08080a',
+                  padding: isMobile ? '28px 24px' : '40px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '12px'
                 }}>
-                  {item.label}
-                </span>
-                {item.url ? (
-                  <a
-                    href={item.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{
+                  <span style={{
+                    fontSize: '11px',
+                    fontWeight: 600,
+                    letterSpacing: '0.12em',
+                    textTransform: 'uppercase',
+                    color: '#4a4a4c'
+                  }}>
+                    {item.label}
+                  </span>
+                  {item.url ? (
+                    <a
+                      href={item.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        fontSize: isMobile ? '18px' : '22px',
+                        fontFamily: "'Instrument Serif', Georgia, serif",
+                        fontStyle: 'italic',
+                        color: '#a8a5a0',
+                        textDecoration: 'none',
+                        transition: 'color 0.2s ease'
+                      }}
+                      onMouseEnter={(e) => (e.target as HTMLElement).style.color = '#c29a6c'}
+                      onMouseLeave={(e) => (e.target as HTMLElement).style.color = '#a8a5a0'}
+                    >
+                      {item.value}
+                    </a>
+                  ) : (
+                    <span style={{
                       fontSize: isMobile ? '18px' : '22px',
                       fontFamily: "'Instrument Serif', Georgia, serif",
                       fontStyle: 'italic',
-                      color: '#a8a5a0',
-                      textDecoration: 'none',
-                      transition: 'color 0.2s ease'
-                    }}
-                    onMouseEnter={(e) => (e.target as HTMLElement).style.color = '#c29a6c'}
-                    onMouseLeave={(e) => (e.target as HTMLElement).style.color = '#a8a5a0'}
-                  >
-                    {item.value}
-                  </a>
-                ) : (
-                  <span style={{
-                    fontSize: isMobile ? '18px' : '22px',
-                    fontFamily: "'Instrument Serif', Georgia, serif",
-                    fontStyle: 'italic',
-                    color: '#a8a5a0'
-                  }}>
-                    {item.value}
-                  </span>
-                )}
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
+                      color: '#a8a5a0'
+                    }}>
+                      {item.value}
+                    </span>
+                  )}
+                </div>
+              ))}
+            </div>
+          </section>
+        )
+      }
 
       {/* Blog Section */}
       {SHOW_BLOG_SECTION && <Blog isMobile={isMobile} isTablet={isTablet} />}
 
       {/* On-Chain Identity Section */}
-      {SHOW_ONCHAIN_IDENTITY && (
-        <section id="on-chain" style={{
-          padding: sectionPadding,
-          maxWidth: '1400px',
-          margin: '0 auto',
-          position: 'relative',
-          zIndex: 1
-        }}>
-          <div style={{
-            border: '1px solid rgba(194, 154, 108, 0.2)',
-            padding: isMobile ? '32px 24px' : '48px',
-            position: 'relative'
+      {
+        SHOW_ONCHAIN_IDENTITY && (
+          <section id="on-chain" style={{
+            padding: sectionPadding,
+            maxWidth: '1400px',
+            margin: '0 auto',
+            position: 'relative',
+            zIndex: 1
           }}>
-            {/* Corner accent */}
             <div style={{
-              position: 'absolute',
-              top: '-1px',
-              left: '-1px',
-              width: '24px',
-              height: '24px',
-              borderTop: '2px solid #c29a6c',
-              borderLeft: '2px solid #c29a6c'
-            }} />
-            <div style={{
-              position: 'absolute',
-              bottom: '-1px',
-              right: '-1px',
-              width: '24px',
-              height: '24px',
-              borderBottom: '2px solid #c29a6c',
-              borderRight: '2px solid #c29a6c'
-            }} />
-
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
-              gap: isMobile ? '32px' : '48px'
+              border: '1px solid rgba(194, 154, 108, 0.2)',
+              padding: isMobile ? '32px 24px' : '48px',
+              position: 'relative'
             }}>
-              <div>
-                <span style={{
-                  fontSize: '11px',
-                  fontWeight: 600,
-                  letterSpacing: '0.15em',
-                  textTransform: 'uppercase',
-                  color: '#4a4a4c',
-                  display: 'block',
-                  marginBottom: '16px'
-                }}>
-                  On-Chain Identity
-                </span>
+              {/* Corner accent */}
+              <div style={{
+                position: 'absolute',
+                top: '-1px',
+                left: '-1px',
+                width: '24px',
+                height: '24px',
+                borderTop: '2px solid #c29a6c',
+                borderLeft: '2px solid #c29a6c'
+              }} />
+              <div style={{
+                position: 'absolute',
+                bottom: '-1px',
+                right: '-1px',
+                width: '24px',
+                height: '24px',
+                borderBottom: '2px solid #c29a6c',
+                borderRight: '2px solid #c29a6c'
+              }} />
 
-                <h3 style={{
-                  fontSize: isMobile ? '28px' : '36px',
-                  fontFamily: "'Instrument Serif', Georgia, serif",
-                  fontWeight: 400,
-                  fontStyle: 'italic',
-                  color: '#e8e6e3',
-                  marginBottom: '20px',
-                  letterSpacing: '-0.02em',
-                  lineHeight: 1.2
-                }}>
-                  Builder, not just observer
-                </h3>
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
+                gap: isMobile ? '32px' : '48px'
+              }}>
+                <div>
+                  <span style={{
+                    fontSize: '11px',
+                    fontWeight: 600,
+                    letterSpacing: '0.15em',
+                    textTransform: 'uppercase',
+                    color: '#4a4a4c',
+                    display: 'block',
+                    marginBottom: '16px'
+                  }}>
+                    On-Chain Identity
+                  </span>
 
-                <p style={{
-                  fontSize: '15px',
-                  color: '#6b6966',
-                  lineHeight: 1.7,
-                  marginBottom: '24px'
-                }}>
-                  From shipping smart contracts at Microsoft to founding a Web3 SaaS,
-                  I've been on-chain since before "Web3" was a category. My activity
-                  reflects genuine participation in the ecosystem I help build.
-                </p>
+                  <h3 style={{
+                    fontSize: isMobile ? '28px' : '36px',
+                    fontFamily: "'Instrument Serif', Georgia, serif",
+                    fontWeight: 400,
+                    fontStyle: 'italic',
+                    color: '#e8e6e3',
+                    marginBottom: '20px',
+                    letterSpacing: '-0.02em',
+                    lineHeight: 1.2
+                  }}>
+                    Builder, not just observer
+                  </h3>
 
-                {/* ENS Display */}
-                <div style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '20px',
-                  padding: '20px 24px',
-                  background: 'rgba(194, 154, 108, 0.05)',
-                  border: '1px solid rgba(194, 154, 108, 0.15)'
-                }}>
+                  <p style={{
+                    fontSize: '15px',
+                    color: '#6b6966',
+                    lineHeight: 1.7,
+                    marginBottom: '24px'
+                  }}>
+                    From shipping smart contracts at Microsoft to founding a Web3 SaaS,
+                    I've been on-chain since before "Web3" was a category. My activity
+                    reflects genuine participation in the ecosystem I help build.
+                  </p>
+
+                  {/* ENS Display */}
                   <div style={{
-                    width: '48px',
-                    height: '48px',
-                    background: 'linear-gradient(135deg, #c29a6c 0%, #a67c4e 100%)',
                     display: 'flex',
                     alignItems: 'center',
-                    justifyContent: 'center',
-                    fontFamily: "'Instrument Serif', Georgia, serif",
-                    fontSize: '20px',
-                    color: '#08080a'
+                    gap: '20px',
+                    padding: '20px 24px',
+                    background: 'rgba(194, 154, 108, 0.05)',
+                    border: '1px solid rgba(194, 154, 108, 0.15)'
                   }}>
-                    ◆
-                  </div>
-                  <div>
                     <div style={{
+                      width: '48px',
+                      height: '48px',
+                      background: 'linear-gradient(135deg, #c29a6c 0%, #a67c4e 100%)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
                       fontFamily: "'Instrument Serif', Georgia, serif",
-                      fontSize: '18px',
-                      fontStyle: 'italic',
-                      color: '#e8e6e3'
+                      fontSize: '20px',
+                      color: '#08080a'
                     }}>
-                      dmitriif.eth
+                      ◆
                     </div>
-                    <div style={{
-                      fontSize: '12px',
-                      color: '#4a4a4c',
-                      fontFamily: 'monospace',
-                      marginTop: '4px'
-                    }}>
-                      Charlotte, NC · EST
+                    <div>
+                      <div style={{
+                        fontFamily: "'Instrument Serif', Georgia, serif",
+                        fontSize: '18px',
+                        fontStyle: 'italic',
+                        color: '#e8e6e3'
+                      }}>
+                        dmitriif.eth
+                      </div>
+                      <div style={{
+                        fontSize: '12px',
+                        color: '#4a4a4c',
+                        fontFamily: 'monospace',
+                        marginTop: '4px'
+                      }}>
+                        Charlotte, NC · EST
+                      </div>
                     </div>
                   </div>
                 </div>
+
+                {/* Stats grid */}
+                <div style={{
+                  display: 'grid',
+                  gridTemplateColumns: '1fr 1fr',
+                  gap: '1px',
+                  background: 'rgba(232, 230, 227, 0.06)',
+                  alignSelf: 'start'
+                }}>
+                  {[
+                    { value: '2016', label: 'First smart contract' },
+                    { value: '200', label: 'DAU at Mempools' },
+                    { value: '1M+', label: 'API requests/day' },
+                    { value: '7+', label: 'Protocols shipped' }
+                  ].map((stat, i) => (
+                    <div key={i} style={{
+                      background: '#08080a',
+                      padding: isMobile ? '24px 20px' : '32px'
+                    }}>
+                      <div style={{
+                        fontSize: isMobile ? '28px' : '36px',
+                        fontFamily: "'Instrument Serif', Georgia, serif",
+                        fontWeight: 400,
+                        color: '#e8e6e3',
+                        lineHeight: 1
+                      }}>
+                        {stat.value}
+                      </div>
+                      <div style={{
+                        fontSize: '11px',
+                        fontWeight: 500,
+                        letterSpacing: '0.08em',
+                        textTransform: 'uppercase',
+                        color: '#4a4a4c',
+                        marginTop: '10px'
+                      }}>
+                        {stat.label}
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
 
-              {/* Stats grid */}
+              {/* Explorer links */}
               <div style={{
-                display: 'grid',
-                gridTemplateColumns: '1fr 1fr',
-                gap: '1px',
-                background: 'rgba(232, 230, 227, 0.06)',
-                alignSelf: 'start'
+                display: 'flex',
+                gap: '32px',
+                marginTop: '32px',
+                paddingTop: '24px',
+                borderTop: '1px solid rgba(232, 230, 227, 0.06)',
+                flexWrap: 'wrap'
               }}>
-                {[
-                  { value: '2016', label: 'First smart contract' },
-                  { value: '200', label: 'DAU at Mempools' },
-                  { value: '1M+', label: 'API requests/day' },
-                  { value: '7+', label: 'Protocols shipped' }
-                ].map((stat, i) => (
-                  <div key={i} style={{
-                    background: '#08080a',
-                    padding: isMobile ? '24px 20px' : '32px'
-                  }}>
-                    <div style={{
-                      fontSize: isMobile ? '28px' : '36px',
-                      fontFamily: "'Instrument Serif', Georgia, serif",
-                      fontWeight: 400,
-                      color: '#e8e6e3',
-                      lineHeight: 1
-                    }}>
-                      {stat.value}
-                    </div>
-                    <div style={{
-                      fontSize: '11px',
-                      fontWeight: 500,
-                      letterSpacing: '0.08em',
-                      textTransform: 'uppercase',
+                {explorerLinks.map((link, i) => (
+                  <a
+                    key={i}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
                       color: '#4a4a4c',
-                      marginTop: '10px'
-                    }}>
-                      {stat.label}
-                    </div>
-                  </div>
+                      textDecoration: 'none',
+                      fontSize: '13px',
+                      fontWeight: 500,
+                      letterSpacing: '0.02em',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px',
+                      transition: 'color 0.2s ease'
+                    }}
+                    onMouseEnter={(e) => (e.target as HTMLElement).style.color = '#c29a6c'}
+                    onMouseLeave={(e) => (e.target as HTMLElement).style.color = '#4a4a4c'}
+                  >
+                    {link.name}
+                    <span style={{ fontFamily: "'Instrument Serif', serif", fontStyle: 'italic' }}>↗</span>
+                  </a>
                 ))}
               </div>
             </div>
-
-            {/* Explorer links */}
-            <div style={{
-              display: 'flex',
-              gap: '32px',
-              marginTop: '32px',
-              paddingTop: '24px',
-              borderTop: '1px solid rgba(232, 230, 227, 0.06)',
-              flexWrap: 'wrap'
-            }}>
-              {explorerLinks.map((link, i) => (
-                <a
-                  key={i}
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    color: '#4a4a4c',
-                    textDecoration: 'none',
-                    fontSize: '13px',
-                    fontWeight: 500,
-                    letterSpacing: '0.02em',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '8px',
-                    transition: 'color 0.2s ease'
-                  }}
-                  onMouseEnter={(e) => (e.target as HTMLElement).style.color = '#c29a6c'}
-                  onMouseLeave={(e) => (e.target as HTMLElement).style.color = '#4a4a4c'}
-                >
-                  {link.name}
-                  <span style={{ fontFamily: "'Instrument Serif', serif", fontStyle: 'italic' }}>↗</span>
-                </a>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
+          </section>
+        )
+      }
 
       {/* Final CTA */}
       <section style={{
@@ -2467,20 +2404,21 @@ export default function Portfolio() {
       </section>
 
       {/* Full-Page Case Study Modal */}
-      {modalCase && (
-        <div
-          style={{
-            position: 'fixed',
-            inset: 0,
-            zIndex: 1000,
-            display: 'flex',
-            flexDirection: 'column',
-            background: colors.background,
-            animation: 'modalSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1)'
-          }}
-        >
-          {/* Modal styles including animation and scrollbar */}
-          <style>{`
+      {
+        modalCase && (
+          <div
+            style={{
+              position: 'fixed',
+              inset: 0,
+              zIndex: 1000,
+              display: 'flex',
+              flexDirection: 'column',
+              background: colors.background,
+              animation: 'modalSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1)'
+            }}
+          >
+            {/* Modal styles including animation and scrollbar */}
+            <style>{`
             @keyframes modalSlideUp {
               from {
                 opacity: 0;
@@ -2515,386 +2453,273 @@ export default function Portfolio() {
             }
           `}</style>
 
-          {/* Modal Header */}
-          <div style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            padding: isMobile ? '20px 24px' : '28px 64px',
-            borderBottom: `1px solid ${colors.borderLight}`,
-            background: colors.background,
-            position: 'sticky',
-            top: 0,
-            zIndex: 10
-          }}>
-            <button
-              onClick={() => setModalCase(null)}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px',
-                background: 'none',
-                border: 'none',
-                color: colors.textTertiary,
-                fontSize: '13px',
-                fontWeight: 500,
-                cursor: 'pointer',
-                padding: 0,
-                transition: 'color 0.2s ease'
-              }}
-              onMouseEnter={(e) => (e.currentTarget as HTMLButtonElement).style.color = colors.textPrimary}
-              onMouseLeave={(e) => (e.currentTarget as HTMLButtonElement).style.color = colors.textTertiary}
-            >
-              <span style={{ fontFamily: "'Instrument Serif', serif", fontStyle: 'italic' }}>←</span>
-              Back to Work
-            </button>
-
-            <button
-              onClick={() => setModalCase(null)}
-              style={{
-                background: 'none',
-                border: `1px solid ${colors.border}`,
-                color: colors.textTertiary,
-                width: '40px',
-                height: '40px',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '18px',
-                transition: 'all 0.2s ease'
-              }}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLButtonElement).style.borderColor = isDark ? 'rgba(232, 230, 227, 0.3)' : 'rgba(26, 26, 28, 0.3)';
-                (e.currentTarget as HTMLButtonElement).style.color = colors.textPrimary;
-              }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLButtonElement).style.borderColor = colors.border;
-                (e.currentTarget as HTMLButtonElement).style.color = colors.textTertiary;
-              }}
-            >
-              ✕
-            </button>
-          </div>
-
-          {/* Modal Content - Scrollable */}
-          <div
-            className="modal-scroll"
-            style={{
-              flex: 1,
-              overflowY: 'auto',
-              padding: isMobile ? '40px 24px' : '64px',
-              maxWidth: '900px',
-              margin: '0 auto',
-              width: '100%'
+            {/* Modal Header */}
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              padding: isMobile ? '20px 24px' : '28px 64px',
+              borderBottom: `1px solid ${colors.borderLight}`,
+              background: colors.background,
+              position: 'sticky',
+              top: 0,
+              zIndex: 10
             }}>
-            {/* Case Study Number & Title */}
-            <div style={{ marginBottom: '40px' }}>
-              <span style={{
-                fontFamily: "'Instrument Serif', Georgia, serif",
-                fontSize: isMobile ? '48px' : '72px',
-                fontStyle: 'italic',
-                color: '#2a2a2c',
-                lineHeight: 1
-              }}>
-                {modalCase.number}
-              </span>
-              <h1 style={{
-                fontSize: isMobile ? '32px' : '48px',
-                fontFamily: "'Instrument Serif', Georgia, serif",
-                fontWeight: 400,
-                fontStyle: 'italic',
-                color: '#e8e6e3',
-                marginTop: '16px',
-                marginBottom: '12px',
-                letterSpacing: '-0.02em',
-                lineHeight: 1.1
-              }}>
-                {modalCase.title}
-              </h1>
-              <div style={{
-                fontSize: '14px',
-                color: '#6b6966'
-              }}>
-                {modalCase.company} • {modalCase.year}
-              </div>
+              <button
+                onClick={() => setModalCase(null)}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  background: 'none',
+                  border: 'none',
+                  color: colors.textTertiary,
+                  fontSize: '13px',
+                  fontWeight: 500,
+                  cursor: 'pointer',
+                  padding: 0,
+                  transition: 'color 0.2s ease'
+                }}
+                onMouseEnter={(e) => (e.currentTarget as HTMLButtonElement).style.color = colors.textPrimary}
+                onMouseLeave={(e) => (e.currentTarget as HTMLButtonElement).style.color = colors.textTertiary}
+              >
+                <span style={{ fontFamily: "'Instrument Serif', serif", fontStyle: 'italic' }}>←</span>
+                Back to Work
+              </button>
+
+              <button
+                onClick={() => setModalCase(null)}
+                style={{
+                  background: 'none',
+                  border: `1px solid ${colors.border}`,
+                  color: colors.textTertiary,
+                  width: '40px',
+                  height: '40px',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '18px',
+                  transition: 'all 0.2s ease'
+                }}
+                onMouseEnter={(e) => {
+                  (e.currentTarget as HTMLButtonElement).style.borderColor = isDark ? 'rgba(232, 230, 227, 0.3)' : 'rgba(26, 26, 28, 0.3)';
+                  (e.currentTarget as HTMLButtonElement).style.color = colors.textPrimary;
+                }}
+                onMouseLeave={(e) => {
+                  (e.currentTarget as HTMLButtonElement).style.borderColor = colors.border;
+                  (e.currentTarget as HTMLButtonElement).style.color = colors.textTertiary;
+                }}
+              >
+                ✕
+              </button>
             </div>
 
-            {/* Hero Image Placeholder */}
-            {modalCase.fullContent.artifacts && modalCase.fullContent.artifacts[0] && (
-              <div style={{
-                background: 'linear-gradient(135deg, #141416 0%, #1a1a1c 100%)',
-                border: modalCase.fullContent.artifacts[0].src ? 'none' : '1px dashed rgba(232, 230, 227, 0.15)',
-                aspectRatio: '16/9',
-                marginBottom: '48px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                overflow: 'hidden'
+            {/* Modal Content - Scrollable */}
+            <div
+              className="modal-scroll"
+              style={{
+                flex: 1,
+                overflowY: 'auto',
+                padding: isMobile ? '40px 24px' : '64px',
+                maxWidth: '900px',
+                margin: '0 auto',
+                width: '100%'
               }}>
-                {modalCase.fullContent.artifacts[0].src ? (
-                  <img
-                    src={modalCase.fullContent.artifacts[0].src}
-                    alt={modalCase.fullContent.artifacts[0].alt}
-                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                  />
-                ) : (
-                  <div style={{ textAlign: 'center' }}>
-                    <span style={{ fontSize: '32px', color: '#3a3a3c' }}>
-                      {modalCase.fullContent.artifacts[0].type === 'diagram' && '📐'}
-                      {modalCase.fullContent.artifacts[0].type === 'screenshot' && '🖼️'}
-                      {modalCase.fullContent.artifacts[0].type === 'chart' && '📊'}
-                      {modalCase.fullContent.artifacts[0].type === 'wireframe' && '📱'}
-                    </span>
-                    <div style={{ fontSize: '14px', color: '#4a4a4c', marginTop: '12px' }}>
-                      {modalCase.fullContent.artifacts[0].alt}
-                    </div>
-                    {modalCase.fullContent.artifacts[0].caption && (
-                      <div style={{ fontSize: '12px', color: '#3a3a3c', fontStyle: 'italic', marginTop: '8px' }}>
-                        {modalCase.fullContent.artifacts[0].caption}
+              {/* Case Study Number & Title */}
+              <div style={{ marginBottom: '40px' }}>
+                <span style={{
+                  fontFamily: "'Instrument Serif', Georgia, serif",
+                  fontSize: isMobile ? '48px' : '72px',
+                  fontStyle: 'italic',
+                  color: '#2a2a2c',
+                  lineHeight: 1
+                }}>
+                  {modalCase.number}
+                </span>
+                <h1 style={{
+                  fontSize: isMobile ? '32px' : '48px',
+                  fontFamily: "'Instrument Serif', Georgia, serif",
+                  fontWeight: 400,
+                  fontStyle: 'italic',
+                  color: '#e8e6e3',
+                  marginTop: '16px',
+                  marginBottom: '12px',
+                  letterSpacing: '-0.02em',
+                  lineHeight: 1.1
+                }}>
+                  {modalCase.title}
+                </h1>
+                <div style={{
+                  fontSize: '14px',
+                  color: '#6b6966'
+                }}>
+                  {modalCase.company} • {modalCase.year}
+                </div>
+              </div>
+
+              {/* Hero Image Placeholder */}
+              {modalCase.fullContent.artifacts && modalCase.fullContent.artifacts[0] && (
+                <div style={{
+                  background: 'linear-gradient(135deg, #141416 0%, #1a1a1c 100%)',
+                  border: modalCase.fullContent.artifacts[0].src ? 'none' : '1px dashed rgba(232, 230, 227, 0.15)',
+                  aspectRatio: '16/9',
+                  marginBottom: '48px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  overflow: 'hidden'
+                }}>
+                  {modalCase.fullContent.artifacts[0].src ? (
+                    <img
+                      src={modalCase.fullContent.artifacts[0].src}
+                      alt={modalCase.fullContent.artifacts[0].alt}
+                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    />
+                  ) : (
+                    <div style={{ textAlign: 'center' }}>
+                      <span style={{ fontSize: '32px', color: '#3a3a3c' }}>
+                        {modalCase.fullContent.artifacts[0].type === 'diagram' && '📐'}
+                        {modalCase.fullContent.artifacts[0].type === 'screenshot' && '🖼️'}
+                        {modalCase.fullContent.artifacts[0].type === 'chart' && '📊'}
+                        {modalCase.fullContent.artifacts[0].type === 'wireframe' && '📱'}
+                      </span>
+                      <div style={{ fontSize: '14px', color: '#4a4a4c', marginTop: '12px' }}>
+                        {modalCase.fullContent.artifacts[0].alt}
                       </div>
-                    )}
+                      {modalCase.fullContent.artifacts[0].caption && (
+                        <div style={{ fontSize: '12px', color: '#3a3a3c', fontStyle: 'italic', marginTop: '8px' }}>
+                          {modalCase.fullContent.artifacts[0].caption}
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Metrics Row */}
+              <div style={{
+                display: 'flex',
+                gap: isMobile ? '24px' : '48px',
+                marginBottom: '48px',
+                flexWrap: 'wrap',
+                padding: '32px',
+                background: 'rgba(232, 230, 227, 0.02)',
+                border: '1px solid rgba(232, 230, 227, 0.06)'
+              }}>
+                <div style={{ flex: 1, minWidth: '120px' }}>
+                  <div style={{
+                    fontSize: isMobile ? '32px' : '40px',
+                    fontFamily: "'Instrument Serif', Georgia, serif",
+                    color: '#c29a6c',
+                    lineHeight: 1
+                  }}>{modalCase.metrics.primary.value}</div>
+                  <div style={{
+                    fontSize: '11px',
+                    fontWeight: 500,
+                    letterSpacing: '0.1em',
+                    textTransform: 'uppercase',
+                    color: '#4a4a4c',
+                    marginTop: '8px'
+                  }}>{modalCase.metrics.primary.label}</div>
+                </div>
+                {modalCase.metrics.secondary && (
+                  <div style={{ flex: 1, minWidth: '120px' }}>
+                    <div style={{
+                      fontSize: isMobile ? '32px' : '40px',
+                      fontFamily: "'Instrument Serif', Georgia, serif",
+                      color: '#e8e6e3',
+                      lineHeight: 1
+                    }}>{modalCase.metrics.secondary.value}</div>
+                    <div style={{
+                      fontSize: '11px',
+                      fontWeight: 500,
+                      letterSpacing: '0.1em',
+                      textTransform: 'uppercase',
+                      color: '#4a4a4c',
+                      marginTop: '8px'
+                    }}>{modalCase.metrics.secondary.label}</div>
+                  </div>
+                )}
+                {modalCase.metrics.tertiary && (
+                  <div style={{ flex: 1, minWidth: '120px' }}>
+                    <div style={{
+                      fontSize: isMobile ? '32px' : '40px',
+                      fontFamily: "'Instrument Serif', Georgia, serif",
+                      color: '#a8a5a0',
+                      lineHeight: 1
+                    }}>{modalCase.metrics.tertiary.value}</div>
+                    <div style={{
+                      fontSize: '11px',
+                      fontWeight: 500,
+                      letterSpacing: '0.1em',
+                      textTransform: 'uppercase',
+                      color: '#4a4a4c',
+                      marginTop: '8px'
+                    }}>{modalCase.metrics.tertiary.label}</div>
                   </div>
                 )}
               </div>
-            )}
 
-            {/* Metrics Row */}
-            <div style={{
-              display: 'flex',
-              gap: isMobile ? '24px' : '48px',
-              marginBottom: '48px',
-              flexWrap: 'wrap',
-              padding: '32px',
-              background: 'rgba(232, 230, 227, 0.02)',
-              border: '1px solid rgba(232, 230, 227, 0.06)'
-            }}>
-              <div style={{ flex: 1, minWidth: '120px' }}>
-                <div style={{
-                  fontSize: isMobile ? '32px' : '40px',
-                  fontFamily: "'Instrument Serif', Georgia, serif",
-                  color: '#c29a6c',
-                  lineHeight: 1
-                }}>{modalCase.metrics.primary.value}</div>
-                <div style={{
-                  fontSize: '11px',
-                  fontWeight: 500,
-                  letterSpacing: '0.1em',
-                  textTransform: 'uppercase',
-                  color: '#4a4a4c',
-                  marginTop: '8px'
-                }}>{modalCase.metrics.primary.label}</div>
-              </div>
-              {modalCase.metrics.secondary && (
-                <div style={{ flex: 1, minWidth: '120px' }}>
-                  <div style={{
-                    fontSize: isMobile ? '32px' : '40px',
-                    fontFamily: "'Instrument Serif', Georgia, serif",
-                    color: '#e8e6e3',
-                    lineHeight: 1
-                  }}>{modalCase.metrics.secondary.value}</div>
-                  <div style={{
-                    fontSize: '11px',
-                    fontWeight: 500,
-                    letterSpacing: '0.1em',
-                    textTransform: 'uppercase',
-                    color: '#4a4a4c',
-                    marginTop: '8px'
-                  }}>{modalCase.metrics.secondary.label}</div>
-                </div>
-              )}
-              {modalCase.metrics.tertiary && (
-                <div style={{ flex: 1, minWidth: '120px' }}>
-                  <div style={{
-                    fontSize: isMobile ? '32px' : '40px',
-                    fontFamily: "'Instrument Serif', Georgia, serif",
-                    color: '#a8a5a0',
-                    lineHeight: 1
-                  }}>{modalCase.metrics.tertiary.value}</div>
-                  <div style={{
-                    fontSize: '11px',
-                    fontWeight: 500,
-                    letterSpacing: '0.1em',
-                    textTransform: 'uppercase',
-                    color: '#4a4a4c',
-                    marginTop: '8px'
-                  }}>{modalCase.metrics.tertiary.label}</div>
-                </div>
-              )}
-            </div>
-
-            {/* Role & Context */}
-            <div style={{
-              display: 'flex',
-              gap: '32px',
-              marginBottom: '40px',
-              flexWrap: 'wrap',
-              paddingBottom: '32px',
-              borderBottom: '1px solid rgba(232, 230, 227, 0.08)'
-            }}>
-              <div>
-                <span style={{
-                  fontSize: '10px',
-                  fontWeight: 600,
-                  letterSpacing: '0.12em',
-                  textTransform: 'uppercase',
-                  color: '#4a4a4c'
-                }}>My Role</span>
-                <div style={{
-                  fontSize: '16px',
-                  color: '#c29a6c',
-                  marginTop: '6px',
-                  fontWeight: 500
-                }}>{modalCase.fullContent.myRole}</div>
-              </div>
-              {modalCase.fullContent.teamSize && (
-                <div>
-                  <span style={{
-                    fontSize: '10px',
-                    fontWeight: 600,
-                    letterSpacing: '0.12em',
-                    textTransform: 'uppercase',
-                    color: '#4a4a4c'
-                  }}>Team</span>
-                  <div style={{
-                    fontSize: '16px',
-                    color: '#a8a5a0',
-                    marginTop: '6px'
-                  }}>{modalCase.fullContent.teamSize}</div>
-                </div>
-              )}
-              {modalCase.fullContent.duration && (
-                <div>
-                  <span style={{
-                    fontSize: '10px',
-                    fontWeight: 600,
-                    letterSpacing: '0.12em',
-                    textTransform: 'uppercase',
-                    color: '#4a4a4c'
-                  }}>Duration</span>
-                  <div style={{
-                    fontSize: '16px',
-                    color: '#a8a5a0',
-                    marginTop: '6px'
-                  }}>{modalCase.fullContent.duration}</div>
-                </div>
-              )}
-            </div>
-
-            {/* The Challenge */}
-            <div style={{ marginBottom: '40px' }}>
-              <h2 style={{
-                fontSize: '13px',
-                fontWeight: 600,
-                letterSpacing: '0.12em',
-                textTransform: 'uppercase',
-                color: '#6b6966',
-                marginBottom: '16px'
-              }}>The Challenge</h2>
-              <p style={{
-                fontSize: '17px',
-                color: '#a8a5a0',
-                lineHeight: 1.8
-              }}>{modalCase.fullContent.situation}</p>
-            </div>
-
-            {/* Key Decision Callout */}
-            {modalCase.fullContent.keyDecision && (
+              {/* Role & Context */}
               <div style={{
-                background: 'rgba(194, 154, 108, 0.08)',
-                border: '1px solid rgba(194, 154, 108, 0.25)',
-                padding: '28px',
-                marginBottom: '40px'
+                display: 'flex',
+                gap: '32px',
+                marginBottom: '40px',
+                flexWrap: 'wrap',
+                paddingBottom: '32px',
+                borderBottom: '1px solid rgba(232, 230, 227, 0.08)'
               }}>
-                <div style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '10px',
-                  marginBottom: '12px'
-                }}>
-                  <span style={{ fontSize: '18px' }}>💡</span>
+                <div>
                   <span style={{
-                    fontSize: '12px',
+                    fontSize: '10px',
                     fontWeight: 600,
                     letterSpacing: '0.12em',
                     textTransform: 'uppercase',
-                    color: '#c29a6c'
-                  }}>Key Decision</span>
-                </div>
-                <h3 style={{
-                  fontSize: '18px',
-                  color: '#e8e6e3',
-                  fontWeight: 500,
-                  marginBottom: '12px',
-                  fontFamily: "'Instrument Serif', Georgia, serif",
-                  fontStyle: 'italic'
-                }}>{modalCase.fullContent.keyDecision.title}</h3>
-                <p style={{
-                  fontSize: '15px',
-                  color: '#8a8885',
-                  lineHeight: 1.7
-                }}>{modalCase.fullContent.keyDecision.description}</p>
-              </div>
-            )}
-
-            {/* What I Did */}
-            <div style={{ marginBottom: '40px' }}>
-              <h2 style={{
-                fontSize: '13px',
-                fontWeight: 600,
-                letterSpacing: '0.12em',
-                textTransform: 'uppercase',
-                color: '#6b6966',
-                marginBottom: '20px'
-              }}>What I Did</h2>
-              <ul style={{
-                listStyle: 'none',
-                padding: 0,
-                margin: 0,
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '16px'
-              }}>
-                {modalCase.fullContent.actions.map((action: string, i: number) => (
-                  <li key={i} style={{
+                    color: '#4a4a4c'
+                  }}>My Role</span>
+                  <div style={{
                     fontSize: '16px',
-                    color: '#a8a5a0',
-                    lineHeight: 1.7,
-                    paddingLeft: '28px',
-                    position: 'relative'
-                  }}>
+                    color: '#c29a6c',
+                    marginTop: '6px',
+                    fontWeight: 500
+                  }}>{modalCase.fullContent.myRole}</div>
+                </div>
+                {modalCase.fullContent.teamSize && (
+                  <div>
                     <span style={{
-                      position: 'absolute',
-                      left: 0,
-                      color: '#c29a6c',
-                      fontFamily: "'Instrument Serif', serif",
-                      fontStyle: 'italic'
-                    }}>→</span>
-                    {action}
-                  </li>
-                ))}
-              </ul>
-            </div>
+                      fontSize: '10px',
+                      fontWeight: 600,
+                      letterSpacing: '0.12em',
+                      textTransform: 'uppercase',
+                      color: '#4a4a4c'
+                    }}>Team</span>
+                    <div style={{
+                      fontSize: '16px',
+                      color: '#a8a5a0',
+                      marginTop: '6px'
+                    }}>{modalCase.fullContent.teamSize}</div>
+                  </div>
+                )}
+                {modalCase.fullContent.duration && (
+                  <div>
+                    <span style={{
+                      fontSize: '10px',
+                      fontWeight: 600,
+                      letterSpacing: '0.12em',
+                      textTransform: 'uppercase',
+                      color: '#4a4a4c'
+                    }}>Duration</span>
+                    <div style={{
+                      fontSize: '16px',
+                      color: '#a8a5a0',
+                      marginTop: '6px'
+                    }}>{modalCase.fullContent.duration}</div>
+                  </div>
+                )}
+              </div>
 
-            {/* Results */}
-            <div style={{ marginBottom: '40px' }}>
-              <h2 style={{
-                fontSize: '13px',
-                fontWeight: 600,
-                letterSpacing: '0.12em',
-                textTransform: 'uppercase',
-                color: '#6b6966',
-                marginBottom: '16px'
-              }}>Results</h2>
-              <p style={{
-                fontSize: '17px',
-                color: '#a8a5a0',
-                lineHeight: 1.8
-              }}>{modalCase.fullContent.results}</p>
-            </div>
-
-            {/* Tech Stack */}
-            {modalCase.fullContent.techStack && (
+              {/* The Challenge */}
               <div style={{ marginBottom: '40px' }}>
                 <h2 style={{
                   fontSize: '13px',
@@ -2903,130 +2728,244 @@ export default function Portfolio() {
                   textTransform: 'uppercase',
                   color: '#6b6966',
                   marginBottom: '16px'
-                }}>Tech Stack</h2>
-                <div style={{
-                  display: 'flex',
-                  gap: '10px',
-                  flexWrap: 'wrap'
-                }}>
-                  {modalCase.fullContent.techStack.map((tech, i) => (
-                    <span key={i} style={{
-                      fontSize: '12px',
-                      fontWeight: 500,
-                      color: '#6b6966',
-                      padding: '8px 14px',
-                      background: 'rgba(232, 230, 227, 0.04)',
-                      border: '1px solid rgba(232, 230, 227, 0.1)'
-                    }}>{tech}</span>
-                  ))}
-                </div>
+                }}>The Challenge</h2>
+                <p style={{
+                  fontSize: '17px',
+                  color: '#a8a5a0',
+                  lineHeight: 1.8
+                }}>{modalCase.fullContent.situation}</p>
               </div>
-            )}
 
-            {/* Tags */}
-            <div style={{
-              display: 'flex',
-              gap: '10px',
-              flexWrap: 'wrap',
-              paddingTop: '32px',
-              borderTop: '1px solid rgba(232, 230, 227, 0.08)'
-            }}>
-              {modalCase.tags.map((tag, i) => (
-                <span key={i} style={{
-                  fontSize: '11px',
-                  fontWeight: 500,
-                  letterSpacing: '0.08em',
+              {/* Key Decision Callout */}
+              {modalCase.fullContent.keyDecision && (
+                <div style={{
+                  background: 'rgba(194, 154, 108, 0.08)',
+                  border: '1px solid rgba(194, 154, 108, 0.25)',
+                  padding: '28px',
+                  marginBottom: '40px'
+                }}>
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '10px',
+                    marginBottom: '12px'
+                  }}>
+                    <span style={{ fontSize: '18px' }}>💡</span>
+                    <span style={{
+                      fontSize: '12px',
+                      fontWeight: 600,
+                      letterSpacing: '0.12em',
+                      textTransform: 'uppercase',
+                      color: '#c29a6c'
+                    }}>Key Decision</span>
+                  </div>
+                  <h3 style={{
+                    fontSize: '18px',
+                    color: '#e8e6e3',
+                    fontWeight: 500,
+                    marginBottom: '12px',
+                    fontFamily: "'Instrument Serif', Georgia, serif",
+                    fontStyle: 'italic'
+                  }}>{modalCase.fullContent.keyDecision.title}</h3>
+                  <p style={{
+                    fontSize: '15px',
+                    color: '#8a8885',
+                    lineHeight: 1.7
+                  }}>{modalCase.fullContent.keyDecision.description}</p>
+                </div>
+              )}
+
+              {/* What I Did */}
+              <div style={{ marginBottom: '40px' }}>
+                <h2 style={{
+                  fontSize: '13px',
+                  fontWeight: 600,
+                  letterSpacing: '0.12em',
                   textTransform: 'uppercase',
-                  color: '#4a4a4c',
-                  padding: '8px 14px',
-                  border: '1px solid rgba(232, 230, 227, 0.08)'
-                }}>{tag}</span>
-              ))}
-            </div>
+                  color: '#6b6966',
+                  marginBottom: '20px'
+                }}>What I Did</h2>
+                <ul style={{
+                  listStyle: 'none',
+                  padding: 0,
+                  margin: 0,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '16px'
+                }}>
+                  {modalCase.fullContent.actions.map((action: string, i: number) => (
+                    <li key={i} style={{
+                      fontSize: '16px',
+                      color: '#a8a5a0',
+                      lineHeight: 1.7,
+                      paddingLeft: '28px',
+                      position: 'relative'
+                    }}>
+                      <span style={{
+                        position: 'absolute',
+                        left: 0,
+                        color: '#c29a6c',
+                        fontFamily: "'Instrument Serif', serif",
+                        fontStyle: 'italic'
+                      }}>→</span>
+                      {action}
+                    </li>
+                  ))}
+                </ul>
+              </div>
 
-            {/* Navigation Between Case Studies */}
-            <div style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              marginTop: '64px',
-              paddingTop: '32px',
-              borderTop: '1px solid rgba(232, 230, 227, 0.08)',
-              gap: '24px',
-              flexWrap: 'wrap'
-            }}>
-              {(() => {
-                const currentIndex = caseStudies.findIndex(c => c.id === modalCase.id);
-                const prevStudy = currentIndex > 0 ? caseStudies[currentIndex - 1] : null;
-                const nextStudy = currentIndex < caseStudies.length - 1 ? caseStudies[currentIndex + 1] : null;
+              {/* Results */}
+              <div style={{ marginBottom: '40px' }}>
+                <h2 style={{
+                  fontSize: '13px',
+                  fontWeight: 600,
+                  letterSpacing: '0.12em',
+                  textTransform: 'uppercase',
+                  color: '#6b6966',
+                  marginBottom: '16px'
+                }}>Results</h2>
+                <p style={{
+                  fontSize: '17px',
+                  color: '#a8a5a0',
+                  lineHeight: 1.8
+                }}>{modalCase.fullContent.results}</p>
+              </div>
 
-                return (
-                  <>
-                    {prevStudy ? (
-                      <button
-                        onClick={() => setModalCase(prevStudy)}
-                        style={{
-                          background: 'none',
-                          border: 'none',
-                          cursor: 'pointer',
-                          textAlign: 'left',
-                          padding: 0,
-                          flex: 1
-                        }}
-                      >
-                        <span style={{
-                          fontSize: '11px',
-                          fontWeight: 500,
-                          letterSpacing: '0.1em',
-                          textTransform: 'uppercase',
-                          color: '#4a4a4c',
-                          display: 'block',
-                          marginBottom: '8px'
-                        }}>← Previous</span>
-                        <span style={{
-                          fontSize: '16px',
-                          fontFamily: "'Instrument Serif', Georgia, serif",
-                          fontStyle: 'italic',
-                          color: '#a8a5a0'
-                        }}>{prevStudy.title}</span>
-                      </button>
-                    ) : <div style={{ flex: 1 }} />}
+              {/* Tech Stack */}
+              {modalCase.fullContent.techStack && (
+                <div style={{ marginBottom: '40px' }}>
+                  <h2 style={{
+                    fontSize: '13px',
+                    fontWeight: 600,
+                    letterSpacing: '0.12em',
+                    textTransform: 'uppercase',
+                    color: '#6b6966',
+                    marginBottom: '16px'
+                  }}>Tech Stack</h2>
+                  <div style={{
+                    display: 'flex',
+                    gap: '10px',
+                    flexWrap: 'wrap'
+                  }}>
+                    {modalCase.fullContent.techStack.map((tech, i) => (
+                      <span key={i} style={{
+                        fontSize: '12px',
+                        fontWeight: 500,
+                        color: '#6b6966',
+                        padding: '8px 14px',
+                        background: 'rgba(232, 230, 227, 0.04)',
+                        border: '1px solid rgba(232, 230, 227, 0.1)'
+                      }}>{tech}</span>
+                    ))}
+                  </div>
+                </div>
+              )}
 
-                    {nextStudy ? (
-                      <button
-                        onClick={() => setModalCase(nextStudy)}
-                        style={{
-                          background: 'none',
-                          border: 'none',
-                          cursor: 'pointer',
-                          textAlign: 'right',
-                          padding: 0,
-                          flex: 1
-                        }}
-                      >
-                        <span style={{
-                          fontSize: '11px',
-                          fontWeight: 500,
-                          letterSpacing: '0.1em',
-                          textTransform: 'uppercase',
-                          color: '#4a4a4c',
-                          display: 'block',
-                          marginBottom: '8px'
-                        }}>Next →</span>
-                        <span style={{
-                          fontSize: '16px',
-                          fontFamily: "'Instrument Serif', Georgia, serif",
-                          fontStyle: 'italic',
-                          color: '#a8a5a0'
-                        }}>{nextStudy.title}</span>
-                      </button>
-                    ) : <div style={{ flex: 1 }} />}
-                  </>
-                );
-              })()}
+              {/* Tags */}
+              <div style={{
+                display: 'flex',
+                gap: '10px',
+                flexWrap: 'wrap',
+                paddingTop: '32px',
+                borderTop: '1px solid rgba(232, 230, 227, 0.08)'
+              }}>
+                {modalCase.tags.map((tag, i) => (
+                  <span key={i} style={{
+                    fontSize: '11px',
+                    fontWeight: 500,
+                    letterSpacing: '0.08em',
+                    textTransform: 'uppercase',
+                    color: '#4a4a4c',
+                    padding: '8px 14px',
+                    border: '1px solid rgba(232, 230, 227, 0.08)'
+                  }}>{tag}</span>
+                ))}
+              </div>
+
+              {/* Navigation Between Case Studies */}
+              <div style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                marginTop: '64px',
+                paddingTop: '32px',
+                borderTop: '1px solid rgba(232, 230, 227, 0.08)',
+                gap: '24px',
+                flexWrap: 'wrap'
+              }}>
+                {(() => {
+                  const currentIndex = caseStudies.findIndex(c => c.id === modalCase.id);
+                  const prevStudy = currentIndex > 0 ? caseStudies[currentIndex - 1] : null;
+                  const nextStudy = currentIndex < caseStudies.length - 1 ? caseStudies[currentIndex + 1] : null;
+
+                  return (
+                    <>
+                      {prevStudy ? (
+                        <button
+                          onClick={() => setModalCase(prevStudy)}
+                          style={{
+                            background: 'none',
+                            border: 'none',
+                            cursor: 'pointer',
+                            textAlign: 'left',
+                            padding: 0,
+                            flex: 1
+                          }}
+                        >
+                          <span style={{
+                            fontSize: '11px',
+                            fontWeight: 500,
+                            letterSpacing: '0.1em',
+                            textTransform: 'uppercase',
+                            color: '#4a4a4c',
+                            display: 'block',
+                            marginBottom: '8px'
+                          }}>← Previous</span>
+                          <span style={{
+                            fontSize: '16px',
+                            fontFamily: "'Instrument Serif', Georgia, serif",
+                            fontStyle: 'italic',
+                            color: '#a8a5a0'
+                          }}>{prevStudy.title}</span>
+                        </button>
+                      ) : <div style={{ flex: 1 }} />}
+
+                      {nextStudy ? (
+                        <button
+                          onClick={() => setModalCase(nextStudy)}
+                          style={{
+                            background: 'none',
+                            border: 'none',
+                            cursor: 'pointer',
+                            textAlign: 'right',
+                            padding: 0,
+                            flex: 1
+                          }}
+                        >
+                          <span style={{
+                            fontSize: '11px',
+                            fontWeight: 500,
+                            letterSpacing: '0.1em',
+                            textTransform: 'uppercase',
+                            color: '#4a4a4c',
+                            display: 'block',
+                            marginBottom: '8px'
+                          }}>Next →</span>
+                          <span style={{
+                            fontSize: '16px',
+                            fontFamily: "'Instrument Serif', Georgia, serif",
+                            fontStyle: 'italic',
+                            color: '#a8a5a0'
+                          }}>{nextStudy.title}</span>
+                        </button>
+                      ) : <div style={{ flex: 1 }} />}
+                    </>
+                  );
+                })()}
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )
+      }
 
       {/* Footer */}
       <footer style={{
@@ -3056,6 +2995,6 @@ export default function Portfolio() {
           Designed and built by Dmitrii
         </div>
       </footer>
-    </div>
+    </div >
   );
 }

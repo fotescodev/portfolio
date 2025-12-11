@@ -70,10 +70,10 @@ const lightColors: ThemeColors = {
   backgroundSecondary: '#ffffff',
   backgroundTertiary: '#f5f5f5',
 
-  textPrimary: '#1a1a1c',
-  textSecondary: '#4a4a4c',
-  textTertiary: '#6b6966',
-  textMuted: '#9a9a9c',
+  textPrimary: '#050505', // Pure black for primary
+  textSecondary: '#2a2a2c', // Darker gray
+  textTertiary: '#4a4a4c', // Previous secondary
+  textMuted: '#666666', // Darker muted
 
   accent: '#a67c52',
   accentHover: '#8a6642',
@@ -134,7 +134,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   }, [theme]);
 
   const toggleTheme = () => {
-    setTheme(prev => prev === 'dark' ? 'light' : 'dark');
+    setTheme((prev: Theme) => prev === 'dark' ? 'light' : 'dark');
   };
 
   const colors = theme === 'dark' ? darkColors : lightColors;
