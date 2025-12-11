@@ -1,0 +1,58 @@
+# ═══════════════════════════════════════════════════════════════
+# WORK EXPERIENCE
+# ═══════════════════════════════════════════════════════════════
+jobs:
+  - company: "Anchorage Digital"
+    role: "Senior Product Manager"
+    period: "2024 – Present"
+    location: "Remote"
+    logo: "/images/logos/anchorage.svg"
+    highlights:
+      - "Leading ETH staking and protocol integrations for institutional clients"
+      - "Shipped 7+ L2 protocol integrations (Optimism, Base, Arbitrum)"
+      - "Built ETF-grade custody standards for validator provisioning"
+    tags: ["Staking", "L2s", "Institutional Custody"]
+
+  - company: "Forte"
+    role: "Product Manager"
+    period: "2023 – 2024"
+    location: "Remote"
+    logo: "/images/logos/forte.svg"
+    highlights:
+      - "Built Wallet-as-a-Service infrastructure for gaming studios"
+      - "Designed MPC custody solution for non-custodial wallets"
+      - "Launched SDK used by multiple AAA gaming partners"
+    tags: ["MPC", "Gaming", "Wallet Infrastructure"]
+
+  - company: "Dapper Labs"
+    role: "Product Manager"
+    period: "2022 – 2023"
+    location: "Remote"
+    logo: "/images/logos/dapper.svg"
+    highlights:
+      - "Shipped Flow CLI and Cadence Playground developer tools"
+      - "Improved developer onboarding reducing time-to-first-deploy by 60%"
+      - "Led cross-functional team of 8 engineers"
+    tags: ["Developer Tools", "Flow", "Cadence"]
+
+  - company: "Ankr"
+    role: "Product Manager"
+    period: "2021 – 2022"
+    location: "Remote"
+    logo: "/images/logos/ankr.svg"
+    highlights:
+      - "Drove 15× revenue growth on RPC infrastructure ($2M ARR)"
+      - "Launched Ankr Advanced APIs reaching 1M+ daily requests"
+      - "Repositioned product to target blockchain protocols as customers"
+    tags: ["APIs", "RPC", "Growth"]
+
+  - company: "Microsoft"
+    role: "Software Engineer → PM"
+    period: "2016 – 2020"
+    location: "Seattle, WA"
+    logo: "/images/logos/microsoft.svg"
+    highlights:
+      - "Designed Ethereum-based royalty system for Xbox store"
+      - "Built Docker/K8s blockchain consortium infrastructure"
+      - "First smart contract shipped at Microsoft (2016)"
+    tags: ["Enterprise Blockchain", "Xbox", "Smart Contracts"]

@@ -1,0 +1,189 @@
+# ═══════════════════════════════════════════════════════════════
+# IDENTIFICATION
+# ═══════════════════════════════════════════════════════════════
+id: 4
+slug: "ankr-rpc-infrastructure"
+title: "RPC Infrastructure & APIs"
+company: "Ankr"
+year: "2021–22"
+tags: ["APIs", "Developer Tools", "Growth", "B2B"]
+
+# ═══════════════════════════════════════════════════════════════
+# HOOK - Grab attention in 3 seconds
+# ═══════════════════════════════════════════════════════════════
+hook:
+  headline: "Repositioned RPC product to target protocols as customers—15× revenue growth in 8 months"
+  impactMetric:
+    value: "15×"
+    label: "revenue growth"
+  subMetrics:
+    - value: "$2M"
+      label: "ARR in 6 months"
+    - value: "1M+"
+      label: "daily requests"
+  thumbnail: "/images/case-study-ankr-rpc.png"
+  thumbnailAlt: "Ankr RPC infrastructure dashboard"
+
+# ═══════════════════════════════════════════════════════════════
+# CONTEXT - Role clarity
+# ═══════════════════════════════════════════════════════════════
+context:
+  myRole: "Product Manager"
+  teamSize: "5 engineers"
+  duration: "8 months"
+  stakeholders:
+    - "Protocol BD teams (potential customers)"
+    - "Individual developers (existing users)"
+    - "Engineering and infrastructure"
+    - "Marketing and growth"
+
+# ═══════════════════════════════════════════════════════════════
+# PROBLEM - Make them feel the pain
+# ═══════════════════════════════════════════════════════════════
+problem:
+  businessContext: >
+    Ankr's RPC infrastructure was underutilized and treated as a commodity.
+    Competing on price with Infura and Alchemy in the developer segment
+    was a race to the bottom. The product needed differentiation and a
+    sustainable business model.
+  constraints:
+    - "Limited engineering resources (5 engineers total)"
+    - "Established competitors with strong developer brand (Infura, Alchemy)"
+    - "RPC is inherently commoditized—hard to differentiate on features"
+    - "Developer segment has high churn and low willingness to pay"
+  stakes: >
+    Without finding product-market fit, the RPC product would be shut down
+    or sold off. Team jobs were on the line.
+
+# ═══════════════════════════════════════════════════════════════
+# APPROACH - Show thinking depth
+# ═══════════════════════════════════════════════════════════════
+approach:
+  hypothesis: >
+    Blockchain protocols have different needs than individual developers:
+    they need reliable infrastructure for their entire ecosystems, have
+    longer sales cycles but higher LTV, and would pay premium for
+    partnership-level support.
+  alternatives:
+    - option: "Double down on developer segment with better DX"
+      tradeoffs: "Large market, familiar go-to-market, existing user base"
+      whyNot: "We couldn't out-Alchemy Alchemy. They had 10x our resources and established developer love."
+    - option: "Pivot to enterprise (non-crypto)"
+      tradeoffs: "Higher contract values, less competition"
+      whyNot: "Sales cycle too long for our runway. Enterprise blockchain adoption was still nascent."
+    - option: "Build specialized APIs (NFT, DeFi data)"
+      tradeoffs: "Higher margins, less commoditized"
+      whyNot: "Good complement to core strategy, but not a standalone business. Became part of our B2B offering."
+  chosenPath: "Pivot to B2B protocol sales while building Advanced APIs as differentiation. Protocols became our core customer segment; developers became their users."
+
+# ═══════════════════════════════════════════════════════════════
+# EXECUTION - Concrete actions
+# ═══════════════════════════════════════════════════════════════
+execution:
+  phases:
+    - name: "Customer Discovery"
+      duration: "4 weeks"
+      actions:
+        - "Interviewed 15+ blockchain protocol teams about infrastructure pain points"
+        - "Identified key insight: protocols were stitching together multiple providers"
+        - "Mapped competitive landscape and pricing for protocol-tier contracts"
+    - name: "Product Repositioning"
+      duration: "3 weeks"
+      actions:
+        - "Redesigned pricing to include protocol-tier with SLA guarantees"
+        - "Created partnership program with dedicated support channels"
+        - "Built case studies from early protocol conversations"
+    - name: "Advanced APIs Development"
+      duration: "8 weeks"
+      actions:
+        - "Designed and shipped Ankr Advanced APIs (NFT, token, query APIs)"
+        - "Created Ankr.JS SDK for improved developer experience"
+        - "Built usage analytics dashboard for protocol partners"
+    - name: "Go-to-Market"
+      duration: "Ongoing"
+      actions:
+        - "Launched outbound sales motion targeting protocol BD teams"
+        - "Created content marketing around protocol infrastructure needs"
+        - "Built referral program where protocols recommended us to their developers"
+  keyDecision:
+    title: "B2B pivot: protocols over developers"
+    context: "Team was attached to developer-first identity. Pivot felt like abandoning our roots."
+    decision: "Shifted primary customer from developers to protocols. Developers became users we served through protocol partnerships."
+    outcome: "Protocols had 10x LTV of developer accounts. One protocol deal = 100 developer signups in revenue. Unit economics finally worked."
+
+# ═══════════════════════════════════════════════════════════════
+# RESULTS - Quantified impact
+# ═══════════════════════════════════════════════════════════════
+results:
+  primary:
+    metric: "15× revenue growth"
+    context: "From ~$130K to $2M ARR in 8 months"
+  secondary:
+    metric: "$2M ARR in 6 months"
+    context: "Achieved target that seemed impossible at start"
+  tertiary:
+    metric: "1M+ daily API requests"
+    context: "Usage scaled with protocol partnerships"
+  qualitative: >
+    Proved the B2B model worked for infrastructure products. Ankr later
+    raised additional funding citing this traction. Team avoided layoffs
+    that hit other crypto companies.
+
+# ═══════════════════════════════════════════════════════════════
+# REFLECTION - Shows self-awareness
+# ═══════════════════════════════════════════════════════════════
+reflection:
+  whatWorked:
+    - "Customer interviews revealed insight competitors missed—protocols were underserved"
+    - "Protocol partnerships created network effects (their developers became our users)"
+    - "Advanced APIs gave us differentiation beyond commodity RPC"
+    - "SLA guarantees justified premium pricing that developers wouldn't pay"
+  whatDidnt:
+    - "Initially priced protocol tier too low. Left money on the table with first 3 deals. Should have tested pricing more aggressively."
+    - "Ankr.JS SDK was over-engineered. Developers wanted simple examples, not comprehensive abstraction."
+    - "Spent too much time on marketing content that didn't convert. Direct outreach was 10x more effective."
+  lessonLearned: >
+    In infrastructure, your customer isn't always your user. Finding the
+    right customer segment can transform unit economics overnight.
+  wouldDoDifferently: >
+    Would have started outbound sales 4 weeks earlier. We waited for
+    'perfect' product when good-enough product with strong sales motion
+    would have accelerated revenue.
+
+# ═══════════════════════════════════════════════════════════════
+# EVIDENCE - Proof points
+# ═══════════════════════════════════════════════════════════════
+evidence:
+  demoUrl: "https://www.ankr.com/rpc/"
+  githubUrl: "https://github.com/ankr-network/ankr.js"
+  blogPostUrl: null
+  testimonial:
+    quote: "Ankr understood what we needed as a protocol. They didn't just sell us RPC—they became an infrastructure partner."
+    author: "Head of DevRel"
+    role: "Partner"
+    company: "L1 Protocol"
+  artifacts:
+    - type: "screenshot"
+      src: null
+      alt: "Ankr RPC dashboard"
+      caption: "Developer dashboard showing usage analytics"
+
+# ═══════════════════════════════════════════════════════════════
+# CTA - Drive action
+# ═══════════════════════════════════════════════════════════════
+cta:
+  headline: "Building developer infrastructure?"
+  subtext: "I've learned a lot about finding PMF in crowded markets."
+  action: "calendly"
+  linkText: "Let's chat →"
+
+# ═══════════════════════════════════════════════════════════════
+# TECH STACK
+# ═══════════════════════════════════════════════════════════════
+techStack:
+  - "Node.js"
+  - "WebSocket"
+  - "REST APIs"
+  - "Multi-chain RPC"
+  - "SDK Development"
+  - "TypeScript"
