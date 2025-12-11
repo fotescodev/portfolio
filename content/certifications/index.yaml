@@ -1,0 +1,49 @@
+# ═══════════════════════════════════════════════════════════════
+# CERTIFICATIONS
+# ═══════════════════════════════════════════════════════════════
+certifications:
+  - name: "AI Product Management"
+    issuer: "Product Faculty"
+    instructor: "Miqdad Jaffer"
+    instructorRole: "Product Leader at OpenAI, former Head of AI Products at Shopify"
+    date: "2024"
+    credentialId: null
+    url: "https://productfaculty.com"
+    logo: "/images/certs/product-faculty.svg"
+    featured: true
+
+# ═══════════════════════════════════════════════════════════════
+# CREDENTIALS (Quick highlights)
+# ═══════════════════════════════════════════════════════════════
+credentials:
+  - label: "Founder"
+    value: "Mempools.com — 200 DAU Web3 SaaS"
+    url: "https://mempools.com"
+
+  - label: "Developer Tools"
+    value: "Flow CLI, Cadence Playground, Ankr.JS"
+    url: null
+
+  - label: "MPC & Custody"
+    value: "Wallet-as-a-Service at Forte"
+    url: null
+
+  - label: "Exploring"
+    value: "AI agents × on-chain execution"
+    url: null
+
+# ═══════════════════════════════════════════════════════════════
+# ON-CHAIN IDENTITY
+# ═══════════════════════════════════════════════════════════════
+onchainIdentity:
+  ens: "dmitriif.eth"
+  links:
+    - name: "Etherscan"
+      url: "https://etherscan.io/address/dmitriif.eth"
+      icon: "etherscan"
+    - name: "ENS Profile"
+      url: "https://app.ens.domains/dmitriif.eth"
+      icon: "ens"
+    - name: "Snapshot"
+      url: "https://snapshot.org/#/profile/dmitriif.eth"
+      icon: "snapshot"

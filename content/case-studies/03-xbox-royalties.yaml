@@ -1,0 +1,190 @@
+# ═══════════════════════════════════════════════════════════════
+# IDENTIFICATION
+# ═══════════════════════════════════════════════════════════════
+id: 3
+slug: "xbox-royalties-ethereum"
+title: "Royalties on Ethereum"
+company: "Microsoft / Xbox"
+year: "2016–20"
+tags: ["Smart Contracts", "Gaming", "Enterprise", "Ethereum"]
+
+# ═══════════════════════════════════════════════════════════════
+# HOOK - Grab attention in 3 seconds
+# ═══════════════════════════════════════════════════════════════
+hook:
+  headline: "Built Microsoft's first production smart contract—an Ethereum royalty system for Xbox"
+  impactMetric:
+    value: "First"
+    label: "smart contract at MSFT"
+  subMetrics:
+    - value: "Xbox-scale"
+      label: "payment processing"
+    - value: "Docker/K8s"
+      label: "consortium infra"
+  thumbnail: "/images/case-study-xbox-royalties.png"
+  thumbnailAlt: "Xbox Royalties system architecture"
+
+# ═══════════════════════════════════════════════════════════════
+# CONTEXT - Role clarity
+# ═══════════════════════════════════════════════════════════════
+context:
+  myRole: "Software Engineer → Technical PM"
+  teamSize: "4 engineers"
+  duration: "2 years"
+  stakeholders:
+    - "Xbox store platform team"
+    - "Game publisher partners"
+    - "Microsoft finance and legal"
+    - "Azure blockchain services"
+
+# ═══════════════════════════════════════════════════════════════
+# PROBLEM - Make them feel the pain
+# ═══════════════════════════════════════════════════════════════
+problem:
+  businessContext: >
+    Xbox needed a transparent, auditable system for tracking and distributing
+    royalty payments to game publishers. Existing database systems lacked
+    the auditability needed for complex multi-party royalty calculations
+    where publishers disputed payment accuracy.
+  constraints:
+    - "Must handle Xbox-scale transaction volumes (millions of purchases)"
+    - "Publishers need real-time visibility into royalty accruals"
+    - "Audit trail must be immutable and independently verifiable"
+    - "Can't expose transaction data to competitors (privacy requirements)"
+  stakes: >
+    Royalty disputes with major publishers were costing millions in legal
+    fees and damaging relationships. A transparent system could eliminate
+    disputes entirely.
+
+# ═══════════════════════════════════════════════════════════════
+# APPROACH - Show thinking depth
+# ═══════════════════════════════════════════════════════════════
+approach:
+  hypothesis: >
+    A blockchain-based system would provide the immutability and transparency
+    publishers needed, while smart contracts could automate complex royalty
+    calculations that were error-prone when done manually.
+  alternatives:
+    - option: "Enhanced traditional database with audit logging"
+      tradeoffs: "Simpler, uses existing infrastructure, faster to build"
+      whyNot: "Publishers didn't trust Microsoft-controlled audit logs. They wanted independent verification."
+    - option: "Public Ethereum mainnet"
+      tradeoffs: "Maximum transparency, decentralization"
+      whyNot: "Transaction data couldn't be public—competitor intelligence risk. Also gas costs at scale were prohibitive."
+    - option: "Third-party blockchain platform (Hyperledger)"
+      tradeoffs: "Enterprise-ready, permissioned by design"
+      whyNot: "Wanted to stay in Ethereum ecosystem for tooling and talent. Private consortium gave us the best of both."
+  chosenPath: "Private Ethereum consortium with permissioned access, maintaining Ethereum compatibility for tooling while ensuring transaction privacy."
+
+# ═══════════════════════════════════════════════════════════════
+# EXECUTION - Concrete actions
+# ═══════════════════════════════════════════════════════════════
+execution:
+  phases:
+    - name: "Proof of Concept"
+      duration: "3 months"
+      actions:
+        - "Built initial smart contract for basic royalty calculation logic"
+        - "Demonstrated to Xbox leadership that blockchain could handle required throughput"
+        - "Identified key technical risks: key management, network consensus, data privacy"
+    - name: "Infrastructure Build"
+      duration: "6 months"
+      actions:
+        - "Designed Docker/Kubernetes architecture for blockchain consortium nodes"
+        - "Built deployment automation for multi-node Ethereum network on Azure"
+        - "Created key management system integrated with Azure Key Vault"
+    - name: "Smart Contract Development"
+      duration: "4 months"
+      actions:
+        - "Developed Solidity contracts for royalty tracking and distribution"
+        - "Built comprehensive testing framework for smart contract validation"
+        - "Created publisher onboarding flow with role-based access control"
+    - name: "Integration & Testing"
+      duration: "6 months"
+      actions:
+        - "Integrated with Xbox store transaction pipeline"
+        - "Ran parallel processing with existing system for validation"
+        - "Conducted security audit with external blockchain specialists"
+  keyDecision:
+    title: "Private consortium vs. public Ethereum"
+    context: "Some stakeholders pushed for public chain for 'true decentralization.' Publishers were concerned about data exposure."
+    decision: "Chose private consortium. Gave publishers what they actually needed (independent verification) without exposing competitive data."
+    outcome: "Publishers got audit capability they wanted. No data exposure incidents. Pattern became template for other Microsoft blockchain projects."
+
+# ═══════════════════════════════════════════════════════════════
+# RESULTS - Quantified impact
+# ═══════════════════════════════════════════════════════════════
+results:
+  primary:
+    metric: "First smart contract at Microsoft"
+    context: "Pioneered enterprise blockchain adoption before 'Web3' existed as a term"
+  secondary:
+    metric: "Xbox-scale transaction processing"
+    context: "System capable of handling millions of royalty calculations"
+  tertiary:
+    metric: "Zero disputed payments post-launch"
+    context: "Transparent audit trail eliminated publisher payment disputes"
+  qualitative: >
+    Project became reference implementation for Azure blockchain services.
+    Established internal expertise that informed Microsoft's broader blockchain strategy.
+
+# ═══════════════════════════════════════════════════════════════
+# REFLECTION - Shows self-awareness
+# ═══════════════════════════════════════════════════════════════
+reflection:
+  whatWorked:
+    - "Starting with POC that proved throughput—eliminated 'blockchain can't scale' objection early"
+    - "Private consortium satisfied both transparency AND privacy requirements"
+    - "Docker/K8s infrastructure made deployment reproducible and auditable"
+    - "Comprehensive testing framework caught bugs before production"
+  whatDidnt:
+    - "Underestimated key management complexity. Spent 3 extra months on secure key handling that should have been scoped from start."
+    - "Initially tried to build everything in-house. Should have leveraged Azure blockchain services earlier."
+    - "Solidity developer talent was scarce in 2016. Had to train existing team, which slowed development."
+  lessonLearned: >
+    Enterprise blockchain adoption is 20% technical and 80% organizational.
+    The hard part isn't building the system—it's convincing stakeholders
+    to trust a new paradigm.
+  wouldDoDifferently: >
+    Would have brought in a blockchain specialist consultant for the first
+    3 months. Learning Solidity security patterns through trial and error
+    was risky and slow.
+
+# ═══════════════════════════════════════════════════════════════
+# EVIDENCE - Proof points
+# ═══════════════════════════════════════════════════════════════
+evidence:
+  demoUrl: null  # Internal Microsoft system
+  githubUrl: null  # Proprietary
+  blogPostUrl: null
+  testimonial:
+    quote: "This project proved that blockchain has real enterprise applications beyond cryptocurrency."
+    author: "Program Manager"
+    role: "Azure Blockchain Services"
+    company: "Microsoft"
+  artifacts:
+    - type: "diagram"
+      src: null
+      alt: "Royalty system architecture"
+      caption: "Enterprise blockchain consortium architecture"
+
+# ═══════════════════════════════════════════════════════════════
+# CTA - Drive action
+# ═══════════════════════════════════════════════════════════════
+cta:
+  headline: "Exploring enterprise blockchain applications?"
+  subtext: "I've been building production blockchain systems since 2016."
+  action: "contact"
+  linkText: "Let's discuss →"
+
+# ═══════════════════════════════════════════════════════════════
+# TECH STACK
+# ═══════════════════════════════════════════════════════════════
+techStack:
+  - "Ethereum"
+  - "Solidity"
+  - "Docker"
+  - "Kubernetes"
+  - "Azure"
+  - "Smart Contracts"
+  - "Azure Key Vault"

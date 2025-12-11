@@ -1,0 +1,41 @@
+# ═══════════════════════════════════════════════════════════════
+# SKILLS & EXPERTISE
+# ═══════════════════════════════════════════════════════════════
+categories:
+  - name: "Blockchain & Web3"
+    skills:
+      - "Ethereum"
+      - "Solidity"
+      - "L2s (Optimism, Base, Arbitrum)"
+      - "Staking Infrastructure"
+      - "MPC Custody"
+      - "ENS"
+      - "DeFi Protocols"
+
+  - name: "Product Management"
+    skills:
+      - "PRDs & Specs"
+      - "Roadmapping"
+      - "Agile/Scrum"
+      - "Cross-functional Leadership"
+      - "Stakeholder Management"
+      - "Go-to-Market"
+
+  - name: "Technical"
+    skills:
+      - "API Design"
+      - "Docker/Kubernetes"
+      - "Smart Contracts"
+      - "SDK Development"
+      - "System Architecture"
+      - "Developer Experience"
+
+  - name: "Tools"
+    skills:
+      - "Jira"
+      - "Linear"
+      - "Notion"
+      - "Figma"
+      - "GitHub"
+      - "Dune Analytics"
+      - "Etherscan"
