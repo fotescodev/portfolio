@@ -7,7 +7,7 @@ import AboutSection from './sections/AboutSection';
 import ExperienceSection from './sections/ExperienceSection';
 import CertificationsSection from './sections/CertificationsSection';
 import TestimonialsSection from './sections/TestimonialsSection';
-import SocialSection from './sections/SocialSection';
+
 import CaseStudiesSection from './sections/CaseStudiesSection';
 import FooterSection from './sections/FooterSection';
 import CaseStudyDrawer from './case-study/CaseStudyDrawer';
@@ -282,11 +282,7 @@ export default function Portfolio() {
         sectionPadding={sectionPadding}
       />
 
-      {/* Social / Writing & Speaking Section */}
-      <SocialSection
-        isMobile={isMobile}
-        sectionPadding={sectionPadding}
-      />
+
 
       {/* Blog Section */}
       {sections.blog && <Blog isMobile={isMobile} isTablet={isTablet} />}
