@@ -257,25 +257,27 @@ animation: slideUp 1s var(--ease-smooth) forwards;
 ```
 
 ## Layout System
-251: 
-252: Defined in `globals.css` to ensure consistency across all sections.
-253: 
-254: ### Dimensions
-255: 
-256: - `--layout-max-width`: **1600px** (Wide, premium feel)
-257: - `--nav-height`: **20px** (Compact desktop vertical padding)
-258: - `--nav-height-mobile`: **16px** (Mobile vertical padding)
-259: 
-260: ### Usage
-261: 
-262: ```css
-263: .section-container {
-264:   max-width: var(--layout-max-width);
-265:   margin: 0 auto;
-266: }
-267: ```
-268: 
-269: ## Effects
+
+Defined in `globals.css` to ensure consistency across all sections.
+
+### Dimensions
+
+- `--layout-max-width`: **1600px** (Wide, premium feel)
+- `--nav-height`: **20px** (Compact desktop vertical padding)
+- `--nav-height-mobile`: **16px** (Mobile vertical padding)
+- `--drawer-width`: **800px** (Case Study slide-over width)
+- `--drawer-z-index`: **200** (Above all content)
+
+### Usage
+
+```css
+.section-container {
+  max-width: var(--layout-max-width);
+  margin: 0 auto;
+}
+```
+
+## Effects
 
 ### Grid Overlay
 Subtle dot grid background:

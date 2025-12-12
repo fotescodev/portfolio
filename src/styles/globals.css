@@ -40,6 +40,8 @@
   --layout-max-width: 1600px;
   --nav-height: 20px;
   --nav-height-mobile: 16px;
+  --drawer-width: 800px;
+  --drawer-z-index: 200;
 
   /* Spacing */
   --space-xs: 4px;

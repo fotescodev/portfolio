@@ -1,69 +1,68 @@
-# Implementation Plan - Case Study Modal Refactor
+# Phase 2: Polish & Features ("The Hired Metric")
 
-**Goal**: Deconstruct the monolothic `CaseStudyModal.tsx` (630 lines) into small, composable components to enable easier animation, styling, and maintenance.
+**Goal**: Transform the functional portfolio into a "premium" experience with smooth animations, dynamic SEO for social sharing, and high-conversion features.
 
 ## User Review Required
-
 > [!IMPORTANT]
-> This refactor will create a new directory `src/components/case-study/`.
-> We will strictly maintain **feature parity** first before adding new animations.
+> **New Dependencies**: We will install `framer-motion` and `react-helmet-async`.
+> **Visual Changes**: The "Orb" effect will add a subtle background animation. The "Omnibar" will add a floating element to the screen.
 
 ## Proposed Changes
 
-### Component Architecture
+### 1. Dynamic SEO (Priority: High)
+Ensure that sharing a specific case study link on LinkedIn/Twitter looks professional.
 
-We will decompose `src/components/sections/CaseStudyModal.tsx` into the following structure:
+#### [NEW] [SEO.tsx](file:///Users/dfotesco/Portfolio/portfolio/src/components/common/SEO.tsx)
+- Create a wrapper around `react-helmet-async`.
+- Props: `title`, `description`, `image`, `url`.
 
-```
-src/components/case-study/
-├── CaseStudyModal.tsx        # Main container / Orchestrator (State, Scroll, Layout)
-├── CaseStudyHeader.tsx       # Navigation (Back/Close buttons)
-├── CaseStudyHero.tsx         # Title, Role, Context + [NEW] Actual Image Rendering
-├── CaseStudyMetrics.tsx      # The full-width stats grid
-├── CaseStudyNarrative.tsx    # Problem, Approach, Execution, Key Decision
-├── CaseStudyResults.tsx      # Quantitative & Qualitative results
-├── CaseStudyReflection.tsx   # What worked/didn't, Lesson Learned
-└── CaseStudyFooter.tsx       # Tech stack, constraints, links, CTA
-```
+#### [MODIFY] [App.tsx](file:///Users/dfotesco/Portfolio/portfolio/src/App.tsx)
+- Wrap application in `<HelmetProvider>`.
 
-### Detailed Component Breakdown
+#### [MODIFY] [CaseStudyModal.tsx](file:///Users/dfotesco/Portfolio/portfolio/src/components/case-study/CaseStudyModal.tsx)
+- Inject `<SEO />` with case-study specific data.
 
-#### [NEW] `src/components/case-study/CaseStudyHero.tsx`
-*   **Responsibilities**:
-    *   Render the meta line (ID · Company · Year)
-    *   Render Main Title (`h1`)
-    *   Render Role/Team/Duration context
-    *   **Fix**: Implement `caseStudy.hook.thumbnail` rendering (currently missing in the codebase).
+### 2. Motion & Transitions (Priority: High)
+Replace jerk CSS animations with physics-based transitions and switch to **Drawer** pattern.
 
-#### [NEW] `src/components/case-study/CaseStudyNarrative.tsx`
-*   **Responsibilities**:
-    *   "The Story" sections
-    *   Challenge (Business Context + Stakes)
-    *   Approach (Hypothesis + Solution)
-    *   Execution Phases (Timeline visualization)
-*   **Why**: This is the most text-heavy section. Isolating it allows us to add "Reading Progress" observers later easily.
+#### [NEW] [Global Styles](file:///Users/dfotesco/Portfolio/portfolio/src/styles/globals.css)
+- **Governance**: Define `--drawer-width` (e.g., 800px or 50vw), `--drawer-z-index`, and overlay colors.
 
-#### [NEW] `src/components/case-study/CaseStudyMetrics.tsx`
-*   **Responsibilities**:
-    *   Render the `impactMetric` (Primary)
-    *   Render `subMetrics` list
-    *   Handle the `bg-grid` overlay specific to this section.
+#### [REFACTOR] [CaseStudyModal.tsx] -> [CaseStudyDrawer.tsx]
+- **Component**: Rename to `CaseStudyDrawer`.
+- **Behavior**:
+    - **Desktop**: Slide in from **Right**. Cover ~50-60% of screen. Backdop blur.
+    - **Mobile**: Slide up from **Bottom**. Cover 95% of screen.
+- **Motion**: Use `framer-motion` for the slide effect (`x: '100%'` -> `x: 0`).
+- **SEO**: Ensure URL updates to `?case-study=slug` so deep linking works perfectly.
 
-### Migration Steps
+### 3. Visual Polish ("The Orbs") (Priority: Medium)
+Add the background ambient effects referenced in the Design System.
 
-1.  **Setup**: Create the directory `src/components/case-study/`.
-2.  **Extract**: Move logic piece-by-piece, starting with leaf nodes (`Header`, `Footer`, `Metrics`) and ending with the core `Narrative`.
-3.  **Integrate**: Update the main `CaseStudyModal` to import and compose these new components.
-4.  **Verify**: Ensure all props are passed correctly and no styling regressions occur.
+#### [NEW] [AmbientBackground.tsx](file:///Users/dfotesco/Portfolio/portfolio/src/components/effects/AmbientBackground.tsx)
+- Renders the `.orb-primary`, `.orb-secondary`, and `.bg-grid` divs.
+- Uses `framer-motion` to move the orbs slowly (breathing effect).
+
+#### [MODIFY] [Portfolio.tsx](file:///Users/dfotesco/Portfolio/portfolio/src/components/Portfolio.tsx)
+- Mount `<AmbientBackground />` at the top level.
+
+### 4. Conversion Features (Priority: Medium)
+
+#### [NEW] [TrustBattery.tsx](file:///Users/dfotesco/Portfolio/portfolio/src/components/sections/TrustBattery.tsx)
+- A "Wall of Love" marquee section for testimonials.
+
+#### [NEW] [Omnibar.tsx](file:///Users/dfotesco/Portfolio/portfolio/src/components/common/Omnibar.tsx)
+- Floating action bar (Resume, Email, Calendar).
+- Bottom centered on mobile, bottom-right or top-right on desktop.
 
 ## Verification Plan
 
 ### Automated Tests
-*   Run `npm run build` to ensure no TypeScript errors from the prop drilling.
+- Verify `react-helmet-async` injects tags correctly (unit test).
+- Verify `framer-motion` components mount without errors.
 
 ### Manual Verification
-*   Open "Institutional ETH Staking" case study.
-*   Check that the **image** now appears (if we add the placeholder logic).
-*   Verify the **Metrics** grid layout on Mobile vs Desktop.
-*   Verify **Navigation** (Prev/Next) still works in the Footer/Header.
-*   Verify **Close** button works.
+- **SEO**: Use a metadata checker tool (or inspect element head) on case study views.
+- **Motion**: Verify modal opens/closes smoothly without layout shifts.
+- **Visuals**: Check "Orb" visibility in Dark and Light modes.
+- **Responsive**: Ensure Omnibar doesn't cover content on mobile.

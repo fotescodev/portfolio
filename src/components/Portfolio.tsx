@@ -2,18 +2,16 @@ import { useState, useEffect } from 'react';
 import Blog from './Blog';
 import ThemeToggle from './ThemeToggle';
 import { useTheme } from '../context/ThemeContext';
-import {
-  HeroSection,
-  AboutSection,
-  ExperienceSection,
-  CertificationsSection,
-  TestimonialsSection,
-  SocialSection,
-  CaseStudiesSection,
-  CaseStudyModal,
-  FooterSection
-} from './sections';
-import { profile, caseStudies } from '../lib/content';
+import HeroSection from './sections/HeroSection';
+import AboutSection from './sections/AboutSection';
+import ExperienceSection from './sections/ExperienceSection';
+import CertificationsSection from './sections/CertificationsSection';
+import TestimonialsSection from './sections/TestimonialsSection';
+import SocialSection from './sections/SocialSection';
+import CaseStudiesSection from './sections/CaseStudiesSection';
+import FooterSection from './sections/FooterSection';
+import CaseStudyDrawer from './case-study/CaseStudyDrawer';
+import { profile } from '../lib/content';
 import type { CaseStudy } from '../types/portfolio';
 
 export default function Portfolio() {
@@ -448,12 +446,12 @@ export default function Portfolio() {
 
       {/* Case Study Modal */}
       {modalCase && (
-        <CaseStudyModal
-          caseStudy={modalCase}
-          allCaseStudies={caseStudies}
+        <CaseStudyDrawer
+          isOpen={!!modalCase}
           onClose={() => setModalCase(null)}
-          onNavigate={(study) => setModalCase(study)}
+          caseStudy={modalCase}
           isMobile={isMobile}
+          onNavigate={(study) => setModalCase(study)}
         />
       )}
 
