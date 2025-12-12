@@ -53,10 +53,10 @@ export interface Job {
   role: string;
   period: string;
   location: string;
-  logo?: string;
+  logo?: string | null;
   highlights: string[];
   tags: string[];
-  url?: string;
+  url?: string | null;
 }
 
 export interface Experience {
@@ -88,17 +88,17 @@ export interface Certification {
   issuer: string;
   date: string;
   credentialId?: string | null;
-  url?: string;
-  logo?: string;
+  url?: string | null;
+  logo?: string | null;
   featured: boolean;
-  instructor?: string;
-  instructorRole?: string;
+  instructor?: string | null;
+  instructorRole?: string | null;
 }
 
 export interface Credential {
   label: string;
   value: string;
-  url?: string;
+  url?: string | null;
 }
 
 export interface OnchainLink {
