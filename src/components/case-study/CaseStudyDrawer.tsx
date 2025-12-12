@@ -72,7 +72,7 @@ export default function CaseStudyDrawer({ isOpen, onClose, caseStudy, isMobile, 
                                 width: isMobile ? '100%' : 'var(--drawer-width)', // 800px
                                 height: '100%',
                                 background: colors.background,
-                                zIndex: 201, // Above backdrop
+                                zIndex: 'calc(var(--drawer-z-index) + 1)', // 201
                                 overflowY: 'auto',
                                 boxShadow: '-10px 0 40px rgba(0,0,0,0.2)',
                                 borderLeft: `1px solid ${colors.border}`
@@ -95,12 +95,12 @@ export default function CaseStudyDrawer({ isOpen, onClose, caseStudy, isMobile, 
                                     onClick={onClose}
                                     style={{
                                         position: 'absolute',
-                                        top: '24px',
-                                        right: '24px',
-                                        width: '40px',
+                                        top: 'var(--space-lg)', // 24px
+                                        right: 'var(--space-lg)', // 24px
+                                        width: '40px', // keeping 40px as specific UI element size not spacing
                                         height: '40px',
                                         borderRadius: '50%',
-                                        background: 'rgba(0,0,0,0.5)',
+                                        background: 'rgba(0,0,0,0.5)', // Backdrop alpha not in tokens usually
                                         border: 'none',
                                         color: '#fff',
                                         display: 'flex',
@@ -119,7 +119,7 @@ export default function CaseStudyDrawer({ isOpen, onClose, caseStudy, isMobile, 
 
                                 <CaseStudyHero caseStudy={caseStudy} isMobile={isMobile} />
 
-                                <div style={{ padding: isMobile ? '24px' : '48px 48px 0' }}>
+                                <div style={{ padding: isMobile ? 'var(--space-lg)' : 'var(--space-2xl) var(--space-2xl) 0' }}>
                                     <CaseStudyHeader
                                         onClose={onClose}
                                         isMobile={isMobile}
