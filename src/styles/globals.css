@@ -19,9 +19,9 @@
   /* Effects - Dark */
   --color-nav-gradient-start: rgba(8, 8, 10, 1);
   --color-nav-gradient-end: rgba(8, 8, 10, 0);
-  --color-grid-overlay: rgba(255, 255, 255, 0.08);
-  --color-orb-accent: rgba(194, 154, 108, 0.4);
-  --color-orb-secondary: rgba(74, 222, 128, 0.2);
+  --color-grid-overlay: rgba(255, 255, 255, 0.05);
+  --color-orb-accent: rgba(194, 154, 108, 0.25);
+  --color-orb-secondary: rgba(74, 222, 128, 0.12);
   --color-scrollbar-thumb: rgba(232, 230, 227, 0.15);
   --color-scrollbar-thumb-hover: rgba(232, 230, 227, 0.25);
   --color-card-hover: rgba(194, 154, 108, 0.02);
@@ -79,9 +79,9 @@
   /* Effects - Light */
   --color-nav-gradient-start: rgba(250, 250, 250, 1);
   --color-nav-gradient-end: rgba(250, 250, 250, 0);
-  --color-grid-overlay: rgba(0, 0, 0, 0.05);
-  --color-orb-accent: rgba(166, 124, 82, 0.25);
-  --color-orb-secondary: rgba(34, 197, 94, 0.15);
+  --color-grid-overlay: rgba(0, 0, 0, 0.03);
+  --color-orb-accent: rgba(166, 124, 82, 0.15);
+  --color-orb-secondary: rgba(34, 197, 94, 0.1);
   --color-scrollbar-thumb: rgba(26, 26, 28, 0.15);
   --color-scrollbar-thumb-hover: rgba(26, 26, 28, 0.25);
   --color-card-hover: rgba(166, 124, 82, 0.03);
