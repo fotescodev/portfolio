@@ -154,6 +154,7 @@
   pointer-events: none;
   z-index: 0;
   opacity: 0.8;
+  animation: float 25s ease-in-out infinite;
 }
 
 .orb-secondary {
@@ -167,6 +168,27 @@
   pointer-events: none;
   z-index: 0;
   opacity: 0.5;
+  animation: float 20s ease-in-out infinite reverse;
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  25% {
+    transform: translate(2%, 2%);
+  }
+
+  50% {
+    transform: translate(-2%, 4%);
+  }
+
+  75% {
+    transform: translate(-4%, -2%);
+  }
 }
 
 .bg-grid {

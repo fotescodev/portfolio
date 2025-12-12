@@ -283,7 +283,7 @@ Defined in `globals.css` to ensure consistency across all sections.
 Subtle dot grid background:
 
 ```tsx
-<div className="grid-overlay" />
+<div className="bg-grid" />
 ```
 
 ### Ambient Orbs

@@ -11,6 +11,7 @@ import SocialSection from './sections/SocialSection';
 import CaseStudiesSection from './sections/CaseStudiesSection';
 import FooterSection from './sections/FooterSection';
 import CaseStudyDrawer from './case-study/CaseStudyDrawer';
+import AmbientBackground from './common/AmbientBackground';
 import { profile } from '../lib/content';
 import type { CaseStudy } from '../types/portfolio';
 
@@ -58,62 +59,13 @@ export default function Portfolio() {
   return (
     <div style={{
       minHeight: '100vh',
-      background: colors.background,
-      color: colors.textPrimary,
-      fontFamily: "'Instrument Sans', -apple-system, BlinkMacSystemFont, sans-serif",
-      overflowX: 'hidden',
-      transition: 'background 0.4s cubic-bezier(0.16, 1, 0.3, 1), color 0.4s cubic-bezier(0.16, 1, 0.3, 1)'
+      background: 'var(--color-background)',
+      color: 'var(--color-text-primary)',
+      transition: 'background var(--transition-medium), color var(--transition-medium)',
+      position: 'relative'
     }}>
-      {/* Subtle grid texture overlay */}
-      <div style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        backgroundImage: `radial-gradient(${colors.gridOverlay} 1px, transparent 1px)`,
-        backgroundSize: '32px 32px',
-        pointerEvents: 'none',
-        zIndex: 0,
-        transition: 'background-image 0.4s ease'
-      }} />
 
-      {/* Background Orbs */}
-      <div style={{
-        position: 'fixed',
-        top: '0',
-        left: '0',
-        right: '0',
-        height: '80vh',
-        background: `radial-gradient(circle at 50% 0%, ${colors.orbAccent} 0%, transparent 70%)`,
-        opacity: 0.8,
-        zIndex: 0,
-        pointerEvents: 'none'
-      }} />
-      <div style={{
-        position: 'fixed',
-        top: '20%',
-        right: '-10%',
-        width: '40vw',
-        height: '40vw',
-        background: `radial-gradient(circle, ${colors.orbSecondary} 0%, transparent 70%)`,
-        filter: 'blur(60px)',
-        opacity: 0.5,
-        zIndex: 0,
-        pointerEvents: 'none'
-      }} />
-      <style>{`
-        @keyframes float {
-          0%, 100% { transform: translate(0, 0) scale(1); }
-          25% { transform: translate(30px, -20px) scale(1.05); }
-          50% { transform: translate(-20px, 20px) scale(0.95); }
-          75% { transform: translate(10px, 10px) scale(1.02); }
-        }
-        @keyframes pulse {
-          0%, 100% { opacity: 0.4; }
-          50% { opacity: 0.6; }
-        }
-      `}</style>
+      <AmbientBackground />
 
       {/* Navigation */}
       <nav style={{
