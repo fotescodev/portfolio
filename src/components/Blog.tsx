@@ -3,10 +3,8 @@ import type { BlogPost } from '../types/blog';
 import BlogPostModal from './BlogPostModal';
 import { useTheme } from '../context/ThemeContext';
 
-// Import blog posts statically (we'll parse these)
-import retrospectivePost from '../../content/blog/2024-12-11-portfolio-retrospective.md?raw';
-import aiAgentsPost from '../../content/blog/2024-12-01-ai-agents-meet-onchain.md?raw';
-import stakingPost from '../../content/blog/2024-11-15-etf-grade-staking.md?raw';
+// Auto-discover blog posts using import.meta.glob
+const blogPostFiles = import.meta.glob('../../content/blog/*.md', { query: '?raw', eager: true });
 
 interface BlogProps {
     isMobile: boolean;
@@ -62,16 +60,20 @@ function calculateReadingTime(content: string): number {
     return Math.ceil(words / wordsPerMinute);
 }
 
-// Parse all blog posts
-function parseBlogPosts(): BlogPost[] {
-    const posts = [
-        { raw: retrospectivePost, slug: 'portfolio-retrospective' },
-        { raw: aiAgentsPost, slug: 'ai-agents-meet-onchain' },
-        { raw: stakingPost, slug: 'etf-grade-staking' },
-    ];
+// Extract slug from filename (YYYY-MM-DD-slug.md → slug)
+function extractSlugFromFilename(path: string): string {
+    const filename = path.split('/').pop() || '';
+    // Remove .md extension and date prefix (YYYY-MM-DD-)
+    return filename.replace(/^\d{4}-\d{2}-\d{2}-/, '').replace(/\.md$/, '');
+}
 
-    return posts.map(({ raw, slug }) => {
+// Parse all blog posts (auto-discovered)
+function parseBlogPosts(): BlogPost[] {
+    const posts = Object.entries(blogPostFiles).map(([path, module]) => {
+        const raw = (module as any).default as string;
+        const slug = extractSlugFromFilename(path);
         const { frontmatter, content } = parseFrontmatter(raw);
+
         return {
             slug,
             title: frontmatter.title as string || 'Untitled',
@@ -82,7 +84,9 @@ function parseBlogPosts(): BlogPost[] {
             readingTime: calculateReadingTime(content),
             content
         };
-    }).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    });
+
+    return posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 
 export default function Blog({ isMobile, isTablet }: BlogProps) {
