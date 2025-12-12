@@ -22,6 +22,7 @@ export default function Portfolio() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
   const [modalCase, setModalCase] = useState<CaseStudy | null>(null);
+  const [hoveredCase, setHoveredCase] = useState<number | null>(null);
 
   useEffect(() => {
     setIsLoaded(true);
@@ -308,7 +309,9 @@ export default function Portfolio() {
         isMobile={isMobile}
         isTablet={isTablet}
         sectionPadding={sectionPadding}
-        onOpenModal={(study) => setModalCase(study)}
+        hoveredCase={hoveredCase}
+        setHoveredCase={setHoveredCase}
+        onCaseClick={(study) => setModalCase(study)}
       />
 
       {/* Testimonials Section */}
