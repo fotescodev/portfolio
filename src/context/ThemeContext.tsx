@@ -58,9 +58,9 @@ const darkColors: ThemeColors = {
   codeBackground: '#141416',
 
   navGradient: 'rgba(8,8,10,0.85)',
-  gridOverlay: 'rgba(255,255,255,0.03)',
-  orbAccent: 'rgba(194, 154, 108, 0.15)',
-  orbSecondary: 'rgba(74, 222, 128, 0.08)',
+  gridOverlay: 'rgba(255,255,255,0.08)',
+  orbAccent: 'rgba(194, 154, 108, 0.4)',
+  orbSecondary: 'rgba(74, 222, 128, 0.2)',
 
   scrollbarThumb: 'rgba(232, 230, 227, 0.15)',
   scrollbarThumbHover: 'rgba(232, 230, 227, 0.25)',
@@ -87,9 +87,9 @@ const lightColors: ThemeColors = {
   codeBackground: '#f8f8f8',
 
   navGradient: 'rgba(250,250,250,0.85)',
-  gridOverlay: 'rgba(0,0,0,0.02)',
-  orbAccent: 'rgba(166, 124, 82, 0.08)',
-  orbSecondary: 'rgba(34, 197, 94, 0.05)',
+  gridOverlay: 'rgba(0,0,0,0.05)',
+  orbAccent: 'rgba(166, 124, 82, 0.25)',
+  orbSecondary: 'rgba(34, 197, 94, 0.15)',
 
   scrollbarThumb: 'rgba(26, 26, 28, 0.15)',
   scrollbarThumbHover: 'rgba(26, 26, 28, 0.25)',
