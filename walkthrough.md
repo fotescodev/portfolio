@@ -19,7 +19,10 @@ This changeset implements the foundational technical requirements for the "Direc
 *   **Feature Fix**: Implemented the missing `thumbnail` rendering logic in the Hero section.
 *   **Verification**: Added `src/tests/case-study-modal.test.tsx` to prove regression-free refactoring.
 
-### 3. Data Integrity (Zod)
+### 4. Layout Fixes
+*   **Navbar Alignment**: Wrapped navbar content in a constrained container (`maxWidth: 1400px`) to match the body content alignment on large screens.
+
+### 5. Data Integrity (Zod)
 *   Installed `zod`.
 *   Replaced unsafe `as unknown` casting in `src/lib/content.ts` with strict Zod schemas.
 *   **Effect**: The application now validates all YAML content at runtime, preventing silent crashes from bad data.
