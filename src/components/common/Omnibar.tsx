@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from '../../context/ThemeContext';
 import { profile } from '../../lib/content';
 
@@ -13,26 +14,32 @@ export default function Omnibar() {
     };
 
     return (
-        <div style={{
-            position: 'fixed',
-            bottom: 'var(--omnibar-bottom-spacing)',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            zIndex: 'var(--omnibar-z-index)',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-            padding: '6px',
-            background: isDark ? 'rgba(20, 20, 22, 0.6)' : 'rgba(255, 255, 255, 0.6)',
-            backdropFilter: 'blur(12px)',
-            WebkitBackdropFilter: 'blur(12px)',
-            borderRadius: '100px',
-            border: `1px solid ${colors.borderLight}`,
-            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.12)'
-        }}>
+        <motion.div
+            initial={{ y: 100, opacity: 0, x: '-50%' }}
+            animate={{ y: 0, opacity: 1, x: '-50%' }}
+            transition={{ type: 'spring', damping: 20, stiffness: 300, delay: 0.5 }}
+            style={{
+                position: 'fixed',
+                bottom: 'var(--omnibar-bottom-spacing)',
+                left: '50%',
+                zIndex: 'var(--omnibar-z-index)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                padding: '6px',
+                background: isDark ? 'rgba(20, 20, 22, 0.6)' : 'rgba(255, 255, 255, 0.6)',
+                backdropFilter: 'blur(12px)',
+                WebkitBackdropFilter: 'blur(12px)',
+                borderRadius: '100px',
+                border: `1px solid ${colors.borderLight}`,
+                boxShadow: '0 8px 32px rgba(0, 0, 0, 0.12)'
+            }}
+        >
             {/* Email / Copy */}
-            <button
+            <motion.button
                 onClick={handleCopyEmail}
+                whileHover={{ scale: 1.05, backgroundColor: colors.tagHover }}
+                whileTap={{ scale: 0.95 }}
                 style={{
                     display: 'flex',
                     alignItems: 'center',
@@ -45,23 +52,44 @@ export default function Omnibar() {
                     fontWeight: 500,
                     cursor: 'pointer',
                     borderRadius: '100px',
-                    transition: 'background 0.2s ease',
                     whiteSpace: 'nowrap'
                 }}
-                onMouseEnter={(e) => (e.currentTarget.style.background = colors.tagHover)}
-                onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
             >
-                <span style={{ fontSize: '16px' }}>{copied ? '✓' : '✉️'}</span>
+                <AnimatePresence mode='wait' initial={false}>
+                    {copied ? (
+                        <motion.span
+                            key="check"
+                            initial={{ scale: 0, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0, opacity: 0 }}
+                            style={{ fontSize: '16px' }}
+                        >
+                            ✓
+                        </motion.span>
+                    ) : (
+                        <motion.span
+                            key="email"
+                            initial={{ scale: 0, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0, opacity: 0 }}
+                            style={{ fontSize: '16px' }}
+                        >
+                            ✉️
+                        </motion.span>
+                    )}
+                </AnimatePresence>
                 <span>{copied ? 'Copied' : 'Email'}</span>
-            </button>
+            </motion.button>
 
             <div style={{ width: '1px', height: '16px', background: colors.borderLight }} />
 
             {/* Resume */}
-            <a
-                href="/resume.pdf" // Placeholder, user needs to add resume.pdf to public folder
+            <motion.a
+                href="/resume.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
+                whileHover={{ scale: 1.05, backgroundColor: colors.tagHover }}
+                whileTap={{ scale: 0.95 }}
                 style={{
                     display: 'flex',
                     alignItems: 'center',
@@ -74,44 +102,40 @@ export default function Omnibar() {
                     fontWeight: 500,
                     cursor: 'pointer',
                     textDecoration: 'none',
-                    borderRadius: '100px',
-                    transition: 'background 0.2s ease'
+                    borderRadius: '100px'
                 }}
-                onMouseEnter={(e) => (e.currentTarget.style.background = colors.tagHover)}
-                onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
             >
                 <span>📄</span>
                 <span>Resume</span>
-            </a>
+            </motion.a>
 
             <div style={{ width: '1px', height: '16px', background: colors.borderLight }} />
 
             {/* Book Call (Primary) */}
-            <a
-                href="https://calendly.com/dmitriifotesco" // Hardcoded based on CaseStudyFooter knowledge
+            <motion.a
+                href="https://calendly.com/dmitriifotesco"
                 target="_blank"
                 rel="noopener noreferrer"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 style={{
                     display: 'flex',
                     alignItems: 'center',
                     gap: '8px',
                     padding: '8px 16px',
-                    background: colors.textPrimary, // Primary action style
+                    background: colors.textPrimary,
                     color: colors.background,
                     border: 'none',
                     fontSize: '13px',
                     fontWeight: 600,
                     cursor: 'pointer',
                     textDecoration: 'none',
-                    borderRadius: '100px',
-                    transition: 'transform 0.2s ease'
+                    borderRadius: '100px'
                 }}
-                onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.05)')}
-                onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
             >
                 <span>☕️</span>
                 <span>Book Call</span>
-            </a>
-        </div>
+            </motion.a>
+        </motion.div>
     );
 }
