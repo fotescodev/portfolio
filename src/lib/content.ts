@@ -16,11 +16,8 @@ import certificationsYaml from '../../content/certifications/index.yaml';
 import skillsYaml from '../../content/skills/index.yaml';
 import socialYaml from '../../content/social/index.yaml';
 
-// Import case studies
-import caseStudy01 from '../../content/case-studies/01-eth-staking.yaml';
-import caseStudy02 from '../../content/case-studies/02-protocol-integration.yaml';
-import caseStudy03 from '../../content/case-studies/03-xbox-royalties.yaml';
-import caseStudy04 from '../../content/case-studies/04-ankr-rpc.yaml';
+// Auto-discover case studies using import.meta.glob
+const caseStudyFiles = import.meta.glob('../../content/case-studies/*.yaml', { eager: true });
 
 // ------------------------------------------------------------------
 // Zod Schemas (Mirroring types/portfolio.ts)
@@ -306,13 +303,12 @@ export const certifications = validate(CertificationsSchema, certificationsYaml,
 export const skills = validate(SkillsSchema, skillsYaml, 'skills/index.yaml');
 export const social = validate(SocialSchema, socialYaml, 'social/index.yaml');
 
-// Validate and sort case studies
-export const caseStudies = [
-  caseStudy01,
-  caseStudy02,
-  caseStudy03,
-  caseStudy04,
-].map((cs, i) => validate(CaseStudySchema, cs, `case-study-${i + 1}`))
+// Validate and sort case studies (auto-discovered)
+export const caseStudies = Object.entries(caseStudyFiles)
+  .map(([path, module]) => {
+    const filename = path.split('/').pop() || 'unknown';
+    return validate(CaseStudySchema, (module as any).default, filename);
+  })
   .sort((a, b) => a.id - b.id);
 
 // Aggregated content export
