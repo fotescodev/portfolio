@@ -45,3 +45,42 @@ This changeset implements the foundational technical requirements for the "Direc
 ## Next Steps (Phase 2)
 *   Animate the new atomic components with Framer Motion.
 *   Enable the "Orb" background effects.
+
+# Phase 2 Completion: Polish & Features
+
+**Summary**:
+Implements the "Director-Grade" interactive features, including a smooth animated drawer for case studies, ambient visual effects, and a high-conversion Omnibar. Also resolves critical deployment blockers.
+
+## Changes
+
+### 1. Animated Case Study Drawer
+*   **Refactor**: Replaced the static `CaseStudyModal` with a `CaseStudyDrawer` using purely standard CSS variables and motion primitives.
+*   **Animation**: Integrated `framer-motion` for slide-in (desktop right) and slide-up (mobile bottom) transitions.
+*   **Nav**: Added "Previous/Next" navigation within the drawer to keep users engaged with case studies.
+
+### 2. Visual Polish (Ambient Effects)
+*   **Orbs**: Implemented breathing, floating gradient orbs (Gold & Green) in `AmbientBackground.tsx` and `globals.css`.
+*   **Grid**: Added a subtle dot-grid overlay to the entire background for texture.
+*   **Tuning**: Opacity calibrated for visibility without distraction (Orbs: 25%, Grid: 5%).
+
+### 3. Floating Omnibar
+*   **Component**: Created `Omnibar.tsx`, a glass-morphic floating dock.
+*   **Actions**: "Email" (Copy to Clipboard), "Resume" (PDF Link), "Book Call" (Calendly).
+*   **Motion**: Spring-loaded entrance animation and tactile hover/tap feedbacks.
+
+### 4. Dynamic SEO
+*   **Integration**: Added `react-helmet-async` to `App.tsx`.
+*   **Component**: Created `SEO.tsx` to dynamically inject `<title>` and OpenGraph tags based on the active route or case study.
+
+### 5. Deployment Fixes
+*   **React 19 Peer Deps**: Added `package.json` overrides to resolve `react-helmet-async` vs React 19 conflicts.
+*   **Zombie Exports**: Fixed build failure caused by `index.ts` exporting the deleted `CaseStudyModal`.
+
+## Verification Results
+*   **Deployment**: Validated via GitHub Actions (Green Build).
+*   **Visuals**: Verified "Goldilocks" opacity settings with the user.
+*   **Interactions**: Verified Omnibar copy-paste and hover states via code review.
+
+## Next Steps (Phase 3)
+*   Implement the "Trust Battery" (Testimonials) section.
+*   Refine Scroll-Driven Storytelling within the new Drawer.

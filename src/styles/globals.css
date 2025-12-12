@@ -79,9 +79,9 @@
   /* Effects - Light */
   --color-nav-gradient-start: rgba(250, 250, 250, 1);
   --color-nav-gradient-end: rgba(250, 250, 250, 0);
-  --color-grid-overlay: rgba(0, 0, 0, 0.03);
-  --color-orb-accent: rgba(166, 124, 82, 0.15);
-  --color-orb-secondary: rgba(34, 197, 94, 0.1);
+  --color-grid-overlay: rgba(0, 0, 0, 0.08);
+  --color-orb-accent: rgba(166, 124, 82, 0.35);
+  --color-orb-secondary: rgba(34, 197, 94, 0.25);
   --color-scrollbar-thumb: rgba(26, 26, 28, 0.15);
   --color-scrollbar-thumb-hover: rgba(26, 26, 28, 0.25);
   --color-card-hover: rgba(166, 124, 82, 0.03);

@@ -87,9 +87,9 @@ const lightColors: ThemeColors = {
   codeBackground: '#f8f8f8',
 
   navGradient: 'rgba(250,250,250,0.85)',
-  gridOverlay: 'rgba(0,0,0,0.03)',
-  orbAccent: 'rgba(166, 124, 82, 0.15)',
-  orbSecondary: 'rgba(34, 197, 94, 0.1)',
+  gridOverlay: 'rgba(0,0,0,0.08)',
+  orbAccent: 'rgba(166, 124, 82, 0.35)',
+  orbSecondary: 'rgba(34, 197, 94, 0.25)',
 
   scrollbarThumb: 'rgba(26, 26, 28, 0.15)',
   scrollbarThumbHover: 'rgba(26, 26, 28, 0.25)',

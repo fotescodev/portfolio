@@ -13,7 +13,9 @@ This document serves as the **Supreme Law** for contributing to this codebase. Y
 2.  **No "Snowflakes"**:
     *   **NEVER** use hardcoded hex codes (e.g., `#FFFFFF`), pixels (e.g., `24px`), or ad-hoc styles in components.
     *   **ALWAYS** use CSS variables defined in `globals.css` (e.g., `var(--color-text-primary)`, `var(--space-lg)`).
-3.  **Governance Protocol**:
+3.  **Theme Parity**:
+    *   **Dark Mode != Light Mode**: Do not assume transparency or colors work the same.
+    *   **Verify Both**: Every visual change MUST be verified in both themes. If a feature exists in Dark Mode (e.g., ambient orbs), it MUST have a Light Mode equivalent.
     If you need to introduce a new visual style, dimension, or pattern:
     *   **Step 1: Reason**: Explicitly justify to the user *why* the existing system is insufficient.
     *   **Step 2: Define**: Add the new token to `src/styles/globals.css`.
@@ -30,7 +32,7 @@ This document serves as the **Supreme Law** for contributing to this codebase. Y
 - [ ] **Token First**: Did I check `globals.css` before writing any new style?
 - [ ] **No Magic Numbers**: Are all spacing/sizing values using `var(--space-*)` or `var(--layout-*)`? (Exception: 1-2px borders/offsets).
 - [ ] **Documentation Sync**: If I added a new variable, did I update `context/DESIGN.md`?
-- [ ] **Theme Check**: Did I verify the change works in both Dark AND Light mode?
+- [ ] **Theme Check**: Did I verify the change works in both Dark AND Light mode? (Are ambient effects visible in both?)
 - [ ] **Mobile Check**: Did I verify responsive behavior (e.g., `isMobile` logic)?
 
 ## 4. "The Prime Directive" of Design

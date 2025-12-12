@@ -15,13 +15,14 @@ These tasks address immediate blocking issues for content correctness and visibi
     - **Solution**: Install `zod`. Create schemas for `Profile`, `CaseStudy`, etc. Validate YAML import at runtime or build time.
     - **Command**: `npm install zod`
 
-- [ ] **Dynamic SEO (Social Proof)**
+- [x] **Dynamic SEO (Social Proof)**
     - **Problem**: As a SPA, sharing a Case Study link on LinkedIn currently shows the generic homepage metadata.
-    - **Solution**: Install `react-helmet-async`. Update `CaseStudyModal` (or the route wrapper) to inject dynamic `<title>` and `<meta property="og:..." />` tags based on the active case study.
+    - **Solution**: Install `react-helmet-async`. Update `CaseStudyDrawer` to inject dynamic keys.
+    - **Status**: Completed in Phase 2.
 
 - [x] **Fix Missing Hero Image in Modal**
     - **Problem**: Analysis of `CaseStudyModal.tsx` reveals the "Hero area with image" comment exists, but the actual `<img>` or background render logic is missing or ineffective.
-    - **Solution**: Implement a proper responsive image or standard `<Image />` component in the modal hero.
+    - **Solution**: Implemented a proper responsive image in `CaseStudyHero.tsx`.
 
 ---
 
@@ -33,9 +34,10 @@ Features designed to prove seniority and competence.
     - **Why**: Social proof is currently buried or static.
     - **Plan**: Implement a "Wall of Love" or Infinite Marquee section on the home page using the compiled reviews from `content/testimonials`.
 
-- [ ] **Floating "Hire Me" Omnibar**
+- [x] **Floating "Hire Me" Omnibar**
     - **Why**: Conversion path should be always available but unobtrusive.
     - **Plan**: A subtle, glass-morphic floating action bar on mobile (bottom) and desktop (corner) that offers "Resume", "Email", and "Calendly" without needing to scroll to the footer.
+    - **Status**: Completed in Phase 2.
 
 ---
 
@@ -43,19 +45,20 @@ Features designed to prove seniority and competence.
 
 Elevating the aesthetic from "Clean" to "Premium".
 
-- [ ] **Framer Motion Integration**
+- [x] **Framer Motion Integration**
     - **Problem**: `CaseStudyModal` uses inline `style={{ animation: ... }}`. This is jerky and lacks exit animations.
-    - **Plan**: Replace inline CSS animations with `<AnimatePresence>` and `<motion.div>`.
-    - **Effect**: Smooth layout transitions, beautiful modal entry/exit, layout promotion when opening a card.
+    - **Plan**: Replace inline CSS animations with `<AnimatePresence>` and `<motion.div>` in `CaseStudyDrawer`.
+    - **Status**: Completed in Phase 2.
 
 - [ ] **Scroll-Driven Storytelling**
-    - **Plan**: Add simple scroll observers to `CaseStudyModal`. As the user reads "Problem", "Approach", "Results":
+    - **Plan**: Add simple scroll observers to `CaseStudyDrawer`. As the user reads "Problem", "Approach", "Results":
         - Fade in sections.
         - Update a "Reading Progress" indicator.
         - Subtle parallax on large metrics.
 
-- [ ] **Orb/Glow Ambient Effects**
-    - **Plan**: Utilize the unused `color-orb-accent` variables. Add a background mesh gradient or "Orb" that follows the cursor subtly in the background, shifting colors based on the theme (Gold for dark mode, Green/Subtle for light mode).
+- [x] **Orb/Glow Ambient Effects**
+    - **Plan**: Utilize the unused `color-orb-accent` variables. Add a background mesh gradient or "Orb" that follows the cursor subtly in the background, shifting colors based on the theme.
+    - **Status**: Completed in Phase 2.
 
 ---
 
@@ -64,16 +67,10 @@ Elevating the aesthetic from "Clean" to "Premium".
 Preparing the codebase for rapid iteration and AI-assisted development.
 
 - [x] **Refactor `CaseStudyModal` Monolith**
-    - **Current**: 600+ lines, mixed concerns.
-    - **Target**:
-        - `src/components/case-study/CaseStudyHeader.tsx`
-        - `src/components/case-study/CaseStudyMetrics.tsx`
-        - `src/components/case-study/CaseStudyNarrative.tsx`
-    - **Benefit**: Easier for AI to "Edit the metrics section" without context window limits or scrolling errors.
+    - **Status**: Completed. Replaced with `CaseStudyDrawer`.
 
 - [x] **Documentation Cleanup**
-    - **Actions**: Consolidated `context/` directory, moved history to `docs/` created dashboard `README.md`.
-    - **Benefit**: Clearer context for AI agents and human developers.
+    - **Status**: Completed.
 
 - [ ] **Standardized `<Image />` Component**
     - **Problem**: No lazy loading, no blur-up placeholders.
@@ -81,18 +78,21 @@ Preparing the codebase for rapid iteration and AI-assisted development.
 
 - [ ] **AI Onboarding Scripts**
     - **Plan**: Create `scripts/validate-content.ts`.
-    - **Usage**: `npm run check:content`. Verification script that ensures every YAML file matches the Zod schema and every image referenced in YAML actually exists in `public/images`. This saves the user from broken deploys.
 
 ---
 
 ## 5. Execution Strategy
 
-**Phase 1: Foundation (Today)**
-1.  Implement Zod schemas to verify what data we actually have.
-2.  Fix the SEO/Head metadata so links look good.
-3.  Refactor `CaseStudyModal` into smaller chunks to make subsequent design work easier.
+**Phase 1: Foundation (Done)**
+1.  Implement Zod schemas.
+2.  Refactor `CaseStudyModal`.
 
-**Phase 2: Polish (Next)**
+**Phase 2: Polish (Done)**
 1.  Install Framer Motion.
-2.  Implement the animations and the "Orb" effect.
-3.  Add the Floating CTA.
+2.  Implement Animations & Ambient Orbs.
+3.  Add Floating Omnibar & SEO.
+4.  Fix Deployment.
+
+**Phase 3: Social & Content (Next)**
+1.  Implement "Trust Battery" Testimonials.
+2.  Refine Scroll-Driven Storytelling.
