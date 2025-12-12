@@ -1,4 +1,3 @@
-import { useTheme } from '../../context/ThemeContext';
 import { certifications as certificationsData } from '../../lib/content';
 
 interface CertificationsSectionProps {
@@ -7,7 +6,6 @@ interface CertificationsSectionProps {
 }
 
 export default function CertificationsSection({ isMobile, sectionPadding }: CertificationsSectionProps) {
-  const { colors } = useTheme();
   const { certifications } = certificationsData;
 
   return (
@@ -22,35 +20,35 @@ export default function CertificationsSection({ isMobile, sectionPadding }: Cert
       <div style={{
         display: 'flex',
         alignItems: 'center',
-        gap: '24px',
-        marginBottom: isMobile ? '32px' : '40px'
+        gap: 'var(--space-lg)',
+        marginBottom: isMobile ? 'var(--space-xl)' : '40px'
       }}>
         <span style={{
           fontSize: '11px',
           fontWeight: 600,
           letterSpacing: '0.15em',
           textTransform: 'uppercase',
-          color: colors.textMuted
+          color: 'var(--color-text-muted)'
         }}>
           Certifications
         </span>
         <div style={{
           flex: 1,
           height: '1px',
-          background: 'rgba(232, 230, 227, 0.08)'
+          background: 'var(--color-border-light)'
         }} />
       </div>
 
       <div style={{
         display: 'grid',
         gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)',
-        gap: '24px'
+        gap: 'var(--space-lg)'
       }}>
         {/* Featured Certifications */}
         {certifications.filter(cert => cert.featured).map((cert, index) => (
           <div key={index} style={{
-            background: 'linear-gradient(135deg, rgba(194, 154, 108, 0.08) 0%, rgba(194, 154, 108, 0.02) 100%)',
-            border: '1px solid rgba(194, 154, 108, 0.2)',
+            background: 'linear-gradient(135deg, var(--color-cert-bg-start) 0%, var(--color-cert-bg-end) 100%)',
+            border: '1px solid var(--color-cert-border)',
             padding: isMobile ? '28px 24px' : '36px',
             position: 'relative',
             overflow: 'hidden'
@@ -74,7 +72,7 @@ export default function CertificationsSection({ isMobile, sectionPadding }: Cert
               <div style={{
                 width: '56px',
                 height: '56px',
-                background: 'linear-gradient(135deg, #c29a6c 0%, #a67c4e 100%)',
+                background: 'linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-hover) 100%)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -82,7 +80,7 @@ export default function CertificationsSection({ isMobile, sectionPadding }: Cert
               }}>
                 <span style={{
                   fontSize: '24px',
-                  color: '#08080a'
+                  color: 'var(--color-background)'
                 }}>🎓</span>
               </div>
 
@@ -92,17 +90,17 @@ export default function CertificationsSection({ isMobile, sectionPadding }: Cert
                   fontWeight: 600,
                   letterSpacing: '0.1em',
                   textTransform: 'uppercase',
-                  color: '#c29a6c',
-                  marginBottom: '8px'
+                  color: 'var(--color-accent)',
+                  marginBottom: 'var(--space-sm)'
                 }}>
                   {cert.name}
                 </div>
                 <h3 style={{
                   fontSize: isMobile ? '20px' : '24px',
-                  fontFamily: "'Instrument Serif', Georgia, serif",
+                  fontFamily: 'var(--font-serif)',
                   fontStyle: 'italic',
                   fontWeight: 400,
-                  color: colors.textSecondary,
+                  color: 'var(--color-text-secondary)',
                   marginBottom: '12px',
                   lineHeight: 1.2
                 }}>
@@ -111,23 +109,23 @@ export default function CertificationsSection({ isMobile, sectionPadding }: Cert
                 {cert.instructor && (
                   <p style={{
                     fontSize: '14px',
-                    color: '#8a8885',
+                    color: 'var(--color-text-tertiary)',
                     lineHeight: 1.6,
-                    marginBottom: '16px'
+                    marginBottom: 'var(--space-md)'
                   }}>
-                    Intensive AI PM program led by <strong style={{ color: colors.textSecondary }}>{cert.instructor}</strong>
+                    Intensive AI PM program led by <strong style={{ color: 'var(--color-text-secondary)' }}>{cert.instructor}</strong>
                     {cert.instructorRole && `, ${cert.instructorRole}.`}
                   </p>
                 )}
                 <div style={{
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '16px',
+                  gap: 'var(--space-md)',
                   flexWrap: 'wrap'
                 }}>
                   <span style={{
                     fontSize: '12px',
-                    color: colors.textMuted
+                    color: 'var(--color-text-muted)'
                   }}>
                     Issued {cert.date}
                   </span>
@@ -139,7 +137,7 @@ export default function CertificationsSection({ isMobile, sectionPadding }: Cert
                       style={{
                         fontSize: '12px',
                         fontWeight: 500,
-                        color: '#c29a6c',
+                        color: 'var(--color-accent)',
                         textDecoration: 'none',
                         display: 'flex',
                         alignItems: 'center',
@@ -148,7 +146,7 @@ export default function CertificationsSection({ isMobile, sectionPadding }: Cert
                       }}
                     >
                       Verify credential
-                      <span style={{ fontFamily: "'Instrument Serif', serif", fontStyle: 'italic' }}>↗</span>
+                      <span style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic' }}>↗</span>
                     </a>
                   )}
                 </div>
@@ -159,33 +157,33 @@ export default function CertificationsSection({ isMobile, sectionPadding }: Cert
 
         {/* Placeholder for additional certification */}
         <div style={{
-          background: 'linear-gradient(135deg, #141416 0%, #1a1a1c 100%)',
-          border: '1px dashed rgba(232, 230, 227, 0.1)',
+          background: 'linear-gradient(135deg, var(--color-background-secondary) 0%, var(--color-background-tertiary) 100%)',
+          border: '1px dashed var(--color-border)',
           padding: isMobile ? '28px 24px' : '36px',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          gap: '16px',
+          gap: 'var(--space-md)',
           minHeight: '180px'
         }}>
           <div style={{
             width: '48px',
             height: '48px',
-            border: '1px dashed rgba(232, 230, 227, 0.15)',
+            border: '1px dashed var(--color-border)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            color: '#3a3a3c',
+            color: 'var(--color-text-muted)',
             fontSize: '20px'
           }}>
             +
           </div>
           <span style={{
             fontSize: '13px',
-            color: '#3a3a3c',
+            color: 'var(--color-text-muted)',
             fontStyle: 'italic',
-            fontFamily: "'Instrument Serif', Georgia, serif"
+            fontFamily: 'var(--font-serif)'
           }}>
             More certifications coming soon
           </span>

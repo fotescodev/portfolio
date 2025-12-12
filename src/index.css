@@ -1,3 +1,5 @@
+@import './styles/globals.css';
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -9,9 +11,11 @@ html {
 }
 
 body {
+  font-family: var(--font-sans);
   overflow-x: hidden;
-  background: #08080a;
-  transition: background 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  background: var(--color-background);
+  color: var(--color-text-secondary);
+  transition: background var(--transition-medium), color var(--transition-medium);
 }
 
 ::selection {

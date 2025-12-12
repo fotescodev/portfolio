@@ -6,7 +6,7 @@ interface ThemeToggleProps {
 }
 
 export default function ThemeToggle({ isMobile = false }: ThemeToggleProps) {
-  const { isDark, toggleTheme, colors } = useTheme();
+  const { isDark, toggleTheme } = useTheme();
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -20,13 +20,14 @@ export default function ThemeToggle({ isMobile = false }: ThemeToggleProps) {
         width: isMobile ? '44px' : '40px',
         height: isMobile ? '44px' : '40px',
         background: 'transparent',
-        border: `1px solid ${isHovered ? colors.textTertiary : colors.border}`,
+        border: `1px solid ${isHovered ? 'var(--color-text-tertiary)' : 'var(--color-border)'}`,
         cursor: 'pointer',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+        transition: 'all var(--transition-medium)',
         overflow: 'hidden',
+        color: 'var(--color-text-tertiary)',
       }}
     >
       {/* Sun icon */}
@@ -35,13 +36,13 @@ export default function ThemeToggle({ isMobile = false }: ThemeToggleProps) {
         height="18"
         viewBox="0 0 24 24"
         fill="none"
-        stroke={colors.textTertiary}
+        stroke="currentColor"
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
         style={{
           position: 'absolute',
-          transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+          transition: 'all var(--transition-medium)',
           opacity: isDark ? 1 : 0,
           transform: isDark ? 'rotate(0deg) scale(1)' : 'rotate(-90deg) scale(0.5)',
         }}
@@ -63,13 +64,13 @@ export default function ThemeToggle({ isMobile = false }: ThemeToggleProps) {
         height="18"
         viewBox="0 0 24 24"
         fill="none"
-        stroke={colors.textTertiary}
+        stroke="currentColor"
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
         style={{
           position: 'absolute',
-          transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+          transition: 'all var(--transition-medium)',
           opacity: isDark ? 0 : 1,
           transform: isDark ? 'rotate(90deg) scale(0.5)' : 'rotate(0deg) scale(1)',
         }}

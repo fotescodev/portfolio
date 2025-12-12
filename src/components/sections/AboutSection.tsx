@@ -1,4 +1,3 @@
-import { useTheme } from '../../context/ThemeContext';
 import { profile } from '../../lib/content';
 
 interface AboutSectionProps {
@@ -8,7 +7,6 @@ interface AboutSectionProps {
 }
 
 export default function AboutSection({ isMobile, isTablet, sectionPadding }: AboutSectionProps) {
-  const { colors, isDark } = useTheme();
   const { about, ens, photo, name } = profile;
 
   return (
@@ -23,37 +21,37 @@ export default function AboutSection({ isMobile, isTablet, sectionPadding }: Abo
       <div style={{
         display: 'flex',
         alignItems: 'center',
-        gap: '24px',
-        marginBottom: isMobile ? '32px' : '40px'
+        gap: 'var(--space-lg)',
+        marginBottom: isMobile ? 'var(--space-xl)' : '40px'
       }}>
         <span style={{
           fontSize: '11px',
           fontWeight: 600,
           letterSpacing: '0.15em',
           textTransform: 'uppercase',
-          color: colors.textMuted
+          color: 'var(--color-text-muted)'
         }}>
           About
         </span>
         <div style={{
           flex: 1,
           height: '1px',
-          background: colors.borderLight
+          background: 'var(--color-border-light)'
         }} />
       </div>
 
       <div style={{
         display: 'grid',
         gridTemplateColumns: isMobile ? '1fr' : isTablet ? '180px 1fr' : '280px 1fr',
-        gap: isMobile ? '40px' : isTablet ? '48px' : '80px',
+        gap: isMobile ? '40px' : isTablet ? 'var(--space-2xl)' : '80px',
         alignItems: 'start'
       }}>
         {/* Photo */}
         <div style={{
           aspectRatio: '3/4',
           maxWidth: isMobile ? '180px' : '100%',
-          background: `linear-gradient(135deg, ${colors.backgroundSecondary} 0%, ${colors.backgroundTertiary} 100%)`,
-          border: `1px solid ${isDark ? 'rgba(232, 230, 227, 0.06)' : 'rgba(26, 26, 28, 0.06)'}`,
+          background: 'linear-gradient(135deg, var(--color-background-secondary) 0%, var(--color-background-tertiary) 100%)',
+          border: '1px solid var(--color-photo-border)',
           position: 'relative',
           overflow: 'hidden'
         }}>
@@ -82,7 +80,7 @@ export default function AboutSection({ isMobile, isTablet, sectionPadding }: Abo
             bottom: '0',
             left: '0',
             right: '0',
-            background: isDark ? 'rgba(8, 8, 10, 0.9)' : 'rgba(250, 250, 250, 0.9)',
+            background: 'var(--color-ens-bg)',
             backdropFilter: 'blur(8px)',
             padding: '14px 16px',
             display: 'flex',
@@ -90,10 +88,10 @@ export default function AboutSection({ isMobile, isTablet, sectionPadding }: Abo
             justifyContent: 'space-between'
           }}>
             <span style={{
-              fontFamily: "'Instrument Serif', Georgia, serif",
+              fontFamily: 'var(--font-serif)',
               fontStyle: 'italic',
               fontSize: '14px',
-              color: colors.accent
+              color: 'var(--color-accent)'
             }}>
               {ens}
             </span>
@@ -102,7 +100,7 @@ export default function AboutSection({ isMobile, isTablet, sectionPadding }: Abo
               fontWeight: 600,
               letterSpacing: '0.1em',
               textTransform: 'uppercase',
-              color: colors.success
+              color: 'var(--color-success)'
             }}>
               Verified
             </span>
@@ -112,10 +110,10 @@ export default function AboutSection({ isMobile, isTablet, sectionPadding }: Abo
         <div>
           <h2 style={{
             fontSize: isMobile ? '28px' : isTablet ? '32px' : '40px',
-            fontFamily: "'Instrument Serif', Georgia, serif",
+            fontFamily: 'var(--font-serif)',
             fontStyle: 'italic',
             lineHeight: 1.3,
-            color: colors.textPrimary,
+            color: 'var(--color-text-primary)',
             marginBottom: '28px',
             letterSpacing: '-0.02em'
           }}>
@@ -123,13 +121,13 @@ export default function AboutSection({ isMobile, isTablet, sectionPadding }: Abo
           </h2>
           <div style={{
             columns: isMobile ? 1 : 2,
-            columnGap: '48px'
+            columnGap: 'var(--space-2xl)'
           }}>
             {about.bio.map((paragraph, index) => (
               <p key={index} style={{
                 fontSize: '15px',
                 lineHeight: 1.75,
-                color: isDark ? '#8a8885' : '#5a5a5c',
+                color: 'var(--color-text-tertiary)',
                 marginBottom: '20px'
               }}>
                 {paragraph}
@@ -140,19 +138,19 @@ export default function AboutSection({ isMobile, isTablet, sectionPadding }: Abo
           {/* Stats row */}
           <div style={{
             display: 'flex',
-            gap: isMobile ? '32px' : '48px',
-            marginTop: '32px',
-            paddingTop: '24px',
-            borderTop: `1px solid ${colors.borderLight}`,
+            gap: isMobile ? 'var(--space-xl)' : 'var(--space-2xl)',
+            marginTop: 'var(--space-xl)',
+            paddingTop: 'var(--space-lg)',
+            borderTop: '1px solid var(--color-border-light)',
             flexWrap: 'wrap'
           }}>
             {about.stats.map((stat, i) => (
               <div key={i}>
                 <div style={{
                   fontSize: isMobile ? '36px' : '48px',
-                  fontFamily: "'Instrument Serif', Georgia, serif",
+                  fontFamily: 'var(--font-serif)',
                   fontWeight: 400,
-                  color: colors.textPrimary,
+                  color: 'var(--color-text-primary)',
                   lineHeight: 1
                 }}>{stat.value}</div>
                 <div style={{
@@ -160,8 +158,8 @@ export default function AboutSection({ isMobile, isTablet, sectionPadding }: Abo
                   fontWeight: 500,
                   letterSpacing: '0.08em',
                   textTransform: 'uppercase',
-                  color: colors.textMuted,
-                  marginTop: '8px'
+                  color: 'var(--color-text-muted)',
+                  marginTop: 'var(--space-sm)'
                 }}>{stat.label}</div>
               </div>
             ))}

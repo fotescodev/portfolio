@@ -1,4 +1,3 @@
-import { useTheme } from '../../context/ThemeContext';
 import { social } from '../../lib/content';
 
 interface SocialSectionProps {
@@ -7,7 +6,6 @@ interface SocialSectionProps {
 }
 
 export default function SocialSection({ isMobile, sectionPadding }: SocialSectionProps) {
-  const { colors } = useTheme();
   const { links, newsletter } = social;
   const primaryLinks = links.filter(l => l.primary);
 
@@ -23,29 +21,29 @@ export default function SocialSection({ isMobile, sectionPadding }: SocialSectio
       <div style={{
         display: 'flex',
         alignItems: 'center',
-        gap: '24px',
-        marginBottom: isMobile ? '32px' : '40px'
+        gap: 'var(--space-lg)',
+        marginBottom: isMobile ? 'var(--space-xl)' : '40px'
       }}>
         <span style={{
           fontSize: '11px',
           fontWeight: 600,
           letterSpacing: '0.15em',
           textTransform: 'uppercase',
-          color: colors.textMuted
+          color: 'var(--color-text-muted)'
         }}>
           Writing & Speaking
         </span>
         <div style={{
           flex: 1,
           height: '1px',
-          background: 'rgba(232, 230, 227, 0.08)'
+          background: 'var(--color-border-light)'
         }} />
       </div>
 
       <div style={{
         display: 'grid',
         gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
-        gap: '24px'
+        gap: 'var(--space-lg)'
       }}>
         {/* Coming Soon Card */}
         <div style={{
@@ -59,12 +57,12 @@ export default function SocialSection({ isMobile, sectionPadding }: SocialSectio
             display: 'flex',
             alignItems: 'center',
             gap: '12px',
-            marginBottom: '16px'
+            marginBottom: 'var(--space-md)'
           }}>
             <div style={{
               width: '8px',
               height: '8px',
-              background: '#4ade80',
+              background: 'var(--color-success)',
               borderRadius: '50%'
             }} />
             <span style={{
@@ -72,7 +70,7 @@ export default function SocialSection({ isMobile, sectionPadding }: SocialSectio
               fontWeight: 600,
               letterSpacing: '0.1em',
               textTransform: 'uppercase',
-              color: '#4ade80'
+              color: 'var(--color-success)'
             }}>
               Coming Soon
             </span>
@@ -80,10 +78,10 @@ export default function SocialSection({ isMobile, sectionPadding }: SocialSectio
 
           <h3 style={{
             fontSize: isMobile ? '20px' : '26px',
-            fontFamily: "'Instrument Serif', Georgia, serif",
+            fontFamily: 'var(--font-serif)',
             fontStyle: 'italic',
             fontWeight: 400,
-            color: colors.textSecondary,
+            color: 'var(--color-text-secondary)',
             marginBottom: '12px',
             lineHeight: 1.2
           }}>
@@ -92,7 +90,7 @@ export default function SocialSection({ isMobile, sectionPadding }: SocialSectio
 
           <p style={{
             fontSize: '14px',
-            color: '#8a8885',
+            color: 'var(--color-text-tertiary)',
             lineHeight: 1.7,
             marginBottom: '20px',
             maxWidth: '480px'
@@ -104,7 +102,7 @@ export default function SocialSection({ isMobile, sectionPadding }: SocialSectio
 
           <div style={{
             display: 'flex',
-            gap: '16px',
+            gap: 'var(--space-md)',
             flexWrap: 'wrap'
           }}>
             {['AI Agents', 'Smart Contracts', 'Product Thinking'].map((tag, i) => (
@@ -113,7 +111,7 @@ export default function SocialSection({ isMobile, sectionPadding }: SocialSectio
                 fontWeight: 500,
                 letterSpacing: '0.05em',
                 textTransform: 'uppercase',
-                color: colors.textMuted,
+                color: 'var(--color-text-muted)',
                 padding: '6px 10px',
                 background: 'rgba(74, 222, 128, 0.05)',
                 border: '1px solid rgba(74, 222, 128, 0.1)'
@@ -126,8 +124,8 @@ export default function SocialSection({ isMobile, sectionPadding }: SocialSectio
 
         {/* Social Links */}
         <div style={{
-          background: 'linear-gradient(135deg, #141416 0%, #1a1a1c 100%)',
-          border: '1px solid rgba(232, 230, 227, 0.08)',
+          background: 'linear-gradient(135deg, var(--color-background-secondary) 0%, var(--color-background-tertiary) 100%)',
+          border: '1px solid var(--color-border-light)',
           padding: isMobile ? '28px 24px' : '36px',
           display: 'flex',
           flexDirection: 'column',
@@ -138,7 +136,7 @@ export default function SocialSection({ isMobile, sectionPadding }: SocialSectio
             fontWeight: 600,
             letterSpacing: '0.1em',
             textTransform: 'uppercase',
-            color: colors.textTertiary
+            color: 'var(--color-text-tertiary)'
           }}>
             Follow Along
           </span>
@@ -154,7 +152,7 @@ export default function SocialSection({ isMobile, sectionPadding }: SocialSectio
                 justifyContent: 'space-between',
                 alignItems: 'center',
                 padding: '14px 0',
-                borderBottom: '1px solid rgba(232, 230, 227, 0.06)',
+                borderBottom: '1px solid var(--color-experience-border)',
                 textDecoration: 'none',
                 transition: 'all 0.2s ease'
               }}
@@ -163,22 +161,22 @@ export default function SocialSection({ isMobile, sectionPadding }: SocialSectio
                 <div style={{
                   fontSize: '14px',
                   fontWeight: 500,
-                  color: colors.textSecondary,
+                  color: 'var(--color-text-secondary)',
                   marginBottom: '2px'
                 }}>
                   {link.label}
                 </div>
                 <div style={{
                   fontSize: '12px',
-                  color: colors.textMuted,
+                  color: 'var(--color-text-muted)',
                   fontFamily: 'monospace'
                 }}>
                   {('handle' in link) ? (link as { handle: string }).handle : ''}
                 </div>
               </div>
               <span style={{
-                color: colors.textMuted,
-                fontFamily: "'Instrument Serif', serif",
+                color: 'var(--color-text-muted)',
+                fontFamily: 'var(--font-serif)',
                 fontStyle: 'italic',
                 transition: 'color 0.2s ease'
               }}>↗</span>
@@ -188,16 +186,16 @@ export default function SocialSection({ isMobile, sectionPadding }: SocialSectio
           {newsletter && !newsletter.enabled && (
             <div style={{
               marginTop: 'auto',
-              padding: '16px',
+              padding: 'var(--space-md)',
               background: 'rgba(194, 154, 108, 0.05)',
               border: '1px dashed rgba(194, 154, 108, 0.15)',
               textAlign: 'center'
             }}>
               <span style={{
                 fontSize: '12px',
-                color: colors.textTertiary,
+                color: 'var(--color-text-tertiary)',
                 fontStyle: 'italic',
-                fontFamily: "'Instrument Serif', Georgia, serif"
+                fontFamily: 'var(--font-serif)'
               }}>
                 {newsletter.teaser}
               </span>

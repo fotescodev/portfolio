@@ -1,36 +1,32 @@
-import { useTheme } from '../../context/ThemeContext';
-
 interface FooterSectionProps {
   isMobile: boolean;
 }
 
 export default function FooterSection({ isMobile }: FooterSectionProps) {
-  const { isDark } = useTheme();
-
   return (
     <footer style={{
-      padding: isMobile ? '32px 24px' : '40px 64px',
-      borderTop: `1px solid ${isDark ? 'rgba(232, 230, 227, 0.06)' : 'rgba(26, 26, 28, 0.06)'}`,
+      padding: isMobile ? 'var(--space-xl) var(--space-lg)' : 'var(--space-2xl) var(--space-3xl)',
+      borderTop: '1px solid var(--color-experience-border)',
       display: 'flex',
       flexDirection: isMobile ? 'column' : 'row',
       justifyContent: 'space-between',
       alignItems: isMobile ? 'flex-start' : 'center',
-      gap: '16px',
+      gap: 'var(--space-md)',
       position: 'relative',
       zIndex: 1
     }}>
       <div style={{
         fontSize: '12px',
-        color: isDark ? '#3a3a3c' : '#9a9a9c',
+        color: 'var(--color-text-muted)',
         letterSpacing: '0.02em'
       }}>
         © 2025
       </div>
       <div style={{
         fontSize: '12px',
-        color: isDark ? '#3a3a3c' : '#9a9a9c',
+        color: 'var(--color-text-muted)',
         fontStyle: 'italic',
-        fontFamily: "'Instrument Serif', Georgia, serif"
+        fontFamily: 'var(--font-serif)'
       }}>
         Designed and built by Dmitrii
       </div>

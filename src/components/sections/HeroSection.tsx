@@ -1,4 +1,3 @@
-import { useTheme } from '../../context/ThemeContext';
 import { profile } from '../../lib/content';
 
 interface HeroSectionProps {
@@ -8,146 +7,162 @@ interface HeroSectionProps {
 }
 
 export default function HeroSection({ isMobile, isTablet, isLoaded }: HeroSectionProps) {
-  const { colors } = useTheme();
   const { hero } = profile;
 
   return (
-    <section style={{
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      padding: isMobile ? '100px 24px 48px' : '120px 64px 64px',
-      maxWidth: '1400px',
-      margin: '0 auto',
-      position: 'relative',
-      zIndex: 1
-    }}>
-      <div style={{
-        opacity: isLoaded ? 1 : 0,
-        transform: isLoaded ? 'translateY(0)' : 'translateY(40px)',
-        transition: 'all 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s'
+    <>
+      <style>{`
+        .hero-secondary-link {
+          color: var(--color-text-tertiary);
+          border-bottom: 1px solid var(--color-border);
+          transition: all 0.2s ease;
+        }
+        .hero-secondary-link:hover {
+          color: var(--color-text-primary);
+        }
+        .hero-primary-btn {
+          background: var(--color-text-primary);
+          color: var(--color-background);
+          transition: all 0.2s ease;
+        }
+        .hero-primary-btn:hover {
+          opacity: 0.9;
+        }
+      `}</style>
+      <section style={{
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        padding: isMobile ? '100px 24px 48px' : '120px 64px 64px',
+        maxWidth: '1400px',
+        margin: '0 auto',
+        position: 'relative',
+        zIndex: 1
       }}>
-        {/* Eyebrow */}
         <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '16px',
-          marginBottom: isMobile ? '20px' : '24px'
+          opacity: isLoaded ? 1 : 0,
+          transform: isLoaded ? 'translateY(0)' : 'translateY(40px)',
+          transition: 'all 1s var(--ease-smooth) 0.2s'
         }}>
-          <div style={{
-            width: '8px',
-            height: '8px',
-            background: colors.success,
-            borderRadius: '50%'
-          }} />
-          <span style={{
-            fontSize: '13px',
-            fontWeight: 500,
-            letterSpacing: '0.1em',
-            textTransform: 'uppercase',
-            color: colors.textTertiary
-          }}>
-            {hero.status}
-          </span>
-        </div>
-
-        {/* Main headline - Editorial style */}
-        <h1 style={{
-          fontSize: isMobile ? '11vw' : isTablet ? '9vw' : '8vw',
-          fontFamily: "'Instrument Serif', Georgia, serif",
-          fontWeight: 400,
-          fontStyle: 'italic',
-          lineHeight: 0.95,
-          margin: 0,
-          letterSpacing: '-0.03em',
-          color: colors.textPrimary,
-          transition: 'color 0.4s ease'
-        }}>
-          {hero.headline.map((segment, index) => {
-            const style: React.CSSProperties = {};
-            if (segment.style === 'muted') {
-              style.fontStyle = 'normal';
-              style.color = colors.textTertiary;
-            } else if (segment.style === 'accent') {
-              style.color = colors.accent;
-            }
-            return (
-              <span key={index}>
-                {index > 0 && <br />}
-                <span style={style}>{segment.text}</span>
-              </span>
-            );
-          })}
-        </h1>
-
-        {/* Subheadline */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
-          gap: isMobile ? '24px' : '48px',
-          marginTop: isMobile ? '32px' : '40px',
-          alignItems: 'start'
-        }}>
-          <p style={{
-            fontSize: isMobile ? '17px' : '19px',
-            color: colors.textSecondary,
-            lineHeight: 1.6,
-            fontWeight: 400,
-            maxWidth: '480px'
-          }}>
-            {hero.subheadline}
-          </p>
-
+          {/* Eyebrow */}
           <div style={{
             display: 'flex',
-            flexDirection: 'column',
-            gap: '16px'
+            alignItems: 'center',
+            gap: 'var(--space-md)',
+            marginBottom: isMobile ? '20px' : 'var(--space-lg)'
           }}>
-            <a href={hero.cta.primary.href} style={{
-              background: colors.textPrimary,
-              color: colors.background,
-              padding: isMobile ? '16px 28px' : '18px 32px',
-              textDecoration: 'none',
-              fontSize: '14px',
-              fontWeight: 600,
-              letterSpacing: '0.02em',
-              display: 'inline-flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              transition: 'all 0.2s ease',
-              width: isMobile ? '100%' : 'fit-content',
-              minWidth: '220px'
+            <div style={{
+              width: '8px',
+              height: '8px',
+              background: 'var(--color-success)',
+              borderRadius: '50%'
+            }} />
+            <span style={{
+              fontSize: '13px',
+              fontWeight: 500,
+              letterSpacing: '0.1em',
+              textTransform: 'uppercase',
+              color: 'var(--color-text-tertiary)'
             }}>
-              <span>{hero.cta.primary.label}</span>
-              <span style={{ fontFamily: "'Instrument Serif', serif", fontStyle: 'italic' }}>↓</span>
-            </a>
-            <a
-              href={hero.cta.secondary.href}
-              download="Dmitrii-Fotesco-Resume.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                color: colors.textTertiary,
-                padding: '18px 0',
-                textDecoration: 'none',
-                fontSize: '14px',
-                fontWeight: 500,
-                letterSpacing: '0.02em',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '12px',
-                borderBottom: `1px solid ${colors.border}`,
-                transition: 'all 0.2s ease',
-                width: 'fit-content'
-              }}
-              onMouseEnter={(e) => (e.target as HTMLElement).style.color = colors.textPrimary}
-              onMouseLeave={(e) => (e.target as HTMLElement).style.color = colors.textTertiary}
-            >
-              {hero.cta.secondary.label}
-            </a>
+              {hero.status}
+            </span>
+          </div>
+
+          {/* Main headline - Editorial style */}
+          <h1 style={{
+            fontSize: isMobile ? '11vw' : isTablet ? '9vw' : '8vw',
+            fontFamily: 'var(--font-serif)',
+            fontWeight: 400,
+            fontStyle: 'italic',
+            lineHeight: 0.95,
+            margin: 0,
+            letterSpacing: '-0.03em',
+            color: 'var(--color-text-primary)',
+            transition: 'color var(--transition-medium)'
+          }}>
+            {hero.headline.map((segment, index) => {
+              const style: React.CSSProperties = {};
+              if (segment.style === 'muted') {
+                style.fontStyle = 'normal';
+                style.color = 'var(--color-text-tertiary)';
+              } else if (segment.style === 'accent') {
+                style.color = 'var(--color-accent)';
+              }
+              return (
+                <span key={index}>
+                  {index > 0 && <br />}
+                  <span style={style}>{segment.text}</span>
+                </span>
+              );
+            })}
+          </h1>
+
+          {/* Subheadline */}
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
+            gap: isMobile ? 'var(--space-lg)' : 'var(--space-2xl)',
+            marginTop: isMobile ? 'var(--space-xl)' : '40px',
+            alignItems: 'start'
+          }}>
+            <p style={{
+              fontSize: isMobile ? '17px' : '19px',
+              color: 'var(--color-text-secondary)',
+              lineHeight: 1.6,
+              fontWeight: 400,
+              maxWidth: '480px'
+            }}>
+              {hero.subheadline}
+            </p>
+
+            <div style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 'var(--space-md)'
+            }}>
+              <a
+                href={hero.cta.primary.href}
+                className="hero-primary-btn"
+                style={{
+                  padding: isMobile ? '16px 28px' : '18px 32px',
+                  textDecoration: 'none',
+                  fontSize: '14px',
+                  fontWeight: 600,
+                  letterSpacing: '0.02em',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  width: isMobile ? '100%' : 'fit-content',
+                  minWidth: '220px'
+                }}
+              >
+                <span>{hero.cta.primary.label}</span>
+                <span style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic' }}>↓</span>
+              </a>
+              <a
+                href={hero.cta.secondary.href}
+                download="Dmitrii-Fotesco-Resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hero-secondary-link"
+                style={{
+                  padding: '18px 0',
+                  textDecoration: 'none',
+                  fontSize: '14px',
+                  fontWeight: 500,
+                  letterSpacing: '0.02em',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '12px',
+                  width: 'fit-content'
+                }}
+              >
+                {hero.cta.secondary.label}
+              </a>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 }

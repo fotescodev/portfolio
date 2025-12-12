@@ -1,4 +1,3 @@
-import { useTheme } from '../../context/ThemeContext';
 import { experience } from '../../lib/content';
 
 interface ExperienceSectionProps {
@@ -8,7 +7,6 @@ interface ExperienceSectionProps {
 }
 
 export default function ExperienceSection({ isMobile, isTablet, sectionPadding }: ExperienceSectionProps) {
-  const { colors } = useTheme();
   const { jobs } = experience;
 
   return (
@@ -23,22 +21,22 @@ export default function ExperienceSection({ isMobile, isTablet, sectionPadding }
       <div style={{
         display: 'flex',
         alignItems: 'center',
-        gap: '24px',
-        marginBottom: isMobile ? '32px' : '40px'
+        gap: 'var(--space-lg)',
+        marginBottom: isMobile ? 'var(--space-xl)' : '40px'
       }}>
         <span style={{
           fontSize: '11px',
           fontWeight: 600,
           letterSpacing: '0.15em',
           textTransform: 'uppercase',
-          color: colors.textMuted
+          color: 'var(--color-text-muted)'
         }}>
           Experience
         </span>
         <div style={{
           flex: 1,
           height: '1px',
-          background: 'rgba(232, 230, 227, 0.08)'
+          background: 'var(--color-border-light)'
         }} />
       </div>
 
@@ -53,9 +51,9 @@ export default function ExperienceSection({ isMobile, isTablet, sectionPadding }
             style={{
               display: 'grid',
               gridTemplateColumns: isMobile ? '1fr' : isTablet ? '160px 1fr' : '200px 1fr',
-              gap: isMobile ? '16px' : '48px',
-              padding: isMobile ? '24px 0' : '32px 0',
-              borderBottom: '1px solid rgba(232, 230, 227, 0.06)'
+              gap: isMobile ? 'var(--space-md)' : 'var(--space-2xl)',
+              padding: isMobile ? 'var(--space-lg) 0' : 'var(--space-xl) 0',
+              borderBottom: '1px solid var(--color-experience-border)'
             }}
           >
             {/* Left column - Company & Period */}
@@ -65,23 +63,23 @@ export default function ExperienceSection({ isMobile, isTablet, sectionPadding }
                 fontWeight: 600,
                 letterSpacing: '0.05em',
                 textTransform: 'uppercase',
-                color: colors.textTertiary,
-                marginBottom: '4px'
+                color: 'var(--color-text-tertiary)',
+                marginBottom: 'var(--space-xs)'
               }}>
                 {job.period}
               </div>
               <div style={{
                 fontSize: isMobile ? '16px' : '18px',
-                fontFamily: "'Instrument Serif', Georgia, serif",
+                fontFamily: 'var(--font-serif)',
                 fontStyle: 'italic',
-                color: colors.textSecondary,
-                marginBottom: '4px'
+                color: 'var(--color-text-secondary)',
+                marginBottom: 'var(--space-xs)'
               }}>
                 {job.company}
               </div>
               <div style={{
                 fontSize: '12px',
-                color: colors.textMuted
+                color: 'var(--color-text-muted)'
               }}>
                 {job.location}
               </div>
@@ -92,7 +90,7 @@ export default function ExperienceSection({ isMobile, isTablet, sectionPadding }
               <div style={{
                 fontSize: isMobile ? '15px' : '16px',
                 fontWeight: 500,
-                color: colors.textSecondary,
+                color: 'var(--color-text-secondary)',
                 marginBottom: '12px'
               }}>
                 {job.role}
@@ -100,26 +98,26 @@ export default function ExperienceSection({ isMobile, isTablet, sectionPadding }
               <ul style={{
                 listStyle: 'none',
                 padding: 0,
-                margin: '0 0 16px 0',
+                margin: '0 0 var(--space-md) 0',
                 display: 'flex',
                 flexDirection: 'column',
-                gap: '8px'
+                gap: 'var(--space-sm)'
               }}>
                 {job.highlights.map((highlight, i) => (
                   <li
                     key={i}
                     style={{
                       fontSize: '14px',
-                      color: colors.textTertiary,
+                      color: 'var(--color-text-tertiary)',
                       lineHeight: 1.5,
-                      paddingLeft: '16px',
+                      paddingLeft: 'var(--space-md)',
                       position: 'relative'
                     }}
                   >
                     <span style={{
                       position: 'absolute',
                       left: 0,
-                      color: '#c29a6c'
+                      color: 'var(--color-accent)'
                     }}>→</span>
                     {highlight}
                   </li>
@@ -127,7 +125,7 @@ export default function ExperienceSection({ isMobile, isTablet, sectionPadding }
               </ul>
               <div style={{
                 display: 'flex',
-                gap: '8px',
+                gap: 'var(--space-sm)',
                 flexWrap: 'wrap'
               }}>
                 {job.tags.map((tag, i) => (
@@ -138,9 +136,9 @@ export default function ExperienceSection({ isMobile, isTablet, sectionPadding }
                       fontWeight: 500,
                       letterSpacing: '0.05em',
                       textTransform: 'uppercase',
-                      color: colors.textMuted,
+                      color: 'var(--color-text-muted)',
                       padding: '4px 8px',
-                      border: `1px solid ${colors.border}`
+                      border: '1px solid var(--color-border)'
                     }}
                   >
                     {tag}
