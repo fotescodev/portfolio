@@ -316,7 +316,7 @@ contactCta:
 - [x] Extract `CertificationsSection.tsx`
 - [x] Extract `TestimonialsSection.tsx`
 - [x] Extract `SocialSection.tsx`
-- [ ] Extract `CaseStudiesSection.tsx` - **Pending: Complex state management**
+- [x] Extract `CaseStudiesSection.tsx` - ✅ Done (hover state + modal triggers as props)
 - [ ] Extract `CaseStudyModal.tsx` - **Pending: Needs new schema integration**
 - [ ] Extract `FooterSection.tsx`
 
@@ -402,8 +402,216 @@ contactCta:
 **Build Status:** ✅ Passing
 
 **Next Steps:**
-1. Extract CaseStudiesSection.tsx (complex - manages hover state + modal triggers)
+1. ✅ Extract CaseStudiesSection.tsx (completed)
 2. Extract CaseStudyModal.tsx (needs update for enhanced schema with reflection, alternatives)
 3. Extract FooterSection.tsx
 4. Refactor Portfolio.tsx as thin orchestrator
 5. Visual verification and testing
+
+---
+
+## Detailed Implementation Plan for Next Session
+
+### Task 1: Extract CaseStudyModal.tsx (Enhanced Schema)
+
+**File:** `src/components/sections/CaseStudyModal.tsx`
+
+**Props Interface:**
+```typescript
+interface CaseStudyModalProps {
+  study: CaseStudy | null;
+  onClose: () => void;
+  onNavigate: (study: CaseStudy) => void;
+  isMobile: boolean;
+}
+```
+
+**Sections to Render (in order):**
+
+1. **Header** (existing)
+   - Back button, close button
+   - Case number + title + company/year
+
+2. **Hero Artifact** (existing, enhance)
+   - Display `evidence.artifacts[0]` if available
+   - Show placeholder with icon based on artifact type
+
+3. **Metrics Row** (update to new schema)
+   - Primary: `results.primary.metric` + `results.primary.context`
+   - Secondary: `results.secondary.metric` + `results.secondary.context`
+   - Tertiary: `results.tertiary?.metric` + `results.tertiary?.context`
+
+4. **Role & Context** (update)
+   - My Role: `context.myRole`
+   - Team: `context.teamSize`
+   - Duration: `context.duration`
+   - Stakeholders: `context.stakeholders[]` (NEW - render as pills)
+
+5. **The Challenge** (update to new schema)
+   - Render `problem.businessContext`
+   - NEW: Constraints section with `problem.constraints[]`
+   - NEW: Stakes callout with `problem.stakes`
+
+6. **Key Decision Callout** (update)
+   - `execution.keyDecision.title`
+   - `execution.keyDecision.context`
+   - `execution.keyDecision.decision`
+   - `execution.keyDecision.outcome`
+
+7. **NEW: Approach Section**
+   - Hypothesis: `approach.hypothesis`
+   - Alternatives Considered table:
+     | Option | Tradeoffs | Why Not? |
+     | --- | --- | --- |
+     | `approach.alternatives[].option` | `.tradeoffs` | `.whyNot` |
+   - Chosen Path: `approach.chosenPath`
+
+8. **Execution Phases** (NEW)
+   - Timeline visualization of `execution.phases[]`
+   - Each phase: name, duration, actions as bullets
+
+9. **What I Did** → Rename to "Actions" or keep but source from `execution.phases[].actions`
+
+10. **Results** (update)
+    - Primary/secondary/tertiary with context
+    - `results.qualitative` as prose
+
+11. **NEW: Reflection Section** (CRITICAL for credibility)
+    ```
+    ## What Worked
+    - reflection.whatWorked[]
+
+    ## What Didn't Work
+    - reflection.whatDidnt[]
+
+    ## Key Lesson
+    reflection.lessonLearned
+
+    ## What I'd Do Differently
+    reflection.wouldDoDifferently
+    ```
+
+12. **Evidence Section** (NEW)
+    - Testimonial quote if `evidence.testimonial` exists
+    - Links row: Demo | GitHub | Blog Post (only show if not null)
+    - Additional artifacts gallery
+
+13. **Tech Stack** (existing)
+    - `techStack[]`
+
+14. **CTA Section** (NEW - per case study)
+    - `cta.headline`
+    - `cta.subtext`
+    - Button based on `cta.action` (calendly/contact/linkedin)
+
+15. **Navigation** (existing)
+    - Previous/Next case study buttons
+
+**Visual Design Notes:**
+- Reflection section needs special styling (green checkmarks for whatWorked, amber warning for whatDidnt)
+- Approach alternatives as expandable accordion or table
+- Constraints as bordered pill badges
+- Stakes as a subtle callout box (not alarming, but notable)
+
+---
+
+### Task 2: Extract FooterSection.tsx
+
+**File:** `src/components/sections/FooterSection.tsx`
+
+**Simple extraction from Portfolio.tsx lines 2970-2997:**
+- Copyright year
+- "Designed and built by Dmitrii"
+
+**Props:**
+```typescript
+interface FooterSectionProps {
+  isMobile: boolean;
+}
+```
+
+---
+
+### Task 3: Refactor Portfolio.tsx as Orchestrator
+
+**Target:** Reduce from ~3000 lines to ~400 lines
+
+**Final Structure:**
+```tsx
+export default function Portfolio() {
+  // State
+  const [hoveredCase, setHoveredCase] = useState<number | null>(null);
+  const [modalCase, setModalCase] = useState<CaseStudy | null>(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  // ... other UI state
+
+  // Responsive helpers
+  const isMobile = windowWidth < 768;
+  const isTablet = windowWidth >= 768 && windowWidth < 1024;
+  const sectionPadding = ...;
+
+  // Section visibility from YAML
+  const { sections } = profile;
+
+  return (
+    <div>
+      {/* Background, Navigation */}
+      <Navigation ... />
+
+      {/* Sections from components */}
+      <HeroSection ... />
+      <AboutSection ... />
+      <ExperienceSection ... />
+      <CertificationsSection ... />
+      <CaseStudiesSection
+        hoveredCase={hoveredCase}
+        setHoveredCase={setHoveredCase}
+        onCaseClick={(study) => setModalCase(study)}
+        ...
+      />
+      <TestimonialsSection ... />
+      {sections.blog && <Blog ... />}
+      <SocialSection ... />
+      <FooterSection ... />
+
+      {/* Modal */}
+      {modalCase && (
+        <CaseStudyModal
+          study={modalCase}
+          onClose={() => setModalCase(null)}
+          onNavigate={(study) => setModalCase(study)}
+          ...
+        />
+      )}
+    </div>
+  );
+}
+```
+
+**Keep in Portfolio.tsx:**
+- Navigation component (could extract later)
+- Background orbs/grid (could extract later)
+- Mobile menu overlay
+- Modal scroll lock effect
+- All state management
+
+**Delete from Portfolio.tsx:**
+- All hardcoded data arrays (caseStudies, credentials, etc.)
+- All section JSX (replaced by component imports)
+- Old CaseStudy interface (use from types/portfolio.ts)
+
+---
+
+### Verification Checklist
+
+After completing all tasks:
+- [ ] `npm run build` succeeds
+- [ ] All sections render correctly
+- [ ] Case study modal shows ALL enhanced schema fields
+- [ ] Modal shows reflection section (whatWorked/whatDidnt)
+- [ ] Modal shows approach alternatives
+- [ ] Modal shows evidence links (demo/github/blog)
+- [ ] Dark/light mode works
+- [ ] Mobile responsive (375px)
+- [ ] Navigation between case studies works
+- [ ] ESC key closes modal
