@@ -125,14 +125,17 @@ export default function Portfolio() {
         right: 0,
         zIndex: 100,
         background: colors.navGradient,
+        backdropFilter: 'blur(12px)',
+        WebkitBackdropFilter: 'blur(12px)',
+        borderBottom: `1px solid ${colors.borderLight}`,
         opacity: isLoaded ? 1 : 0,
         transform: isLoaded ? 'translateY(0)' : 'translateY(-20px)',
         transition: 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)'
       }}>
         <div style={{
-          maxWidth: '1400px',
+          maxWidth: '1600px',
           margin: '0 auto',
-          padding: isMobile ? '20px 24px' : '28px 64px',
+          padding: isMobile ? '16px 24px' : '20px 64px',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center'
@@ -301,7 +304,7 @@ export default function Portfolio() {
       {sections.skills && (
         <section style={{
           padding: sectionPadding,
-          maxWidth: '1400px',
+          maxWidth: '1600px',
           margin: '0 auto',
           position: 'relative',
           zIndex: 1

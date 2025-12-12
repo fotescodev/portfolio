@@ -56,7 +56,7 @@ const darkColors: ThemeColors = {
   success: '#4ade80',
   codeBackground: '#141416',
 
-  navGradient: 'linear-gradient(180deg, rgba(8,8,10,1) 0%, rgba(8,8,10,0) 100%)',
+  navGradient: 'rgba(8,8,10,0.85)',
   gridOverlay: 'rgba(255,255,255,0.03)',
   orbAccent: 'rgba(194, 154, 108, 0.15)',
   orbSecondary: 'rgba(74, 222, 128, 0.08)',
@@ -84,7 +84,7 @@ const lightColors: ThemeColors = {
   success: '#22c55e',
   codeBackground: '#f8f8f8',
 
-  navGradient: 'linear-gradient(180deg, rgba(250,250,250,1) 0%, rgba(250,250,250,0) 100%)',
+  navGradient: 'rgba(250,250,250,0.85)',
   gridOverlay: 'rgba(0,0,0,0.02)',
   orbAccent: 'rgba(166, 124, 82, 0.08)',
   orbSecondary: 'rgba(34, 197, 94, 0.05)',

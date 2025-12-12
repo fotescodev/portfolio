@@ -20,7 +20,8 @@ This changeset implements the foundational technical requirements for the "Direc
 *   **Verification**: Added `src/tests/case-study-modal.test.tsx` to prove regression-free refactoring.
 
 ### 4. Layout Fixes
-*   **Navbar Alignment**: Wrapped navbar content in a constrained container (`maxWidth: 1400px`) to match the body content alignment on large screens.
+*   **Navbar Alignment**: Wrapped navbar content in a constrained container (`maxWidth: 1600px`).
+*   **Navbar Visibility**: Changed navbar to use "Frosted Glass" (blur + semi-transparent) background instead of a fade gradient, preventing text overlap issues during scroll.
 
 ### 5. Data Integrity (Zod)
 *   Installed `zod`.

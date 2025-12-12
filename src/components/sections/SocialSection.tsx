@@ -12,7 +12,7 @@ export default function SocialSection({ isMobile, sectionPadding }: SocialSectio
   return (
     <section style={{
       padding: sectionPadding,
-      maxWidth: '1400px',
+      maxWidth: '1600px',
       margin: '0 auto',
       position: 'relative',
       zIndex: 1

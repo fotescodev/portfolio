@@ -12,7 +12,7 @@ export default function AboutSection({ isMobile, isTablet, sectionPadding }: Abo
   return (
     <section id="about" style={{
       padding: sectionPadding,
-      maxWidth: '1400px',
+      maxWidth: '1600px',
       margin: '0 auto',
       position: 'relative',
       zIndex: 1
