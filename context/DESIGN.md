@@ -140,6 +140,14 @@ Fixed navigation with "Frosted Glass" (Glassmorphism) effect and compact padding
 <Navigation logo="yourname.eth" />
 ```
 
+### Floating Actions (Omnibar)
+
+Centralized floating action button for high-value conversions.
+
+```tsx
+<Omnibar />
+```
+
 ## Color System
 
 ### CSS Variables
@@ -267,6 +275,9 @@ Defined in `globals.css` to ensure consistency across all sections.
 - `--nav-height-mobile`: **16px** (Mobile vertical padding)
 - `--drawer-width`: **800px** (Case Study slide-over width)
 - `--drawer-z-index`: **200** (Above all content)
+- `--omnibar-z-index`: **90** (Floating above content, below nav/drawer)
+- `--omnibar-height`: **56px** (Standard touch target height)
+- `--omnibar-bottom-spacing`: **24px** (Distance from bottom)
 
 ### Usage
 

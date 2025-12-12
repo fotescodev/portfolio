@@ -35,6 +35,7 @@ interface ThemeColors {
   // Scrollbar
   scrollbarThumb: string;
   scrollbarThumbHover: string;
+  tagHover: string;
 }
 
 const darkColors: ThemeColors = {
@@ -63,6 +64,7 @@ const darkColors: ThemeColors = {
 
   scrollbarThumb: 'rgba(232, 230, 227, 0.15)',
   scrollbarThumbHover: 'rgba(232, 230, 227, 0.25)',
+  tagHover: 'rgba(194, 154, 108, 0.05)',
 };
 
 const lightColors: ThemeColors = {
@@ -91,6 +93,7 @@ const lightColors: ThemeColors = {
 
   scrollbarThumb: 'rgba(26, 26, 28, 0.15)',
   scrollbarThumbHover: 'rgba(26, 26, 28, 0.25)',
+  tagHover: 'rgba(166, 124, 82, 0.05)',
 };
 
 interface ThemeContextType {

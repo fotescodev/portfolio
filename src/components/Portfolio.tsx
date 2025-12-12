@@ -12,6 +12,7 @@ import CaseStudiesSection from './sections/CaseStudiesSection';
 import FooterSection from './sections/FooterSection';
 import CaseStudyDrawer from './case-study/CaseStudyDrawer';
 import AmbientBackground from './common/AmbientBackground';
+import Omnibar from './common/Omnibar';
 import { profile } from '../lib/content';
 import type { CaseStudy } from '../types/portfolio';
 
@@ -395,6 +396,9 @@ export default function Portfolio() {
           ))}
         </div>
       </section>
+
+      {/* Omnibar */}
+      <Omnibar />
 
       {/* Case Study Modal */}
       {modalCase && (

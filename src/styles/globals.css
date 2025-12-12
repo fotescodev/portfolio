@@ -42,6 +42,9 @@
   --nav-height-mobile: 16px;
   --drawer-width: 800px;
   --drawer-z-index: 200;
+  --omnibar-z-index: 90;
+  --omnibar-height: 56px;
+  --omnibar-bottom-spacing: 24px;
 
   /* Spacing */
   --space-xs: 4px;
