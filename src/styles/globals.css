@@ -36,6 +36,11 @@
   --font-serif: 'Instrument Serif', Georgia, serif;
   --font-sans: 'Instrument Sans', -apple-system, BlinkMacSystemFont, sans-serif;
 
+  /* Layout */
+  --layout-max-width: 1600px;
+  --nav-height: 20px;
+  --nav-height-mobile: 16px;
+
   /* Spacing */
   --space-xs: 4px;
   --space-sm: 8px;

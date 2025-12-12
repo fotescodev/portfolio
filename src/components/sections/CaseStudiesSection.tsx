@@ -27,7 +27,7 @@ export default function CaseStudiesSection({
   return (
     <section id="work" style={{
       padding: sectionPadding,
-      maxWidth: '1600px',
+      maxWidth: 'var(--layout-max-width)',
       margin: '0 auto',
       position: 'relative',
       zIndex: 1

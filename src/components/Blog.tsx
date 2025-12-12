@@ -116,7 +116,7 @@ export default function Blog({ isMobile, isTablet }: BlogProps) {
         <>
             <section id="blog" style={{
                 padding: sectionPadding,
-                maxWidth: '1600px',
+                maxWidth: 'var(--layout-max-width)',
                 margin: '0 auto',
                 position: 'relative',
                 zIndex: 1

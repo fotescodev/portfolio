@@ -11,7 +11,7 @@ export default function CertificationsSection({ isMobile, sectionPadding }: Cert
   return (
     <section style={{
       padding: sectionPadding,
-      maxWidth: '1600px',
+      maxWidth: 'var(--layout-max-width)',
       margin: '0 auto',
       position: 'relative',
       zIndex: 1

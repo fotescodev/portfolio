@@ -133,9 +133,11 @@ export default function Portfolio() {
         transition: 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)'
       }}>
         <div style={{
-          maxWidth: '1600px',
+          maxWidth: 'var(--layout-max-width)',
           margin: '0 auto',
-          padding: isMobile ? '16px 24px' : '20px 64px',
+          padding: isMobile
+            ? 'var(--nav-height-mobile) var(--space-lg)'
+            : 'var(--nav-height) var(--space-3xl)',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center'
@@ -304,7 +306,7 @@ export default function Portfolio() {
       {sections.skills && (
         <section style={{
           padding: sectionPadding,
-          maxWidth: '1600px',
+          maxWidth: 'var(--layout-max-width)',
           margin: '0 auto',
           position: 'relative',
           zIndex: 1

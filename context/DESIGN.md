@@ -128,7 +128,7 @@ Labeled divider for sections:
 
 ### Navigation
 
-Fixed navigation with mobile menu:
+Fixed navigation with "Frosted Glass" (Glassmorphism) effect and compact padding.
 
 ```tsx
 <Navigation logo="yourname.eth" />
@@ -250,7 +250,26 @@ animation: slideUp 1s var(--ease-smooth) forwards;
 }
 ```
 
-## Effects
+## Layout System
+251: 
+252: Defined in `globals.css` to ensure consistency across all sections.
+253: 
+254: ### Dimensions
+255: 
+256: - `--layout-max-width`: **1600px** (Wide, premium feel)
+257: - `--nav-height`: **20px** (Compact desktop vertical padding)
+258: - `--nav-height-mobile`: **16px** (Mobile vertical padding)
+259: 
+260: ### Usage
+261: 
+262: ```css
+263: .section-container {
+264:   max-width: var(--layout-max-width);
+265:   margin: 0 auto;
+266: }
+267: ```
+268: 
+269: ## Effects
 
 ### Grid Overlay
 Subtle dot grid background:

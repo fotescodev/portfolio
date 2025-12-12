@@ -34,7 +34,7 @@ export default function HeroSection({ isMobile, isTablet, isLoaded }: HeroSectio
         flexDirection: 'column',
         justifyContent: 'center',
         padding: isMobile ? '100px 24px 48px' : '120px 64px 64px',
-        maxWidth: '1600px',
+        maxWidth: 'var(--layout-max-width)',
         margin: '0 auto',
         position: 'relative',
         zIndex: 1
