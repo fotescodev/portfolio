@@ -23,3 +23,15 @@ This document serves as the **Supreme Law** for contributing to this codebase. Y
 ## 2. Codebase Maintenance
 *   **Documentation Alignment**: If you refactor code, you **MUST** update the corresponding section in `context/CODEBASE.md` or `context/DESIGN.md`.
 *   **Data Integrity**: Always maintain Zod validation in `src/lib/content.ts` for any new content fields. Do not bypass type safety.
+
+## 3. Mandatory UI/UX Verification Checklist
+**MUST** be performed before finalizing any task involving UI/UX changes.
+
+- [ ] **Token First**: Did I check `globals.css` before writing any new style?
+- [ ] **No Magic Numbers**: Are all spacing/sizing values using `var(--space-*)` or `var(--layout-*)`? (Exception: 1-2px borders/offsets).
+- [ ] **Documentation Sync**: If I added a new variable, did I update `context/DESIGN.md`?
+- [ ] **Theme Check**: Did I verify the change works in both Dark AND Light mode?
+- [ ] **Mobile Check**: Did I verify responsive behavior (e.g., `isMobile` logic)?
+
+## 4. "The Prime Directive" of Design
+> "If it isn't in the Design System, it doesn't exist. If it needs to exist, update the Design System first."
