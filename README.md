@@ -10,7 +10,13 @@
 *   **[Roadmap](./context/ROADMAP.md)**: Current plan and upcoming features.
 *   **[Project History](./docs/history/)**: Refactoring logs and original prompts.
 
-## 🛠 Quick Start
+## 🤖 For AI Agents
+**READ THIS FIRST**: [Governance & Rules](context/AGENT_RULES.md)
+*   **Context**: [Codebase Overview](context/CODEBASE.md)
+*   **Design**: [Design System](context/DESIGN.md)
+*   **Plan**: [Roadmap](context/ROADMAP.md)
+
+## 🚀 Quick Start
 
 ```bash
 npm install

@@ -11,6 +11,12 @@ A comprehensive design system for a Web3 product manager portfolio featuring dar
 - ✨ **Smooth Animations**: Premium easing and transitions
 - 📱 **Fully Responsive**: Mobile, tablet, and desktop optimized
 
+## 🚨 Governance ("The Prime Directive")
+**The Design System is the Single Source of Truth.**
+*   **Do not** use hardcoded values in components.
+*   **Do not** add "snowflake" styles without justification.
+*   **Updates**: If you need a new style, add it to `globals.css` AND document it here first.
+
 ## Quick Start
 
 ### Theme System
