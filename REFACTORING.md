@@ -317,12 +317,12 @@ contactCta:
 - [x] Extract `TestimonialsSection.tsx`
 - [x] Extract `SocialSection.tsx`
 - [x] Extract `CaseStudiesSection.tsx` - ✅ Done (hover state + modal triggers as props)
-- [ ] Extract `CaseStudyModal.tsx` - **Pending: Needs new schema integration**
-- [ ] Extract `FooterSection.tsx`
+- [x] Extract `CaseStudyModal.tsx` - ✅ Done (~630 lines, clean UX with narrative flow)
+- [x] Extract `FooterSection.tsx` - ✅ Done (~35 lines)
 
 ### Phase 5: Integration
-- [ ] Refactor `Portfolio.tsx` as orchestrator
-- [ ] Verify build succeeds
+- [x] Refactor `Portfolio.tsx` as orchestrator (~450 lines, down from 3001)
+- [x] Verify build succeeds
 - [ ] Verify all sections render
 - [ ] Verify dark/light mode
 - [ ] Verify mobile responsiveness
@@ -331,7 +331,7 @@ contactCta:
 
 ## Verification Checklist
 
-- [ ] `npm run build` succeeds
+- [x] `npm run build` succeeds
 - [ ] All sections render correctly
 - [ ] Case study modal works with new schema
 - [ ] Adding new YAML file shows content without code changes
@@ -369,6 +369,9 @@ contactCta:
 - `src/components/sections/CertificationsSection.tsx`
 - `src/components/sections/TestimonialsSection.tsx`
 - `src/components/sections/SocialSection.tsx`
+- `src/components/sections/CaseStudiesSection.tsx` - Case study cards with hover state
+- `src/components/sections/CaseStudyModal.tsx` - Full-page modal with 15 sections
+- `src/components/sections/FooterSection.tsx` - Copyright + designer credit
 - `src/components/sections/index.ts` - Barrel export
 
 ### Infrastructure
@@ -410,7 +413,7 @@ contactCta:
 
 ---
 
-## Detailed Implementation Plan for Next Session
+## Detailed Implementation Plan (Completed)
 
 ### Task 1: Extract CaseStudyModal.tsx (Enhanced Schema)
 
@@ -613,5 +616,37 @@ After completing all tasks:
 - [ ] Modal shows evidence links (demo/github/blog)
 - [ ] Dark/light mode works
 - [ ] Mobile responsive (375px)
-- [ ] Navigation between case studies works
-- [ ] ESC key closes modal
+- [x] Navigation between case studies works
+- [x] ESC key closes modal
+
+---
+
+## Session Log
+
+### Session 2: 2024-12-12
+
+**Completed:**
+- CaseStudyModal.tsx (~630 lines) - Clean UX redesign with narrative flow:
+  - Hero (meta line, title, role)
+  - Full-width metrics bar
+  - Story (challenge, stakes quote, approach, solution)
+  - Key Decision (accent callout)
+  - Execution timeline with phase actions joined by " · "
+  - Results (inline format: metric — context)
+  - Key Lesson quote
+  - Reflection (two-column: worked/didn't)
+  - Testimonial
+  - Footer meta (links, stack, constraints inline)
+  - CTA and navigation
+- FooterSection.tsx (~39 lines) - Copyright + designer credit
+- Portfolio.tsx refactored as orchestrator (~450 lines, down from 3001)
+- Updated barrel export in index.ts
+
+**UX Design Decisions:**
+- Removed excessive visual boxes/borders in favor of typography hierarchy
+- Execution phases use " · " separator instead of bullet lists
+- Results displayed inline rather than in separate boxes
+- Two-column compact reflection section
+- Tech stack and constraints as inline text, not pills/badges
+
+**Build Status:** ✅ Passing
