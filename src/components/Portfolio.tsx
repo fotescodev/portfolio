@@ -282,6 +282,7 @@ export default function Portfolio() {
       {/* Experience Section */}
       <ExperienceSection
         isMobile={isMobile}
+        isTablet={isTablet}
         sectionPadding={sectionPadding}
       />
 
