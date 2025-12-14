@@ -65,24 +65,30 @@ export default function Portfolio() {
       transition: 'background var(--transition-medium), color var(--transition-medium)',
       position: 'relative'
     }}>
+      <a className="skip-link" href="#main-content">
+        Skip to content
+      </a>
 
       <AmbientBackground />
 
       {/* Navigation */}
-      <nav style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        zIndex: 100,
-        background: colors.navGradient,
-        backdropFilter: 'blur(12px)',
-        WebkitBackdropFilter: 'blur(12px)',
-        borderBottom: `1px solid ${colors.borderLight}`,
-        opacity: isLoaded ? 1 : 0,
-        transform: isLoaded ? 'translateY(0)' : 'translateY(-20px)',
-        transition: 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)'
-      }}>
+      <nav
+        aria-label="Primary"
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 100,
+          background: 'var(--color-nav-bg)',
+          backdropFilter: 'blur(12px)',
+          WebkitBackdropFilter: 'blur(12px)',
+          borderBottom: '1px solid var(--color-border-light)',
+          opacity: isLoaded ? 1 : 0,
+          transform: isLoaded ? 'translateY(0)' : 'translateY(-20px)',
+          transition: 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)'
+        }}
+      >
         <div style={{
           maxWidth: 'var(--layout-max-width)',
           margin: '0 auto',
@@ -159,7 +165,11 @@ export default function Portfolio() {
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
               <ThemeToggle isMobile />
               <button
+                type="button"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+                aria-expanded={mobileMenuOpen}
+                aria-controls="mobile-menu"
                 style={{
                   background: 'transparent',
                   border: 'none',
@@ -186,22 +196,27 @@ export default function Portfolio() {
 
       {/* Mobile Menu Overlay */}
       {isMobile && (
-        <div style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          background: colors.background,
-          zIndex: 99,
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          padding: '0 24px',
-          opacity: mobileMenuOpen ? 1 : 0,
-          pointerEvents: mobileMenuOpen ? 'auto' : 'none',
-          transition: 'opacity 0.3s ease, background 0.4s ease'
-        }}>
+        <div
+          id="mobile-menu"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Navigation menu"
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: colors.background,
+            zIndex: 99,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            padding: '0 24px',
+            opacity: mobileMenuOpen ? 1 : 0,
+            pointerEvents: mobileMenuOpen ? 'auto' : 'none',
+            transition: 'opacity 0.3s ease, background 0.4s ease'
+          }}>
           {['Work', 'About', 'Blog', 'Contact'].map((item, i) => (
             <a
               key={item}
@@ -226,186 +241,191 @@ export default function Portfolio() {
         </div>
       )}
 
-      {/* Hero Section */}
-      <HeroSection
-        isMobile={isMobile}
-        isTablet={isTablet}
-        isLoaded={isLoaded}
-      />
+      <main id="main-content" style={{ position: 'relative', zIndex: 1 }}>
+        {/* Hero Section */}
+        <HeroSection
+          isMobile={isMobile}
+          isTablet={isTablet}
+          isLoaded={isLoaded}
+        />
 
-      {/* About Section */}
-      <AboutSection
-        isMobile={isMobile}
-        isTablet={isTablet}
-        sectionPadding={sectionPadding}
-      />
+        {/* About Section */}
+        <AboutSection
+          isMobile={isMobile}
+          isTablet={isTablet}
+          sectionPadding={sectionPadding}
+        />
 
-      {/* Experience Section */}
-      <ExperienceSection
-        isMobile={isMobile}
-        isTablet={isTablet}
-        sectionPadding={sectionPadding}
-      />
+        {/* Experience Section */}
+        <ExperienceSection
+          isMobile={isMobile}
+          isTablet={isTablet}
+          sectionPadding={sectionPadding}
+        />
 
-      {/* Certifications Section */}
-      <CertificationsSection
-        isMobile={isMobile}
-        sectionPadding={sectionPadding}
-      />
+        {/* Certifications Section */}
+        <CertificationsSection
+          isMobile={isMobile}
+          isTablet={isTablet}
+          sectionPadding={sectionPadding}
+        />
 
-      {/* Skills Section - conditionally rendered */}
-      {sections.skills && (
+        {/* Skills Section - conditionally rendered */}
+        {sections.skills && (
+          <section style={{
+            padding: sectionPadding,
+            maxWidth: 'var(--layout-max-width)',
+            margin: '0 auto',
+            position: 'relative',
+            zIndex: 1
+          }}>
+            {/* Skills content would go here */}
+          </section>
+        )}
+
+        {/* Case Studies Section */}
+        <CaseStudiesSection
+          isMobile={isMobile}
+          isTablet={isTablet}
+          sectionPadding={sectionPadding}
+          hoveredCase={hoveredCase}
+          setHoveredCase={setHoveredCase}
+          onCaseClick={(study) => setModalCase(study)}
+        />
+
+        {/* Testimonials Section */}
+        <TestimonialsSection
+          isMobile={isMobile}
+          isTablet={isTablet}
+          sectionPadding={sectionPadding}
+        />
+
+
+
+        {/* Blog Section */}
+        {sections.blog && <Blog isMobile={isMobile} isTablet={isTablet} />}
+
+        {/* Final CTA */}
         <section style={{
-          padding: sectionPadding,
-          maxWidth: 'var(--layout-max-width)',
+          padding: isMobile ? '48px 24px 64px' : '64px 64px 80px',
+          maxWidth: '1000px',
           margin: '0 auto',
+          textAlign: 'center',
           position: 'relative',
           zIndex: 1
         }}>
-          {/* Skills content would go here */}
-        </section>
-      )}
-
-      {/* Case Studies Section */}
-      <CaseStudiesSection
-        isMobile={isMobile}
-        isTablet={isTablet}
-        sectionPadding={sectionPadding}
-        hoveredCase={hoveredCase}
-        setHoveredCase={setHoveredCase}
-        onCaseClick={(study) => setModalCase(study)}
-      />
-
-      {/* Testimonials Section */}
-      <TestimonialsSection
-        isMobile={isMobile}
-        sectionPadding={sectionPadding}
-      />
-
-
-
-      {/* Blog Section */}
-      {sections.blog && <Blog isMobile={isMobile} isTablet={isTablet} />}
-
-      {/* Final CTA */}
-      <section style={{
-        padding: isMobile ? '48px 24px 64px' : '64px 64px 80px',
-        maxWidth: '1000px',
-        margin: '0 auto',
-        textAlign: 'center',
-        position: 'relative',
-        zIndex: 1
-      }}>
-        <h2 style={{
-          fontSize: isMobile ? '10vw' : '7vw',
-          fontFamily: "'Instrument Serif', Georgia, serif",
-          fontWeight: 400,
-          fontStyle: 'italic',
-          color: colors.textPrimary,
-          letterSpacing: '-0.03em',
-          lineHeight: 1,
-          marginBottom: '32px'
-        }}>
-          Let's build
-        </h2>
-
-        <p style={{
-          fontSize: '16px',
-          color: colors.textTertiary,
-          maxWidth: '440px',
-          margin: '0 auto 32px',
-          lineHeight: 1.6
-        }}>
-          Open to PM roles in AI, infrastructure, and Web3.
-          Particularly interested in where agents meet on-chain execution.
-          Based in {profile.location} ({profile.timezone}), flexible on remote.
-        </p>
-
-        <div style={{
-          display: 'flex',
-          flexDirection: isMobile ? 'column' : 'row',
-          gap: '16px',
-          justifyContent: 'center'
-        }}>
-          <a href={`mailto:${profile.email}`} style={{
-            background: colors.textPrimary,
-            color: colors.background,
-            padding: '18px 40px',
-            textDecoration: 'none',
-            fontSize: '14px',
-            fontWeight: 600,
-            letterSpacing: '0.02em',
-            transition: 'all 0.2s ease',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '12px'
+          <h2 style={{
+            fontSize: isMobile ? '10vw' : '7vw',
+            fontFamily: "'Instrument Serif', Georgia, serif",
+            fontWeight: 400,
+            fontStyle: 'italic',
+            color: colors.textPrimary,
+            letterSpacing: '-0.03em',
+            lineHeight: 1,
+            marginBottom: '32px'
           }}>
-            <span>Share an Opportunity</span>
-            <span style={{ fontFamily: "'Instrument Serif', serif", fontStyle: 'italic' }}>→</span>
-          </a>
-          <a href="https://www.linkedin.com/in/0xdmitri/" target="_blank" rel="noopener noreferrer" style={{
+            Let's build
+          </h2>
+
+          <p style={{
+            fontSize: '16px',
             color: colors.textTertiary,
-            padding: '18px 40px',
-            textDecoration: 'none',
-            fontSize: '14px',
-            fontWeight: 600,
-            letterSpacing: '0.02em',
-            border: `1px solid ${isDark ? 'rgba(232, 230, 227, 0.15)' : 'rgba(26, 26, 28, 0.15)'}`,
-            transition: 'all 0.2s ease'
+            maxWidth: '440px',
+            margin: '0 auto 32px',
+            lineHeight: 1.6
           }}>
-            Connect on LinkedIn
-          </a>
-        </div>
+            Open to PM roles in AI, infrastructure, and Web3.
+            Particularly interested in where agents meet on-chain execution.
+            Based in {profile.location} ({profile.timezone}), flexible on remote.
+          </p>
 
-        {/* Social links */}
-        <div style={{
-          display: 'flex',
-          gap: '40px',
-          justifyContent: 'center',
-          marginTop: '40px'
-        }}>
-          {[
-            { name: 'X', url: 'https://x.com/kolob0kk' },
-            { name: 'LinkedIn', url: 'https://www.linkedin.com/in/0xdmitri/' },
-            { name: 'Email', url: `mailto:${profile.email}` }
-          ].map((social, i) => (
-            <a
-              key={i}
-              href={social.url}
-              target={social.url.startsWith('http') ? '_blank' : undefined}
-              rel="noopener noreferrer"
-              style={{
-                color: isDark ? '#3a3a3c' : '#9a9a9c',
-                textDecoration: 'none',
-                fontSize: '12px',
-                fontWeight: 500,
-                letterSpacing: '0.08em',
-                textTransform: 'uppercase',
-                transition: 'color 0.2s ease'
-              }}
-              onMouseEnter={(e) => (e.target as HTMLElement).style.color = colors.textTertiary}
-              onMouseLeave={(e) => (e.target as HTMLElement).style.color = isDark ? '#3a3a3c' : '#9a9a9c'}
-            >
-              {social.name}
+          <div style={{
+            display: 'flex',
+            flexDirection: isMobile ? 'column' : 'row',
+            gap: '16px',
+            justifyContent: 'center'
+          }}>
+            <a href={`mailto:${profile.email}`} style={{
+              background: colors.textPrimary,
+              color: colors.background,
+              padding: '18px 40px',
+              textDecoration: 'none',
+              fontSize: '14px',
+              fontWeight: 600,
+              letterSpacing: '0.02em',
+              transition: 'all 0.2s ease',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '12px'
+            }}>
+              <span>Share an Opportunity</span>
+              <span style={{ fontFamily: "'Instrument Serif', serif", fontStyle: 'italic' }}>→</span>
             </a>
-          ))}
-        </div>
-      </section>
+            <a href="https://www.linkedin.com/in/0xdmitri/" target="_blank" rel="noopener noreferrer" style={{
+              color: colors.textTertiary,
+              padding: '18px 40px',
+              textDecoration: 'none',
+              fontSize: '14px',
+              fontWeight: 600,
+              letterSpacing: '0.02em',
+              border: `1px solid ${isDark ? 'rgba(232, 230, 227, 0.15)' : 'rgba(26, 26, 28, 0.15)'}`,
+              transition: 'all 0.2s ease'
+            }}>
+              Connect on LinkedIn
+            </a>
+          </div>
 
-      {/* Omnibar */}
-      <Omnibar />
+          {/* Social links */}
+          <div style={{
+            display: 'flex',
+            gap: '40px',
+            justifyContent: 'center',
+            marginTop: '40px'
+          }}>
+            {[
+              { name: 'X', url: 'https://x.com/kolob0kk' },
+              { name: 'LinkedIn', url: 'https://www.linkedin.com/in/0xdmitri/' },
+              { name: 'Email', url: `mailto:${profile.email}` }
+            ].map((social, i) => (
+              <a
+                key={i}
+                href={social.url}
+                target={social.url.startsWith('http') ? '_blank' : undefined}
+                rel="noopener noreferrer"
+                style={{
+                  color: isDark ? '#3a3a3c' : '#9a9a9c',
+                  textDecoration: 'none',
+                  fontSize: '12px',
+                  fontWeight: 500,
+                  letterSpacing: '0.08em',
+                  textTransform: 'uppercase',
+                  transition: 'color 0.2s ease'
+                }}
+                onMouseEnter={(e) => (e.target as HTMLElement).style.color = colors.textTertiary}
+                onMouseLeave={(e) => (e.target as HTMLElement).style.color = isDark ? '#3a3a3c' : '#9a9a9c'}
+              >
+                {social.name}
+              </a>
+            ))}
+          </div>
+        </section>
 
-      {/* Case Study Modal */}
-      {modalCase && (
-        <CaseStudyDrawer
-          isOpen={!!modalCase}
-          onClose={() => setModalCase(null)}
-          caseStudy={modalCase}
-          isMobile={isMobile}
-          onNavigate={(study) => setModalCase(study)}
-        />
-      )}
+        {/* Omnibar */}
+        <Omnibar />
+
+        {/* Case Study Modal */}
+        {modalCase && (
+          <CaseStudyDrawer
+            isOpen={!!modalCase}
+            onClose={() => setModalCase(null)}
+            caseStudy={modalCase}
+            isMobile={isMobile}
+            onNavigate={(study) => setModalCase(study)}
+          />
+        )}
+
+      </main>
 
       {/* Footer */}
       <FooterSection isMobile={isMobile} />

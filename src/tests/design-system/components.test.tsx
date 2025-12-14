@@ -77,11 +77,11 @@ describe('Component Integration Tests', () => {
         it('should render without crashing', () => {
             render(
                 <TestWrapper>
-                    <CertificationsSection isMobile={false} sectionPadding="40px" />
+                    <CertificationsSection isMobile={false} isTablet={false} sectionPadding="40px" />
                 </TestWrapper>
             );
 
-            expect(screen.getByText('Certifications')).toBeInTheDocument();
+            expect(screen.getByText('Credentials')).toBeInTheDocument();
         });
     });
 
