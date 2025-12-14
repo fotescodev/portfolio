@@ -4,11 +4,8 @@ import type { CaseStudy } from '../../types/portfolio';
 import { caseStudies } from '../../lib/content';
 import { useTheme } from '../../context/ThemeContext';
 import CaseStudyHero from './CaseStudyHero';
-import CaseStudyHeader from './CaseStudyHeader';
-import CaseStudyMetrics from './CaseStudyMetrics';
-import CaseStudyNarrative from './CaseStudyNarrative';
-import CaseStudyResults from './CaseStudyResults';
-import CaseStudyReflection from './CaseStudyReflection';
+import CaseStudyContent from './CaseStudyContent';
+import CaseStudyOutcome from './CaseStudyOutcome';
 import CaseStudyFooter from './CaseStudyFooter';
 import SEO from '../common/SEO';
 
@@ -51,9 +48,9 @@ export default function CaseStudyDrawer({ isOpen, onClose, caseStudy, isMobile, 
                             style={{
                                 position: 'fixed',
                                 inset: 0,
-                                background: 'rgba(0,0,0,0.4)',
+                                background: 'var(--color-backdrop)',
                                 backdropFilter: 'blur(4px)',
-                                zIndex: 'var(--drawer-z-index)', // 200
+                                zIndex: 'var(--drawer-z-index)',
                                 cursor: 'pointer'
                             }}
                         />
@@ -69,13 +66,13 @@ export default function CaseStudyDrawer({ isOpen, onClose, caseStudy, isMobile, 
                                 top: 0,
                                 right: 0,
                                 bottom: 0,
-                                width: isMobile ? '100%' : 'var(--drawer-width)', // 800px
+                                width: isMobile ? '100%' : 'var(--drawer-width)',
                                 height: '100%',
                                 background: colors.background,
-                                zIndex: 'calc(var(--drawer-z-index) + 1)', // 201
+                                zIndex: 'calc(var(--drawer-z-index) + 1)',
                                 overflowY: 'auto',
                                 boxShadow: '-10px 0 40px rgba(0,0,0,0.2)',
-                                borderLeft: `1px solid ${colors.border}`
+                                borderLeft: '1px solid var(--color-border-light)'
                             }}
                             onClick={(e) => e.stopPropagation()}
                         >
@@ -87,53 +84,46 @@ export default function CaseStudyDrawer({ isOpen, onClose, caseStudy, isMobile, 
                                 path={`?case-study=${caseStudy.id}`}
                             />
 
-                            {/* Content Container */}
-                            <div style={{ position: 'relative', paddingBottom: '80px' }}>
+                            {/* Close Button */}
+                            <button
+                                onClick={onClose}
+                                aria-label="Close case study"
+                                style={{
+                                    position: 'absolute',
+                                    top: 'var(--space-lg)',
+                                    right: 'var(--space-lg)',
+                                    width: '40px',
+                                    height: '40px',
+                                    background: 'var(--color-surface-glass)',
+                                    border: 'none',
+                                    color: 'var(--color-text-primary)',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    cursor: 'pointer',
+                                    zIndex: 10,
+                                    backdropFilter: 'blur(4px)',
+                                    transition: 'transform 0.2s ease',
+                                    fontSize: '18px'
+                                }}
+                                onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.1)')}
+                                onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
+                            >
+                                ✕
+                            </button>
 
-                                {/* Close Button (Floating) */}
-                                <button
-                                    onClick={onClose}
-                                    style={{
-                                        position: 'absolute',
-                                        top: 'var(--space-lg)', // 24px
-                                        right: 'var(--space-lg)', // 24px
-                                        width: '40px', // keeping 40px as specific UI element size not spacing
-                                        height: '40px',
-                                        borderRadius: '50%',
-                                        background: 'rgba(0,0,0,0.5)', // Backdrop alpha not in tokens usually
-                                        border: 'none',
-                                        color: '#fff',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        cursor: 'pointer',
-                                        zIndex: 10,
-                                        backdropFilter: 'blur(4px)',
-                                        transition: 'transform 0.2s ease'
-                                    }}
-                                    onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.1)')}
-                                    onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
-                                >
-                                    ✕
-                                </button>
-
+                            {/* Content */}
+                            <div style={{ paddingBottom: 'var(--space-2xl)' }}>
+                                {/* HERO: Title + Primary Metric + Meta */}
                                 <CaseStudyHero caseStudy={caseStudy} isMobile={isMobile} />
 
-                                <div style={{ padding: isMobile ? 'var(--space-lg)' : 'var(--space-2xl) var(--space-2xl) 0' }}>
-                                    <CaseStudyHeader
-                                        onClose={onClose}
-                                        isMobile={isMobile}
-                                    />
+                                {/* CONTENT: Problem → Discovery → Solution → Lessons */}
+                                <CaseStudyContent caseStudy={caseStudy} isMobile={isMobile} />
 
-                                    <CaseStudyMetrics caseStudy={caseStudy} isMobile={isMobile} />
+                                {/* OUTCOME: Merged metrics/results */}
+                                <CaseStudyOutcome caseStudy={caseStudy} isMobile={isMobile} />
 
-                                    <CaseStudyNarrative caseStudy={caseStudy} isMobile={isMobile} />
-
-                                    <CaseStudyResults caseStudy={caseStudy} />
-
-                                    <CaseStudyReflection caseStudy={caseStudy} isMobile={isMobile} />
-                                </div>
-
+                                {/* FOOTER: Testimonial + CTA + Nav */}
                                 <CaseStudyFooter
                                     caseStudy={caseStudy}
                                     prevStudy={caseStudies.find(s => s.id === caseStudy.id - 1) || null}

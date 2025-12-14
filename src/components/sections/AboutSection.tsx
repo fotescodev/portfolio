@@ -1,3 +1,4 @@
+import { useMemo, useState } from 'react';
 import { profile } from '../../lib/content';
 
 interface AboutSectionProps {
@@ -8,6 +9,17 @@ interface AboutSectionProps {
 
 export default function AboutSection({ isMobile, isTablet, sectionPadding }: AboutSectionProps) {
   const { about, ens, photo, name } = profile;
+  const [photoError, setPhotoError] = useState(false);
+
+  const initials = useMemo(() => {
+    const parts = name.split(' ').filter(Boolean);
+    const computed = parts
+      .slice(0, 2)
+      .map((p) => p[0])
+      .join('')
+      .toUpperCase();
+    return computed || 'ME';
+  }, [name]);
 
   return (
     <section id="about" style={{
@@ -55,25 +67,55 @@ export default function AboutSection({ isMobile, isTablet, sectionPadding }: Abo
           position: 'relative',
           overflow: 'hidden'
         }}>
-          <img
-            src={photo}
-            alt={name}
-            style={{
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover'
-            }}
-            onError={(e) => {
-              (e.target as HTMLImageElement).style.display = 'none';
-              const parent = (e.target as HTMLImageElement).parentElement;
-              if (parent) {
-                const placeholder = document.createElement('div');
-                placeholder.style.cssText = 'position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#2a2a2c;font-size:12px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase';
-                placeholder.textContent = 'Photo';
-                parent.appendChild(placeholder);
-              }
-            }}
-          />
+          {!photoError ? (
+            <img
+              src={photo}
+              alt={name}
+              loading="lazy"
+              decoding="async"
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover'
+              }}
+              onError={() => setPhotoError(true)}
+            />
+          ) : (
+            <div
+              aria-label={`${name} photo unavailable`}
+              style={{
+                position: 'absolute',
+                inset: 0,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 'var(--space-xs)',
+                color: 'var(--color-text-muted)'
+              }}
+            >
+              <div
+                style={{
+                  fontFamily: 'var(--font-serif)',
+                  fontStyle: 'italic',
+                  fontSize: '32px',
+                  color: 'var(--color-text-tertiary)'
+                }}
+              >
+                {initials}
+              </div>
+              <div
+                style={{
+                  fontSize: '12px',
+                  fontWeight: 600,
+                  letterSpacing: '0.1em',
+                  textTransform: 'uppercase'
+                }}
+              >
+                Photo
+              </div>
+            </div>
+          )}
           {/* ENS tag */}
           <div style={{
             position: 'absolute',

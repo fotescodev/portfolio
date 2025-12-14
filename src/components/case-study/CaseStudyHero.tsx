@@ -10,71 +10,68 @@ export default function CaseStudyHero({ caseStudy, isMobile }: CaseStudyHeroProp
         <div style={{
             maxWidth: '1200px',
             margin: '0 auto',
-            padding: isMobile ? 'var(--space-xl) 20px' : 'var(--space-2xl) var(--space-2xl) 0'
+            padding: isMobile ? 'var(--space-xl) var(--space-lg)' : 'var(--space-3xl) var(--space-2xl) var(--space-2xl)'
         }}>
-            {/* Meta line */}
-            <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '12px',
-                marginBottom: 'var(--space-md)',
-                fontSize: '13px',
-                color: 'var(--color-text-muted)'
-            }}>
-                <span style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic' }}>
-                    {String(caseStudy.id).padStart(2, '0')}
-                </span>
-                <span>·</span>
-                <span>{caseStudy.company}</span>
-                <span>·</span>
-                <span>{caseStudy.year}</span>
-            </div>
-
-            {/* Title */}
+            {/* Title - Large, commanding */}
             <h1 style={{
-                fontSize: isMobile ? '32px' : '44px',
+                fontSize: isMobile ? '32px' : '48px',
                 fontFamily: 'var(--font-serif)',
                 fontWeight: 400,
                 fontStyle: 'italic',
                 color: 'var(--color-text-primary)',
                 letterSpacing: '-0.02em',
                 lineHeight: 1.15,
-                margin: '0 0 var(--space-lg) 0',
-                maxWidth: '700px'
+                margin: '0 0 var(--space-xl) 0',
+                maxWidth: '800px'
             }}>
                 {caseStudy.title}
             </h1>
 
-            {/* Role + Team + Duration - single line */}
-            <p style={{
-                fontSize: '15px',
-                color: 'var(--color-text-tertiary)',
-                margin: '0 0 40px 0'
+            {/* Primary Impact Metric - BIG */}
+            <div style={{
+                marginBottom: 'var(--space-xl)'
             }}>
-                <span style={{ color: 'var(--color-accent)' }}>{caseStudy.context.myRole}</span>
-                <span style={{ color: 'var(--color-text-muted)' }}> · {caseStudy.context.teamSize} · {caseStudy.context.duration}</span>
-            </p>
-
-            {/* [NEW] Feature Fix: Render Thumbnail if available */}
-            {caseStudy.hook.thumbnail && (
                 <div style={{
-                    width: '100%',
-                    marginBottom: '40px',
-                    borderRadius: '8px',
-                    overflow: 'hidden',
-                    border: '1px solid var(--color-border-light)'
+                    fontSize: isMobile ? '48px' : '72px',
+                    fontFamily: 'var(--font-serif)',
+                    color: 'var(--color-accent)',
+                    lineHeight: 1,
+                    letterSpacing: '-0.02em'
                 }}>
-                    <img
-                        src={caseStudy.hook.thumbnail}
-                        alt={caseStudy.hook.thumbnailAlt || caseStudy.title}
-                        style={{
-                            width: '100%',
-                            height: 'auto',
-                            display: 'block'
-                        }}
-                    />
+                    {caseStudy.hook.impactMetric.value}
                 </div>
-            )}
+                <div style={{
+                    fontSize: '13px',
+                    fontWeight: 600,
+                    letterSpacing: '0.1em',
+                    textTransform: 'uppercase',
+                    color: 'var(--color-text-muted)',
+                    marginTop: 'var(--space-sm)'
+                }}>
+                    {caseStudy.hook.impactMetric.label}
+                </div>
+            </div>
+
+            {/* Compact meta line */}
+            <div style={{
+                fontSize: '14px',
+                color: 'var(--color-text-tertiary)',
+                display: 'flex',
+                flexWrap: 'wrap',
+                gap: '6px'
+            }}>
+                <span style={{ fontWeight: 500, color: 'var(--color-text-secondary)' }}>
+                    {caseStudy.company}
+                </span>
+                <span style={{ color: 'var(--color-text-muted)' }}>·</span>
+                <span>{caseStudy.year}</span>
+                <span style={{ color: 'var(--color-text-muted)' }}>·</span>
+                <span style={{ color: 'var(--color-accent)' }}>{caseStudy.context.myRole}</span>
+                <span style={{ color: 'var(--color-text-muted)' }}>·</span>
+                <span>{caseStudy.context.teamSize}</span>
+                <span style={{ color: 'var(--color-text-muted)' }}>·</span>
+                <span>{caseStudy.context.duration}</span>
+            </div>
         </div>
     );
 }
