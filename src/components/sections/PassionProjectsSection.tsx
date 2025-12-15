@@ -2,13 +2,11 @@ import { passionProjects } from '../../lib/content';
 
 interface PassionProjectsSectionProps {
   isMobile: boolean;
-  isTablet: boolean;
   sectionPadding: string;
 }
 
 export default function PassionProjectsSection({
   isMobile,
-  isTablet,
   sectionPadding
 }: PassionProjectsSectionProps) {
   // Handle link clicks (open in new tab)
@@ -66,7 +64,7 @@ export default function PassionProjectsSection({
       {/* Grid of project cards */}
       <div style={{
         display: 'grid',
-        gridTemplateColumns: isMobile ? '1fr' : isTablet ? 'repeat(2, 1fr)' : 'repeat(3, 1fr)',
+        gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)',
         gap: isMobile ? 'var(--space-xl)' : 'var(--space-2xl)',
         alignItems: 'start'
       }}>

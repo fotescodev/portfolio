@@ -364,7 +364,6 @@ export default function Portfolio() {
           {sections.passionProjects && (
             <PassionProjectsSection
               isMobile={isMobile}
-              isTablet={isTablet}
               sectionPadding={sectionPadding}
             />
           )}
