@@ -159,12 +159,24 @@ All colors are defined as CSS custom properties in `/styles/globals.css`:
 - `--color-text-primary`: #e8e6e3
 - `--color-accent`: #c29a6c
 - `--color-success`: #4ade80
+- `--color-danger`: #ef4444
 
 #### Light Mode
 - `--color-background`: #fafafa
 - `--color-text-primary`: #050505
 - `--color-accent`: #8a6642
 - `--color-success`: #22c55e
+- `--color-danger`: #ef4444
+
+#### Component-Specific Tokens (Dec 2024)
+- `--color-thumbnail-bg-start/end`: Thumbnail gradient backgrounds
+- `--color-overlay-dark`: Semi-transparent overlay for thumbnails
+- `--color-overlay-text`: Text color on dark overlays
+- `--color-placeholder-text`: Muted placeholder text
+- `--color-separator`: Subtle separator color (dots, dashes)
+- `--color-success-bg/border`: Success state backgrounds/borders
+- `--shadow-omnibar`: Omnibar floating shadow
+- `--shadow-drawer`: Case study drawer shadow
 
 ### Using Colors
 

@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import type { BlogPost } from '../types/blog';
 import BlogPostModal from './BlogPostModal';
-import { useTheme } from '../context/ThemeContext';
 
 // Auto-discover blog posts using import.meta.glob
 const blogPostFiles = import.meta.glob('../../content/blog/*.md', { query: '?raw', eager: true });
@@ -90,7 +89,6 @@ function parseBlogPosts(): BlogPost[] {
 }
 
 export default function Blog({ isMobile, isTablet }: BlogProps) {
-    const { colors, isDark } = useTheme();
     const [hoveredPost, setHoveredPost] = useState<string | null>(null);
     const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
 
@@ -129,36 +127,36 @@ export default function Blog({ isMobile, isTablet }: BlogProps) {
                 <div style={{
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '24px',
-                    marginBottom: isMobile ? '32px' : '40px'
+                    gap: 'var(--space-lg)',
+                    marginBottom: isMobile ? 'var(--space-xl)' : '40px'
                 }}>
                     <span style={{
                         fontSize: '11px',
                         fontWeight: 600,
                         letterSpacing: '0.15em',
                         textTransform: 'uppercase',
-                        color: colors.textMuted
+                        color: 'var(--color-text-muted)'
                     }}>
                         Insights
                     </span>
                     <div style={{
                         flex: 1,
                         height: '1px',
-                        background: colors.borderLight
+                        background: 'var(--color-border-light)'
                     }} />
                 </div>
 
                 {/* Section header */}
                 <div style={{
-                    marginBottom: isMobile ? '32px' : '48px'
+                    marginBottom: isMobile ? 'var(--space-xl)' : 'var(--space-2xl)'
                 }}>
                     <h2 style={{
                         fontSize: isMobile ? '28px' : isTablet ? '36px' : '42px',
-                        fontFamily: "'Instrument Serif', Georgia, serif",
+                        fontFamily: 'var(--font-serif)',
                         fontWeight: 400,
                         fontStyle: 'italic',
-                        color: colors.textPrimary,
-                        marginBottom: '16px',
+                        color: 'var(--color-text-primary)',
+                        marginBottom: 'var(--space-md)',
                         letterSpacing: '-0.02em',
                         lineHeight: 1.2
                     }}>
@@ -166,7 +164,7 @@ export default function Blog({ isMobile, isTablet }: BlogProps) {
                     </h2>
                     <p style={{
                         fontSize: '15px',
-                        color: colors.textTertiary,
+                        color: 'var(--color-text-tertiary)',
                         maxWidth: '600px',
                         lineHeight: 1.6
                     }}>
@@ -184,12 +182,12 @@ export default function Blog({ isMobile, isTablet }: BlogProps) {
                         <article
                             key={post.slug}
                             style={{
-                                borderTop: index === 0 ? `1px solid ${colors.border}` : 'none',
-                                borderBottom: `1px solid ${colors.border}`,
+                                borderTop: index === 0 ? '1px solid var(--color-border)' : 'none',
+                                borderBottom: '1px solid var(--color-border)',
                                 padding: isMobile ? '28px 0' : '36px 0',
                                 cursor: 'pointer',
                                 transition: 'all 0.3s ease',
-                                background: hoveredPost === post.slug ? (isDark ? 'rgba(194, 154, 108, 0.02)' : 'rgba(166, 124, 82, 0.03)') : 'transparent'
+                                background: hoveredPost === post.slug ? 'var(--color-card-hover)' : 'transparent'
                             }}
                             onMouseEnter={() => !isMobile && setHoveredPost(post.slug)}
                             onMouseLeave={() => !isMobile && setHoveredPost(null)}
@@ -198,7 +196,7 @@ export default function Blog({ isMobile, isTablet }: BlogProps) {
                             <div style={{
                                 display: 'grid',
                                 gridTemplateColumns: isMobile ? '1fr' : isTablet ? '120px 1fr' : '140px 1fr auto',
-                                gap: isMobile ? '16px' : '32px',
+                                gap: isMobile ? 'var(--space-md)' : 'var(--space-xl)',
                                 alignItems: 'start'
                             }}>
                                 {/* Date */}
@@ -206,13 +204,13 @@ export default function Blog({ isMobile, isTablet }: BlogProps) {
                                     fontSize: '12px',
                                     fontWeight: 500,
                                     letterSpacing: '0.05em',
-                                    color: colors.textMuted,
+                                    color: 'var(--color-text-muted)',
                                     display: 'flex',
                                     alignItems: 'center',
-                                    gap: '12px'
+                                    gap: 'var(--space-sm)'
                                 }}>
                                     <span>{formatDate(post.date)}</span>
-                                    <span style={{ color: isDark ? '#3a3a3c' : '#9a9a9c' }}>•</span>
+                                    <span style={{ color: 'var(--color-separator)' }}>•</span>
                                     <span>{post.readingTime} min</span>
                                 </div>
 
@@ -220,11 +218,11 @@ export default function Blog({ isMobile, isTablet }: BlogProps) {
                                 <div>
                                     <h3 style={{
                                         fontSize: isMobile ? '22px' : '26px',
-                                        fontFamily: "'Instrument Serif', Georgia, serif",
+                                        fontFamily: 'var(--font-serif)',
                                         fontWeight: 400,
                                         fontStyle: 'italic',
-                                        color: colors.textPrimary,
-                                        marginBottom: '12px',
+                                        color: 'var(--color-text-primary)',
+                                        marginBottom: 'var(--space-sm)',
                                         letterSpacing: '-0.02em',
                                         lineHeight: 1.2,
                                         transition: 'color 0.2s ease'
@@ -234,9 +232,9 @@ export default function Blog({ isMobile, isTablet }: BlogProps) {
 
                                     <p style={{
                                         fontSize: '14px',
-                                        color: colors.textTertiary,
+                                        color: 'var(--color-text-tertiary)',
                                         lineHeight: 1.6,
-                                        marginBottom: '16px',
+                                        marginBottom: 'var(--space-md)',
                                         maxWidth: '600px'
                                     }}>
                                         {post.excerpt}
@@ -245,7 +243,7 @@ export default function Blog({ isMobile, isTablet }: BlogProps) {
                                     {/* Tags */}
                                     <div style={{
                                         display: 'flex',
-                                        gap: '8px',
+                                        gap: 'var(--space-sm)',
                                         flexWrap: 'wrap'
                                     }}>
                                         {post.tags.map((tag, i) => (
@@ -254,11 +252,11 @@ export default function Blog({ isMobile, isTablet }: BlogProps) {
                                                 fontWeight: 500,
                                                 letterSpacing: '0.05em',
                                                 textTransform: 'uppercase',
-                                                color: colors.textMuted,
+                                                color: 'var(--color-text-muted)',
                                                 padding: '4px 8px',
-                                                border: `1px solid ${colors.borderLight}`,
+                                                border: '1px solid var(--color-border-light)',
                                                 transition: 'all 0.2s ease',
-                                                background: hoveredPost === post.slug ? (isDark ? 'rgba(194, 154, 108, 0.05)' : 'rgba(166, 124, 82, 0.05)') : 'transparent'
+                                                background: hoveredPost === post.slug ? 'var(--color-tag-hover)' : 'transparent'
                                             }}>
                                                 {tag}
                                             </span>
@@ -271,8 +269,8 @@ export default function Blog({ isMobile, isTablet }: BlogProps) {
                                     <div style={{
                                         display: 'flex',
                                         alignItems: 'center',
-                                        gap: '8px',
-                                        color: hoveredPost === post.slug ? colors.accent : colors.textMuted,
+                                        gap: 'var(--space-sm)',
+                                        color: hoveredPost === post.slug ? 'var(--color-accent)' : 'var(--color-text-muted)',
                                         transition: 'color 0.2s ease',
                                         alignSelf: 'center'
                                     }}>
@@ -286,7 +284,7 @@ export default function Blog({ isMobile, isTablet }: BlogProps) {
                                         <span style={{
                                             transform: hoveredPost === post.slug ? 'translateX(4px)' : 'translateX(0)',
                                             transition: 'transform 0.2s ease',
-                                            fontFamily: "'Instrument Serif', serif",
+                                            fontFamily: 'var(--font-serif)',
                                             fontStyle: 'italic'
                                         }}>→</span>
                                     </div>

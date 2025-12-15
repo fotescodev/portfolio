@@ -43,6 +43,23 @@
   --color-photo-border: rgba(232, 230, 227, 0.06);
   --color-experience-border: rgba(232, 230, 227, 0.06);
 
+  /* Thumbnail/overlay specific */
+  --color-thumbnail-bg-start: #141416;
+  --color-thumbnail-bg-end: #1a1a1c;
+  --color-overlay-dark: rgba(8, 8, 10, 0.7);
+  --color-overlay-text: #ffffff;
+  --color-placeholder-text: #2a2a2c;
+  --color-separator: #3a3a3c;
+
+  /* Success states */
+  --color-success-bg: rgba(74, 222, 128, 0.05);
+  --color-success-border: rgba(74, 222, 128, 0.15);
+  --color-success-border-subtle: rgba(74, 222, 128, 0.1);
+
+  /* Shadows */
+  --shadow-omnibar: 0 8px 32px rgba(0, 0, 0, 0.12);
+  --shadow-drawer: -10px 0 40px rgba(0, 0, 0, 0.2);
+
   /* Typography */
   --font-serif: 'Instrument Serif', Georgia, serif;
   --font-sans: 'Instrument Sans', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -121,6 +138,23 @@
   --color-cert-border: rgba(166, 124, 82, 0.2);
   --color-photo-border: rgba(26, 26, 28, 0.06);
   --color-experience-border: rgba(26, 26, 28, 0.06);
+
+  /* Thumbnail/overlay specific - light mode */
+  --color-thumbnail-bg-start: #f0f0f0;
+  --color-thumbnail-bg-end: #e5e5e5;
+  --color-overlay-dark: rgba(0, 0, 0, 0.6);
+  --color-overlay-text: #ffffff;
+  --color-placeholder-text: #9a9a9c;
+  --color-separator: #9a9a9c;
+
+  /* Success states - light mode */
+  --color-success-bg: rgba(34, 197, 94, 0.05);
+  --color-success-border: rgba(34, 197, 94, 0.15);
+  --color-success-border-subtle: rgba(34, 197, 94, 0.1);
+
+  /* Shadows - light mode */
+  --shadow-omnibar: 0 8px 32px rgba(0, 0, 0, 0.08);
+  --shadow-drawer: -10px 0 40px rgba(0, 0, 0, 0.1);
 }
 
 /* Custom Scrollbar */

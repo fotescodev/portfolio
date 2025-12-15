@@ -8,7 +8,7 @@ interface AboutSectionProps {
 }
 
 export default function AboutSection({ isMobile, isTablet, sectionPadding }: AboutSectionProps) {
-  const { about, ens, photo, name } = profile;
+  const { about, photo, name } = profile;
   const [photoError, setPhotoError] = useState(false);
 
   const initials = useMemo(() => {
@@ -116,37 +116,6 @@ export default function AboutSection({ isMobile, isTablet, sectionPadding }: Abo
               </div>
             </div>
           )}
-          {/* ENS tag */}
-          <div style={{
-            position: 'absolute',
-            bottom: '0',
-            left: '0',
-            right: '0',
-            background: 'var(--color-ens-bg)',
-            backdropFilter: 'blur(8px)',
-            padding: '14px 16px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between'
-          }}>
-            <span style={{
-              fontFamily: 'var(--font-serif)',
-              fontStyle: 'italic',
-              fontSize: '14px',
-              color: 'var(--color-accent)'
-            }}>
-              {ens}
-            </span>
-            <span style={{
-              fontSize: '10px',
-              fontWeight: 600,
-              letterSpacing: '0.1em',
-              textTransform: 'uppercase',
-              color: 'var(--color-success)'
-            }}>
-              Verified
-            </span>
-          </div>
         </div>
 
         <div>

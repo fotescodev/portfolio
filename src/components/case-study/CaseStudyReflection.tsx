@@ -65,7 +65,7 @@ export default function CaseStudyReflection({ caseStudy, isMobile }: CaseStudyRe
                         fontWeight: 600,
                         letterSpacing: '0.1em',
                         textTransform: 'uppercase',
-                        color: '#ef4444',
+                        color: 'var(--color-danger)',
                         marginBottom: '12px'
                     }}>What didn't</div>
                     {caseStudy.reflection.whatDidnt.map((item, i) => (
