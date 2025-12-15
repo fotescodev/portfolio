@@ -51,22 +51,19 @@ export default function CaseStudyFooter({ caseStudy, prevStudy, nextStudy, onNav
                     style={{
                         display: 'inline-block',
                         padding: '12px 24px',
-                        background: 'transparent',
-                        color: 'var(--color-text-secondary)',
+                        background: 'var(--color-accent)',
+                        color: 'var(--color-background)',
                         textDecoration: 'none',
                         fontSize: '13px',
                         fontWeight: 600,
                         letterSpacing: '0.02em',
-                        border: '1px solid var(--color-border)',
                         transition: 'all 0.2s ease'
                     }}
                     onMouseEnter={(e) => {
-                        e.currentTarget.style.borderColor = 'var(--color-accent)';
-                        e.currentTarget.style.color = 'var(--color-accent)';
+                        e.currentTarget.style.background = 'var(--color-accent-hover)';
                     }}
                     onMouseLeave={(e) => {
-                        e.currentTarget.style.borderColor = 'var(--color-border)';
-                        e.currentTarget.style.color = 'var(--color-text-secondary)';
+                        e.currentTarget.style.background = 'var(--color-accent)';
                     }}
                 >
                     {caseStudy.cta.linkText}
