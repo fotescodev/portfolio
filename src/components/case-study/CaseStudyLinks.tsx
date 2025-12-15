@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import type { CaseStudy } from '../../types/portfolio';
 
 interface CaseStudyLinksProps {
@@ -6,7 +7,7 @@ interface CaseStudyLinksProps {
 }
 
 // Media type icons and labels
-const MediaIcons: Record<string, { icon: JSX.Element; label: string }> = {
+const MediaIcons: Record<string, { icon: ReactNode; label: string }> = {
     blog: {
         icon: (
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
