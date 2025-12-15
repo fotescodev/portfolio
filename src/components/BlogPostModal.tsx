@@ -27,7 +27,8 @@ export default function BlogPostModal({
     nextTitle,
     isMobile
 }: BlogPostModalProps) {
-    const { colors, isDark } = useTheme();
+    // Only keep isDark for the SyntaxHighlighter theme (third-party library)
+    const { isDark } = useTheme();
 
     // Handle scroll lock and ESC key
     useEffect(() => {
@@ -59,11 +60,11 @@ export default function BlogPostModal({
                 zIndex: 1000,
                 display: 'flex',
                 flexDirection: 'column',
-                background: colors.background,
+                background: 'var(--color-background)',
                 animation: 'modalSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1)'
             }}
         >
-            {/* Modal styles */}
+            {/* Modal styles - all using CSS variables */}
             <style>{`
         @keyframes modalSlideUp {
           from {
@@ -85,25 +86,25 @@ export default function BlogPostModal({
         }
 
         .blog-modal-scroll::-webkit-scrollbar-thumb {
-          background: ${colors.scrollbarThumb};
+          background: var(--color-scrollbar-thumb);
           border-radius: 3px;
         }
 
         .blog-modal-scroll::-webkit-scrollbar-thumb:hover {
-          background: ${colors.scrollbarThumbHover};
+          background: var(--color-scrollbar-thumb-hover);
         }
 
         .blog-modal-scroll {
           scrollbar-width: thin;
-          scrollbar-color: ${colors.scrollbarThumb} transparent;
+          scrollbar-color: var(--color-scrollbar-thumb) transparent;
         }
 
         .blog-content h1 {
           font-size: ${isMobile ? '28px' : '36px'};
-          font-family: 'Instrument Serif', Georgia, serif;
+          font-family: var(--font-serif);
           font-weight: 400;
           font-style: italic;
-          color: ${colors.textPrimary};
+          color: var(--color-text-primary);
           margin: 40px 0 20px;
           letter-spacing: -0.02em;
           line-height: 1.2;
@@ -111,10 +112,10 @@ export default function BlogPostModal({
 
         .blog-content h2 {
           font-size: ${isMobile ? '22px' : '26px'};
-          font-family: 'Instrument Serif', Georgia, serif;
+          font-family: var(--font-serif);
           font-weight: 400;
           font-style: italic;
-          color: ${colors.textPrimary};
+          color: var(--color-text-primary);
           margin: 36px 0 16px;
           letter-spacing: -0.02em;
           line-height: 1.3;
@@ -123,14 +124,14 @@ export default function BlogPostModal({
         .blog-content h3 {
           font-size: ${isMobile ? '18px' : '20px'};
           font-weight: 600;
-          color: ${colors.textPrimary};
+          color: var(--color-text-primary);
           margin: 28px 0 12px;
           line-height: 1.4;
         }
 
         .blog-content p {
           font-size: ${isMobile ? '16px' : '17px'};
-          color: ${colors.textSecondary};
+          color: var(--color-text-secondary);
           line-height: 1.8;
           margin: 0 0 20px;
         }
@@ -138,7 +139,7 @@ export default function BlogPostModal({
         .blog-content ul, .blog-content ol {
           margin: 0 0 20px;
           padding-left: 24px;
-          color: ${colors.textSecondary};
+          color: var(--color-text-secondary);
         }
 
         .blog-content li {
@@ -148,7 +149,7 @@ export default function BlogPostModal({
         }
 
         .blog-content a {
-          color: ${colors.accent};
+          color: var(--color-accent);
           text-decoration: none;
           transition: opacity 0.2s ease;
         }
@@ -158,7 +159,7 @@ export default function BlogPostModal({
         }
 
         .blog-content strong {
-          color: ${colors.textPrimary};
+          color: var(--color-text-primary);
           font-weight: 600;
         }
 
@@ -167,10 +168,10 @@ export default function BlogPostModal({
         }
 
         .blog-content blockquote {
-          border-left: 3px solid ${colors.accent};
+          border-left: 3px solid var(--color-accent);
           margin: 24px 0;
           padding: 16px 24px;
-          background: ${isDark ? 'rgba(194, 154, 108, 0.05)' : 'rgba(166, 124, 82, 0.05)'};
+          background: var(--color-tag-hover);
         }
 
         .blog-content blockquote p {
@@ -181,21 +182,59 @@ export default function BlogPostModal({
         .blog-content hr {
           border: none;
           height: 1px;
-          background: ${colors.border};
+          background: var(--color-border);
           margin: 40px 0;
         }
 
         .blog-content pre {
           margin: 24px 0;
           border-radius: 0;
-          border: 1px solid ${colors.border};
+          border: 1px solid var(--color-border);
         }
 
         .blog-content code:not([class*="language-"]) {
-          background: ${isDark ? 'rgba(232, 230, 227, 0.08)' : 'rgba(26, 26, 28, 0.06)'};
+          background: var(--color-border-light);
           padding: 2px 6px;
           font-size: 0.9em;
-          color: ${colors.accent};
+          color: var(--color-accent);
+        }
+
+        .blog-modal-back-btn {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          background: none;
+          border: none;
+          color: var(--color-text-tertiary);
+          font-size: 13px;
+          font-weight: 500;
+          cursor: pointer;
+          padding: 0;
+          font-family: var(--font-sans);
+          transition: color 0.2s ease;
+        }
+
+        .blog-modal-back-btn:hover {
+          color: var(--color-text-primary);
+        }
+
+        .blog-modal-close-btn {
+          background: none;
+          border: 1px solid var(--color-border);
+          color: var(--color-text-tertiary);
+          width: 40px;
+          height: 40px;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 18px;
+          transition: all 0.2s ease;
+        }
+
+        .blog-modal-close-btn:hover {
+          border-color: var(--color-text-tertiary);
+          color: var(--color-text-primary);
         }
       `}</style>
 
@@ -205,59 +244,18 @@ export default function BlogPostModal({
                 justifyContent: 'space-between',
                 alignItems: 'center',
                 padding: isMobile ? '20px 24px' : '28px 64px',
-                borderBottom: `1px solid ${colors.borderLight}`,
-                background: colors.background,
+                borderBottom: '1px solid var(--color-border-light)',
+                background: 'var(--color-background)',
                 position: 'sticky',
                 top: 0,
                 zIndex: 10
             }}>
-                <button
-                    onClick={onClose}
-                    style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '8px',
-                        background: 'none',
-                        border: 'none',
-                        color: colors.textTertiary,
-                        fontSize: '13px',
-                        fontWeight: 500,
-                        cursor: 'pointer',
-                        padding: 0,
-                        fontFamily: "'Instrument Sans', -apple-system, BlinkMacSystemFont, sans-serif",
-                        transition: 'color 0.2s ease'
-                    }}
-                    onMouseEnter={(e) => (e.currentTarget as HTMLButtonElement).style.color = colors.textPrimary}
-                    onMouseLeave={(e) => (e.currentTarget as HTMLButtonElement).style.color = colors.textTertiary}
-                >
-                    <span style={{ fontFamily: "'Instrument Serif', serif", fontStyle: 'italic' }}>←</span>
+                <button onClick={onClose} className="blog-modal-back-btn">
+                    <span style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic' }}>←</span>
                     Back to Blog
                 </button>
 
-                <button
-                    onClick={onClose}
-                    style={{
-                        background: 'none',
-                        border: `1px solid ${colors.border}`,
-                        color: colors.textTertiary,
-                        width: '40px',
-                        height: '40px',
-                        cursor: 'pointer',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        fontSize: '18px',
-                        transition: 'all 0.2s ease'
-                    }}
-                    onMouseEnter={(e) => {
-                        (e.currentTarget as HTMLButtonElement).style.borderColor = isDark ? 'rgba(232, 230, 227, 0.3)' : 'rgba(26, 26, 28, 0.3)';
-                        (e.currentTarget as HTMLButtonElement).style.color = colors.textPrimary;
-                    }}
-                    onMouseLeave={(e) => {
-                        (e.currentTarget as HTMLButtonElement).style.borderColor = colors.border;
-                        (e.currentTarget as HTMLButtonElement).style.color = colors.textTertiary;
-                    }}
-                >
+                <button onClick={onClose} className="blog-modal-close-btn">
                     ✕
                 </button>
             </div>
@@ -278,23 +276,23 @@ export default function BlogPostModal({
                 <div style={{ marginBottom: '40px' }}>
                     <div style={{
                         fontSize: '13px',
-                        color: colors.textTertiary,
-                        marginBottom: '16px',
+                        color: 'var(--color-text-tertiary)',
+                        marginBottom: 'var(--space-md)',
                         display: 'flex',
                         alignItems: 'center',
-                        gap: '12px'
+                        gap: 'var(--space-sm)'
                     }}>
                         <span>{formatDate(post.date)}</span>
-                        <span style={{ color: isDark ? '#3a3a3c' : '#9a9a9c' }}>•</span>
+                        <span style={{ color: 'var(--color-separator)' }}>•</span>
                         <span>{post.readingTime} min read</span>
                     </div>
 
                     <h1 style={{
                         fontSize: isMobile ? '32px' : '48px',
-                        fontFamily: "'Instrument Serif', Georgia, serif",
+                        fontFamily: 'var(--font-serif)',
                         fontWeight: 400,
                         fontStyle: 'italic',
-                        color: colors.textPrimary,
+                        color: 'var(--color-text-primary)',
                         marginBottom: '20px',
                         letterSpacing: '-0.02em',
                         lineHeight: 1.1
@@ -314,9 +312,9 @@ export default function BlogPostModal({
                                 fontWeight: 500,
                                 letterSpacing: '0.08em',
                                 textTransform: 'uppercase',
-                                color: colors.textMuted,
+                                color: 'var(--color-text-muted)',
                                 padding: '6px 12px',
-                                border: `1px solid ${colors.borderLight}`
+                                border: '1px solid var(--color-border-light)'
                             }}>
                                 {tag}
                             </span>
@@ -328,9 +326,9 @@ export default function BlogPostModal({
                 {post.thumbnail && (
                     <div style={{
                         aspectRatio: '16/9',
-                        marginBottom: '48px',
-                        background: `linear-gradient(135deg, ${colors.backgroundSecondary} 0%, ${colors.backgroundTertiary} 100%)`,
-                        border: `1px solid ${isDark ? 'rgba(232, 230, 227, 0.06)' : 'rgba(26, 26, 28, 0.06)'}`,
+                        marginBottom: 'var(--space-2xl)',
+                        background: 'linear-gradient(135deg, var(--color-background-secondary) 0%, var(--color-background-tertiary) 100%)',
+                        border: '1px solid var(--color-border-light)',
                         overflow: 'hidden'
                     }}>
                         <img
@@ -357,8 +355,8 @@ export default function BlogPostModal({
                                         customStyle={{
                                             margin: '24px 0',
                                             borderRadius: 0,
-                                            border: `1px solid ${colors.border}`,
-                                            background: colors.codeBackground
+                                            border: '1px solid var(--color-border)',
+                                            background: 'var(--color-code-bg)'
                                         }}
                                     >
                                         {String(children).replace(/\n$/, '')}
@@ -380,10 +378,10 @@ export default function BlogPostModal({
                     <div style={{
                         display: 'flex',
                         justifyContent: 'space-between',
-                        marginTop: '64px',
-                        paddingTop: '32px',
-                        borderTop: `1px solid ${colors.borderLight}`,
-                        gap: '24px',
+                        marginTop: 'var(--space-3xl)',
+                        paddingTop: 'var(--space-xl)',
+                        borderTop: '1px solid var(--color-border-light)',
+                        gap: 'var(--space-lg)',
                         flexWrap: 'wrap'
                     }}>
                         {hasPrev ? (
@@ -396,7 +394,7 @@ export default function BlogPostModal({
                                     textAlign: 'left',
                                     padding: 0,
                                     flex: 1,
-                                    fontFamily: "'Instrument Sans', -apple-system, BlinkMacSystemFont, sans-serif"
+                                    fontFamily: 'var(--font-sans)'
                                 }}
                             >
                                 <span style={{
@@ -404,15 +402,15 @@ export default function BlogPostModal({
                                     fontWeight: 500,
                                     letterSpacing: '0.1em',
                                     textTransform: 'uppercase',
-                                    color: colors.textMuted,
+                                    color: 'var(--color-text-muted)',
                                     display: 'block',
-                                    marginBottom: '8px'
+                                    marginBottom: 'var(--space-sm)'
                                 }}>← Previous</span>
                                 <span style={{
                                     fontSize: '16px',
-                                    fontFamily: "'Instrument Serif', Georgia, serif",
+                                    fontFamily: 'var(--font-serif)',
                                     fontStyle: 'italic',
-                                    color: colors.textSecondary
+                                    color: 'var(--color-text-secondary)'
                                 }}>{prevTitle}</span>
                             </button>
                         ) : <div style={{ flex: 1 }} />}
@@ -427,7 +425,7 @@ export default function BlogPostModal({
                                     textAlign: 'right',
                                     padding: 0,
                                     flex: 1,
-                                    fontFamily: "'Instrument Sans', -apple-system, BlinkMacSystemFont, sans-serif"
+                                    fontFamily: 'var(--font-sans)'
                                 }}
                             >
                                 <span style={{
@@ -435,15 +433,15 @@ export default function BlogPostModal({
                                     fontWeight: 500,
                                     letterSpacing: '0.1em',
                                     textTransform: 'uppercase',
-                                    color: colors.textMuted,
+                                    color: 'var(--color-text-muted)',
                                     display: 'block',
-                                    marginBottom: '8px'
+                                    marginBottom: 'var(--space-sm)'
                                 }}>Next →</span>
                                 <span style={{
                                     fontSize: '16px',
-                                    fontFamily: "'Instrument Serif', Georgia, serif",
+                                    fontFamily: 'var(--font-serif)',
                                     fontStyle: 'italic',
-                                    color: colors.textSecondary
+                                    color: 'var(--color-text-secondary)'
                                 }}>{nextTitle}</span>
                             </button>
                         ) : <div style={{ flex: 1 }} />}

@@ -1,4 +1,3 @@
-import { useTheme } from '../../context/ThemeContext';
 import { caseStudies } from '../../lib/content';
 import type { CaseStudy } from '../../types/portfolio';
 
@@ -19,8 +18,6 @@ export default function CaseStudiesSection({
   setHoveredCase,
   onCaseClick
 }: CaseStudiesSectionProps) {
-  const { colors, isDark } = useTheme();
-
   // Format case study number with leading zero
   const formatNumber = (id: number) => id.toString().padStart(2, '0');
 
@@ -36,22 +33,22 @@ export default function CaseStudiesSection({
       <div style={{
         display: 'flex',
         alignItems: 'center',
-        gap: '24px',
-        marginBottom: isMobile ? '32px' : '40px'
+        gap: 'var(--space-lg)',
+        marginBottom: isMobile ? 'var(--space-xl)' : '40px'
       }}>
         <span style={{
           fontSize: '11px',
           fontWeight: 600,
           letterSpacing: '0.15em',
           textTransform: 'uppercase',
-          color: colors.textMuted
+          color: 'var(--color-text-muted)'
         }}>
           Selected Work
         </span>
         <div style={{
           flex: 1,
           height: '1px',
-          background: 'rgba(232, 230, 227, 0.08)'
+          background: 'var(--color-border-light)'
         }} />
       </div>
 
@@ -59,18 +56,18 @@ export default function CaseStudiesSection({
       <div style={{
         display: 'flex',
         flexDirection: 'column',
-        gap: isMobile ? '48px' : '0'
+        gap: isMobile ? 'var(--space-2xl)' : '0'
       }}>
         {caseStudies.map((study, index) => (
           <div
             key={study.id}
             style={{
-              borderTop: !isMobile && index === 0 ? '1px solid rgba(232, 230, 227, 0.1)' : 'none',
-              borderBottom: !isMobile ? '1px solid rgba(232, 230, 227, 0.1)' : 'none',
+              borderTop: !isMobile && index === 0 ? '1px solid var(--color-border)' : 'none',
+              borderBottom: !isMobile ? '1px solid var(--color-border)' : 'none',
               padding: isMobile ? '0' : '40px 0',
               cursor: 'pointer',
               transition: 'all 0.3s ease',
-              background: hoveredCase === study.id ? 'rgba(194, 154, 108, 0.02)' : 'transparent'
+              background: hoveredCase === study.id ? 'var(--color-card-hover)' : 'transparent'
             }}
             onMouseEnter={() => !isMobile && setHoveredCase(study.id)}
             onMouseLeave={() => !isMobile && setHoveredCase(null)}
@@ -78,15 +75,15 @@ export default function CaseStudiesSection({
             <div style={{
               display: 'grid',
               gridTemplateColumns: isMobile ? '1fr' : isTablet ? '200px 1fr' : '340px 1fr',
-              gap: isMobile ? '24px' : isTablet ? '40px' : '56px',
+              gap: isMobile ? 'var(--space-lg)' : isTablet ? '40px' : '56px',
               alignItems: 'start'
             }}>
               {/* Thumbnail */}
               <div style={{
                 position: 'relative',
                 aspectRatio: '4/3',
-                background: 'linear-gradient(135deg, #141416 0%, #1a1a1c 100%)',
-                border: '1px solid rgba(232, 230, 227, 0.06)',
+                background: 'linear-gradient(135deg, var(--color-thumbnail-bg-start) 0%, var(--color-thumbnail-bg-end) 100%)',
+                border: '1px solid var(--color-border-light)',
                 overflow: 'hidden',
                 transition: 'all 0.4s ease'
               }}>
@@ -109,13 +106,13 @@ export default function CaseStudiesSection({
                     {/* Number overlay */}
                     <div style={{
                       position: 'absolute',
-                      top: '16px',
-                      left: '16px',
-                      fontFamily: "'Instrument Serif', Georgia, serif",
+                      top: 'var(--space-md)',
+                      left: 'var(--space-md)',
+                      fontFamily: 'var(--font-serif)',
                       fontSize: '14px',
                       fontStyle: 'italic',
-                      color: '#fff',
-                      background: 'rgba(8, 8, 10, 0.7)',
+                      color: 'var(--color-overlay-text)',
+                      background: 'var(--color-overlay-dark)',
                       padding: '6px 12px',
                       backdropFilter: 'blur(4px)'
                     }}>
@@ -131,14 +128,14 @@ export default function CaseStudiesSection({
                   flexDirection: 'column',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  gap: '12px',
+                  gap: 'var(--space-sm)',
                   zIndex: study.hook.thumbnail ? -1 : 1
                 }}>
                   <span style={{
-                    fontFamily: "'Instrument Serif', Georgia, serif",
+                    fontFamily: 'var(--font-serif)',
                     fontSize: isMobile ? '48px' : '56px',
                     fontStyle: 'italic',
-                    color: '#2a2a2c',
+                    color: 'var(--color-placeholder-text)',
                     lineHeight: 1
                   }}>
                     {formatNumber(study.id)}
@@ -154,7 +151,7 @@ export default function CaseStudiesSection({
               }}>
                 <div style={{
                   display: 'flex',
-                  gap: '16px',
+                  gap: 'var(--space-md)',
                   marginBottom: '14px',
                   flexWrap: 'wrap',
                   alignItems: 'center'
@@ -164,24 +161,24 @@ export default function CaseStudiesSection({
                     fontWeight: 500,
                     letterSpacing: '0.05em',
                     textTransform: 'uppercase',
-                    color: colors.textTertiary
+                    color: 'var(--color-text-tertiary)'
                   }}>{study.company}</span>
                   <span style={{
-                    color: '#3a3a3c',
+                    color: 'var(--color-separator)',
                     fontSize: '12px'
                   }}>—</span>
                   <span style={{
                     fontSize: '12px',
-                    color: colors.textMuted
+                    color: 'var(--color-text-muted)'
                   }}>{study.year}</span>
                 </div>
 
                 <h3 style={{
                   fontSize: isMobile ? '26px' : isTablet ? '32px' : '38px',
-                  fontFamily: "'Instrument Serif', Georgia, serif",
+                  fontFamily: 'var(--font-serif)',
                   fontWeight: 400,
                   fontStyle: 'italic',
-                  color: colors.textSecondary,
+                  color: 'var(--color-text-secondary)',
                   marginBottom: '14px',
                   letterSpacing: '-0.02em',
                   lineHeight: 1.15,
@@ -192,7 +189,7 @@ export default function CaseStudiesSection({
 
                 <p style={{
                   fontSize: '15px',
-                  color: colors.textTertiary,
+                  color: 'var(--color-text-tertiary)',
                   lineHeight: 1.65,
                   marginBottom: '20px',
                   maxWidth: '520px'
@@ -203,7 +200,7 @@ export default function CaseStudiesSection({
                 {/* Metrics row */}
                 <div style={{
                   display: 'flex',
-                  gap: isMobile ? '16px' : '24px',
+                  gap: isMobile ? 'var(--space-md)' : 'var(--space-lg)',
                   marginBottom: '20px',
                   flexWrap: 'wrap'
                 }}>
@@ -211,13 +208,13 @@ export default function CaseStudiesSection({
                   <div style={{
                     display: 'flex',
                     flexDirection: 'column',
-                    gap: '4px'
+                    gap: 'var(--space-xs)'
                   }}>
                     <span style={{
                       fontSize: isMobile ? '24px' : '28px',
-                      fontFamily: "'Instrument Serif', Georgia, serif",
+                      fontFamily: 'var(--font-serif)',
                       fontWeight: 400,
-                      color: '#c29a6c',
+                      color: 'var(--color-accent)',
                       lineHeight: 1
                     }}>
                       {study.hook.impactMetric.value}
@@ -227,7 +224,7 @@ export default function CaseStudiesSection({
                       fontWeight: 500,
                       letterSpacing: '0.05em',
                       textTransform: 'uppercase',
-                      color: colors.textMuted
+                      color: 'var(--color-text-muted)'
                     }}>
                       {study.hook.impactMetric.label}
                     </span>
@@ -238,15 +235,15 @@ export default function CaseStudiesSection({
                     <div key={i} style={{
                       display: 'flex',
                       flexDirection: 'column',
-                      gap: '4px',
-                      paddingLeft: isMobile ? '16px' : '24px',
-                      borderLeft: '1px solid rgba(232, 230, 227, 0.1)'
+                      gap: 'var(--space-xs)',
+                      paddingLeft: isMobile ? 'var(--space-md)' : 'var(--space-lg)',
+                      borderLeft: '1px solid var(--color-border)'
                     }}>
                       <span style={{
                         fontSize: isMobile ? '24px' : '28px',
-                        fontFamily: "'Instrument Serif', Georgia, serif",
+                        fontFamily: 'var(--font-serif)',
                         fontWeight: 400,
-                        color: colors.textSecondary,
+                        color: 'var(--color-text-secondary)',
                         lineHeight: 1
                       }}>
                         {metric.value}
@@ -256,7 +253,7 @@ export default function CaseStudiesSection({
                         fontWeight: 500,
                         letterSpacing: '0.05em',
                         textTransform: 'uppercase',
-                        color: colors.textMuted
+                        color: 'var(--color-text-muted)'
                       }}>
                         {metric.label}
                       </span>
@@ -276,11 +273,11 @@ export default function CaseStudiesSection({
                       fontWeight: 500,
                       letterSpacing: '0.05em',
                       textTransform: 'uppercase',
-                      color: colors.textMuted,
+                      color: 'var(--color-text-muted)',
                       padding: '6px 12px',
-                      border: `1px solid ${colors.border}`,
+                      border: '1px solid var(--color-border)',
                       transition: 'all 0.2s ease',
-                      background: hoveredCase === study.id ? (isDark ? 'rgba(194, 154, 108, 0.05)' : 'rgba(138, 102, 66, 0.05)') : 'transparent'
+                      background: hoveredCase === study.id ? 'var(--color-tag-hover)' : 'transparent'
                     }}>
                       {tag}
                     </span>
@@ -293,9 +290,9 @@ export default function CaseStudiesSection({
                   style={{
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '12px',
-                    marginTop: '24px',
-                    color: hoveredCase === study.id ? colors.accent : colors.textMuted,
+                    gap: 'var(--space-sm)',
+                    marginTop: 'var(--space-lg)',
+                    color: hoveredCase === study.id ? 'var(--color-accent)' : 'var(--color-text-muted)',
                     transition: 'color 0.2s ease',
                     cursor: 'pointer'
                   }}
@@ -310,7 +307,7 @@ export default function CaseStudiesSection({
                   <span style={{
                     transform: hoveredCase === study.id ? 'translateX(4px)' : 'translateX(0)',
                     transition: 'transform 0.2s ease',
-                    fontFamily: "'Instrument Serif', serif",
+                    fontFamily: 'var(--font-serif)',
                     fontStyle: 'italic'
                   }}>→</span>
                 </div>

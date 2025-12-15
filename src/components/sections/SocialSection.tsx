@@ -48,15 +48,15 @@ export default function SocialSection({ isMobile, sectionPadding }: SocialSectio
         {/* Coming Soon Card */}
         <div style={{
           gridColumn: isMobile ? 'span 1' : 'span 2',
-          background: 'linear-gradient(135deg, rgba(74, 222, 128, 0.05) 0%, rgba(74, 222, 128, 0.01) 100%)',
-          border: '1px solid rgba(74, 222, 128, 0.15)',
+          background: 'linear-gradient(135deg, var(--color-success-bg) 0%, transparent 100%)',
+          border: '1px solid var(--color-success-border)',
           padding: isMobile ? '28px 24px' : '36px',
           position: 'relative'
         }}>
           <div style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '12px',
+            gap: 'var(--space-sm)',
             marginBottom: 'var(--space-md)'
           }}>
             <div style={{
@@ -82,7 +82,7 @@ export default function SocialSection({ isMobile, sectionPadding }: SocialSectio
             fontStyle: 'italic',
             fontWeight: 400,
             color: 'var(--color-text-secondary)',
-            marginBottom: '12px',
+            marginBottom: 'var(--space-sm)',
             lineHeight: 1.2
           }}>
             Thoughts on AI × On-Chain
@@ -113,8 +113,8 @@ export default function SocialSection({ isMobile, sectionPadding }: SocialSectio
                 textTransform: 'uppercase',
                 color: 'var(--color-text-muted)',
                 padding: '6px 10px',
-                background: 'rgba(74, 222, 128, 0.05)',
-                border: '1px solid rgba(74, 222, 128, 0.1)'
+                background: 'var(--color-success-bg)',
+                border: '1px solid var(--color-success-border-subtle)'
               }}>
                 {tag}
               </span>
@@ -187,8 +187,8 @@ export default function SocialSection({ isMobile, sectionPadding }: SocialSectio
             <div style={{
               marginTop: 'auto',
               padding: 'var(--space-md)',
-              background: 'rgba(194, 154, 108, 0.05)',
-              border: '1px dashed rgba(194, 154, 108, 0.15)',
+              background: 'var(--color-tag-hover)',
+              border: '1px dashed var(--color-cert-border)',
               textAlign: 'center'
             }}>
               <span style={{

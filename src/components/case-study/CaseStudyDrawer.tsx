@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { CaseStudy } from '../../types/portfolio';
 import { caseStudies } from '../../lib/content';
-import { useTheme } from '../../context/ThemeContext';
 import CaseStudyHero from './CaseStudyHero';
 import CaseStudyContent from './CaseStudyContent';
 import CaseStudyOutcome from './CaseStudyOutcome';
@@ -18,8 +17,6 @@ interface CaseStudyDrawerProps {
 }
 
 export default function CaseStudyDrawer({ isOpen, onClose, caseStudy, isMobile, onNavigate }: CaseStudyDrawerProps) {
-    const { colors } = useTheme();
-
     useEffect(() => {
         if (isOpen) {
             document.body.style.overflow = 'hidden';
@@ -68,10 +65,10 @@ export default function CaseStudyDrawer({ isOpen, onClose, caseStudy, isMobile, 
                                 bottom: 0,
                                 width: isMobile ? '100%' : 'var(--drawer-width)',
                                 height: '100%',
-                                background: colors.background,
+                                background: 'var(--color-background)',
                                 zIndex: 'calc(var(--drawer-z-index) + 1)',
                                 overflowY: 'auto',
-                                boxShadow: '-10px 0 40px rgba(0,0,0,0.2)',
+                                boxShadow: 'var(--shadow-drawer)',
                                 borderLeft: '1px solid var(--color-border-light)'
                             }}
                             onClick={(e) => e.stopPropagation()}
