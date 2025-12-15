@@ -31,3 +31,69 @@ projects:
     githubUrl: https://github.com/fotescodev/programmable-planning
     liveUrl: null
     docsUrl: null
+
+  - id: 4
+    slug: smart-contract-explorer
+    title: Smart Contract Explorer
+    tagline: Interactive visualization tool for exploring Ethereum smart contract dependencies
+    year: "2023"
+    tags: [Web3, Visualization, Ethereum]
+    thumbnail: null
+    githubUrl: https://github.com/fotescodev/contract-explorer
+    liveUrl: https://contract-explorer.demo.com
+    docsUrl: null
+
+  - id: 5
+    slug: api-spec-validator
+    title: API Spec Validator
+    tagline: Automated OpenAPI validation and testing framework for REST APIs
+    year: "2024"
+    tags: [API, Testing, DevOps]
+    thumbnail: null
+    githubUrl: https://github.com/fotescodev/api-validator
+    liveUrl: null
+    docsUrl: https://api-validator.docs.dev
+
+  - id: 6
+    slug: markdown-slides
+    title: Markdown Slides
+    tagline: Convert markdown files to beautiful presentation slides with live preview
+    year: "2023"
+    tags: [Markdown, Presentations, Tools]
+    thumbnail: null
+    githubUrl: https://github.com/fotescodev/md-slides
+    liveUrl: https://md-slides.app
+    docsUrl: null
+
+  - id: 7
+    slug: git-metrics
+    title: Git Metrics Dashboard
+    tagline: Visualize team contribution patterns and code review metrics from Git history
+    year: "2024"
+    tags: [Git, Analytics, Dashboard]
+    thumbnail: null
+    githubUrl: https://github.com/fotescodev/git-metrics
+    liveUrl: null
+    docsUrl: null
+
+  - id: 8
+    slug: node-dependency-graph
+    title: Node Dependency Graph
+    tagline: Generate visual dependency graphs for Node.js projects with security insights
+    year: "2023"
+    tags: [Node.js, Security, Visualization]
+    thumbnail: null
+    githubUrl: https://github.com/fotescodev/node-deps
+    liveUrl: null
+    docsUrl: null
+
+  - id: 9
+    slug: prompt-library
+    title: Prompt Library
+    tagline: Curated collection of LLM prompts with version control and A/B testing
+    year: "2024"
+    tags: [AI, LLM, Tooling]
+    thumbnail: null
+    githubUrl: https://github.com/fotescodev/prompt-library
+    liveUrl: https://prompts.tools
+    docsUrl: null
