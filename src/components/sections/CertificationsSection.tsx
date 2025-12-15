@@ -12,6 +12,10 @@ function formatCompletionDate(date: string) {
   if (/^\d{4}$/.test(date)) {
     return date;
   }
+  // Handle season + year formats like "Winter 2025"
+  if (/^(Winter|Spring|Summer|Fall)\s+\d{4}$/i.test(date)) {
+    return date;
+  }
   try {
     return new Date(date).toLocaleDateString(undefined, {
       year: 'numeric',
@@ -29,9 +33,6 @@ export default function CertificationsSection({
   showOnchainIdentity = profile.sections.onchainIdentity
 }: CertificationsSectionProps) {
   const { certifications, credentials, onchainIdentity } = certificationsData;
-
-  const featured = certifications.filter((c) => c.featured);
-  const other = certifications.filter((c) => !c.featured);
 
   return (
     <section
@@ -95,266 +96,235 @@ export default function CertificationsSection({
         </p>
       </div>
 
-      {/* Two-column layout */}
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: isMobile ? '1fr' : '1.5fr 0.5fr',
-          gap: isMobile ? 'var(--space-xl)' : 'var(--space-2xl)'
-        }}
-      >
-        {/* Left: Certifications */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-lg)' }}>
-          {featured.map((cert, index) => (
-            <div
-              key={index}
-              style={{
-                position: 'relative',
-                padding: isMobile ? 'var(--space-xl)' : 'var(--space-2xl)',
-                border: '1px solid var(--color-border-light)',
-                background:
-                  'linear-gradient(135deg, var(--color-background-secondary) 0%, var(--color-background-tertiary) 100%)'
-              }}
-            >
-              {/* Decorative corner */}
-              <div
-                aria-hidden="true"
-                style={{
-                  position: 'absolute',
-                  top: 'var(--space-md)',
-                  right: 'var(--space-md)',
-                  width: '48px',
-                  height: '48px',
-                  background: 'var(--color-accent)',
-                  opacity: 0.12,
-                  filter: 'blur(14px)'
-                }}
-              />
-
-              <div style={{ display: 'flex', justifyContent: 'space-between', gap: 'var(--space-lg)' }}>
-                <div style={{ display: 'flex', gap: 'var(--space-lg)', flex: 1 }}>
-                  {/* Logo */}
-                  {cert.logo && (
-                    <div style={{
-                      width: '48px',
-                      height: '48px',
-                      flexShrink: 0,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center'
-                    }}>
-                      <img
-                        src={cert.logo}
-                        alt={`${cert.issuer} logo`}
-                        style={{
-                          width: '100%',
-                          height: '100%',
-                          objectFit: 'contain'
-                        }}
-                        onError={(e) => {
-                          // Hide image if it fails to load
-                          (e.target as HTMLImageElement).style.display = 'none';
-                        }}
-                      />
-                    </div>
-                  )}
-                  
-                  <div>
-                    <h3
-                      style={{
-                        fontSize: '20px',
-                        fontFamily: 'var(--font-serif)',
-                        fontWeight: 400,
-                        fontStyle: 'italic',
-                        color: 'var(--color-text-primary)',
-                        marginBottom: 'var(--space-xs)'
-                      }}
-                    >
-                      {cert.name}
-                    </h3>
-                    <div style={{ fontSize: '13px', color: 'var(--color-text-muted)', marginBottom: 'var(--space-md)' }}>
-                      {cert.issuer} · Completed {formatCompletionDate(cert.date)}
-                    </div>
-                    {cert.instructor && (
-                      <p style={{ fontSize: '14px', color: 'var(--color-text-tertiary)', lineHeight: 1.6 }}>
-                        Intensive AI PM program led by <strong style={{ color: 'var(--color-text-secondary)' }}>{cert.instructor}</strong>
-                        {cert.instructorRole && `, ${cert.instructorRole}.`}
-                      </p>
-                    )}
-                  </div>
-                </div>
-
-                {cert.url && (
-                  <a
-                    href={cert.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{
-                      alignSelf: 'flex-start',
-                      padding: '8px 14px',
-                      border: '1px solid var(--color-border-light)',
-                      textDecoration: 'none',
-                      fontSize: '12px',
-                      fontWeight: 700,
-                      letterSpacing: '0.04em',
-                      textTransform: 'uppercase',
-                      color: 'var(--color-text-primary)'
-                    }}
-                  >
-                    Verify ↗
-                  </a>
-                )}
-              </div>
-
-              {cert.credentialId && (
-                <div
-                  style={{
-                    marginTop: 'var(--space-lg)',
-                    fontSize: '12px',
-                    color: 'var(--color-text-muted)'
-                  }}
-                >
-                  Credential ID: <span style={{ color: 'var(--color-text-tertiary)' }}>{cert.credentialId}</span>
-                </div>
-              )}
-            </div>
-          ))}
-
-          {other.length > 0 && (
-            <div
-              style={{
-                padding: isMobile ? 'var(--space-lg)' : 'var(--space-xl)',
-                border: '1px solid var(--color-border-light)',
-                background: 'var(--color-background-secondary)'
-              }}
-            >
-              <div style={{ fontSize: '12px', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--color-text-muted)', marginBottom: 'var(--space-md)' }}>
-                Other certifications
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-sm)' }}>
-                {other.map((cert, index) => (
-                  <div key={index} style={{ display: 'flex', justifyContent: 'space-between', gap: 'var(--space-lg)' }}>
-                    <div style={{ color: 'var(--color-text-primary)', fontSize: '13px', fontWeight: 600 }}>{cert.name}</div>
-                    <div style={{ color: 'var(--color-text-muted)', fontSize: '12px' }}>{cert.issuer}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* Right: Highlights */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-lg)' }}>
+      {/* Certifications - Clean list style */}
+      <div style={{ marginBottom: 'var(--space-2xl)' }}>
+        {certifications.map((cert, index) => (
           <div
+            key={index}
             style={{
-              padding: isMobile ? 'var(--space-lg)' : 'var(--space-xl)',
-              border: '1px solid var(--color-border-light)',
-              background: 'var(--color-background-secondary)'
+              display: 'flex',
+              flexDirection: isMobile ? 'column' : 'row',
+              alignItems: isMobile ? 'flex-start' : 'baseline',
+              gap: isMobile ? 'var(--space-sm)' : 'var(--space-xl)',
+              padding: 'var(--space-lg) 0',
+              borderBottom: index < certifications.length - 1 ? '1px solid var(--color-border-light)' : 'none'
             }}
           >
+            {/* Date column */}
             <div
               style={{
                 fontSize: '12px',
-                fontWeight: 700,
-                letterSpacing: '0.1em',
+                fontWeight: 600,
+                letterSpacing: '0.08em',
                 textTransform: 'uppercase',
                 color: 'var(--color-text-muted)',
-                marginBottom: 'var(--space-md)'
+                minWidth: isMobile ? 'auto' : '120px',
+                flexShrink: 0
               }}
             >
-              Highlights
+              {formatCompletionDate(cert.date)}
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-md)' }}>
-              {credentials.map((cred, index) => (
-                <div key={index}>
-                  <div
-                    style={{
-                      fontSize: '10px',
-                      fontWeight: 700,
-                      letterSpacing: '0.12em',
-                      textTransform: 'uppercase',
-                      color: 'var(--color-text-muted)',
-                      marginBottom: 'var(--space-xs)'
-                    }}
-                  >
-                    {cred.label}
-                  </div>
-                  {cred.url ? (
-                    <a
-                      href={cred.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{ fontSize: '13px', color: 'var(--color-text-primary)', textDecoration: 'none' }}
-                    >
-                      {cred.value} ↗
-                    </a>
-                  ) : (
-                    <div style={{ fontSize: '13px', color: 'var(--color-text-primary)' }}>{cred.value}</div>
-                  )}
-                </div>
-              ))}
+            {/* Main content */}
+            <div style={{ flex: 1 }}>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: isMobile ? 'column' : 'row',
+                  alignItems: isMobile ? 'flex-start' : 'baseline',
+                  gap: isMobile ? 'var(--space-xs)' : 'var(--space-md)',
+                  marginBottom: cert.instructor ? 'var(--space-sm)' : 0
+                }}
+              >
+                <h3
+                  style={{
+                    fontSize: isMobile ? '18px' : '20px',
+                    fontFamily: 'var(--font-serif)',
+                    fontWeight: 400,
+                    fontStyle: 'italic',
+                    color: 'var(--color-text-primary)',
+                    margin: 0
+                  }}
+                >
+                  {cert.name}
+                </h3>
+                <span
+                  style={{
+                    fontSize: '13px',
+                    color: 'var(--color-text-muted)'
+                  }}
+                >
+                  {cert.issuer}
+                </span>
+              </div>
+
+              {cert.instructor && (
+                <p
+                  style={{
+                    fontSize: '13px',
+                    color: 'var(--color-text-tertiary)',
+                    lineHeight: 1.5,
+                    margin: 0,
+                    maxWidth: '600px'
+                  }}
+                >
+                  Led by <span style={{ color: 'var(--color-text-secondary)' }}>{cert.instructor}</span>
+                  {cert.instructorRole && ` — ${cert.instructorRole}`}
+                </p>
+              )}
             </div>
+
+            {/* Verify link */}
+            {cert.url && (
+              <a
+                href={cert.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  fontSize: '12px',
+                  fontWeight: 600,
+                  letterSpacing: '0.06em',
+                  textTransform: 'uppercase',
+                  color: 'var(--color-accent)',
+                  textDecoration: 'none',
+                  flexShrink: 0,
+                  marginTop: isMobile ? 'var(--space-sm)' : 0
+                }}
+              >
+                Verify ↗
+              </a>
+            )}
           </div>
+        ))}
+      </div>
 
-          {showOnchainIdentity && (
+      {/* Highlights - Horizontal badges */}
+      <div
+        style={{
+          padding: 'var(--space-xl) 0',
+          borderTop: '1px solid var(--color-border-light)',
+          borderBottom: showOnchainIdentity ? 'none' : '1px solid var(--color-border-light)'
+        }}
+      >
+        <div
+          style={{
+            fontSize: '11px',
+            fontWeight: 600,
+            letterSpacing: '0.15em',
+            textTransform: 'uppercase',
+            color: 'var(--color-text-muted)',
+            marginBottom: 'var(--space-lg)'
+          }}
+        >
+          Highlights
+        </div>
+
+        <div
+          style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: isMobile ? 'var(--space-md)' : 'var(--space-xl)'
+          }}
+        >
+          {credentials.map((cred, index) => (
             <div
+              key={index}
               style={{
-                padding: isMobile ? 'var(--space-lg)' : 'var(--space-xl)',
-                border: '1px solid var(--color-border-light)',
-                background: 'var(--color-background-secondary)'
+                minWidth: isMobile ? '100%' : 'auto'
               }}
             >
               <div
                 style={{
-                  fontSize: '12px',
+                  fontSize: '10px',
                   fontWeight: 700,
                   letterSpacing: '0.1em',
                   textTransform: 'uppercase',
                   color: 'var(--color-text-muted)',
-                  marginBottom: 'var(--space-md)'
-                }}
-              >
-                On-chain identity
-              </div>
-
-              <div
-                style={{
-                  fontSize: '13px',
-                  color: 'var(--color-text-primary)',
-                  fontWeight: 700,
                   marginBottom: 'var(--space-xs)'
                 }}
               >
-                {onchainIdentity.ens}
+                {cred.label}
               </div>
-
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-sm)', marginTop: 'var(--space-md)' }}>
-                {onchainIdentity.links.map((link, index) => (
-                  <a
-                    key={index}
-                    href={link.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{
-                      padding: '8px 12px',
-                      border: '1px solid var(--color-border-light)',
-                      textDecoration: 'none',
-                      fontSize: '12px',
-                      fontWeight: 700,
-                      color: 'var(--color-text-tertiary)',
-                      letterSpacing: '0.06em',
-                      textTransform: 'uppercase'
-                    }}
-                  >
-                    {link.name} ↗
-                  </a>
-                ))}
-              </div>
+              {cred.url ? (
+                <a
+                  href={cred.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    fontSize: '14px',
+                    color: 'var(--color-text-primary)',
+                    textDecoration: 'none'
+                  }}
+                >
+                  {cred.value} <span style={{ color: 'var(--color-accent)' }}>↗</span>
+                </a>
+              ) : (
+                <div style={{ fontSize: '14px', color: 'var(--color-text-primary)' }}>{cred.value}</div>
+              )}
             </div>
-          )}
+          ))}
         </div>
       </div>
+
+      {/* On-chain identity - Compact footer style */}
+      {showOnchainIdentity && (
+        <div
+          style={{
+            padding: 'var(--space-lg) 0',
+            borderTop: '1px solid var(--color-border-light)',
+            display: 'flex',
+            flexDirection: isMobile ? 'column' : 'row',
+            alignItems: isMobile ? 'flex-start' : 'center',
+            gap: 'var(--space-lg)',
+            justifyContent: 'space-between'
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-md)' }}>
+            <span
+              style={{
+                fontSize: '11px',
+                fontWeight: 600,
+                letterSpacing: '0.15em',
+                textTransform: 'uppercase',
+                color: 'var(--color-text-muted)'
+              }}
+            >
+              On-chain
+            </span>
+            <span
+              style={{
+                fontSize: '15px',
+                color: 'var(--color-text-primary)',
+                fontFamily: 'var(--font-mono)',
+                fontWeight: 500
+              }}
+            >
+              {onchainIdentity.ens}
+            </span>
+          </div>
+
+          <div style={{ display: 'flex', gap: 'var(--space-md)' }}>
+            {onchainIdentity.links.map((link, index) => (
+              <a
+                key={index}
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  fontSize: '12px',
+                  fontWeight: 600,
+                  letterSpacing: '0.04em',
+                  textTransform: 'uppercase',
+                  color: 'var(--color-text-tertiary)',
+                  textDecoration: 'none'
+                }}
+              >
+                {link.name} ↗
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
     </section>
   );
 }
