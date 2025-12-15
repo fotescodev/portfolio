@@ -24,25 +24,26 @@ export default function CaseStudyFooter({ caseStudy, prevStudy, nextStudy, onNav
     const btnStyle = {
         display: 'flex',
         alignItems: 'center',
-        gap: '8px',
-        padding: '12px 16px',
+        gap: '10px',
+        padding: '14px 20px',
         background: 'transparent',
         border: 'none',
         color: 'var(--color-text-primary)',
-        fontSize: '13px',
+        fontSize: '14px',
         fontWeight: 500,
-        letterSpacing: '0.02em',
+        letterSpacing: '0.01em',
         cursor: 'pointer',
         whiteSpace: 'nowrap' as const,
         textDecoration: 'none',
-        transition: 'background 0.2s ease'
+        transition: 'background 0.2s ease',
+        borderRadius: '4px'
     };
 
     const primaryBtnStyle = {
         ...btnStyle,
-        background: 'transparent',
-        border: '1px solid var(--color-accent)',
-        color: 'var(--color-accent)',
+        background: 'var(--color-accent)',
+        border: 'none',
+        color: 'var(--color-background)',
         fontWeight: 600
     };
 
@@ -57,8 +58,7 @@ export default function CaseStudyFooter({ caseStudy, prevStudy, nextStudy, onNav
                     background: var(--color-tag-hover) !important;
                 }
                 .drawer-cta-btn-primary:hover {
-                    background: var(--color-accent) !important;
-                    color: var(--color-background) !important;
+                    background: var(--color-accent-hover) !important;
                 }
                 .drawer-social-icon:hover {
                     color: var(--color-accent) !important;
@@ -68,34 +68,46 @@ export default function CaseStudyFooter({ caseStudy, prevStudy, nextStudy, onNav
             {/* CTA Section */}
             <div style={{
                 textAlign: 'center',
-                padding: 'var(--space-3xl) 0',
+                padding: isMobile ? 'var(--space-2xl) 0' : 'var(--space-3xl) 0',
                 borderTop: '1px solid var(--color-border-light)',
-                borderBottom: '1px solid var(--color-border-light)',
                 marginBottom: 'var(--space-xl)'
             }}>
-                <p style={{
-                    fontSize: '20px',
+                <h3 style={{
+                    fontSize: isMobile ? '28px' : '36px',
                     fontFamily: 'var(--font-serif)',
+                    fontWeight: 400,
                     fontStyle: 'italic',
-                    color: 'var(--color-text-secondary)',
-                    margin: '0 0 var(--space-lg) 0',
-                    lineHeight: 1.4
+                    color: 'var(--color-text-primary)',
+                    margin: '0 0 var(--space-md) 0',
+                    lineHeight: 1.2,
+                    letterSpacing: '-0.02em'
+                }}>
+                    Let's connect
+                </h3>
+
+                <p style={{
+                    fontSize: '15px',
+                    color: 'var(--color-text-tertiary)',
+                    margin: '0 0 var(--space-xl) 0',
+                    lineHeight: 1.6,
+                    maxWidth: '400px',
+                    marginLeft: 'auto',
+                    marginRight: 'auto'
                 }}>
                     {caseStudy.cta.headline}
                 </p>
 
-                {/* Omnibar-style CTA */}
+                {/* Action buttons */}
                 <div style={{
                     display: 'inline-flex',
                     alignItems: 'center',
-                    gap: 'var(--space-sm)',
-                    padding: 'var(--space-sm)',
+                    gap: '8px',
+                    padding: '8px',
                     background: 'var(--color-surface-glass)',
                     backdropFilter: 'blur(12px)',
                     WebkitBackdropFilter: 'blur(12px)',
-                    borderRadius: '6px',
+                    borderRadius: '8px',
                     border: '1px solid var(--color-border-light)',
-                    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
                     flexWrap: isMobile ? 'wrap' : 'nowrap',
                     justifyContent: 'center'
                 }}>
@@ -158,8 +170,8 @@ export default function CaseStudyFooter({ caseStudy, prevStudy, nextStudy, onNav
                 <div style={{
                     display: 'flex',
                     justifyContent: 'center',
-                    gap: 'var(--space-lg)',
-                    marginTop: 'var(--space-xl)'
+                    gap: 'var(--space-xl)',
+                    marginTop: 'var(--space-2xl)'
                 }}>
                     {/* LinkedIn */}
                     <a
@@ -223,7 +235,9 @@ export default function CaseStudyFooter({ caseStudy, prevStudy, nextStudy, onNav
             <nav style={{
                 display: 'flex',
                 justifyContent: 'space-between',
-                gap: 'var(--space-lg)',
+                alignItems: 'stretch',
+                gap: 'var(--space-md)',
+                borderTop: '1px solid var(--color-border-light)',
                 paddingTop: 'var(--space-xl)'
             }}>
                 {prevStudy ? (
@@ -231,34 +245,27 @@ export default function CaseStudyFooter({ caseStudy, prevStudy, nextStudy, onNav
                         onClick={() => onNavigate(prevStudy)}
                         style={{
                             background: 'none',
-                            border: '1px solid var(--color-border)',
+                            border: 'none',
                             cursor: 'pointer',
                             textAlign: 'left',
-                            padding: 'var(--space-lg)',
+                            padding: 'var(--space-md) 0',
                             flex: 1,
-                            maxWidth: '45%',
                             transition: 'all 0.2s ease'
-                        }}
-                        onMouseEnter={(e) => {
-                            e.currentTarget.style.borderColor = 'var(--color-accent)';
-                        }}
-                        onMouseLeave={(e) => {
-                            e.currentTarget.style.borderColor = 'var(--color-border)';
                         }}
                     >
                         <span style={{
-                            fontSize: '13px',
+                            fontSize: '12px',
                             fontWeight: 500,
-                            letterSpacing: '0.05em',
+                            letterSpacing: '0.08em',
                             textTransform: 'uppercase',
                             color: 'var(--color-text-muted)',
                             display: 'block',
-                            marginBottom: '6px'
+                            marginBottom: '4px'
                         }}>
                             ← Previous
                         </span>
                         <span style={{
-                            fontSize: '18px',
+                            fontSize: '15px',
                             fontFamily: 'var(--font-serif)',
                             fontStyle: 'italic',
                             color: 'var(--color-text-secondary)',
@@ -274,34 +281,27 @@ export default function CaseStudyFooter({ caseStudy, prevStudy, nextStudy, onNav
                         onClick={() => onNavigate(nextStudy)}
                         style={{
                             background: 'none',
-                            border: '1px solid var(--color-border)',
+                            border: 'none',
                             cursor: 'pointer',
                             textAlign: 'right',
-                            padding: 'var(--space-lg)',
+                            padding: 'var(--space-md) 0',
                             flex: 1,
-                            maxWidth: '45%',
                             transition: 'all 0.2s ease'
-                        }}
-                        onMouseEnter={(e) => {
-                            e.currentTarget.style.borderColor = 'var(--color-accent)';
-                        }}
-                        onMouseLeave={(e) => {
-                            e.currentTarget.style.borderColor = 'var(--color-border)';
                         }}
                     >
                         <span style={{
-                            fontSize: '13px',
+                            fontSize: '12px',
                             fontWeight: 500,
-                            letterSpacing: '0.05em',
+                            letterSpacing: '0.08em',
                             textTransform: 'uppercase',
                             color: 'var(--color-text-muted)',
                             display: 'block',
-                            marginBottom: '6px'
+                            marginBottom: '4px'
                         }}>
                             Next →
                         </span>
                         <span style={{
-                            fontSize: '18px',
+                            fontSize: '15px',
                             fontFamily: 'var(--font-serif)',
                             fontStyle: 'italic',
                             color: 'var(--color-text-secondary)',
