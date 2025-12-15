@@ -2,14 +2,22 @@
 # CERTIFICATIONS
 # ═══════════════════════════════════════════════════════════════
 certifications:
-  - name: "AI Product Management"
+  - name: "AI Product Management Certification"
     issuer: "Product Faculty"
     instructor: "Miqdad Jaffer"
     instructorRole: "Product Leader at OpenAI, former Head of AI Products at Shopify"
-    date: "2024"
-    credentialId: null
-    url: "https://productfaculty.com"
-    logo: "/images/certs/product-faculty.svg"
+    date: "Winter 2025"
+    credentialId: "73f3c64b11e1468cb8255d8331cbba9c"
+    url: "https://certificate.productfaculty.com/c/73f3c64b11e1468cb8255d8331cbba9c"
+    featured: true
+
+  - name: "Ethereum Developer Bootcamp"
+    issuer: "ChainShot"
+    instructor: null
+    instructorRole: null
+    date: "Nov 2020"
+    credentialId: "dmitrii.chainshot.eth"
+    url: "https://www.chainshot.com"
     featured: true
 
 # ═══════════════════════════════════════════════════════════════
