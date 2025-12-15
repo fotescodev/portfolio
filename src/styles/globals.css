@@ -53,9 +53,12 @@
   --nav-height-mobile: 16px;
   --drawer-width: 800px;
   --drawer-z-index: 200;
+  --drawer-padding: var(--space-2xl);
+  --drawer-padding-mobile: var(--space-xl);
+  --drawer-content-max-width: 720px;
   --omnibar-z-index: 90;
   --omnibar-height: 56px;
-  --omnibar-bottom-spacing: 24px;
+  --omnibar-bottom-spacing: calc(var(--space-lg) + env(safe-area-inset-bottom));
 
   /* Spacing */
   --space-xs: 4px;
