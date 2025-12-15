@@ -20,7 +20,6 @@ export default function AboutSection({ isMobile, isTablet, sectionPadding }: Abo
   };
 
   // Get social links
-  const emailLink = social.links.find(l => l.platform === 'email');
   const linkedinLink = social.links.find(l => l.platform === 'linkedin');
   const githubLink = social.links.find(l => l.platform === 'github');
   const twitterLink = social.links.find(l => l.platform === 'twitter');
