@@ -9,7 +9,7 @@ certifications:
     date: "Winter 2025"
     credentialId: "73f3c64b11e1468cb8255d8331cbba9c"
     url: "https://certificate.productfaculty.com/c/73f3c64b11e1468cb8255d8331cbba9c"
-    logo: "/images/certs/product-faculty.svg"
+    logo: "/images/certs/product-faculty.png"
     featured: true
 
   - name: "Ethereum Developer Bootcamp"
@@ -19,7 +19,7 @@ certifications:
     date: "Nov 2020"
     credentialId: "dmitrii.chainshot.eth"
     url: "https://www.chainshot.com"
-    logo: "/images/certs/chainshot.svg"
+    logo: "/images/certs/chainshot.png"
     featured: true
 
 # ═══════════════════════════════════════════════════════════════

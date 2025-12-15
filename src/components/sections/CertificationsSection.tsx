@@ -132,28 +132,56 @@ export default function CertificationsSection({
               />
 
               <div style={{ display: 'flex', justifyContent: 'space-between', gap: 'var(--space-lg)' }}>
-                <div>
-                  <h3
-                    style={{
-                      fontSize: '20px',
-                      fontFamily: 'var(--font-serif)',
-                      fontWeight: 400,
-                      fontStyle: 'italic',
-                      color: 'var(--color-text-primary)',
-                      marginBottom: 'var(--space-xs)'
-                    }}
-                  >
-                    {cert.name}
-                  </h3>
-                  <div style={{ fontSize: '13px', color: 'var(--color-text-muted)', marginBottom: 'var(--space-md)' }}>
-                    {cert.issuer} · Completed {formatCompletionDate(cert.date)}
-                  </div>
-                  {cert.instructor && (
-                    <p style={{ fontSize: '14px', color: 'var(--color-text-tertiary)', lineHeight: 1.6 }}>
-                      Intensive AI PM program led by <strong style={{ color: 'var(--color-text-secondary)' }}>{cert.instructor}</strong>
-                      {cert.instructorRole && `, ${cert.instructorRole}.`}
-                    </p>
+                <div style={{ display: 'flex', gap: 'var(--space-lg)', flex: 1 }}>
+                  {/* Logo */}
+                  {cert.logo && (
+                    <div style={{
+                      width: '48px',
+                      height: '48px',
+                      flexShrink: 0,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center'
+                    }}>
+                      <img
+                        src={cert.logo}
+                        alt={`${cert.issuer} logo`}
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'contain'
+                        }}
+                        onError={(e) => {
+                          // Hide image if it fails to load
+                          (e.target as HTMLImageElement).style.display = 'none';
+                        }}
+                      />
+                    </div>
                   )}
+                  
+                  <div>
+                    <h3
+                      style={{
+                        fontSize: '20px',
+                        fontFamily: 'var(--font-serif)',
+                        fontWeight: 400,
+                        fontStyle: 'italic',
+                        color: 'var(--color-text-primary)',
+                        marginBottom: 'var(--space-xs)'
+                      }}
+                    >
+                      {cert.name}
+                    </h3>
+                    <div style={{ fontSize: '13px', color: 'var(--color-text-muted)', marginBottom: 'var(--space-md)' }}>
+                      {cert.issuer} · Completed {formatCompletionDate(cert.date)}
+                    </div>
+                    {cert.instructor && (
+                      <p style={{ fontSize: '14px', color: 'var(--color-text-tertiary)', lineHeight: 1.6 }}>
+                        Intensive AI PM program led by <strong style={{ color: 'var(--color-text-secondary)' }}>{cert.instructor}</strong>
+                        {cert.instructorRole && `, ${cert.instructorRole}.`}
+                      </p>
+                    )}
+                  </div>
                 </div>
 
                 {cert.url && (
