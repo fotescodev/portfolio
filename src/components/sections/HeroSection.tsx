@@ -12,14 +12,6 @@ export default function HeroSection({ isMobile, isTablet, isLoaded }: HeroSectio
   return (
     <>
       <style>{`
-        .hero-secondary-link {
-          color: var(--color-text-tertiary);
-          border-bottom: 1px solid var(--color-border);
-          transition: all 0.2s ease;
-        }
-        .hero-secondary-link:hover {
-          color: var(--color-text-primary);
-        }
         .hero-primary-btn {
           background: var(--color-accent);
           color: var(--color-background);
@@ -27,6 +19,16 @@ export default function HeroSection({ isMobile, isTablet, isLoaded }: HeroSectio
         }
         .hero-primary-btn:hover {
           background: var(--color-accent-hover);
+        }
+        .hero-secondary-btn {
+          background: transparent;
+          border: 1px solid var(--color-border);
+          color: var(--color-text-secondary);
+          transition: all 0.2s ease;
+        }
+        .hero-secondary-btn:hover {
+          border-color: var(--color-text-tertiary);
+          color: var(--color-text-primary);
         }
       `}</style>
       <section style={{
@@ -144,20 +146,36 @@ export default function HeroSection({ isMobile, isTablet, isLoaded }: HeroSectio
                 download="Dmitrii-Fotesco-Resume.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hero-secondary-link"
+                className="hero-secondary-btn"
                 style={{
-                  padding: '18px 0',
+                  padding: isMobile ? '16px 28px' : '18px 32px',
                   textDecoration: 'none',
                   fontSize: '14px',
-                  fontWeight: 500,
+                  fontWeight: 600,
                   letterSpacing: '0.02em',
                   display: 'inline-flex',
                   alignItems: 'center',
-                  gap: '12px',
-                  width: 'fit-content'
+                  justifyContent: 'space-between',
+                  width: isMobile ? '100%' : 'fit-content',
+                  minWidth: '220px'
                 }}
               >
-                {hero.cta.secondary.label}
+                <span>{hero.cta.secondary.label}</span>
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  style={{ opacity: 0.7 }}
+                >
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="7 10 12 15 17 10" />
+                  <line x1="12" y1="15" x2="12" y2="3" />
+                </svg>
               </a>
             </div>
           </div>

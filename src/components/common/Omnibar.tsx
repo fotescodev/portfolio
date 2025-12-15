@@ -4,8 +4,11 @@ import { profile } from '../../lib/content';
 
 export default function Omnibar() {
     const [copied, setCopied] = useState(false);
-    const [isVisible, setIsVisible] = useState(true);
-    const observerRef = useRef<IntersectionObserver | null>(null);
+    const [isVisible, setIsVisible] = useState(false); // Start hidden until we know hero is scrolled past
+    const [heroVisible, setHeroVisible] = useState(true);
+    const [footerVisible, setFooterVisible] = useState(false);
+    const heroObserverRef = useRef<IntersectionObserver | null>(null);
+    const footerObserverRef = useRef<IntersectionObserver | null>(null);
 
     const handleCopyEmail = () => {
         navigator.clipboard.writeText(profile.email);
@@ -13,17 +16,46 @@ export default function Omnibar() {
         setTimeout(() => setCopied(false), 2000);
     };
 
-    // Hide Omnibar when footer CTA is visible
+    // Update visibility based on hero and footer state
+    useEffect(() => {
+        // Show omnibar only when hero CTAs are NOT visible AND footer CTA is NOT visible
+        setIsVisible(!heroVisible && !footerVisible);
+    }, [heroVisible, footerVisible]);
+
+    // Observe Hero CTA section
+    useEffect(() => {
+        // Find the hero CTA container (parent of .hero-primary-btn)
+        const heroCta = document.querySelector('.hero-primary-btn')?.parentElement;
+
+        if (!heroCta) return;
+
+        heroObserverRef.current = new IntersectionObserver(
+            ([entry]) => {
+                setHeroVisible(entry.isIntersecting);
+            },
+            {
+                threshold: 0.1,
+                rootMargin: '0px'
+            }
+        );
+
+        heroObserverRef.current.observe(heroCta);
+
+        return () => {
+            heroObserverRef.current?.disconnect();
+        };
+    }, []);
+
+    // Observe Footer CTA section
     useEffect(() => {
         // Find the "Let's build" CTA section
         const ctaSection = document.querySelector('section[style*="text-align"]');
 
         if (!ctaSection) return;
 
-        observerRef.current = new IntersectionObserver(
+        footerObserverRef.current = new IntersectionObserver(
             ([entry]) => {
-                // Hide when CTA section is 20% visible
-                setIsVisible(!entry.isIntersecting);
+                setFooterVisible(entry.isIntersecting);
             },
             {
                 threshold: 0.2,
@@ -31,10 +63,10 @@ export default function Omnibar() {
             }
         );
 
-        observerRef.current.observe(ctaSection);
+        footerObserverRef.current.observe(ctaSection);
 
         return () => {
-            observerRef.current?.disconnect();
+            footerObserverRef.current?.disconnect();
         };
     }, []);
 
