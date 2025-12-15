@@ -200,6 +200,18 @@ export interface CaseStudy {
     thumbnail: string | null;
   };
 
+  // Links (optional)
+  demoUrl?: string | null;
+  githubUrl?: string | null;
+  docsUrl?: string | null;
+
+  // Media links (optional) - blog posts, tweets, videos, etc.
+  media?: Array<{
+    type: 'blog' | 'twitter' | 'linkedin' | 'video' | 'article' | 'slides';
+    url: string;
+    label?: string; // Optional custom label for tooltip
+  }>;
+
   // CTA - Drive action
   cta: CaseStudyCta;
 

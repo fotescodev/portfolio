@@ -1,4 +1,5 @@
 import type { CaseStudy } from '../../types/portfolio';
+import CaseStudyLinks from './CaseStudyLinks';
 
 interface CaseStudyHeroProps {
     caseStudy: CaseStudy;
@@ -103,6 +104,11 @@ export default function CaseStudyHero({ caseStudy, isMobile }: CaseStudyHeroProp
                         </div>
                     </div>
                 ))}
+            </div>
+
+            {/* Links */}
+            <div style={{ marginTop: 'var(--space-xl)' }}>
+                <CaseStudyLinks caseStudy={caseStudy} isMobile={isMobile} />
             </div>
         </header>
     );

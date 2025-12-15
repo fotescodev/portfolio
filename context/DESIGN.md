@@ -148,6 +148,32 @@ Centralized floating action button for high-value conversions.
 <Omnibar />
 ```
 
+### Case Study Links
+
+Reusable component for displaying external links (Live, Code, Docs) and media links.
+
+```tsx
+import CaseStudyLinks from './case-study/CaseStudyLinks';
+
+<CaseStudyLinks caseStudy={caseStudy} isMobile={false} />
+```
+
+#### Link Buttons
+- **Primary buttons (with labels)**: Live, Code, Docs
+- **Media buttons (icon-only)**: Blog, Twitter, LinkedIn, Video, Article, Slides
+- **Hover effect**: Border and text change to `--color-accent`
+- **Styling**: Consistent border outline style (no solid fills)
+
+#### Supported Media Types
+| Type | Icon | Use for |
+|------|------|---------|
+| `blog` | Pen | Blog posts |
+| `twitter` | X logo | Tweets/threads |
+| `linkedin` | LinkedIn logo | LinkedIn posts |
+| `video` | Play | YouTube, Loom, talks |
+| `article` | Document | Press/external articles |
+| `slides` | Presentation | Slide decks |
+
 ## Color System
 
 ### CSS Variables

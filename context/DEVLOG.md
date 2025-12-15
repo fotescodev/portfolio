@@ -4,6 +4,73 @@ A running record of development sessions, changes made, issues encountered, and 
 
 ---
 
+## Session: December 15, 2025 (Afternoon) — Case Study Cards & Links
+
+### Summary
+Redesigned case study cards for cleaner UX with external link buttons, and added links to case study drawer.
+
+### Changes Made
+
+#### 1. Case Study Card Redesign
+- **Whole card clickable**: Click anywhere on the card to open drawer (not just "Read more")
+- **Simplified metrics**: Show only primary metric on cards (sub-metrics remain in drawer)
+- **Removed tags**: Cleaner card layout without tag chips
+- **Added link buttons**: Live, Code, Docs buttons with consistent styling
+- **Added media section**: Icon-only buttons for blog, twitter, linkedin, video, article, slides
+
+#### 2. Case Study Schema Updates
+- **Added `demoUrl`**: Optional URL for live product/demo
+- **Added `githubUrl`**: Optional URL for source code
+- **Added `docsUrl`**: Optional URL for documentation
+- **Added `media` array**: Array of `{ type, url, label? }` for additional links
+- **Supported media types**: `blog`, `twitter`, `linkedin`, `video`, `article`, `slides`
+
+#### 3. New Component: CaseStudyLinks
+- Reusable component for displaying external links
+- Renders in two locations: after hero metrics, before CTA in footer
+- Labeled buttons for Live/Code/Docs, icon-only for media
+- Accent color hover effect on all buttons
+
+#### 4. Button Styling
+- **Consistent outline style**: All link buttons use border outline (no solid fills)
+- **Accent hover**: Border and text change to `--color-accent` on hover
+- **Compact media icons**: 32×32px icon-only buttons with tooltips
+
+### Files Changed
+- `src/types/portfolio.ts` — Added link fields to CaseStudy interface
+- `src/lib/content.ts` — Updated Zod schema for new fields
+- `src/components/sections/CaseStudiesSection.tsx` — Card redesign with links
+- `src/components/case-study/CaseStudyLinks.tsx` — New shared component
+- `src/components/case-study/CaseStudyHero.tsx` — Added links section
+- `src/components/case-study/CaseStudyFooter.tsx` — Added "Explore" links section
+- `content/case-studies/04-ankr-rpc.md` — Added demo links and media as example
+
+### Tests Added
+- 12 new tests for CaseStudyLinks component
+- Tests for schema validation of new link fields
+- Tests for media array validation
+
+### Documentation Added
+- `docs/guides/adding-case-studies.md` — Complete guide for creating case studies
+- Updated `context/DESIGN.md` — Added CaseStudyLinks component documentation
+
+### Outcomes
+
+| Area | Outcome |
+|------|---------|
+| UX Improvement | Cards are now fully clickable, less cluttered |
+| Flexibility | Case studies can now link to external resources |
+| Maintainability | Shared CaseStudyLinks component, comprehensive schema |
+| Documentation | Clear guide for adding new case studies |
+
+**Session Value Summary:**
+- ✅ Cleaner case study card design
+- ✅ Support for external links and media
+- ✅ Consistent button styling with accent hover
+- ✅ Comprehensive case study authoring guide
+
+---
+
 ## Session: December 15, 2025
 
 ### Summary

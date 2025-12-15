@@ -13,6 +13,7 @@ import { caseStudies, getCaseStudyBySlug, getCaseStudyById } from '../../lib/con
 import CaseStudyHero from '../../components/case-study/CaseStudyHero';
 import CaseStudyContent from '../../components/case-study/CaseStudyContent';
 import CaseStudyFooter from '../../components/case-study/CaseStudyFooter';
+import CaseStudyLinks from '../../components/case-study/CaseStudyLinks';
 
 // Wrapper for components that need ThemeProvider
 const TestWrapper = ({ children }: { children: React.ReactNode }) => (
@@ -403,5 +404,147 @@ describe('Case Study Content Specific Tests', () => {
         expect(cs?.title).toBe('RPC Infrastructure & APIs');
         expect(cs?.company).toBe('Ankr');
         expect(cs?.hook.impactMetric.value).toBe('15×');
+    });
+});
+
+describe('Case Study Links Schema', () => {
+    it('should support optional demoUrl, githubUrl, docsUrl fields', () => {
+        // Ankr case study has all three
+        const ankr = getCaseStudyById(4);
+        expect(ankr?.demoUrl).toBeDefined();
+        expect(ankr?.githubUrl).toBeDefined();
+        expect(ankr?.docsUrl).toBeDefined();
+    });
+
+    it('should allow case studies without links', () => {
+        // ETH Staking doesn't have external links (confidential)
+        const ethStaking = getCaseStudyById(1);
+        expect(ethStaking?.demoUrl).toBeUndefined();
+        expect(ethStaking?.githubUrl).toBeUndefined();
+        expect(ethStaking?.docsUrl).toBeUndefined();
+    });
+
+    it('should support media array with type and url', () => {
+        const ankr = getCaseStudyById(4);
+        expect(ankr?.media).toBeDefined();
+        expect(Array.isArray(ankr?.media)).toBe(true);
+        expect(ankr?.media?.length).toBeGreaterThan(0);
+        
+        ankr?.media?.forEach(item => {
+            expect(item.type).toBeDefined();
+            expect(item.url).toBeDefined();
+        });
+    });
+
+    it('should have valid media types', () => {
+        const validTypes = ['blog', 'twitter', 'linkedin', 'video', 'article', 'slides'];
+        caseStudies.forEach(cs => {
+            cs.media?.forEach(item => {
+                expect(validTypes).toContain(item.type);
+            });
+        });
+    });
+
+    it('media items can have optional labels', () => {
+        const ankr = getCaseStudyById(4);
+        // At least some media items should have labels
+        const hasLabels = ankr?.media?.some(item => item.label !== undefined);
+        expect(hasLabels).toBe(true);
+    });
+});
+
+describe('CaseStudyLinks Component', () => {
+    it('should render nothing when no links exist', () => {
+        const noLinksCaseStudy = { ...caseStudies[0], demoUrl: undefined, githubUrl: undefined, docsUrl: undefined, media: undefined };
+        const { container } = render(
+            <TestWrapper>
+                <CaseStudyLinks caseStudy={noLinksCaseStudy} />
+            </TestWrapper>
+        );
+        
+        expect(container.firstChild).toBeNull();
+    });
+
+    it('should render Live button when demoUrl exists', () => {
+        const ankr = getCaseStudyById(4)!;
+        render(
+            <TestWrapper>
+                <CaseStudyLinks caseStudy={ankr} />
+            </TestWrapper>
+        );
+        
+        expect(screen.getByText('Live')).toBeInTheDocument();
+    });
+
+    it('should render Code button when githubUrl exists', () => {
+        const ankr = getCaseStudyById(4)!;
+        render(
+            <TestWrapper>
+                <CaseStudyLinks caseStudy={ankr} />
+            </TestWrapper>
+        );
+        
+        expect(screen.getByText('Code')).toBeInTheDocument();
+    });
+
+    it('should render Docs button when docsUrl exists', () => {
+        const ankr = getCaseStudyById(4)!;
+        render(
+            <TestWrapper>
+                <CaseStudyLinks caseStudy={ankr} />
+            </TestWrapper>
+        );
+        
+        expect(screen.getByText('Docs')).toBeInTheDocument();
+    });
+
+    it('should render media icon buttons with tooltips', () => {
+        const ankr = getCaseStudyById(4)!;
+        render(
+            <TestWrapper>
+                <CaseStudyLinks caseStudy={ankr} />
+            </TestWrapper>
+        );
+        
+        // Media buttons should have title attributes (tooltips)
+        const buttons = document.querySelectorAll('button[title]');
+        const mediaButtonCount = Array.from(buttons).filter(btn => 
+            btn.getAttribute('title') && !['Live', 'Code', 'Docs'].includes(btn.textContent || '')
+        ).length;
+        
+        expect(mediaButtonCount).toBeGreaterThan(0);
+    });
+
+    it('should render links in hero section', () => {
+        const ankr = getCaseStudyById(4)!;
+        render(
+            <TestWrapper>
+                <CaseStudyHero caseStudy={ankr} isMobile={false} />
+            </TestWrapper>
+        );
+        
+        // Links should be in the hero
+        expect(screen.getByText('Live')).toBeInTheDocument();
+        expect(screen.getByText('Code')).toBeInTheDocument();
+    });
+
+    it('should render links in footer before CTA', () => {
+        const ankr = getCaseStudyById(4)!;
+        render(
+            <TestWrapper>
+                <CaseStudyFooter 
+                    caseStudy={ankr}
+                    prevStudy={caseStudies[2]}
+                    nextStudy={null}
+                    onNavigate={() => {}}
+                    isMobile={false}
+                />
+            </TestWrapper>
+        );
+        
+        // Should have "Explore" label
+        expect(screen.getByText('Explore')).toBeInTheDocument();
+        // Links should be present
+        expect(screen.getByText('Live')).toBeInTheDocument();
     });
 });

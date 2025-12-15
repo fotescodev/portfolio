@@ -201,6 +201,14 @@ export const CaseStudySchema = z.object({
     subMetrics: z.array(ImpactMetricSchema).optional(),
     thumbnail: z.string().nullable()
   }),
+  demoUrl: z.string().nullable().optional(),
+  githubUrl: z.string().nullable().optional(),
+  docsUrl: z.string().nullable().optional(),
+  media: z.array(z.object({
+    type: z.enum(['blog', 'twitter', 'linkedin', 'video', 'article', 'slides']),
+    url: z.string(),
+    label: z.string().optional()
+  })).optional(),
   cta: CaseStudyCtaSchema,
   content: z.string()
 });

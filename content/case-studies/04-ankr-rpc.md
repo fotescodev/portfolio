@@ -20,6 +20,24 @@ hook:
       label: daily requests
   thumbnail: /images/case-study-ankr-rpc.png
 
+demoUrl: https://www.ankr.com/rpc/
+githubUrl: https://github.com/ankr-network/ankr.js
+docsUrl: https://www.ankr.com/docs/rpc-service/overview/
+
+media:
+  - type: blog
+    url: https://medium.com/ankr-network
+    label: Launch Post
+  - type: twitter
+    url: https://twitter.com/ankaborrego
+    label: Launch Thread
+  - type: video
+    url: https://youtube.com/watch?v=example
+    label: Demo Video
+  - type: linkedin
+    url: https://linkedin.com/posts/example
+    label: Announcement
+
 cta:
   headline: Building developer infrastructure?
   subtext: I've learned a lot about finding PMF in crowded markets.
