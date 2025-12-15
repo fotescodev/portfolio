@@ -16,6 +16,7 @@ import CertificationsSection from '../../components/sections/CertificationsSecti
 import SocialSection from '../../components/sections/SocialSection';
 import FooterSection from '../../components/sections/FooterSection';
 import ThemeToggle from '../../components/ThemeToggle';
+import Omnibar from '../../components/common/Omnibar';
 
 // Wrapper for components that need ThemeProvider
 const TestWrapper = ({ children }: { children: React.ReactNode }) => (
@@ -47,6 +48,34 @@ describe('Component Integration Tests', () => {
             // Check it uses CSS variable font-family
             expect(h1?.style.fontFamily).toContain('var(--font-serif)');
         });
+
+        it('should render primary and secondary CTA buttons', () => {
+            render(
+                <TestWrapper>
+                    <HeroSection isMobile={false} isTablet={false} isLoaded={true} />
+                </TestWrapper>
+            );
+
+            // Check for primary CTA (View Work)
+            const primaryBtn = document.querySelector('.hero-primary-btn');
+            expect(primaryBtn).toBeInTheDocument();
+
+            // Check for secondary CTA (Download Resume)
+            const secondaryBtn = document.querySelector('.hero-secondary-btn');
+            expect(secondaryBtn).toBeInTheDocument();
+        });
+
+        it('should have download icon in secondary button', () => {
+            render(
+                <TestWrapper>
+                    <HeroSection isMobile={false} isTablet={false} isLoaded={true} />
+                </TestWrapper>
+            );
+
+            const secondaryBtn = document.querySelector('.hero-secondary-btn');
+            const svg = secondaryBtn?.querySelector('svg');
+            expect(svg).toBeInTheDocument();
+        });
     });
 
     describe('AboutSection', () => {
@@ -58,6 +87,44 @@ describe('Component Integration Tests', () => {
             );
 
             expect(screen.getByText('About')).toBeInTheDocument();
+        });
+
+        it('should render social icons bar', () => {
+            render(
+                <TestWrapper>
+                    <AboutSection isMobile={false} isTablet={false} sectionPadding="40px" />
+                </TestWrapper>
+            );
+
+            // Check for social link icons (LinkedIn, GitHub, X, Telegram)
+            expect(screen.getByTitle('LinkedIn')).toBeInTheDocument();
+            expect(screen.getByTitle('GitHub')).toBeInTheDocument();
+            expect(screen.getByTitle('X / Twitter')).toBeInTheDocument();
+            expect(screen.getByTitle('Telegram')).toBeInTheDocument();
+        });
+
+        it('should have copy email button', () => {
+            render(
+                <TestWrapper>
+                    <AboutSection isMobile={false} isTablet={false} sectionPadding="40px" />
+                </TestWrapper>
+            );
+
+            const copyButton = screen.getByTitle('Copy email');
+            expect(copyButton).toBeInTheDocument();
+        });
+
+        it('should have correct social link URLs', () => {
+            render(
+                <TestWrapper>
+                    <AboutSection isMobile={false} isTablet={false} sectionPadding="40px" />
+                </TestWrapper>
+            );
+
+            expect(screen.getByTitle('LinkedIn')).toHaveAttribute('href', 'https://www.linkedin.com/in/0xdmitri/');
+            expect(screen.getByTitle('GitHub')).toHaveAttribute('href', 'https://github.com/fotescodev');
+            expect(screen.getByTitle('X / Twitter')).toHaveAttribute('href', 'https://x.com/kolob0kk');
+            expect(screen.getByTitle('Telegram')).toHaveAttribute('href', 'https://t.me/zimbru0x');
         });
     });
 
@@ -140,6 +207,44 @@ describe('Component Integration Tests', () => {
 
             const button = screen.getByRole('button');
             expect(button).toHaveAttribute('aria-label');
+        });
+    });
+
+    describe('Omnibar', () => {
+        // Mock IntersectionObserver
+        beforeAll(() => {
+            global.IntersectionObserver = class IntersectionObserver {
+                constructor() {}
+                observe() { return null; }
+                unobserve() { return null; }
+                disconnect() { return null; }
+            } as unknown as typeof IntersectionObserver;
+        });
+
+        it('should render without crashing', () => {
+            render(
+                <TestWrapper>
+                    <Omnibar />
+                </TestWrapper>
+            );
+
+            // Component should render without throwing errors
+            expect(document.body).toBeInTheDocument();
+        });
+
+        it('should include Omnibar CSS classes in style tag', () => {
+            render(
+                <TestWrapper>
+                    <Omnibar />
+                </TestWrapper>
+            );
+
+            // Find all style elements and check if any contain omnibar styles
+            const styleElements = document.querySelectorAll('style');
+            const hasOmnibarStyles = Array.from(styleElements).some(
+                style => style.textContent?.includes('.omnibar-btn')
+            );
+            expect(hasOmnibarStyles).toBe(true);
         });
     });
 });
