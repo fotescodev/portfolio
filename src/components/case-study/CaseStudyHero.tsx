@@ -1,4 +1,5 @@
 import type { CaseStudy } from '../../types/portfolio';
+import CaseStudyLinks from './CaseStudyLinks';
 
 interface CaseStudyHeroProps {
     caseStudy: CaseStudy;
@@ -11,7 +12,7 @@ export default function CaseStudyHero({ caseStudy, isMobile }: CaseStudyHeroProp
 
     return (
         <header style={{
-            maxWidth: '640px',
+            maxWidth: 'var(--drawer-content-max-width)',
             margin: '0 auto',
             padding: `var(--space-3xl) ${padding} var(--space-2xl)`
         }}>
@@ -31,7 +32,7 @@ export default function CaseStudyHero({ caseStudy, isMobile }: CaseStudyHeroProp
                 <span style={{ color: 'var(--color-text-muted)' }}>·</span>
                 <span>{caseStudy.year}</span>
                 <span style={{ color: 'var(--color-text-muted)' }}>·</span>
-                <span>{caseStudy.context.duration}</span>
+                <span>{caseStudy.duration}</span>
             </div>
 
             {/* Title */}
@@ -103,6 +104,11 @@ export default function CaseStudyHero({ caseStudy, isMobile }: CaseStudyHeroProp
                         </div>
                     </div>
                 ))}
+            </div>
+
+            {/* Links */}
+            <div style={{ marginTop: 'var(--space-xl)' }}>
+                <CaseStudyLinks caseStudy={caseStudy} isMobile={isMobile} />
             </div>
         </header>
     );

@@ -22,6 +22,7 @@
     "react-markdown": "^10.1.0",
     "react-syntax-highlighter": "^16.1.0",
     "remark-gfm": "^4.0.1",
+    "yaml": "^2.8.2",
     "zod": "^4.1.13"
   },
   "overrides": {

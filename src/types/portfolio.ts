@@ -165,49 +165,11 @@ export interface Social {
 }
 
 // ═══════════════════════════════════════════════════════════════
-// CASE STUDY (Enhanced for recruiter engagement)
+// CASE STUDY (Simplified markdown-first schema)
 // ═══════════════════════════════════════════════════════════════
-export interface MetricWithContext {
-  metric: string;
-  context: string;
-}
-
 export interface ImpactMetric {
   value: string;
   label: string;
-}
-
-export interface Alternative {
-  option: string;
-  tradeoffs: string;
-  whyNot: string;
-}
-
-export interface ExecutionPhase {
-  name: string;
-  duration?: string;
-  actions: string[];
-}
-
-export interface KeyDecision {
-  title: string;
-  context: string;
-  decision: string;
-  outcome: string;
-}
-
-export interface CaseStudyTestimonial {
-  quote: string;
-  author: string;
-  role: string;
-  company: string;
-}
-
-export interface Artifact {
-  type: 'diagram' | 'screenshot' | 'video' | 'metrics' | 'chart';
-  src: string | null;
-  alt: string;
-  caption?: string;
 }
 
 export interface CaseStudyCta {
@@ -226,73 +188,35 @@ export interface CaseStudy {
   year: string;
   tags: string[];
 
+  // Context (simplified)
+  duration: string;
+  role: string;
+
   // Hook - Grab attention in 3 seconds
   hook: {
     headline: string;
     impactMetric: ImpactMetric;
     subMetrics?: ImpactMetric[];
     thumbnail: string | null;
-    thumbnailAlt: string;
   };
 
-  // Context - Role clarity
-  context: {
-    myRole: string;
-    teamSize: string;
-    duration: string;
-    stakeholders: string[];
-  };
+  // Links (optional)
+  demoUrl?: string | null;
+  githubUrl?: string | null;
+  docsUrl?: string | null;
 
-  // Problem - Make them feel the pain
-  problem: {
-    businessContext: string;
-    constraints: string[];
-    stakes: string;
-  };
+  // Media links (optional) - blog posts, tweets, videos, etc.
+  media?: Array<{
+    type: 'blog' | 'twitter' | 'linkedin' | 'video' | 'article' | 'slides';
+    url: string;
+    label?: string; // Optional custom label for tooltip
+  }>;
 
-  // Approach - Show thinking depth
-  approach: {
-    hypothesis: string;
-    alternatives: Alternative[];
-    chosenPath: string;
-  };
-
-  // Execution - Concrete actions
-  execution: {
-    phases: ExecutionPhase[];
-    keyDecision: KeyDecision;
-  };
-
-  // Results - Quantified impact
-  results: {
-    primary: MetricWithContext;
-    secondary?: MetricWithContext;
-    tertiary?: MetricWithContext;
-    qualitative?: string;
-  };
-
-  // Reflection - Shows self-awareness (critical for credibility)
-  reflection: {
-    whatWorked: string[];
-    whatDidnt: string[];
-    lessonLearned: string;
-    wouldDoDifferently: string;
-  };
-
-  // Evidence - Proof points
-  evidence: {
-    demoUrl?: string | null;
-    githubUrl?: string | null;
-    blogPostUrl?: string | null;
-    testimonial?: CaseStudyTestimonial;
-    artifacts: Artifact[];
-  };
-
-  // CTA - Drive action (contextual per case study)
+  // CTA - Drive action
   cta: CaseStudyCta;
 
-  // Tech Stack - For keyword matching
-  techStack: string[];
+  // Markdown content (the narrative)
+  content: string;
 }
 
 // ═══════════════════════════════════════════════════════════════

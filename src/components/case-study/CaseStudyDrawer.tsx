@@ -4,7 +4,6 @@ import type { CaseStudy } from '../../types/portfolio';
 import { caseStudies } from '../../lib/content';
 import CaseStudyHero from './CaseStudyHero';
 import CaseStudyContent from './CaseStudyContent';
-import CaseStudyOutcome from './CaseStudyOutcome';
 import CaseStudyFooter from './CaseStudyFooter';
 import SEO from '../common/SEO';
 
@@ -210,13 +209,10 @@ export default function CaseStudyDrawer({ isOpen, onClose, caseStudy, isMobile, 
                             {/* HERO: Title + Primary Metric + Meta */}
                             <CaseStudyHero caseStudy={caseStudy} isMobile={isMobile} />
 
-                            {/* CONTENT: Clean narrative flow */}
+                            {/* CONTENT: Markdown narrative */}
                             <CaseStudyContent caseStudy={caseStudy} isMobile={isMobile} />
 
-                            {/* OUTCOME: Results metrics */}
-                            <CaseStudyOutcome caseStudy={caseStudy} isMobile={isMobile} />
-
-                            {/* FOOTER: Testimonial + CTA + Nav */}
+                            {/* FOOTER: CTA + Nav */}
                             <CaseStudyFooter
                                 caseStudy={caseStudy}
                                 prevStudy={caseStudies.find(s => s.id === caseStudy.id - 1) || null}

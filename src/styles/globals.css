@@ -68,11 +68,11 @@
   --layout-max-width: 1600px;
   --nav-height: 20px;
   --nav-height-mobile: 16px;
-  --drawer-width: min(720px, 90vw);
+  --drawer-width: min(960px, 95vw);
   --drawer-z-index: 200;
   --drawer-padding: var(--space-2xl);
   --drawer-padding-mobile: var(--space-xl);
-  --drawer-content-max-width: 720px;
+  --drawer-content-max-width: 860px;
   --omnibar-z-index: 90;
   --omnibar-height: 56px;
   --omnibar-bottom-spacing: calc(var(--space-lg) + env(safe-area-inset-bottom));
