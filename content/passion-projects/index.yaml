@@ -97,3 +97,14 @@ projects:
     githubUrl: https://github.com/fotescodev/prompt-library
     liveUrl: https://prompts.tools
     docsUrl: null
+
+  - id: 10
+    slug: content-validator
+    title: Content Validator CLI
+    tagline: TypeScript CLI for validating markdown and YAML content with Zod schemas
+    year: "2024"
+    tags: [CLI, TypeScript, Validation, DevTools]
+    thumbnail: null
+    githubUrl: https://github.com/fotescodev/content-validator
+    liveUrl: null
+    docsUrl: https://validator.docs.dev

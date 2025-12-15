@@ -21,13 +21,13 @@ const TestWrapper = ({ children }: { children: React.ReactNode }) => (
 );
 
 describe('Case Study Content Loading', () => {
-    it('should load all 4 case studies', () => {
-        expect(caseStudies).toHaveLength(4);
+    it('should load all 6 case studies', () => {
+        expect(caseStudies).toHaveLength(6);
     });
 
     it('should sort case studies by id', () => {
         const ids = caseStudies.map(cs => cs.id);
-        expect(ids).toEqual([1, 2, 3, 4]);
+        expect(ids).toEqual([1, 2, 3, 4, 5, 6]);
     });
 
     it('should have required fields in each case study', () => {
