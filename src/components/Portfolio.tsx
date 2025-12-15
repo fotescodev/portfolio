@@ -209,7 +209,7 @@ export default function Portfolio() {
                   </a>
                 ))}
                 <ThemeToggle />
-                <a href={`mailto:${profile.email}`} className="nav-cta">
+                <a href="https://calendar.google.com/calendar/u/0/appointments/AcZssZ2leGghBAF6F4IbGMZQErnaR21wvu-mYWXP06o=" target="_blank" rel="noopener noreferrer" className="nav-cta">
                   Get in Touch
                 </a>
               </div>

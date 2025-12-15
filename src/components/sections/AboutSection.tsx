@@ -147,35 +147,40 @@ export default function AboutSection({ isMobile, isTablet, sectionPadding }: Abo
               whileTap={{ scale: 0.95 }}
               title={emailCopied ? 'Copied!' : 'Copy email'}
               style={{
-                flex: 1,
+                flex: emailCopied ? 2 : 1,
                 height: '32px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                background: 'transparent',
+                gap: 'var(--space-xs)',
+                background: emailCopied ? 'var(--color-success-bg)' : 'transparent',
                 border: 'none',
+                borderRadius: '2px',
                 color: emailCopied ? 'var(--color-success)' : 'var(--color-text-tertiary)',
                 cursor: 'pointer',
-                transition: 'color 0.2s ease'
+                transition: 'all 0.2s ease'
               }}
             >
               <AnimatePresence mode="wait" initial={false}>
                 {emailCopied ? (
-                  <motion.svg
-                    key="check"
-                    initial={{ scale: 0.5, opacity: 0 }}
+                  <motion.div
+                    key="copied"
+                    initial={{ scale: 0.8, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
-                    exit={{ scale: 0.5, opacity: 0 }}
-                    width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
+                    exit={{ scale: 0.8, opacity: 0 }}
+                    style={{ display: 'flex', alignItems: 'center', gap: '4px' }}
                   >
-                    <polyline points="20 6 9 17 4 12" />
-                  </motion.svg>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                    <span style={{ fontSize: '11px', fontWeight: 600, letterSpacing: '0.02em' }}>Copied!</span>
+                  </motion.div>
                 ) : (
                   <motion.svg
                     key="mail"
-                    initial={{ scale: 0.5, opacity: 0 }}
+                    initial={{ scale: 0.8, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
-                    exit={{ scale: 0.5, opacity: 0 }}
+                    exit={{ scale: 0.8, opacity: 0 }}
                     width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
                   >
                     <rect x="2" y="4" width="20" height="16" rx="2" />
@@ -259,7 +264,7 @@ export default function AboutSection({ isMobile, isTablet, sectionPadding }: Abo
 
             {/* Telegram */}
             <motion.a
-              href="https://t.me/kolob0kk"
+              href="https://t.me/zimbru0x"
               target="_blank"
               rel="noopener noreferrer"
               whileTap={{ scale: 0.95 }}

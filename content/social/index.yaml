@@ -18,8 +18,8 @@ links:
 
   - platform: "github"
     label: "GitHub"
-    handle: "@dmitriif"
-    url: "https://github.com/dmitriif"
+    handle: "@fotescodev"
+    url: "https://github.com/fotescodev"
     icon: "github"
     primary: false
 
