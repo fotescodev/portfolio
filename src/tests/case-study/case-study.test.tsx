@@ -528,7 +528,7 @@ describe('CaseStudyLinks Component', () => {
         expect(screen.getByText('Code')).toBeInTheDocument();
     });
 
-    it('should render links in footer before CTA', () => {
+    it('should render links only in hero (not footer for consistency)', () => {
         const ankr = getCaseStudyById(4)!;
         render(
             <TestWrapper>
@@ -542,9 +542,9 @@ describe('CaseStudyLinks Component', () => {
             </TestWrapper>
         );
         
-        // Should have "Explore" label
-        expect(screen.getByText('Explore')).toBeInTheDocument();
-        // Links should be present
-        expect(screen.getByText('Live')).toBeInTheDocument();
+        // Footer should NOT have "Explore" section (links are in hero only)
+        expect(screen.queryByText('Explore')).not.toBeInTheDocument();
+        // CTA should still be present
+        expect(screen.getByText(ankr.cta.linkText)).toBeInTheDocument();
     });
 });

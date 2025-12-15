@@ -1,5 +1,4 @@
 import type { CaseStudy } from '../../types/portfolio';
-import CaseStudyLinks from './CaseStudyLinks';
 
 interface CaseStudyFooterProps {
     caseStudy: CaseStudy;
@@ -23,7 +22,6 @@ export default function CaseStudyFooter({ caseStudy, prevStudy, nextStudy, onNav
     };
 
     const padding = isMobile ? 'var(--space-lg)' : 'var(--space-2xl)';
-    const hasLinks = caseStudy.demoUrl || caseStudy.githubUrl || caseStudy.docsUrl || (caseStudy.media && caseStudy.media.length > 0);
 
     return (
         <footer style={{
@@ -31,41 +29,21 @@ export default function CaseStudyFooter({ caseStudy, prevStudy, nextStudy, onNav
             margin: '0 auto',
             padding: `0 ${padding} ${padding}`
         }}>
-            {/* Links section before CTA */}
-            {hasLinks && (
-                <div style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    padding: 'var(--space-2xl) 0',
-                    borderTop: '1px solid var(--color-border-light)'
-                }}>
-                    <span style={{
-                        fontSize: '12px',
-                        fontWeight: 500,
-                        letterSpacing: '0.1em',
-                        textTransform: 'uppercase',
-                        color: 'var(--color-text-muted)',
-                        marginBottom: 'var(--space-md)'
-                    }}>
-                        Explore
-                    </span>
-                    <CaseStudyLinks caseStudy={caseStudy} isMobile={isMobile} />
-                </div>
-            )}
-
-            {/* CTA - minimal */}
+            {/* CTA */}
             <div style={{
                 textAlign: 'center',
-                padding: 'var(--space-2xl) 0',
+                padding: 'var(--space-3xl) 0',
                 borderTop: '1px solid var(--color-border-light)',
                 borderBottom: '1px solid var(--color-border-light)',
                 marginBottom: 'var(--space-xl)'
             }}>
                 <p style={{
-                    fontSize: '15px',
-                    color: 'var(--color-text-tertiary)',
-                    margin: '0 0 var(--space-md) 0'
+                    fontSize: '20px',
+                    fontFamily: 'var(--font-serif)',
+                    fontStyle: 'italic',
+                    color: 'var(--color-text-secondary)',
+                    margin: '0 0 var(--space-lg) 0',
+                    lineHeight: 1.4
                 }}>
                     {caseStudy.cta.headline}
                 </p>
@@ -75,18 +53,21 @@ export default function CaseStudyFooter({ caseStudy, prevStudy, nextStudy, onNav
                     rel="noopener noreferrer"
                     style={{
                         display: 'inline-block',
-                        padding: '12px 24px',
-                        background: 'var(--color-text-primary)',
+                        padding: '14px 32px',
+                        background: 'var(--color-accent)',
                         color: 'var(--color-background)',
                         textDecoration: 'none',
-                        fontSize: '13px',
+                        fontSize: '15px',
                         fontWeight: 600,
                         letterSpacing: '0.02em',
-                        borderRadius: '2px',
-                        transition: 'opacity 0.2s ease'
+                        transition: 'all 0.2s ease'
                     }}
-                    onMouseEnter={(e) => e.currentTarget.style.opacity = '0.9'}
-                    onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}
+                    onMouseEnter={(e) => {
+                        e.currentTarget.style.background = 'var(--color-accent-hover)';
+                    }}
+                    onMouseLeave={(e) => {
+                        e.currentTarget.style.background = 'var(--color-accent)';
+                    }}
                 >
                     {caseStudy.cta.linkText}
                 </a>
@@ -96,32 +77,46 @@ export default function CaseStudyFooter({ caseStudy, prevStudy, nextStudy, onNav
             <nav style={{
                 display: 'flex',
                 justifyContent: 'space-between',
-                gap: 'var(--space-lg)'
+                gap: 'var(--space-lg)',
+                paddingTop: 'var(--space-xl)'
             }}>
                 {prevStudy ? (
                     <button
                         onClick={() => onNavigate(prevStudy)}
                         style={{
                             background: 'none',
-                            border: 'none',
+                            border: '1px solid var(--color-border)',
                             cursor: 'pointer',
                             textAlign: 'left',
-                            padding: 0
+                            padding: 'var(--space-lg)',
+                            flex: 1,
+                            maxWidth: '45%',
+                            transition: 'all 0.2s ease'
+                        }}
+                        onMouseEnter={(e) => {
+                            e.currentTarget.style.borderColor = 'var(--color-accent)';
+                        }}
+                        onMouseLeave={(e) => {
+                            e.currentTarget.style.borderColor = 'var(--color-border)';
                         }}
                     >
                         <span style={{
-                            fontSize: '12px',
+                            fontSize: '13px',
+                            fontWeight: 500,
+                            letterSpacing: '0.05em',
+                            textTransform: 'uppercase',
                             color: 'var(--color-text-muted)',
                             display: 'block',
-                            marginBottom: '2px'
+                            marginBottom: '6px'
                         }}>
-                            Previous
+                            ← Previous
                         </span>
                         <span style={{
-                            fontSize: '14px',
+                            fontSize: '18px',
                             fontFamily: 'var(--font-serif)',
                             fontStyle: 'italic',
-                            color: 'var(--color-text-secondary)'
+                            color: 'var(--color-text-secondary)',
+                            lineHeight: 1.3
                         }}>
                             {prevStudy.title}
                         </span>
@@ -133,25 +128,38 @@ export default function CaseStudyFooter({ caseStudy, prevStudy, nextStudy, onNav
                         onClick={() => onNavigate(nextStudy)}
                         style={{
                             background: 'none',
-                            border: 'none',
+                            border: '1px solid var(--color-border)',
                             cursor: 'pointer',
                             textAlign: 'right',
-                            padding: 0
+                            padding: 'var(--space-lg)',
+                            flex: 1,
+                            maxWidth: '45%',
+                            transition: 'all 0.2s ease'
+                        }}
+                        onMouseEnter={(e) => {
+                            e.currentTarget.style.borderColor = 'var(--color-accent)';
+                        }}
+                        onMouseLeave={(e) => {
+                            e.currentTarget.style.borderColor = 'var(--color-border)';
                         }}
                     >
                         <span style={{
-                            fontSize: '12px',
+                            fontSize: '13px',
+                            fontWeight: 500,
+                            letterSpacing: '0.05em',
+                            textTransform: 'uppercase',
                             color: 'var(--color-text-muted)',
                             display: 'block',
-                            marginBottom: '2px'
+                            marginBottom: '6px'
                         }}>
-                            Next
+                            Next →
                         </span>
                         <span style={{
-                            fontSize: '14px',
+                            fontSize: '18px',
                             fontFamily: 'var(--font-serif)',
                             fontStyle: 'italic',
-                            color: 'var(--color-text-secondary)'
+                            color: 'var(--color-text-secondary)',
+                            lineHeight: 1.3
                         }}>
                             {nextStudy.title}
                         </span>
