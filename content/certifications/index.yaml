@@ -12,6 +12,16 @@ certifications:
     logo: "/images/certs/product-faculty.svg"
     featured: true
 
+  - name: "Ethereum Developer Bootcamp"
+    issuer: "ChainShot"
+    instructor: null
+    instructorRole: null
+    date: "Nov 2020"
+    credentialId: "dmitrii.chainshot.eth"
+    url: "https://www.chainshot.com"
+    logo: "/images/certs/chainshot.svg"
+    featured: true
+
 # ═══════════════════════════════════════════════════════════════
 # CREDENTIALS (Quick highlights)
 # ═══════════════════════════════════════════════════════════════
