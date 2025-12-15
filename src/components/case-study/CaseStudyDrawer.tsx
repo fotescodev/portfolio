@@ -108,102 +108,153 @@ export default function CaseStudyDrawer({ isOpen, onClose, caseStudy, isMobile, 
                             path={`?case-study=${caseStudy.id}`}
                         />
 
-                        {/* Sticky Header - appears on scroll */}
-                        <motion.div
-                            initial={false}
-                            animate={{
-                                y: showStickyHeader ? 0 : -60,
-                                opacity: showStickyHeader ? 1 : 0
-                            }}
-                            transition={{ duration: 0.2 }}
-                            style={{
+                        {/* Mobile: Always-visible subtle top bar */}
+                        {isMobile && (
+                            <div style={{
                                 position: 'sticky',
                                 top: 0,
                                 left: 0,
                                 right: 0,
-                                height: '56px',
+                                height: '48px',
                                 background: 'var(--color-background)',
                                 borderBottom: '1px solid var(--color-border-light)',
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'space-between',
                                 padding: '0 var(--space-lg)',
-                                zIndex: 20,
-                                pointerEvents: showStickyHeader ? 'auto' : 'none'
-                            }}
-                        >
-                            <span style={{
-                                fontSize: '14px',
-                                fontFamily: 'var(--font-serif)',
-                                fontStyle: 'italic',
-                                color: 'var(--color-text-secondary)',
-                                overflow: 'hidden',
-                                textOverflow: 'ellipsis',
-                                whiteSpace: 'nowrap',
-                                maxWidth: 'calc(100% - 50px)'
+                                zIndex: 20
                             }}>
-                                {caseStudy.title}
-                            </span>
-                            <button
-                                onClick={onClose}
-                                aria-label="Close"
+                                <span style={{
+                                    fontSize: '12px',
+                                    fontWeight: 500,
+                                    letterSpacing: '0.05em',
+                                    textTransform: 'uppercase',
+                                    color: 'var(--color-text-muted)'
+                                }}>
+                                    Case Study
+                                </span>
+                                <button
+                                    onClick={onClose}
+                                    aria-label="Close"
+                                    style={{
+                                        width: '32px',
+                                        height: '32px',
+                                        background: 'none',
+                                        border: '1px solid var(--color-border)',
+                                        color: 'var(--color-text-tertiary)',
+                                        cursor: 'pointer',
+                                        fontSize: '14px',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        transition: 'all 0.2s ease'
+                                    }}
+                                >
+                                    ✕
+                                </button>
+                            </div>
+                        )}
+
+                        {/* Desktop: Sticky Header - appears on scroll */}
+                        {!isMobile && (
+                            <motion.div
+                                initial={false}
+                                animate={{
+                                    y: showStickyHeader ? 0 : -60,
+                                    opacity: showStickyHeader ? 1 : 0
+                                }}
+                                transition={{ duration: 0.2 }}
                                 style={{
-                                    width: '32px',
-                                    height: '32px',
-                                    background: 'none',
-                                    border: 'none',
-                                    color: 'var(--color-text-tertiary)',
-                                    cursor: 'pointer',
-                                    fontSize: '16px',
+                                    position: 'sticky',
+                                    top: 0,
+                                    left: 0,
+                                    right: 0,
+                                    height: '56px',
+                                    background: 'var(--color-background)',
+                                    borderBottom: '1px solid var(--color-border-light)',
                                     display: 'flex',
                                     alignItems: 'center',
-                                    justifyContent: 'center'
+                                    justifyContent: 'space-between',
+                                    padding: '0 var(--space-lg)',
+                                    zIndex: 20,
+                                    pointerEvents: showStickyHeader ? 'auto' : 'none'
+                                }}
+                            >
+                                <span style={{
+                                    fontSize: '14px',
+                                    fontFamily: 'var(--font-serif)',
+                                    fontStyle: 'italic',
+                                    color: 'var(--color-text-secondary)',
+                                    overflow: 'hidden',
+                                    textOverflow: 'ellipsis',
+                                    whiteSpace: 'nowrap',
+                                    maxWidth: 'calc(100% - 50px)'
+                                }}>
+                                    {caseStudy.title}
+                                </span>
+                                <button
+                                    onClick={onClose}
+                                    aria-label="Close"
+                                    style={{
+                                        width: '32px',
+                                        height: '32px',
+                                        background: 'none',
+                                        border: 'none',
+                                        color: 'var(--color-text-tertiary)',
+                                        cursor: 'pointer',
+                                        fontSize: '16px',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center'
+                                    }}
+                                >
+                                    ✕
+                                </button>
+                            </motion.div>
+                        )}
+
+                        {/* Desktop: Fixed Close Button (when not scrolled) */}
+                        {!isMobile && (
+                            <motion.button
+                                onClick={onClose}
+                                aria-label="Close case study"
+                                animate={{ opacity: showStickyHeader ? 0 : 1 }}
+                                style={{
+                                    position: 'absolute',
+                                    top: 'var(--space-lg)',
+                                    right: 'var(--space-lg)',
+                                    width: '40px',
+                                    height: '40px',
+                                    background: 'var(--color-surface-glass)',
+                                    border: '1px solid var(--color-border-light)',
+                                    borderRadius: '50%',
+                                    color: 'var(--color-text-secondary)',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    cursor: 'pointer',
+                                    zIndex: 15,
+                                    backdropFilter: 'blur(8px)',
+                                    transition: 'all 0.2s ease',
+                                    fontSize: '16px',
+                                    pointerEvents: showStickyHeader ? 'none' : 'auto'
+                                }}
+                                onMouseEnter={(e) => {
+                                    e.currentTarget.style.background = 'var(--color-surface-glass-strong)';
+                                    e.currentTarget.style.color = 'var(--color-text-primary)';
+                                }}
+                                onMouseLeave={(e) => {
+                                    e.currentTarget.style.background = 'var(--color-surface-glass)';
+                                    e.currentTarget.style.color = 'var(--color-text-secondary)';
                                 }}
                             >
                                 ✕
-                            </button>
-                        </motion.div>
-
-                        {/* Fixed Close Button (when not scrolled) */}
-                        <motion.button
-                            onClick={onClose}
-                            aria-label="Close case study"
-                            animate={{ opacity: showStickyHeader ? 0 : 1 }}
-                            style={{
-                                position: 'absolute',
-                                top: 'var(--space-lg)',
-                                right: 'var(--space-lg)',
-                                width: '40px',
-                                height: '40px',
-                                background: 'var(--color-surface-glass)',
-                                border: '1px solid var(--color-border-light)',
-                                borderRadius: '50%',
-                                color: 'var(--color-text-secondary)',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                cursor: 'pointer',
-                                zIndex: 15,
-                                backdropFilter: 'blur(8px)',
-                                transition: 'all 0.2s ease',
-                                fontSize: '16px',
-                                pointerEvents: showStickyHeader ? 'none' : 'auto'
-                            }}
-                            onMouseEnter={(e) => {
-                                e.currentTarget.style.background = 'var(--color-surface-glass-strong)';
-                                e.currentTarget.style.color = 'var(--color-text-primary)';
-                            }}
-                            onMouseLeave={(e) => {
-                                e.currentTarget.style.background = 'var(--color-surface-glass)';
-                                e.currentTarget.style.color = 'var(--color-text-secondary)';
-                            }}
-                        >
-                            ✕
-                        </motion.button>
+                            </motion.button>
+                        )}
 
                         {/* Content */}
                         <div style={{
-                            marginTop: showStickyHeader ? '-56px' : 0,
+                            marginTop: !isMobile && showStickyHeader ? '-56px' : 0,
                             paddingBottom: 'var(--space-3xl)'
                         }}>
                             {/* HERO: Title + Primary Metric + Meta */}

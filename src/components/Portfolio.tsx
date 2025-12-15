@@ -187,11 +187,28 @@ export default function Portfolio() {
               zIndex: 101,
               position: 'relative'
             }}>
-              <a href="#" style={{
-                textDecoration: 'none',
-                color: 'var(--color-text-primary)',
-                transition: 'color 0.4s ease'
-              }}>
+              <a 
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  // Close any open drawer
+                  setModalCase(null);
+                  // Close mobile menu if open
+                  setMobileMenuOpen(false);
+                  // Scroll to top
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                  // Clear URL hash if any
+                  if (window.location.hash) {
+                    window.history.pushState(null, '', window.location.pathname);
+                  }
+                }}
+                style={{
+                  textDecoration: 'none',
+                  color: 'var(--color-text-primary)',
+                  transition: 'color 0.4s ease',
+                  cursor: 'pointer'
+                }}
+              >
                 {profile.name}
               </a>
             </div>
