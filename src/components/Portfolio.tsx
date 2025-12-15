@@ -151,7 +151,7 @@ export default function Portfolio() {
 
         <AmbientBackground />
 
-        {/* Navigation */}
+        {/* Navigation - hidden when drawer is open on mobile */}
         <nav
           aria-label="Primary"
           style={{
@@ -166,7 +166,8 @@ export default function Portfolio() {
             borderBottom: '1px solid var(--color-border-light)',
             opacity: isLoaded ? 1 : 0,
             transform: isLoaded ? 'translateY(0)' : 'translateY(-20px)',
-            transition: 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)'
+            transition: 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
+            display: (isMobile && modalCase) ? 'none' : 'block'
           }}
         >
           <div style={{
