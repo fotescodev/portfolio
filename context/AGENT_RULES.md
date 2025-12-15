@@ -3,6 +3,31 @@
 **ATTENTION ALL AI AGENTS:**
 This document serves as the **Supreme Law** for contributing to this codebase. You are required to read and adhere to these rules before making any changes.
 
+---
+
+## 📋 0. Developer Log (DEVLOG) — MANDATORY
+
+**Location:** `context/DEVLOG.md`
+
+### Rules:
+1. **Session Logging**: At the **end of every working session**, update `DEVLOG.md` with:
+   - Summary of work completed
+   - List of changes made (files, features, fixes)
+   - Issues encountered and their resolutions
+   - Tests added or modified
+   - Follow-up items for future sessions
+
+2. **Real-time Updates**: For significant changes during a session, log them as you go rather than waiting until the end.
+
+3. **Issue Tracking**: Every bug or unexpected behavior encountered MUST be logged with:
+   - Description of the issue
+   - Root cause (if identified)
+   - Resolution applied
+
+4. **Format**: Use the template provided in `DEVLOG.md` for consistency.
+
+---
+
 ## 🚨 1. The "Design System First" Prime Directive
 
 **User Mandate:**

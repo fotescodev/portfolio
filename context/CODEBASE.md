@@ -43,7 +43,11 @@ portfolio/
 ├── content/
 │   └── profile.yaml                  # Content data
 ├── context/
-│   └── DESIGN.md                # Design system documentation
+│   ├── AGENT_RULES.md           # AI agent governance rules
+│   ├── CODEBASE.md              # This file - architecture docs
+│   ├── DESIGN.md                # Design system documentation
+│   ├── DEVLOG.md                # Developer log (session history)
+│   └── ROADMAP.md               # Project roadmap
 └── vitest.config.ts                 # Test configuration
 ```
 
