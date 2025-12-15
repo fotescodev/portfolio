@@ -29,18 +29,21 @@ export default function CaseStudyFooter({ caseStudy, prevStudy, nextStudy, onNav
             margin: '0 auto',
             padding: `0 ${padding} ${padding}`
         }}>
-            {/* CTA - minimal */}
+            {/* CTA */}
             <div style={{
                 textAlign: 'center',
-                padding: 'var(--space-2xl) 0',
+                padding: 'var(--space-3xl) 0',
                 borderTop: '1px solid var(--color-border-light)',
                 borderBottom: '1px solid var(--color-border-light)',
                 marginBottom: 'var(--space-xl)'
             }}>
                 <p style={{
-                    fontSize: '15px',
-                    color: 'var(--color-text-tertiary)',
-                    margin: '0 0 var(--space-md) 0'
+                    fontSize: '20px',
+                    fontFamily: 'var(--font-serif)',
+                    fontStyle: 'italic',
+                    color: 'var(--color-text-secondary)',
+                    margin: '0 0 var(--space-lg) 0',
+                    lineHeight: 1.4
                 }}>
                     {caseStudy.cta.headline}
                 </p>
@@ -50,11 +53,11 @@ export default function CaseStudyFooter({ caseStudy, prevStudy, nextStudy, onNav
                     rel="noopener noreferrer"
                     style={{
                         display: 'inline-block',
-                        padding: '12px 24px',
+                        padding: '14px 32px',
                         background: 'var(--color-accent)',
                         color: 'var(--color-background)',
                         textDecoration: 'none',
-                        fontSize: '13px',
+                        fontSize: '15px',
                         fontWeight: 600,
                         letterSpacing: '0.02em',
                         transition: 'all 0.2s ease'
