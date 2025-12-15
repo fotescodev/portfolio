@@ -108,21 +108,25 @@ export default function CaseStudyDrawer({ isOpen, onClose, caseStudy, isMobile, 
                             path={`?case-study=${caseStudy.id}`}
                         />
 
-                        {/* Mobile: Always-visible subtle top bar */}
+                        {/* Mobile: Fixed top bar with close button (iOS-safe) */}
                         {isMobile && (
                             <div style={{
-                                position: 'sticky',
+                                position: 'fixed',
                                 top: 0,
                                 left: 0,
                                 right: 0,
-                                height: '48px',
+                                height: 'calc(48px + env(safe-area-inset-top, 0px))',
+                                paddingTop: 'env(safe-area-inset-top, 0px)',
                                 background: 'var(--color-background)',
                                 borderBottom: '1px solid var(--color-border-light)',
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'space-between',
                                 padding: '0 var(--space-lg)',
-                                zIndex: 20
+                                paddingLeft: 'max(var(--space-lg), env(safe-area-inset-left, 0px))',
+                                paddingRight: 'max(var(--space-lg), env(safe-area-inset-right, 0px))',
+                                zIndex: 9999,
+                                boxSizing: 'border-box'
                             }}>
                                 <span style={{
                                     fontSize: '12px',
@@ -137,17 +141,19 @@ export default function CaseStudyDrawer({ isOpen, onClose, caseStudy, isMobile, 
                                     onClick={onClose}
                                     aria-label="Close"
                                     style={{
-                                        width: '32px',
-                                        height: '32px',
-                                        background: 'none',
+                                        width: '36px',
+                                        height: '36px',
+                                        background: 'var(--color-surface-glass)',
                                         border: '1px solid var(--color-border)',
-                                        color: 'var(--color-text-tertiary)',
+                                        borderRadius: '8px',
+                                        color: 'var(--color-text-secondary)',
                                         cursor: 'pointer',
-                                        fontSize: '14px',
+                                        fontSize: '16px',
                                         display: 'flex',
                                         alignItems: 'center',
                                         justifyContent: 'center',
-                                        transition: 'all 0.2s ease'
+                                        WebkitTapHighlightColor: 'transparent',
+                                        touchAction: 'manipulation'
                                     }}
                                 >
                                     ✕
@@ -254,7 +260,7 @@ export default function CaseStudyDrawer({ isOpen, onClose, caseStudy, isMobile, 
 
                         {/* Content */}
                         <div style={{
-                            marginTop: !isMobile && showStickyHeader ? '-56px' : 0,
+                            marginTop: isMobile ? 'calc(48px + env(safe-area-inset-top, 0px))' : (showStickyHeader ? '-56px' : 0),
                             paddingBottom: 'var(--space-3xl)'
                         }}>
                             {/* HERO: Title + Primary Metric + Meta */}
