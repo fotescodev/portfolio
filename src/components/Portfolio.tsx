@@ -73,7 +73,7 @@ export default function Portfolio() {
         }
         .nav-cta {
           color: var(--color-background);
-          background: var(--color-text-primary);
+          background: var(--color-accent);
           padding: 12px 24px;
           text-decoration: none;
           font-size: 13px;
@@ -82,7 +82,7 @@ export default function Portfolio() {
           transition: all 0.2s ease;
         }
         .nav-cta:hover {
-          background: var(--color-accent);
+          background: var(--color-accent-hover);
         }
         .mobile-menu-link {
           color: var(--color-text-primary);
@@ -94,7 +94,7 @@ export default function Portfolio() {
           border-bottom: 1px solid var(--color-border);
         }
         .cta-primary {
-          background: var(--color-text-primary);
+          background: var(--color-accent);
           color: var(--color-background);
           padding: 18px 40px;
           text-decoration: none;
@@ -108,7 +108,7 @@ export default function Portfolio() {
           gap: 12px;
         }
         .cta-primary:hover {
-          opacity: 0.9;
+          background: var(--color-accent-hover);
         }
         .cta-secondary {
           color: var(--color-text-tertiary);

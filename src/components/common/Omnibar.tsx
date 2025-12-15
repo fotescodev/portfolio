@@ -71,13 +71,14 @@ export default function Omnibar() {
                     background: var(--color-tag-hover);
                 }
                 .omnibar-btn-primary {
-                    background: var(--color-text-primary);
-                    color: var(--color-background);
+                    background: transparent;
+                    border: 1px solid var(--color-accent);
+                    color: var(--color-accent);
                     font-weight: 600;
                 }
                 .omnibar-btn-primary:hover {
-                    opacity: 0.9;
-                    background: var(--color-text-primary);
+                    background: var(--color-accent);
+                    color: var(--color-background);
                 }
             `}</style>
 
@@ -123,18 +124,26 @@ export default function Omnibar() {
                                         ✓
                                     </motion.span>
                                 ) : (
-                                    <motion.span
-                                        key="email"
+                                    <motion.svg
+                                        key="copy"
                                         initial={{ scale: 0.8, opacity: 0 }}
-                                        animate={{ scale: 1, opacity: 1 }}
+                                        animate={{ scale: 1, opacity: 0.7 }}
                                         exit={{ scale: 0.8, opacity: 0 }}
-                                        style={iconStyle}
+                                        width="14"
+                                        height="14"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
                                     >
-                                        @
-                                    </motion.span>
+                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                                    </motion.svg>
                                 )}
                             </AnimatePresence>
-                            <span>{copied ? 'Copied' : 'Email'}</span>
+                            <span>{copied ? 'Copied!' : 'Copy Email'}</span>
                         </motion.button>
 
                         <div style={{ width: '1px', height: '16px', background: 'var(--color-border-light)' }} />
@@ -147,7 +156,21 @@ export default function Omnibar() {
                             whileTap={{ scale: 0.98 }}
                             className="omnibar-btn"
                         >
-                            <span style={iconStyle}>CV</span>
+                            <svg
+                                width="14"
+                                height="14"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                style={{ opacity: 0.7 }}
+                            >
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                <polyline points="7 10 12 15 17 10" />
+                                <line x1="12" y1="15" x2="12" y2="3" />
+                            </svg>
                             <span>Resume</span>
                         </motion.a>
 
@@ -161,8 +184,22 @@ export default function Omnibar() {
                             whileTap={{ scale: 0.98 }}
                             className="omnibar-btn omnibar-btn-primary"
                         >
-                            <span style={{ ...iconStyle, opacity: 1 }}>→</span>
-                            <span>Book Call</span>
+                            <svg
+                                width="14"
+                                height="14"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            >
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                                <line x1="16" y1="2" x2="16" y2="6" />
+                                <line x1="8" y1="2" x2="8" y2="6" />
+                                <line x1="3" y1="10" x2="21" y2="10" />
+                            </svg>
+                            <span>Let's Talk</span>
                         </motion.a>
                     </motion.div>
                 )}
