@@ -1,0 +1,33 @@
+projects:
+  - id: 1
+    slug: repo-flattener
+    title: Repo Flattener
+    tagline: Drop a repository, download a flattened zip for import into Claude or notebooks
+    year: "2024"
+    tags: [CLI, Developer Tools, AI]
+    thumbnail: null
+    githubUrl: https://github.com/fotescodev/repo-flattener
+    liveUrl: null
+    docsUrl: null
+
+  - id: 2
+    slug: dev-output-manager
+    title: Dev Output Manager
+    tagline: Track and analyze developer output metrics across teams and projects
+    year: "2024"
+    tags: [Analytics, Management, Productivity]
+    thumbnail: null
+    githubUrl: https://github.com/fotescodev/dev-output-manager
+    liveUrl: null
+    docsUrl: null
+
+  - id: 3
+    slug: programmable-planning
+    title: Programmable Planning
+    tagline: Workflow automation tools for product planning and task management
+    year: "2023"
+    tags: [Workflow, Planning, Automation]
+    thumbnail: null
+    githubUrl: https://github.com/fotescodev/programmable-planning
+    liveUrl: null
+    docsUrl: null
