@@ -292,7 +292,7 @@ describe('CaseStudyFooter Component', () => {
         expect(screen.getByText(mockCaseStudy.cta.headline)).toBeInTheDocument();
     });
 
-    it('should display CTA link text', () => {
+    it('should display CTA buttons (Copy Email, Resume, Book Time)', () => {
         render(
             <TestWrapper>
                 <CaseStudyFooter 
@@ -305,10 +305,12 @@ describe('CaseStudyFooter Component', () => {
             </TestWrapper>
         );
 
-        expect(screen.getByText(mockCaseStudy.cta.linkText)).toBeInTheDocument();
+        expect(screen.getByText('Copy Email')).toBeInTheDocument();
+        expect(screen.getByText('Resume')).toBeInTheDocument();
+        expect(screen.getByText('Book Time')).toBeInTheDocument();
     });
 
-    it('should have correct CTA link based on action', () => {
+    it('should have correct Book Time link', () => {
         render(
             <TestWrapper>
                 <CaseStudyFooter 
@@ -321,9 +323,9 @@ describe('CaseStudyFooter Component', () => {
             </TestWrapper>
         );
 
-        const ctaLink = screen.getByText(mockCaseStudy.cta.linkText);
-        // ETH staking uses calendly action
-        expect(ctaLink).toHaveAttribute('href', 'https://calendly.com/dmitriifotesco');
+        const bookTimeLink = screen.getByText('Book Time').closest('a');
+        expect(bookTimeLink).toHaveAttribute('href');
+        expect(bookTimeLink?.getAttribute('href')).toContain('calendar.google.com');
     });
 
     it('should show next study navigation when available', () => {
@@ -339,7 +341,7 @@ describe('CaseStudyFooter Component', () => {
             </TestWrapper>
         );
 
-        expect(screen.getByText('Next')).toBeInTheDocument();
+        expect(screen.getByText('Next →')).toBeInTheDocument();
         expect(screen.getByText(mockNextStudy.title)).toBeInTheDocument();
     });
 
@@ -356,7 +358,7 @@ describe('CaseStudyFooter Component', () => {
             </TestWrapper>
         );
 
-        expect(screen.queryByText('Previous')).not.toBeInTheDocument();
+        expect(screen.queryByText('← Previous')).not.toBeInTheDocument();
     });
 
     it('should NOT have testimonial section (removed)', () => {
@@ -544,7 +546,8 @@ describe('CaseStudyLinks Component', () => {
         
         // Footer should NOT have "Explore" section (links are in hero only)
         expect(screen.queryByText('Explore')).not.toBeInTheDocument();
-        // CTA should still be present
-        expect(screen.getByText(ankr.cta.linkText)).toBeInTheDocument();
+        // CTA buttons should still be present
+        expect(screen.getByText('Copy Email')).toBeInTheDocument();
+        expect(screen.getByText('Book Time')).toBeInTheDocument();
     });
 });
