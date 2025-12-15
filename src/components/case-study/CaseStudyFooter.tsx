@@ -5,9 +5,10 @@ interface CaseStudyFooterProps {
     prevStudy: CaseStudy | null;
     nextStudy: CaseStudy | null;
     onNavigate: (study: CaseStudy) => void;
+    isMobile?: boolean;
 }
 
-export default function CaseStudyFooter({ caseStudy, prevStudy, nextStudy, onNavigate }: CaseStudyFooterProps) {
+export default function CaseStudyFooter({ caseStudy, prevStudy, nextStudy, onNavigate, isMobile = false }: CaseStudyFooterProps) {
     const getCtaLink = (action: string): string => {
         switch (action) {
             case 'calendly':
@@ -20,86 +21,83 @@ export default function CaseStudyFooter({ caseStudy, prevStudy, nextStudy, onNav
         }
     };
 
+    const padding = isMobile ? 'var(--space-lg)' : 'var(--space-2xl)';
+
     return (
-        <div style={{
-            maxWidth: '720px',
+        <footer style={{
+            maxWidth: '640px',
             margin: '0 auto',
-            padding: '0 var(--space-2xl) var(--space-2xl)'
+            padding: `0 ${padding} ${padding}`
         }}>
-            {/* ══════════════════════════════════════════════════════════════
-          TESTIMONIAL (if exists)
-          ══════════════════════════════════════════════════════════════ */}
+            {/* Testimonial - simple blockquote style */}
             {caseStudy.evidence?.testimonial && (
-                <div style={{
-                    marginBottom: 'var(--space-5xl)',
-                    padding: 'var(--space-xl)',
-                    background: 'var(--color-card-hover)',
+                <blockquote style={{
+                    margin: '0 0 var(--space-3xl) 0',
+                    padding: '0 0 0 var(--space-lg)',
                     borderLeft: '2px solid var(--color-accent)'
                 }}>
                     <p style={{
-                        fontSize: '17px',
+                        fontSize: '16px',
                         fontFamily: 'var(--font-serif)',
                         fontStyle: 'italic',
                         color: 'var(--color-text-secondary)',
                         lineHeight: 1.7,
-                        margin: '0 0 var(--space-md) 0'
+                        margin: '0 0 var(--space-sm) 0'
                     }}>
                         "{caseStudy.evidence.testimonial.quote}"
                     </p>
-                    <div style={{
+                    <cite style={{
                         fontSize: '13px',
+                        fontStyle: 'normal',
                         color: 'var(--color-text-muted)'
                     }}>
                         — {caseStudy.evidence.testimonial.author}, {caseStudy.evidence.testimonial.role}
-                    </div>
-                </div>
+                    </cite>
+                </blockquote>
             )}
 
-            {/* ══════════════════════════════════════════════════════════════
-          CTA - Single focused action
-          ══════════════════════════════════════════════════════════════ */}
+            {/* CTA - minimal */}
             <div style={{
                 textAlign: 'center',
-                marginBottom: 'var(--space-5xl)'
+                padding: 'var(--space-2xl) 0',
+                borderTop: '1px solid var(--color-border-light)',
+                borderBottom: '1px solid var(--color-border-light)',
+                marginBottom: 'var(--space-xl)'
             }}>
-                <h3 style={{
-                    fontSize: '24px',
-                    fontFamily: 'var(--font-serif)',
-                    fontStyle: 'italic',
-                    color: 'var(--color-text-primary)',
-                    margin: '0 0 var(--space-md) 0',
-                    fontWeight: 400
+                <p style={{
+                    fontSize: '15px',
+                    color: 'var(--color-text-tertiary)',
+                    margin: '0 0 var(--space-md) 0'
                 }}>
                     {caseStudy.cta.headline}
-                </h3>
+                </p>
                 <a
                     href={getCtaLink(caseStudy.cta.action)}
                     target={caseStudy.cta.action !== 'contact' ? '_blank' : undefined}
                     rel="noopener noreferrer"
                     style={{
                         display: 'inline-block',
-                        padding: '14px 32px',
+                        padding: '12px 24px',
                         background: 'var(--color-text-primary)',
                         color: 'var(--color-background)',
                         textDecoration: 'none',
-                        fontSize: '14px',
+                        fontSize: '13px',
                         fontWeight: 600,
                         letterSpacing: '0.02em',
-                        transition: 'background 0.2s ease'
+                        borderRadius: '2px',
+                        transition: 'opacity 0.2s ease'
                     }}
+                    onMouseEnter={(e) => e.currentTarget.style.opacity = '0.9'}
+                    onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}
                 >
-                    {caseStudy.cta.linkText} →
+                    {caseStudy.cta.linkText}
                 </a>
             </div>
 
-            {/* ══════════════════════════════════════════════════════════════
-          NAVIGATION - Previous / Next
-          ══════════════════════════════════════════════════════════════ */}
-            <div style={{
+            {/* Navigation */}
+            <nav style={{
                 display: 'flex',
                 justifyContent: 'space-between',
-                paddingTop: 'var(--space-lg)',
-                borderTop: '1px solid var(--color-border-light)',
                 gap: 'var(--space-lg)'
             }}>
                 {prevStudy ? (
@@ -113,23 +111,22 @@ export default function CaseStudyFooter({ caseStudy, prevStudy, nextStudy, onNav
                             padding: 0
                         }}
                     >
-                        <div style={{
-                            fontSize: '11px',
-                            letterSpacing: '0.1em',
-                            textTransform: 'uppercase',
+                        <span style={{
+                            fontSize: '12px',
                             color: 'var(--color-text-muted)',
-                            marginBottom: '4px'
+                            display: 'block',
+                            marginBottom: '2px'
                         }}>
-                            ← Previous
-                        </div>
-                        <div style={{
-                            fontSize: '15px',
+                            Previous
+                        </span>
+                        <span style={{
+                            fontSize: '14px',
                             fontFamily: 'var(--font-serif)',
                             fontStyle: 'italic',
                             color: 'var(--color-text-secondary)'
                         }}>
                             {prevStudy.title}
-                        </div>
+                        </span>
                     </button>
                 ) : <div />}
 
@@ -144,26 +141,25 @@ export default function CaseStudyFooter({ caseStudy, prevStudy, nextStudy, onNav
                             padding: 0
                         }}
                     >
-                        <div style={{
-                            fontSize: '11px',
-                            letterSpacing: '0.1em',
-                            textTransform: 'uppercase',
+                        <span style={{
+                            fontSize: '12px',
                             color: 'var(--color-text-muted)',
-                            marginBottom: '4px'
+                            display: 'block',
+                            marginBottom: '2px'
                         }}>
-                            Next →
-                        </div>
-                        <div style={{
-                            fontSize: '15px',
+                            Next
+                        </span>
+                        <span style={{
+                            fontSize: '14px',
                             fontFamily: 'var(--font-serif)',
                             fontStyle: 'italic',
                             color: 'var(--color-text-secondary)'
                         }}>
                             {nextStudy.title}
-                        </div>
+                        </span>
                     </button>
                 ) : <div />}
-            </div>
-        </div>
+            </nav>
+        </footer>
     );
 }
