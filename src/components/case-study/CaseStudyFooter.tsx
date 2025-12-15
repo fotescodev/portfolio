@@ -1,5 +1,4 @@
 import type { CaseStudy } from '../../types/portfolio';
-import CaseStudyLinks from './CaseStudyLinks';
 
 interface CaseStudyFooterProps {
     caseStudy: CaseStudy;
@@ -23,7 +22,6 @@ export default function CaseStudyFooter({ caseStudy, prevStudy, nextStudy, onNav
     };
 
     const padding = isMobile ? 'var(--space-lg)' : 'var(--space-2xl)';
-    const hasLinks = caseStudy.demoUrl || caseStudy.githubUrl || caseStudy.docsUrl || (caseStudy.media && caseStudy.media.length > 0);
 
     return (
         <footer style={{
@@ -31,29 +29,6 @@ export default function CaseStudyFooter({ caseStudy, prevStudy, nextStudy, onNav
             margin: '0 auto',
             padding: `0 ${padding} ${padding}`
         }}>
-            {/* Links section before CTA */}
-            {hasLinks && (
-                <div style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    padding: 'var(--space-2xl) 0',
-                    borderTop: '1px solid var(--color-border-light)'
-                }}>
-                    <span style={{
-                        fontSize: '12px',
-                        fontWeight: 500,
-                        letterSpacing: '0.1em',
-                        textTransform: 'uppercase',
-                        color: 'var(--color-text-muted)',
-                        marginBottom: 'var(--space-md)'
-                    }}>
-                        Explore
-                    </span>
-                    <CaseStudyLinks caseStudy={caseStudy} isMobile={isMobile} />
-                </div>
-            )}
-
             {/* CTA - minimal */}
             <div style={{
                 textAlign: 'center',
