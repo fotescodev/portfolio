@@ -21,12 +21,12 @@ export default function HeroSection({ isMobile, isTablet, isLoaded }: HeroSectio
           color: var(--color-text-primary);
         }
         .hero-primary-btn {
-          background: var(--color-text-primary);
+          background: var(--color-accent);
           color: var(--color-background);
           transition: all 0.2s ease;
         }
         .hero-primary-btn:hover {
-          opacity: 0.9;
+          background: var(--color-accent-hover);
         }
       `}</style>
       <section style={{
