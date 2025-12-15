@@ -25,37 +25,10 @@ export default function CaseStudyFooter({ caseStudy, prevStudy, nextStudy, onNav
 
     return (
         <footer style={{
-            maxWidth: '640px',
+            maxWidth: 'var(--drawer-content-max-width)',
             margin: '0 auto',
             padding: `0 ${padding} ${padding}`
         }}>
-            {/* Testimonial - simple blockquote style */}
-            {caseStudy.evidence?.testimonial && (
-                <blockquote style={{
-                    margin: '0 0 var(--space-3xl) 0',
-                    padding: '0 0 0 var(--space-lg)',
-                    borderLeft: '2px solid var(--color-accent)'
-                }}>
-                    <p style={{
-                        fontSize: '16px',
-                        fontFamily: 'var(--font-serif)',
-                        fontStyle: 'italic',
-                        color: 'var(--color-text-secondary)',
-                        lineHeight: 1.7,
-                        margin: '0 0 var(--space-sm) 0'
-                    }}>
-                        "{caseStudy.evidence.testimonial.quote}"
-                    </p>
-                    <cite style={{
-                        fontSize: '13px',
-                        fontStyle: 'normal',
-                        color: 'var(--color-text-muted)'
-                    }}>
-                        — {caseStudy.evidence.testimonial.author}, {caseStudy.evidence.testimonial.role}
-                    </cite>
-                </blockquote>
-            )}
-
             {/* CTA - minimal */}
             <div style={{
                 textAlign: 'center',

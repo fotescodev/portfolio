@@ -1,12 +1,14 @@
 /**
  * Content Loader with Zod Validation
  *
- * This module provides type-safe access to all YAML content files.
- * Content is loaded at build time via @rollup/plugin-yaml and validated at runtime.
+ * This module provides type-safe access to all content files.
+ * YAML files are loaded via @rollup/plugin-yaml.
+ * Case studies are loaded from markdown files with YAML frontmatter.
  */
 
 import { z } from 'zod';
-import type { PortfolioContent } from '../types/portfolio';
+import YAML from 'yaml';
+import type { PortfolioContent, CaseStudy } from '../types/portfolio';
 
 // Import YAML content files
 import profileYaml from '../../content/profile.yaml';
@@ -16,8 +18,8 @@ import certificationsYaml from '../../content/certifications/index.yaml';
 import skillsYaml from '../../content/skills/index.yaml';
 import socialYaml from '../../content/social/index.yaml';
 
-// Auto-discover case studies using import.meta.glob
-const caseStudyFiles = import.meta.glob('../../content/case-studies/*.yaml', { eager: true });
+// Auto-discover case studies using import.meta.glob (now markdown files)
+const caseStudyFiles = import.meta.glob('../../content/case-studies/*.md', { query: '?raw', eager: true });
 
 // ------------------------------------------------------------------
 // Zod Schemas (Mirroring types/portfolio.ts)
@@ -171,48 +173,10 @@ export const SocialSchema = z.object({
   newsletter: NewsletterSchema.optional()
 });
 
-// Case Study Sub-Schemas
+// Case Study Schema (simplified for markdown files)
 const ImpactMetricSchema = z.object({
   value: z.string(),
   label: z.string()
-});
-
-const MetricWithContextSchema = z.object({
-  metric: z.string(),
-  context: z.string()
-});
-
-const AlternativeSchema = z.object({
-  option: z.string(),
-  tradeoffs: z.string(),
-  whyNot: z.string()
-});
-
-const ExecutionPhaseSchema = z.object({
-  name: z.string(),
-  duration: z.string().optional(),
-  actions: z.array(z.string())
-});
-
-const KeyDecisionSchema = z.object({
-  title: z.string(),
-  context: z.string(),
-  decision: z.string(),
-  outcome: z.string()
-});
-
-const CaseStudyTestimonialSchema = z.object({
-  quote: z.string(),
-  author: z.string(),
-  role: z.string(),
-  company: z.string()
-});
-
-const ArtifactSchema = z.object({
-  type: z.enum(['diagram', 'screenshot', 'video', 'metrics', 'chart']),
-  src: z.string().nullable(),
-  alt: z.string(),
-  caption: z.string().optional()
 });
 
 const CaseStudyCtaSchema = z.object({
@@ -229,55 +193,37 @@ export const CaseStudySchema = z.object({
   company: z.string(),
   year: z.string(),
   tags: z.array(z.string()),
+  duration: z.string(),
+  role: z.string(),
   hook: z.object({
     headline: z.string(),
     impactMetric: ImpactMetricSchema,
     subMetrics: z.array(ImpactMetricSchema).optional(),
-    thumbnail: z.string().nullable(),
-    thumbnailAlt: z.string()
-  }),
-  context: z.object({
-    myRole: z.string(),
-    teamSize: z.string(),
-    duration: z.string(),
-    stakeholders: z.array(z.string())
-  }),
-  problem: z.object({
-    businessContext: z.string(),
-    constraints: z.array(z.string()),
-    stakes: z.string()
-  }),
-  approach: z.object({
-    hypothesis: z.string(),
-    alternatives: z.array(AlternativeSchema).optional().default([]),
-    chosenPath: z.string()
-  }),
-  execution: z.object({
-    phases: z.array(ExecutionPhaseSchema),
-    keyDecision: KeyDecisionSchema
-  }),
-  results: z.object({
-    primary: MetricWithContextSchema,
-    secondary: MetricWithContextSchema.optional(),
-    tertiary: MetricWithContextSchema.optional(),
-    qualitative: z.string().optional()
-  }),
-  reflection: z.object({
-    whatWorked: z.array(z.string()),
-    whatDidnt: z.array(z.string()),
-    lessonLearned: z.string(),
-    wouldDoDifferently: z.string()
-  }),
-  evidence: z.object({
-    demoUrl: z.string().nullable().optional(),
-    githubUrl: z.string().nullable().optional(),
-    blogPostUrl: z.string().nullable().optional(),
-    testimonial: CaseStudyTestimonialSchema.optional(),
-    artifacts: z.array(ArtifactSchema).optional().default([])
+    thumbnail: z.string().nullable()
   }),
   cta: CaseStudyCtaSchema,
-  techStack: z.array(z.string())
+  content: z.string()
 });
+
+// ------------------------------------------------------------------
+// Frontmatter Parsing
+// ------------------------------------------------------------------
+
+function parseFrontmatter(raw: string): { frontmatter: Record<string, unknown>; content: string } {
+  const match = raw.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
+  if (!match) return { frontmatter: {}, content: raw };
+
+  const frontmatterStr = match[1];
+  const content = match[2].trim();
+
+  try {
+    const frontmatter = YAML.parse(frontmatterStr);
+    return { frontmatter, content };
+  } catch (error) {
+    console.error('Failed to parse frontmatter:', error);
+    return { frontmatter: {}, content: raw };
+  }
+}
 
 // ------------------------------------------------------------------
 // Runtime Validation
@@ -303,13 +249,26 @@ export const certifications = validate(CertificationsSchema, certificationsYaml,
 export const skills = validate(SkillsSchema, skillsYaml, 'skills/index.yaml');
 export const social = validate(SocialSchema, socialYaml, 'social/index.yaml');
 
-// Validate and sort case studies (auto-discovered)
-export const caseStudies = Object.entries(caseStudyFiles)
-  .map(([path, module]) => {
-    const filename = path.split('/').pop() || 'unknown';
-    return validate(CaseStudySchema, (module as any).default, filename);
-  })
-  .sort((a, b) => a.id - b.id);
+// Parse and validate case studies from markdown files
+function parseCaseStudies(): CaseStudy[] {
+  return Object.entries(caseStudyFiles)
+    .map(([path, module]) => {
+      const filename = path.split('/').pop() || 'unknown';
+      const raw = (module as { default: string }).default;
+      const { frontmatter, content } = parseFrontmatter(raw);
+      
+      // Combine frontmatter with content
+      const caseStudyData = {
+        ...frontmatter,
+        content
+      };
+      
+      return validate(CaseStudySchema, caseStudyData, filename);
+    })
+    .sort((a, b) => a.id - b.id);
+}
+
+export const caseStudies = parseCaseStudies();
 
 // Aggregated content export
 export const content: PortfolioContent = {

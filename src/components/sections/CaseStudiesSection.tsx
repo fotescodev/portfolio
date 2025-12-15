@@ -91,7 +91,7 @@ export default function CaseStudiesSection({
                   <>
                     <img
                       src={study.hook.thumbnail}
-                      alt={study.hook.thumbnailAlt}
+                      alt={`${study.title} case study`}
                       style={{
                         width: '100%',
                         height: '100%',
