@@ -6,6 +6,7 @@ import AboutSection from './sections/AboutSection';
 import ExperienceSection from './sections/ExperienceSection';
 import CertificationsSection from './sections/CertificationsSection';
 import TestimonialsSection from './sections/TestimonialsSection';
+import PassionProjectsSection from './sections/PassionProjectsSection';
 
 import CaseStudiesSection from './sections/CaseStudiesSection';
 import FooterSection from './sections/FooterSection';
@@ -358,6 +359,15 @@ export default function Portfolio() {
             setHoveredCase={setHoveredCase}
             onCaseClick={(study) => setModalCase(study)}
           />
+
+          {/* Passion Projects Section */}
+          {sections.passionProjects && (
+            <PassionProjectsSection
+              isMobile={isMobile}
+              isTablet={isTablet}
+              sectionPadding={sectionPadding}
+            />
+          )}
 
           {/* Testimonials Section */}
           <TestimonialsSection

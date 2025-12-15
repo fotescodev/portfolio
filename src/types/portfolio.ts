@@ -42,6 +42,7 @@ export interface Profile {
     blog: boolean;
     onchainIdentity: boolean;
     skills: boolean;
+    passionProjects: boolean;
   };
 }
 
@@ -220,6 +221,26 @@ export interface CaseStudy {
 }
 
 // ═══════════════════════════════════════════════════════════════
+// PASSION PROJECTS
+// ═══════════════════════════════════════════════════════════════
+export interface PassionProject {
+  id: number;
+  slug: string;
+  title: string;
+  tagline: string;
+  year: string;
+  tags: string[];
+  thumbnail?: string | null;
+  githubUrl?: string | null;
+  liveUrl?: string | null;
+  docsUrl?: string | null;
+}
+
+export interface PassionProjects {
+  projects: PassionProject[];
+}
+
+// ═══════════════════════════════════════════════════════════════
 // AGGREGATED CONTENT (for content loader)
 // ═══════════════════════════════════════════════════════════════
 export interface PortfolioContent {
@@ -230,4 +251,5 @@ export interface PortfolioContent {
   skills: Skills;
   social: Social;
   caseStudies: CaseStudy[];
+  passionProjects: PassionProject[];
 }

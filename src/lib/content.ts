@@ -17,6 +17,7 @@ import testimonialsYaml from '../../content/testimonials/index.yaml';
 import certificationsYaml from '../../content/certifications/index.yaml';
 import skillsYaml from '../../content/skills/index.yaml';
 import socialYaml from '../../content/social/index.yaml';
+import passionProjectsYaml from '../../content/passion-projects/index.yaml';
 
 // Auto-discover case studies using import.meta.glob (now markdown files)
 const caseStudyFiles = import.meta.glob('../../content/case-studies/*.md', { query: '?raw', eager: true });
@@ -65,7 +66,8 @@ export const ProfileSchema = z.object({
     beyondWork: z.boolean(),
     blog: z.boolean(),
     onchainIdentity: z.boolean(),
-    skills: z.boolean()
+    skills: z.boolean(),
+    passionProjects: z.boolean()
   })
 });
 
@@ -213,6 +215,24 @@ export const CaseStudySchema = z.object({
   content: z.string()
 });
 
+// Passion Projects Schema
+const PassionProjectSchema = z.object({
+  id: z.number(),
+  slug: z.string(),
+  title: z.string(),
+  tagline: z.string(),
+  year: z.string(),
+  tags: z.array(z.string()),
+  thumbnail: z.string().nullable().optional(),
+  githubUrl: z.string().nullable().optional(),
+  liveUrl: z.string().nullable().optional(),
+  docsUrl: z.string().nullable().optional()
+});
+
+export const PassionProjectsSchema = z.object({
+  projects: z.array(PassionProjectSchema)
+});
+
 // ------------------------------------------------------------------
 // Frontmatter Parsing
 // ------------------------------------------------------------------
@@ -256,6 +276,8 @@ export const testimonials = validate(TestimonialsSchema, testimonialsYaml, 'test
 export const certifications = validate(CertificationsSchema, certificationsYaml, 'certifications/index.yaml');
 export const skills = validate(SkillsSchema, skillsYaml, 'skills/index.yaml');
 export const social = validate(SocialSchema, socialYaml, 'social/index.yaml');
+export const passionProjectsData = validate(PassionProjectsSchema, passionProjectsYaml, 'passion-projects/index.yaml');
+export const passionProjects = passionProjectsData.projects;
 
 // Parse and validate case studies from markdown files
 function parseCaseStudies(): CaseStudy[] {
@@ -287,6 +309,7 @@ export const content: PortfolioContent = {
   skills,
   social,
   caseStudies,
+  passionProjects,
 };
 
 // Helper functions
