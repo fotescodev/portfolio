@@ -16,7 +16,7 @@ export default function Omnibar() {
     // Hide Omnibar when footer CTA is visible
     useEffect(() => {
         // Find the "Let's build" CTA section
-        const ctaSection = document.querySelector('section[style*="textAlign"]');
+        const ctaSection = document.querySelector('section[style*="text-align"]');
 
         if (!ctaSection) return;
 
