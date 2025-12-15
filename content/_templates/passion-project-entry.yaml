@@ -1,0 +1,19 @@
+# Copy this entry and add it to content/passion-projects/index.yaml
+#
+# Instructions:
+# 1. Update the id to the next available number
+# 2. Create a unique slug (lowercase, hyphens)
+# 3. Fill in all required fields
+# 4. Set optional URLs to null if not applicable
+# 5. Add to the projects array in passion-projects/index.yaml
+
+- id: 10
+  slug: my-project-slug
+  title: My Project Title
+  tagline: One-sentence description of what this project does
+  year: "2024"
+  tags: [Tag1, Tag2, Tag3]
+  thumbnail: null
+  githubUrl: https://github.com/username/repo
+  liveUrl: https://myproject.demo.com
+  docsUrl: null

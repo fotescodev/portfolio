@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:design-system": "vitest run --reporter=verbose src/tests/design-system"
+    "test:design-system": "vitest run --reporter=verbose src/tests/design-system",
+    "validate": "tsx scripts/validate-content.ts"
   },
   "dependencies": {
     "@types/react-syntax-highlighter": "^15.5.13",
@@ -47,6 +48,7 @@
     "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",
     "jsdom": "^27.0.1",
+    "tsx": "^4.21.0",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.46.4",
     "vite": "^7.2.4",
