@@ -66,15 +66,21 @@ export function mergeProfile(variant: Variant): MergedProfile {
   merged._variant = variant.metadata;
 
   // Apply hero overrides
+  // NOTE: headline is preserved (signature branding), companyAccent adds context
   if (variant.overrides.hero) {
     if (variant.overrides.hero.status) {
       merged.hero.status = variant.overrides.hero.status;
     }
+    // Only override headline if explicitly provided (discouraged - use companyAccent instead)
     if (variant.overrides.hero.headline) {
       merged.hero.headline = variant.overrides.hero.headline;
     }
     if (variant.overrides.hero.subheadline) {
       merged.hero.subheadline = variant.overrides.hero.subheadline;
+    }
+    // NEW: Company accent for recruiter visualization
+    if (variant.overrides.hero.companyAccent) {
+      (merged.hero as typeof merged.hero & { companyAccent?: typeof variant.overrides.hero.companyAccent }).companyAccent = variant.overrides.hero.companyAccent;
     }
   }
 
@@ -100,6 +106,41 @@ export function mergeProfile(variant: Variant): MergedProfile {
   }
 
   return merged;
+}
+
+/**
+ * Get experience with variant overrides applied
+ * @param variant - The variant data (or null for base)
+ * @returns Experience data with any variant overrides merged
+ */
+export function getExperienceWithOverrides(variant: Variant | null) {
+  // Dynamic import to avoid circular dependency
+  const { experience } = require('./content');
+
+  if (!variant?.overrides.experience) {
+    return experience;
+  }
+
+  // Create a deep copy to avoid mutating original
+  const mergedExperience = JSON.parse(JSON.stringify(experience));
+
+  // Apply experience overrides by matching company name
+  for (const override of variant.overrides.experience) {
+    const jobIndex = mergedExperience.jobs.findIndex(
+      (job: { company: string }) => job.company.toLowerCase() === override.company.toLowerCase()
+    );
+
+    if (jobIndex !== -1) {
+      if (override.highlights) {
+        mergedExperience.jobs[jobIndex].highlights = override.highlights;
+      }
+      if (override.tags) {
+        mergedExperience.jobs[jobIndex].tags = override.tags;
+      }
+    }
+  }
+
+  return mergedExperience;
 }
 
 /**

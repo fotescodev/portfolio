@@ -273,6 +273,15 @@ const VariantMetadataSchema = z.object({
 });
 
 /**
+ * Experience override - allows tailoring job highlights per variant
+ */
+const ExperienceOverrideSchema = z.object({
+  company: z.string(), // Match by company name
+  highlights: z.array(z.string()).optional(), // Override highlights for this company
+  tags: z.array(z.string()).optional() // Override tags for this company
+});
+
+/**
  * Overrides for profile fields specific to this variant
  * All fields optional - only override what's relevant for the job
  */
@@ -280,7 +289,9 @@ const VariantOverridesSchema = z.object({
   hero: z.object({
     status: z.string().optional(),
     headline: z.array(HeadlineSegmentSchema).optional(),
-    subheadline: z.string().optional()
+    subheadline: z.string().optional(),
+    // Company accent - shown below signature headline to help recruiters visualize fit
+    companyAccent: z.array(HeadlineSegmentSchema).optional()
   }).optional(),
   about: z.object({
     tagline: z.string().optional(),
@@ -293,7 +304,9 @@ const VariantOverridesSchema = z.object({
     onchainIdentity: z.boolean().optional(),
     skills: z.boolean().optional(),
     passionProjects: z.boolean().optional()
-  }).optional()
+  }).optional(),
+  // Experience customization - tailor highlights per company for this job
+  experience: z.array(ExperienceOverrideSchema).optional()
 });
 
 /**
