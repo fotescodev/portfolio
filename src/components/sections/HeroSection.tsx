@@ -1,5 +1,10 @@
 import type { Profile } from '../../types/variant';
 
+// Extended hero type to include variant-specific companyAccent
+type HeroWithAccent = Profile['hero'] & {
+  companyAccent?: Array<{ text: string; style?: 'italic' | 'muted' | 'accent' | 'normal' }>;
+};
+
 interface HeroSectionProps {
   profile: Profile;
   isMobile: boolean;
@@ -8,7 +13,7 @@ interface HeroSectionProps {
 }
 
 export default function HeroSection({ profile, isMobile, isTablet, isLoaded }: HeroSectionProps) {
-  const { hero } = profile;
+  const hero = profile.hero as HeroWithAccent;
 
   return (
     <>
@@ -71,7 +76,7 @@ export default function HeroSection({ profile, isMobile, isTablet, isLoaded }: H
             </span>
           </div>
 
-          {/* Main headline - Editorial style */}
+          {/* Main headline - Editorial style (signature branding) */}
           <h1 style={{
             fontSize: isMobile ? '11vw' : isTablet ? '9vw' : '8vw',
             fontFamily: 'var(--font-serif)',
@@ -99,6 +104,39 @@ export default function HeroSection({ profile, isMobile, isTablet, isLoaded }: H
               );
             })}
           </h1>
+
+          {/* Company Accent - Shows company-specific context for variants */}
+          {hero.companyAccent && hero.companyAccent.length > 0 && (
+            <div style={{
+              marginTop: isMobile ? 'var(--space-md)' : 'var(--space-lg)',
+              fontSize: isMobile ? '4vw' : isTablet ? '3vw' : '2.5vw',
+              fontFamily: 'var(--font-serif)',
+              fontWeight: 400,
+              fontStyle: 'italic',
+              lineHeight: 1.2,
+              letterSpacing: '-0.02em',
+              opacity: 0.7
+            }}>
+              {hero.companyAccent.map((segment, index) => {
+                const style: React.CSSProperties = {};
+                if (segment.style === 'muted') {
+                  style.fontStyle = 'normal';
+                  style.color = 'var(--color-text-tertiary)';
+                } else if (segment.style === 'accent') {
+                  style.color = 'var(--color-accent)';
+                  style.opacity = 1;
+                } else {
+                  style.color = 'var(--color-text-secondary)';
+                }
+                return (
+                  <span key={index}>
+                    {index > 0 && ' '}
+                    <span style={style}>{segment.text}</span>
+                  </span>
+                );
+              })}
+            </div>
+          )}
 
           {/* Subheadline */}
           <div style={{

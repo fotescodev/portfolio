@@ -10,27 +10,27 @@
   "overrides": {
     "hero": {
       "status": "Open to Technical PM roles — Platform Architecture, Developer Tools, AI Integration",
-      "headline": [
+      "companyAccent": [
         {
-          "text": "Building",
-          "style": "italic"
-        },
-        {
-          "text": "developer platforms at the intersection of",
+          "text": "for",
           "style": "muted"
         },
         {
-          "text": "scale and innovation",
+          "text": "Bloomberg",
           "style": "accent"
+        },
+        {
+          "text": "Terminal Architecture",
+          "style": "muted"
         }
       ],
-      "subheadline": "Senior Technical PM with 8 years shipping developer-facing platforms—from enterprise blockchain infrastructure at Microsoft to institutional crypto APIs at Anchorage. Expert in SDK architecture, platform interoperability, and balancing technical excellence with rapid delivery.\n"
+      "subheadline": "Senior Technical PM with 8 years shipping developer-facing platforms—from enterprise blockchain infrastructure at Microsoft to institutional crypto APIs at Anchorage. Expert in SDK architecture, platform interoperability, and balancing technical excellence with rapid delivery."
     },
     "about": {
-      "tagline": "Eight years building developer platforms where technical rigor meets pragmatic delivery—from Xbox smart contracts to ETF-grade staking APIs. Now focused on next-generation application architecture.\n",
+      "tagline": "Eight years building developer platforms where technical rigor meets pragmatic delivery—from Xbox smart contracts to ETF-grade staking APIs. Now focused on next-generation application architecture.",
       "bio": [
-        "Currently at Anchorage Digital, I lead protocol integrations and staking APIs for institutional clients—designing extensible frameworks that balance security, performance, and developer experience. I've shipped 7+ L2 protocol integrations (Optimism, Base, Arbitrum) with consistent API patterns that scale. Before that, I built Wallet-as-a-Service SDKs at Forte and Flow CLI/Cadence Playground developer tools at Dapper Labs—reducing time-to-first-deploy by 60%.\n",
-        "I started at Microsoft shipping one of the first production smart contracts in enterprise—Xbox royalties on Ethereum, requiring Docker/K8s infrastructure and API design for non-technical stakeholders. I'm drawn to problems at the intersection of technical depth and organizational scale: defining platform standards, championing best practices, and building tools that make developers more productive. Bloomberg's focus on Terminal architecture, interoperability, and AI integration aligns perfectly with my experience.\n"
+        "Currently at Anchorage Digital, I lead protocol integrations and staking APIs for institutional clients—designing extensible frameworks that balance security, performance, and developer experience. I've shipped 7+ L2 protocol integrations (Optimism, Base, Arbitrum) with consistent API patterns that scale. Before that, I built Wallet-as-a-Service SDKs at Forte and Flow CLI/Cadence Playground developer tools at Dapper Labs—reducing time-to-first-deploy by 60%.",
+        "I started at Microsoft shipping one of the first production smart contracts in enterprise—Xbox royalties on Ethereum, requiring Docker/K8s infrastructure and API design for non-technical stakeholders. I'm drawn to problems at the intersection of technical depth and organizational scale: defining platform standards, championing best practices, and building tools that make developers more productive. Bloomberg's focus on Terminal architecture, interoperability, and AI integration aligns perfectly with my experience."
       ],
       "stats": [
         {
@@ -53,7 +53,36 @@
       "onchainIdentity": false,
       "skills": true,
       "passionProjects": true
-    }
+    },
+    "experience": [
+      {
+        "company": "Anchorage Digital",
+        "highlights": [
+          "Designed extensible API framework for protocol integrations—7+ L2s with consistent patterns",
+          "Built platform standards for institutional-grade infrastructure serving ETF providers",
+          "Led cross-functional alignment on API design and developer experience"
+        ],
+        "tags": ["API Architecture", "Platform Standards", "Developer Experience"]
+      },
+      {
+        "company": "Dapper Labs",
+        "highlights": [
+          "Shipped Flow CLI and Cadence Playground—developer tools used by 10K+ developers",
+          "Reduced time-to-first-deploy by 60% through improved SDK architecture",
+          "Defined platform standards and documentation for blockchain developer ecosystem"
+        ],
+        "tags": ["Developer Tools", "SDK Architecture", "Platform Standards"]
+      },
+      {
+        "company": "Microsoft",
+        "highlights": [
+          "Architected first production smart contract at Microsoft—Xbox royalties on Ethereum",
+          "Built Docker/K8s infrastructure and API frameworks for blockchain consortium",
+          "Shipped developer tooling for non-technical stakeholders across enterprise"
+        ],
+        "tags": ["Enterprise Platforms", "API Design", "Developer Tooling"]
+      }
+    ]
   },
   "relevance": {
     "caseStudies": [

@@ -1,4 +1,16 @@
-import { experience } from '../../lib/content';
+import { useVariant } from '../../context/VariantContext';
+import { getExperienceWithOverrides } from '../../lib/variants';
+
+interface Job {
+  company: string;
+  role: string;
+  period: string;
+  location: string;
+  logo?: string | null;
+  highlights: string[];
+  tags: string[];
+  url?: string | null;
+}
 
 interface ExperienceSectionProps {
   isMobile: boolean;
@@ -7,6 +19,8 @@ interface ExperienceSectionProps {
 }
 
 export default function ExperienceSection({ isMobile, isTablet, sectionPadding }: ExperienceSectionProps) {
+  const { variant } = useVariant();
+  const experience = getExperienceWithOverrides(variant) as { jobs: Job[] };
   const { jobs } = experience;
 
   return (
