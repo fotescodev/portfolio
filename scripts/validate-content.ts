@@ -22,7 +22,8 @@ import {
   SocialSchema,
   CaseStudySchema,
   PassionProjectsSchema,
-  BlogPostSchema
+  BlogPostSchema,
+  VariantSchema
 } from '../src/lib/schemas.js';
 
 // ANSI color codes for terminal output
@@ -182,6 +183,32 @@ async function validateAllContent(): Promise<void> {
       console.log(`${colors.red}✗${colors.reset} Blog Post: ${file}`);
       result.errors?.forEach(err => console.log(err));
     }
+  }
+
+  // Validate variants
+  console.log(`\n${colors.gray}Validating portfolio variants...${colors.reset}`);
+  const variantsDir = join(contentDir, 'variants');
+  try {
+    const variantFiles = readdirSync(variantsDir).filter(f => f.endsWith('.yaml') && !f.startsWith('_'));
+
+    if (variantFiles.length === 0) {
+      console.log(`${colors.gray}  No variants found (this is OK)${colors.reset}`);
+    } else {
+      for (const file of variantFiles) {
+        const fullPath = join(variantsDir, file);
+        const result = validateYamlFile(fullPath, VariantSchema);
+        results.push(result);
+
+        if (result.success) {
+          console.log(`${colors.green}✓${colors.reset} Variant: ${file}`);
+        } else {
+          console.log(`${colors.red}✗${colors.reset} Variant: ${file}`);
+          result.errors?.forEach(err => console.log(err));
+        }
+      }
+    }
+  } catch (error) {
+    console.log(`${colors.gray}  Variants directory not found (this is OK)${colors.reset}`);
   }
 
   // Summary
