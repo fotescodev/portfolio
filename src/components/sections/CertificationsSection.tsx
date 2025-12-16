@@ -1,6 +1,8 @@
-import { certifications as certificationsData, profile } from '../../lib/content';
+import { certifications as certificationsData } from '../../lib/content';
+import type { Profile } from '../../types/variant';
 
 interface CertificationsSectionProps {
+  profile: Profile;
   isMobile: boolean;
   isTablet: boolean;
   sectionPadding: string;
@@ -27,11 +29,13 @@ function formatCompletionDate(date: string) {
 }
 
 export default function CertificationsSection({
+  profile,
   isMobile,
   isTablet,
   sectionPadding,
-  showOnchainIdentity = profile.sections.onchainIdentity
+  showOnchainIdentity
 }: CertificationsSectionProps) {
+  const shouldShowOnchain = showOnchainIdentity ?? profile.sections.onchainIdentity;
   const { certifications, credentials, onchainIdentity } = certificationsData;
 
   return (
@@ -203,7 +207,7 @@ export default function CertificationsSection({
         style={{
           padding: 'var(--space-xl) 0',
           borderTop: '1px solid var(--color-border-light)',
-          borderBottom: showOnchainIdentity ? 'none' : '1px solid var(--color-border-light)'
+          borderBottom: shouldShowOnchain ? 'none' : '1px solid var(--color-border-light)'
         }}
       >
         <div
@@ -267,7 +271,7 @@ export default function CertificationsSection({
       </div>
 
       {/* On-chain identity - Compact footer style */}
-      {showOnchainIdentity && (
+      {shouldShowOnchain && (
         <div
           style={{
             padding: 'var(--space-lg) 0',

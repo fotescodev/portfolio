@@ -8,7 +8,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { ThemeProvider } from '../../context/ThemeContext';
 import { HelmetProvider } from 'react-helmet-async';
-import { caseStudies } from '../../lib/content';
+import { caseStudies, profile } from '../../lib/content';
 
 // Components
 import CaseStudyDrawer from '../../components/case-study/CaseStudyDrawer';
@@ -430,7 +430,7 @@ describe('HeroSection - Mobile', () => {
     it('should render on mobile without crashing', () => {
         render(
             <TestWrapper>
-                <HeroSection isMobile={true} isTablet={false} isLoaded={true} />
+                <HeroSection profile={profile} isMobile={true} isTablet={false} isLoaded={true} />
             </TestWrapper>
         );
 
@@ -440,7 +440,7 @@ describe('HeroSection - Mobile', () => {
     it('should display name and headline on mobile', () => {
         render(
             <TestWrapper>
-                <HeroSection isMobile={true} isTablet={false} isLoaded={true} />
+                <HeroSection profile={profile} isMobile={true} isTablet={false} isLoaded={true} />
             </TestWrapper>
         );
 
@@ -451,7 +451,7 @@ describe('HeroSection - Mobile', () => {
     it('should have accessible CTA buttons on mobile', () => {
         render(
             <TestWrapper>
-                <HeroSection isMobile={true} isTablet={false} isLoaded={true} />
+                <HeroSection profile={profile} isMobile={true} isTablet={false} isLoaded={true} />
             </TestWrapper>
         );
 
@@ -467,7 +467,7 @@ describe('AboutSection - Mobile', () => {
     it('should render on mobile without crashing', () => {
         render(
             <TestWrapper>
-                <AboutSection isMobile={true} isTablet={false} sectionPadding="24px" />
+                <AboutSection profile={profile} isMobile={true} isTablet={false} sectionPadding="24px" />
             </TestWrapper>
         );
 
@@ -477,7 +477,7 @@ describe('AboutSection - Mobile', () => {
     it('should display social icons on mobile', () => {
         render(
             <TestWrapper>
-                <AboutSection isMobile={true} isTablet={false} sectionPadding="24px" />
+                <AboutSection profile={profile} isMobile={true} isTablet={false} sectionPadding="24px" />
             </TestWrapper>
         );
 
@@ -488,7 +488,7 @@ describe('AboutSection - Mobile', () => {
     it('should have copy email functionality on mobile', () => {
         render(
             <TestWrapper>
-                <AboutSection isMobile={true} isTablet={false} sectionPadding="24px" />
+                <AboutSection profile={profile} isMobile={true} isTablet={false} sectionPadding="24px" />
             </TestWrapper>
         );
 

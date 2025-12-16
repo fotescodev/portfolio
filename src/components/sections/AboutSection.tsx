@@ -1,14 +1,16 @@
 import { useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { profile, social } from '../../lib/content';
+import { social } from '../../lib/content';
+import type { Profile } from '../../types/variant';
 
 interface AboutSectionProps {
+  profile: Profile;
   isMobile: boolean;
   isTablet: boolean;
   sectionPadding: string;
 }
 
-export default function AboutSection({ isMobile, isTablet, sectionPadding }: AboutSectionProps) {
+export default function AboutSection({ profile, isMobile, isTablet, sectionPadding }: AboutSectionProps) {
   const { about, photo, name } = profile;
   const [photoError, setPhotoError] = useState(false);
   const [emailCopied, setEmailCopied] = useState(false);

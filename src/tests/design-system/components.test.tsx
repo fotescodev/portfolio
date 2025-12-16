@@ -7,6 +7,7 @@
 
 import { render, screen } from '@testing-library/react';
 import { ThemeProvider } from '../../context/ThemeContext';
+import { profile } from '../../lib/content';
 
 // Import all migrated components
 import HeroSection from '../../components/sections/HeroSection';
@@ -28,7 +29,7 @@ describe('Component Integration Tests', () => {
         it('should render without crashing', () => {
             render(
                 <TestWrapper>
-                    <HeroSection isMobile={false} isTablet={false} isLoaded={true} />
+                    <HeroSection profile={profile} isMobile={false} isTablet={false} isLoaded={true} />
                 </TestWrapper>
             );
 
@@ -39,7 +40,7 @@ describe('Component Integration Tests', () => {
         it('should use CSS variables for styling', () => {
             render(
                 <TestWrapper>
-                    <HeroSection isMobile={false} isTablet={false} isLoaded={true} />
+                    <HeroSection profile={profile} isMobile={false} isTablet={false} isLoaded={true} />
                 </TestWrapper>
             );
 
@@ -52,7 +53,7 @@ describe('Component Integration Tests', () => {
         it('should render primary and secondary CTA buttons', () => {
             render(
                 <TestWrapper>
-                    <HeroSection isMobile={false} isTablet={false} isLoaded={true} />
+                    <HeroSection profile={profile} isMobile={false} isTablet={false} isLoaded={true} />
                 </TestWrapper>
             );
 
@@ -68,7 +69,7 @@ describe('Component Integration Tests', () => {
         it('should have download icon in secondary button', () => {
             render(
                 <TestWrapper>
-                    <HeroSection isMobile={false} isTablet={false} isLoaded={true} />
+                    <HeroSection profile={profile} isMobile={false} isTablet={false} isLoaded={true} />
                 </TestWrapper>
             );
 
@@ -82,7 +83,7 @@ describe('Component Integration Tests', () => {
         it('should render without crashing', () => {
             render(
                 <TestWrapper>
-                    <AboutSection isMobile={false} isTablet={false} sectionPadding="40px" />
+                    <AboutSection profile={profile} isMobile={false} isTablet={false} sectionPadding="40px" />
                 </TestWrapper>
             );
 
@@ -92,7 +93,7 @@ describe('Component Integration Tests', () => {
         it('should render social icons bar', () => {
             render(
                 <TestWrapper>
-                    <AboutSection isMobile={false} isTablet={false} sectionPadding="40px" />
+                    <AboutSection profile={profile} isMobile={false} isTablet={false} sectionPadding="40px" />
                 </TestWrapper>
             );
 
@@ -106,7 +107,7 @@ describe('Component Integration Tests', () => {
         it('should have copy email button', () => {
             render(
                 <TestWrapper>
-                    <AboutSection isMobile={false} isTablet={false} sectionPadding="40px" />
+                    <AboutSection profile={profile} isMobile={false} isTablet={false} sectionPadding="40px" />
                 </TestWrapper>
             );
 
@@ -117,7 +118,7 @@ describe('Component Integration Tests', () => {
         it('should have correct social link URLs', () => {
             render(
                 <TestWrapper>
-                    <AboutSection isMobile={false} isTablet={false} sectionPadding="40px" />
+                    <AboutSection profile={profile} isMobile={false} isTablet={false} sectionPadding="40px" />
                 </TestWrapper>
             );
 
@@ -144,7 +145,7 @@ describe('Component Integration Tests', () => {
         it('should render without crashing', () => {
             render(
                 <TestWrapper>
-                    <CertificationsSection isMobile={false} isTablet={false} sectionPadding="40px" />
+                    <CertificationsSection profile={profile} isMobile={false} isTablet={false} sectionPadding="40px" />
                 </TestWrapper>
             );
 
@@ -256,8 +257,8 @@ describe('Design System Compliance', () => {
 
         render(
             <TestWrapper>
-                <HeroSection isMobile={false} isTablet={false} isLoaded={true} />
-                <AboutSection isMobile={false} isTablet={false} sectionPadding="40px" />
+                <HeroSection profile={profile} isMobile={false} isTablet={false} isLoaded={true} />
+                <AboutSection profile={profile} isMobile={false} isTablet={false} sectionPadding="40px" />
                 <FooterSection isMobile={false} />
             </TestWrapper>
         );

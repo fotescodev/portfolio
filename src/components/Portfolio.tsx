@@ -315,6 +315,7 @@ export default function Portfolio() {
         <main id="main-content" style={{ position: 'relative', zIndex: 1 }}>
           {/* Hero Section */}
           <HeroSection
+            profile={profile}
             isMobile={isMobile}
             isTablet={isTablet}
             isLoaded={isLoaded}
@@ -322,6 +323,7 @@ export default function Portfolio() {
 
           {/* About Section */}
           <AboutSection
+            profile={profile}
             isMobile={isMobile}
             isTablet={isTablet}
             sectionPadding={sectionPadding}
@@ -336,6 +338,7 @@ export default function Portfolio() {
 
           {/* Certifications Section */}
           <CertificationsSection
+            profile={profile}
             isMobile={isMobile}
             isTablet={isTablet}
             sectionPadding={sectionPadding}
