@@ -10,27 +10,27 @@
   "overrides": {
     "hero": {
       "status": "Open to Technical PM roles — ML Infrastructure, Web3 Protocols, Developer Platforms",
-      "headline": [
+      "companyAccent": [
         {
-          "text": "Building",
-          "style": "italic"
-        },
-        {
-          "text": "at the intersection of",
+          "text": "for",
           "style": "muted"
         },
         {
-          "text": "AI and decentralized systems",
+          "text": "Gensyn",
           "style": "accent"
+        },
+        {
+          "text": "ML Infrastructure",
+          "style": "muted"
         }
       ],
-      "subheadline": "Senior Technical PM with 8 years at the convergence of blockchain infrastructure and developer platforms. From institutional staking APIs to gaming wallet SDKs— I translate complex distributed systems into accessible developer experiences. Now exploring where ML training meets decentralized compute.\n"
+      "subheadline": "Senior Technical PM with 8 years at the convergence of blockchain infrastructure and developer platforms. From institutional staking APIs to gaming wallet SDKs—I translate complex distributed systems into accessible developer experiences. Now exploring where ML training meets decentralized compute."
     },
     "about": {
-      "tagline": "Eight years building developer infrastructure where cutting-edge technology meets production readiness—from enterprise blockchain at Microsoft to decentralized ML frameworks. Passionate about making complex systems accessible.\n",
+      "tagline": "Eight years building developer infrastructure where cutting-edge technology meets production readiness—from enterprise blockchain at Microsoft to decentralized ML frameworks. Passionate about making complex systems accessible.",
       "bio": [
-        "Currently at Anchorage Digital, I lead protocol integrations and staking infrastructure serving institutional clients. I've shipped 7+ L2 integrations (Optimism, Base, Arbitrum) and built ETF-grade validator APIs—designing distributed systems that balance performance, security, and developer experience. Before that, I built MPC-based Wallet-as-a-Service SDKs at Forte for gaming studios, and Flow CLI/Cadence developer tools at Dapper Labs that reduced onboarding time by 60%.\n",
-        "I started at Microsoft shipping Xbox royalties on Ethereum—one of the first production smart contracts in enterprise, requiring Docker/K8s orchestration for blockchain nodes. I'm deeply experienced in distributed systems, crypto protocols, and developer tooling. Gensyn's mission to democratize ML compute through decentralized infrastructure resonates with my background: I've lived at this intersection of blockchain, developer experience, and cutting-edge technology for years. Currently exploring AI agent orchestration as a passion project.\n"
+        "Currently at Anchorage Digital, I lead protocol integrations and staking infrastructure serving institutional clients. I've shipped 7+ L2 integrations (Optimism, Base, Arbitrum) and built ETF-grade validator APIs—designing distributed systems that balance performance, security, and developer experience. Before that, I built MPC-based Wallet-as-a-Service SDKs at Forte for gaming studios, and Flow CLI/Cadence developer tools at Dapper Labs that reduced onboarding time by 60%.",
+        "I started at Microsoft shipping Xbox royalties on Ethereum—one of the first production smart contracts in enterprise, requiring Docker/K8s orchestration for blockchain nodes. I'm deeply experienced in distributed systems, crypto protocols, and developer tooling. Gensyn's mission to democratize ML compute through decentralized infrastructure resonates with my background: I've lived at this intersection of blockchain, developer experience, and cutting-edge technology for years. Currently exploring AI agent orchestration as a passion project."
       ],
       "stats": [
         {
@@ -53,7 +53,45 @@
       "onchainIdentity": true,
       "skills": true,
       "passionProjects": true
-    }
+    },
+    "experience": [
+      {
+        "company": "Anchorage Digital",
+        "highlights": [
+          "Built distributed validator infrastructure for ETF-grade staking—high availability systems",
+          "Shipped 7+ L2 protocol integrations with consistent API patterns across chains",
+          "Designed infrastructure for institutional-scale distributed systems"
+        ],
+        "tags": ["Distributed Systems", "Protocol Infrastructure", "Validator Networks"]
+      },
+      {
+        "company": "Forte",
+        "highlights": [
+          "Built MPC-based Wallet-as-a-Service SDK for gaming studios",
+          "Designed distributed key management infrastructure for non-custodial wallets",
+          "Shipped SDK enabling AAA gaming partners to integrate crypto seamlessly"
+        ],
+        "tags": ["MPC Infrastructure", "SDK Architecture", "Distributed Systems"]
+      },
+      {
+        "company": "Dapper Labs",
+        "highlights": [
+          "Shipped Flow CLI and developer tools for blockchain developers",
+          "Reduced developer onboarding time by 60% through improved tooling",
+          "Built infrastructure enabling 10K+ developers to deploy on Flow"
+        ],
+        "tags": ["Developer Infrastructure", "Blockchain Tools", "SDK Development"]
+      },
+      {
+        "company": "Microsoft",
+        "highlights": [
+          "First production smart contract at Microsoft—Xbox royalties on Ethereum",
+          "Built Docker/K8s orchestration for distributed blockchain nodes",
+          "Pioneered enterprise blockchain infrastructure before 'Web3' existed"
+        ],
+        "tags": ["Enterprise Infrastructure", "Distributed Systems", "Blockchain Pioneering"]
+      }
+    ]
   },
   "relevance": {
     "caseStudies": [

@@ -6,7 +6,7 @@
 
 import { VariantSchema } from './schemas';
 import type { Variant, MergedProfile } from '../types/variant';
-import { profile as baseProfile } from './content';
+import { profile as baseProfile, experience as baseExperience } from './content';
 
 // Import all variant JSON files at build time using Vite's glob import
 // We use JSON instead of YAML for easier client-side loading
@@ -114,15 +114,12 @@ export function mergeProfile(variant: Variant): MergedProfile {
  * @returns Experience data with any variant overrides merged
  */
 export function getExperienceWithOverrides(variant: Variant | null) {
-  // Dynamic import to avoid circular dependency
-  const { experience } = require('./content');
-
   if (!variant?.overrides.experience) {
-    return experience;
+    return baseExperience;
   }
 
   // Create a deep copy to avoid mutating original
-  const mergedExperience = JSON.parse(JSON.stringify(experience));
+  const mergedExperience = JSON.parse(JSON.stringify(baseExperience));
 
   // Apply experience overrides by matching company name
   for (const override of variant.overrides.experience) {
