@@ -1,10 +1,16 @@
-import { useEffect } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark, oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import type { BlogPost } from '../types/blog';
 import { useTheme } from '../context/ThemeContext';
+
+interface TableOfContentsItem {
+    id: string;
+    text: string;
+    level: number;
+}
 
 interface BlogPostModalProps {
     post: BlogPost;
@@ -15,6 +21,8 @@ interface BlogPostModalProps {
     prevTitle?: string;
     nextTitle?: string;
     isMobile: boolean;
+    relatedPosts?: BlogPost[];
+    onPostSelect?: (post: BlogPost) => void;
 }
 
 export default function BlogPostModal({
@@ -25,10 +33,21 @@ export default function BlogPostModal({
     hasNext,
     prevTitle,
     nextTitle,
-    isMobile
+    isMobile,
+    relatedPosts = [],
+    onPostSelect
 }: BlogPostModalProps) {
     // Only keep isDark for the SyntaxHighlighter theme (third-party library)
     const { isDark } = useTheme();
+
+    // State for UX features
+    const [scrollProgress, setScrollProgress] = useState(0);
+    const [showBackToTop, setShowBackToTop] = useState(false);
+    const [activeHeading, setActiveHeading] = useState<string>('');
+    const [tocItems, setTocItems] = useState<TableOfContentsItem[]>([]);
+    const [showToc, setShowToc] = useState(false);
+    const scrollContainerRef = useRef<HTMLDivElement>(null);
+    const contentRef = useRef<HTMLDivElement>(null);
 
     // Handle scroll lock and ESC key
     useEffect(() => {
@@ -43,6 +62,68 @@ export default function BlogPostModal({
         };
     }, [onClose]);
 
+    // Extract table of contents from markdown
+    useEffect(() => {
+        const headings: TableOfContentsItem[] = [];
+        const headingRegex = /^(#{1,3})\s+(.+)$/gm;
+        let match;
+
+        while ((match = headingRegex.exec(post.content)) !== null) {
+            const level = match[1].length;
+            const text = match[2].trim();
+            const id = text.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-');
+            headings.push({ id, text, level });
+        }
+
+        setTocItems(headings);
+        setShowToc(headings.length > 0);
+    }, [post.content]);
+
+    // Track scroll progress and back-to-top visibility
+    useEffect(() => {
+        const container = scrollContainerRef.current;
+        if (!container) return;
+
+        const handleScroll = () => {
+            const scrollTop = container.scrollTop;
+            const scrollHeight = container.scrollHeight - container.clientHeight;
+            const progress = (scrollTop / scrollHeight) * 100;
+
+            setScrollProgress(Math.min(progress, 100));
+            setShowBackToTop(scrollTop > 400);
+
+            // Track active heading
+            if (contentRef.current) {
+                const headings = contentRef.current.querySelectorAll('h1, h2, h3');
+                let currentActiveId = '';
+
+                headings.forEach((heading) => {
+                    const rect = heading.getBoundingClientRect();
+                    if (rect.top <= 200) {
+                        currentActiveId = heading.id;
+                    }
+                });
+
+                setActiveHeading(currentActiveId);
+            }
+        };
+
+        container.addEventListener('scroll', handleScroll);
+        return () => container.removeEventListener('scroll', handleScroll);
+    }, []);
+
+    // Set IDs on headings for anchor links
+    useEffect(() => {
+        if (!contentRef.current) return;
+
+        const headings = contentRef.current.querySelectorAll('h1, h2, h3');
+        headings.forEach((heading) => {
+            const text = heading.textContent || '';
+            const id = text.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-');
+            heading.id = id;
+        });
+    }, [post.content]);
+
     const formatDate = (dateStr: string) => {
         const date = new Date(dateStr);
         return date.toLocaleDateString('en-US', {
@@ -50,6 +131,28 @@ export default function BlogPostModal({
             month: 'long',
             day: 'numeric'
         });
+    };
+
+    const scrollToTop = () => {
+        scrollContainerRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    const scrollToHeading = (id: string) => {
+        const element = document.getElementById(id);
+        if (element && scrollContainerRef.current) {
+            const container = scrollContainerRef.current;
+            const elementTop = element.offsetTop;
+            const offset = 100; // Account for sticky header
+            container.scrollTo({ top: elementTop - offset, behavior: 'smooth' });
+        }
+    };
+
+    const copyCode = async (code: string) => {
+        try {
+            await navigator.clipboard.writeText(code);
+        } catch (err) {
+            console.error('Failed to copy code:', err);
+        }
     };
 
     return (
@@ -64,6 +167,27 @@ export default function BlogPostModal({
                 animation: 'modalSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1)'
             }}
         >
+            {/* Reading Progress Bar */}
+            <div
+                style={{
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    height: '3px',
+                    background: 'var(--color-border-light)',
+                    zIndex: 1001
+                }}
+            >
+                <div
+                    style={{
+                        height: '100%',
+                        width: `${scrollProgress}%`,
+                        background: 'var(--color-accent)',
+                        transition: 'width 0.1s ease-out'
+                    }}
+                />
+            </div>
             {/* Modal styles - all using CSS variables */}
             <style>{`
         @keyframes modalSlideUp {
@@ -100,7 +224,7 @@ export default function BlogPostModal({
         }
 
         .blog-content h1 {
-          font-size: ${isMobile ? '28px' : '36px'};
+          font-size: clamp(28px, 5vw, 36px);
           font-family: var(--font-serif);
           font-weight: 400;
           font-style: italic;
@@ -108,10 +232,11 @@ export default function BlogPostModal({
           margin: 40px 0 20px;
           letter-spacing: -0.02em;
           line-height: 1.2;
+          text-wrap: balance;
         }
 
         .blog-content h2 {
-          font-size: ${isMobile ? '22px' : '26px'};
+          font-size: clamp(22px, 4vw, 26px);
           font-family: var(--font-serif);
           font-weight: 400;
           font-style: italic;
@@ -119,18 +244,20 @@ export default function BlogPostModal({
           margin: 36px 0 16px;
           letter-spacing: -0.02em;
           line-height: 1.3;
+          text-wrap: balance;
         }
 
         .blog-content h3 {
-          font-size: ${isMobile ? '18px' : '20px'};
+          font-size: clamp(18px, 3vw, 20px);
           font-weight: 600;
           color: var(--color-text-primary);
           margin: 28px 0 12px;
           line-height: 1.4;
+          text-wrap: balance;
         }
 
         .blog-content p {
-          font-size: ${isMobile ? '16px' : '17px'};
+          font-size: clamp(16px, 2.5vw, 17px);
           color: var(--color-text-secondary);
           line-height: 1.8;
           margin: 0 0 20px;
@@ -236,6 +363,164 @@ export default function BlogPostModal({
           border-color: var(--color-text-tertiary);
           color: var(--color-text-primary);
         }
+
+        .back-to-top-btn {
+          position: fixed;
+          bottom: var(--space-xl);
+          right: var(--space-xl);
+          width: 48px;
+          height: 48px;
+          border-radius: 50%;
+          background: var(--color-background-secondary);
+          border: 1px solid var(--color-border);
+          color: var(--color-text-secondary);
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 20px;
+          transition: all var(--transition-fast);
+          z-index: 100;
+          opacity: 0;
+          transform: translateY(20px);
+          pointer-events: none;
+        }
+
+        .back-to-top-btn.visible {
+          opacity: 1;
+          transform: translateY(0);
+          pointer-events: auto;
+        }
+
+        .back-to-top-btn:hover {
+          background: var(--color-accent);
+          color: var(--color-background);
+          border-color: var(--color-accent);
+          transform: translateY(-2px);
+        }
+
+        .toc-container {
+          position: sticky;
+          top: 120px;
+          max-height: calc(100vh - 200px);
+          overflow-y: auto;
+          padding: var(--space-lg);
+          background: var(--color-background-secondary);
+          border: 1px solid var(--color-border-light);
+          border-radius: 0;
+        }
+
+        .toc-container::-webkit-scrollbar {
+          width: 4px;
+        }
+
+        .toc-title {
+          font-size: 11px;
+          font-weight: 600;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          color: var(--color-text-muted);
+          margin-bottom: var(--space-md);
+        }
+
+        .toc-item {
+          display: block;
+          font-size: 13px;
+          color: var(--color-text-tertiary);
+          text-decoration: none;
+          padding: 6px 0;
+          transition: color var(--transition-fast);
+          cursor: pointer;
+          line-height: 1.4;
+        }
+
+        .toc-item:hover {
+          color: var(--color-text-primary);
+        }
+
+        .toc-item.active {
+          color: var(--color-accent);
+          font-weight: 500;
+        }
+
+        .toc-item.level-2 {
+          padding-left: var(--space-md);
+        }
+
+        .toc-item.level-3 {
+          padding-left: var(--space-xl);
+          font-size: 12px;
+        }
+
+        .code-block-wrapper {
+          position: relative;
+          margin: 24px 0;
+        }
+
+        .code-copy-btn {
+          position: absolute;
+          top: 8px;
+          right: 8px;
+          background: var(--color-background-secondary);
+          border: 1px solid var(--color-border);
+          color: var(--color-text-tertiary);
+          padding: 6px 12px;
+          font-size: 11px;
+          font-weight: 500;
+          letter-spacing: 0.05em;
+          text-transform: uppercase;
+          cursor: pointer;
+          border-radius: 0;
+          transition: all var(--transition-fast);
+          font-family: var(--font-sans);
+          z-index: 10;
+        }
+
+        .code-copy-btn:hover {
+          background: var(--color-accent);
+          color: var(--color-background);
+          border-color: var(--color-accent);
+        }
+
+        .related-posts-section {
+          margin-top: var(--space-3xl);
+          padding-top: var(--space-3xl);
+          border-top: 1px solid var(--color-border-light);
+        }
+
+        .related-posts-title {
+          font-size: clamp(20px, 3vw, 24px);
+          font-family: var(--font-serif);
+          font-style: italic;
+          color: var(--color-text-primary);
+          margin-bottom: var(--space-xl);
+        }
+
+        .related-post-card {
+          padding: var(--space-lg);
+          border: 1px solid var(--color-border-light);
+          cursor: pointer;
+          transition: all var(--transition-fast);
+          background: var(--color-background);
+        }
+
+        .related-post-card:hover {
+          border-color: var(--color-accent);
+          background: var(--color-card-hover);
+        }
+
+        .related-post-title {
+          font-size: 16px;
+          font-family: var(--font-serif);
+          font-style: italic;
+          color: var(--color-text-primary);
+          margin-bottom: var(--space-sm);
+        }
+
+        .related-post-meta {
+          font-size: 12px;
+          color: var(--color-text-tertiary);
+        }
       `}</style>
 
             {/* Modal Header */}
@@ -262,16 +547,23 @@ export default function BlogPostModal({
 
             {/* Modal Content - Scrollable */}
             <div
+                ref={scrollContainerRef}
                 className="blog-modal-scroll"
                 style={{
                     flex: 1,
                     overflowY: 'auto',
                     padding: isMobile ? '40px 24px' : '64px',
-                    maxWidth: '800px',
-                    margin: '0 auto',
-                    width: '100%'
+                    display: 'flex',
+                    gap: 'var(--space-3xl)',
+                    justifyContent: 'center'
                 }}
             >
+                {/* Main Content */}
+                <div style={{
+                    maxWidth: '800px',
+                    width: '100%',
+                    flex: '1 1 auto'
+                }}>
                 {/* Header */}
                 <div style={{ marginBottom: '40px' }}>
                     <div style={{
@@ -340,27 +632,38 @@ export default function BlogPostModal({
                 )}
 
                 {/* Article Content */}
-                <div className="blog-content">
+                <div ref={contentRef} className="blog-content">
                     <ReactMarkdown
                         remarkPlugins={[remarkGfm]}
                         components={{
                             code({ className, children, ...props }) {
                                 const match = /language-(\w+)/.exec(className || '');
                                 const isInline = !match;
+                                const code = String(children).replace(/\n$/, '');
+
                                 return !isInline ? (
-                                    <SyntaxHighlighter
-                                        style={isDark ? oneDark : oneLight}
-                                        language={match[1]}
-                                        PreTag="div"
-                                        customStyle={{
-                                            margin: '24px 0',
-                                            borderRadius: 0,
-                                            border: '1px solid var(--color-border)',
-                                            background: 'var(--color-code-bg)'
-                                        }}
-                                    >
-                                        {String(children).replace(/\n$/, '')}
-                                    </SyntaxHighlighter>
+                                    <div className="code-block-wrapper">
+                                        <button
+                                            className="code-copy-btn"
+                                            onClick={() => copyCode(code)}
+                                            title="Copy code"
+                                        >
+                                            Copy
+                                        </button>
+                                        <SyntaxHighlighter
+                                            style={isDark ? oneDark : oneLight}
+                                            language={match[1]}
+                                            PreTag="div"
+                                            customStyle={{
+                                                margin: 0,
+                                                borderRadius: 0,
+                                                border: '1px solid var(--color-border)',
+                                                background: 'var(--color-code-bg)'
+                                            }}
+                                        >
+                                            {code}
+                                        </SyntaxHighlighter>
+                                    </div>
                                 ) : (
                                     <code className={className} {...props}>
                                         {children}
@@ -447,7 +750,87 @@ export default function BlogPostModal({
                         ) : <div style={{ flex: 1 }} />}
                     </div>
                 )}
+
+                {/* Related Posts */}
+                {relatedPosts && relatedPosts.length > 0 && (
+                    <div className="related-posts-section">
+                        <h2 className="related-posts-title">Related Articles</h2>
+                        <div style={{
+                            display: 'grid',
+                            gap: 'var(--space-lg)',
+                            gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(280px, 1fr))'
+                        }}>
+                            {relatedPosts.map((relatedPost, index) => (
+                                <div
+                                    key={index}
+                                    className="related-post-card"
+                                    onClick={() => onPostSelect?.(relatedPost)}
+                                >
+                                    <h3 className="related-post-title">{relatedPost.title}</h3>
+                                    <div className="related-post-meta">
+                                        {formatDate(relatedPost.date)} · {relatedPost.readingTime} min read
+                                    </div>
+                                    {relatedPost.tags && relatedPost.tags.length > 0 && (
+                                        <div style={{
+                                            display: 'flex',
+                                            gap: '8px',
+                                            flexWrap: 'wrap',
+                                            marginTop: 'var(--space-sm)'
+                                        }}>
+                                            {relatedPost.tags.slice(0, 3).map((tag, i) => (
+                                                <span key={i} style={{
+                                                    fontSize: '10px',
+                                                    fontWeight: 500,
+                                                    letterSpacing: '0.08em',
+                                                    textTransform: 'uppercase',
+                                                    color: 'var(--color-text-muted)',
+                                                    padding: '4px 8px',
+                                                    border: '1px solid var(--color-border-light)'
+                                                }}>
+                                                    {tag}
+                                                </span>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
+                </div>
+
+                {/* Table of Contents - Desktop Only */}
+                {!isMobile && showToc && tocItems.length > 0 && (
+                    <div style={{
+                        width: '280px',
+                        flexShrink: 0
+                    }}>
+                        <div className="toc-container">
+                            <div className="toc-title">Contents</div>
+                            <nav>
+                                {tocItems.map((item, index) => (
+                                    <div
+                                        key={index}
+                                        className={`toc-item level-${item.level} ${activeHeading === item.id ? 'active' : ''}`}
+                                        onClick={() => scrollToHeading(item.id)}
+                                    >
+                                        {item.text}
+                                    </div>
+                                ))}
+                            </nav>
+                        </div>
+                    </div>
+                )}
             </div>
+
+            {/* Back to Top Button */}
+            <button
+                className={`back-to-top-btn ${showBackToTop ? 'visible' : ''}`}
+                onClick={scrollToTop}
+                title="Back to top"
+            >
+                ↑
+            </button>
         </div>
     );
 }

@@ -112,6 +112,24 @@ export default function Blog({ isMobile, isTablet }: BlogProps) {
         }
     };
 
+    const getRelatedPosts = (currentPost: BlogPost): BlogPost[] => {
+        if (!currentPost.tags || currentPost.tags.length === 0) return [];
+
+        // Find posts with shared tags, excluding current post
+        const relatedPosts = posts
+            .filter(post => post.slug !== currentPost.slug)
+            .map(post => {
+                const sharedTags = post.tags.filter(tag => currentPost.tags.includes(tag));
+                return { post, sharedTagCount: sharedTags.length };
+            })
+            .filter(({ sharedTagCount }) => sharedTagCount > 0)
+            .sort((a, b) => b.sharedTagCount - a.sharedTagCount)
+            .slice(0, 3) // Max 3 related posts
+            .map(({ post }) => post);
+
+        return relatedPosts;
+    };
+
     const sectionPadding = isMobile ? '48px 24px' : isTablet ? '64px 40px' : '80px 64px';
 
     return (
@@ -306,6 +324,8 @@ export default function Blog({ isMobile, isTablet }: BlogProps) {
                     prevTitle={posts[posts.findIndex(p => p.slug === selectedPost.slug) - 1]?.title}
                     nextTitle={posts[posts.findIndex(p => p.slug === selectedPost.slug) + 1]?.title}
                     isMobile={isMobile}
+                    relatedPosts={getRelatedPosts(selectedPost)}
+                    onPostSelect={setSelectedPost}
                 />
             )}
         </>
