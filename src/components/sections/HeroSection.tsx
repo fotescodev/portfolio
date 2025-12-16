@@ -1,12 +1,13 @@
-import { profile } from '../../lib/content';
+import type { Profile } from '../../types/variant';
 
 interface HeroSectionProps {
+  profile: Profile;
   isMobile: boolean;
   isTablet: boolean;
   isLoaded: boolean;
 }
 
-export default function HeroSection({ isMobile, isTablet, isLoaded }: HeroSectionProps) {
+export default function HeroSection({ profile, isMobile, isTablet, isLoaded }: HeroSectionProps) {
   const { hero } = profile;
 
   return (
