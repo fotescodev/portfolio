@@ -1,0 +1,118 @@
+{
+  "metadata": {
+    "company": "Bloomberg",
+    "role": "Technical Product Manager",
+    "slug": "bloomberg-technical-product-manager",
+    "generatedAt": "2025-12-16T18:30:00Z",
+    "jobDescription": "Technical Product Manager - Terminal Application Architecture - CTO Office\n\nDefining next-generation Terminal architecture with emphasis on interoperability,\ncomposability, and AI integration. Leading platform standards and frameworks to\nenhance developer productivity across Bloomberg's application ecosystem.\n\n7+ years in technical product management, background building application SDKs,\nframeworks, or platforms. Strong stakeholder management and technical documentation\nskills. Experience with web technologies (JavaScript, TypeScript, Node.js, React)\nand emerging AI frameworks.\n",
+    "generationModel": "manual-v1"
+  },
+  "overrides": {
+    "hero": {
+      "status": "Open to Technical PM roles — Platform Architecture, Developer Tools, AI Integration",
+      "headline": [
+        {
+          "text": "Building",
+          "style": "italic"
+        },
+        {
+          "text": "developer platforms at the intersection of",
+          "style": "muted"
+        },
+        {
+          "text": "scale and innovation",
+          "style": "accent"
+        }
+      ],
+      "subheadline": "Senior Technical PM with 8 years shipping developer-facing platforms—from enterprise blockchain infrastructure at Microsoft to institutional crypto APIs at Anchorage. Expert in SDK architecture, platform interoperability, and balancing technical excellence with rapid delivery.\n"
+    },
+    "about": {
+      "tagline": "Eight years building developer platforms where technical rigor meets pragmatic delivery—from Xbox smart contracts to ETF-grade staking APIs. Now focused on next-generation application architecture.\n",
+      "bio": [
+        "Currently at Anchorage Digital, I lead protocol integrations and staking APIs for institutional clients—designing extensible frameworks that balance security, performance, and developer experience. I've shipped 7+ L2 protocol integrations (Optimism, Base, Arbitrum) with consistent API patterns that scale. Before that, I built Wallet-as-a-Service SDKs at Forte and Flow CLI/Cadence Playground developer tools at Dapper Labs—reducing time-to-first-deploy by 60%.\n",
+        "I started at Microsoft shipping one of the first production smart contracts in enterprise—Xbox royalties on Ethereum, requiring Docker/K8s infrastructure and API design for non-technical stakeholders. I'm drawn to problems at the intersection of technical depth and organizational scale: defining platform standards, championing best practices, and building tools that make developers more productive. Bloomberg's focus on Terminal architecture, interoperability, and AI integration aligns perfectly with my experience.\n"
+      ],
+      "stats": [
+        {
+          "value": "8+",
+          "label": "Years Platform PM"
+        },
+        {
+          "value": "7+",
+          "label": "SDK/API Products"
+        },
+        {
+          "value": "4",
+          "label": "Developer Tools"
+        }
+      ]
+    },
+    "sections": {
+      "beyondWork": false,
+      "blog": true,
+      "onchainIdentity": false,
+      "skills": true,
+      "passionProjects": true
+    }
+  },
+  "relevance": {
+    "caseStudies": [
+      {
+        "slug": "developer-analytics",
+        "relevanceScore": 0.95,
+        "reasoning": "Flow CLI and dev tools - direct SDK/platform architecture experience"
+      },
+      {
+        "slug": "ankr-rpc",
+        "relevanceScore": 0.9,
+        "reasoning": "API platform growth - demonstrates platform thinking and stakeholder management"
+      },
+      {
+        "slug": "protocol-integration",
+        "relevanceScore": 0.85,
+        "reasoning": "L2 integration framework - extensible architecture and interoperability"
+      },
+      {
+        "slug": "eth-staking",
+        "relevanceScore": 0.75,
+        "reasoning": "Platform standards for institutional clients - technical rigor and compliance"
+      },
+      {
+        "slug": "ai-agent-orchestration",
+        "relevanceScore": 0.7,
+        "reasoning": "AI integration passion project - aligns with Terminal's AI integration goals"
+      },
+      {
+        "slug": "xbox-royalties",
+        "relevanceScore": 0.65,
+        "reasoning": "Enterprise platform at Microsoft - relevant org context but different domain"
+      }
+    ],
+    "skills": [
+      {
+        "category": "Technical Leadership",
+        "relevanceScore": 1
+      },
+      {
+        "category": "Product Strategy",
+        "relevanceScore": 0.95
+      },
+      {
+        "category": "Blockchain & Web3",
+        "relevanceScore": 0.6
+      }
+    ],
+    "projects": [
+      {
+        "slug": "flow-playground",
+        "relevanceScore": 0.95,
+        "reasoning": "Developer tools and IDE - directly relevant to platform/SDK work"
+      },
+      {
+        "slug": "ai-agent-framework",
+        "relevanceScore": 0.85,
+        "reasoning": "AI integration framework - aligns with Terminal's AI focus"
+      }
+    ]
+  }
+}
