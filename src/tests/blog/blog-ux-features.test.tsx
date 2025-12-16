@@ -83,10 +83,21 @@ const mockRelatedPosts: BlogPost[] = [
 describe('BlogPostModal - UX Features', () => {
     let mockOnClose: ReturnType<typeof vi.fn>;
     let mockOnPostSelect: ReturnType<typeof vi.fn>;
+    let localStorageMock: { [key: string]: string };
 
     beforeEach(() => {
         mockOnClose = vi.fn();
         mockOnPostSelect = vi.fn();
+
+        // Mock localStorage
+        localStorageMock = {};
+        global.Storage.prototype.getItem = vi.fn((key: string) => localStorageMock[key] || null);
+        global.Storage.prototype.setItem = vi.fn((key: string, value: string) => {
+            localStorageMock[key] = value;
+        });
+        global.Storage.prototype.clear = vi.fn(() => {
+            localStorageMock = {};
+        });
 
         // Mock clipboard API
         Object.assign(navigator, {
@@ -97,10 +108,18 @@ describe('BlogPostModal - UX Features', () => {
 
         // Mock window.open for social sharing
         global.open = vi.fn();
+
+        // Mock canvas methods
+        HTMLCanvasElement.prototype.getContext = vi.fn().mockReturnValue({
+            fillText: vi.fn(),
+            measureText: vi.fn(() => ({ width: 0 }))
+        });
+        HTMLCanvasElement.prototype.toDataURL = vi.fn().mockReturnValue('data:image/png;base64,mock');
     });
 
     afterEach(() => {
         vi.clearAllMocks();
+        localStorageMock = {};
     });
 
     describe('Reading Progress Bar', () => {
@@ -699,6 +718,199 @@ describe('BlogPostModal - UX Features', () => {
 
             fireEvent.keyDown(window, { key: 'Escape' });
             expect(mockOnClose).toHaveBeenCalled();
+        });
+    });
+
+    describe('Like Functionality', () => {
+        it('should render like button', () => {
+            render(
+                <TestWrapper>
+                    <BlogPostModal
+                        post={mockPost}
+                        onClose={mockOnClose}
+                        isMobile={false}
+                    />
+                </TestWrapper>
+            );
+
+            expect(screen.getByLabelText('Like this post')).toBeInTheDocument();
+        });
+
+        it('should show "Like" text when not liked', () => {
+            render(
+                <TestWrapper>
+                    <BlogPostModal
+                        post={mockPost}
+                        onClose={mockOnClose}
+                        isMobile={false}
+                    />
+                </TestWrapper>
+            );
+
+            const likeButton = screen.getByLabelText('Like this post');
+            expect(likeButton.textContent).toContain('Like');
+        });
+
+        it('should increment like count when clicked', async () => {
+            render(
+                <TestWrapper>
+                    <BlogPostModal
+                        post={mockPost}
+                        onClose={mockOnClose}
+                        isMobile={false}
+                    />
+                </TestWrapper>
+            );
+
+            const likeButton = screen.getByLabelText('Like this post');
+            fireEvent.click(likeButton);
+
+            await waitFor(() => {
+                expect(screen.getByLabelText('Unlike this post')).toBeInTheDocument();
+                expect(screen.getByText(/1 like/)).toBeInTheDocument();
+            });
+        });
+
+        it('should change button state when liked', async () => {
+            render(
+                <TestWrapper>
+                    <BlogPostModal
+                        post={mockPost}
+                        onClose={mockOnClose}
+                        isMobile={false}
+                    />
+                </TestWrapper>
+            );
+
+            const likeButton = screen.getByLabelText('Like this post');
+            fireEvent.click(likeButton);
+
+            await waitFor(() => {
+                const unlikeButton = screen.getByLabelText('Unlike this post');
+                expect(unlikeButton).toHaveClass('liked');
+                expect(unlikeButton.textContent).toContain('Liked');
+            });
+        });
+
+        it('should decrement like count when unliked', async () => {
+            render(
+                <TestWrapper>
+                    <BlogPostModal
+                        post={mockPost}
+                        onClose={mockOnClose}
+                        isMobile={false}
+                    />
+                </TestWrapper>
+            );
+
+            // Like first
+            const likeButton = screen.getByLabelText('Like this post');
+            fireEvent.click(likeButton);
+
+            await waitFor(() => {
+                expect(screen.getByText(/1 like/)).toBeInTheDocument();
+            });
+
+            // Then unlike
+            const unlikeButton = screen.getByLabelText('Unlike this post');
+            fireEvent.click(unlikeButton);
+
+            await waitFor(() => {
+                expect(screen.queryByText(/like/)).not.toBeInTheDocument();
+                expect(screen.getByLabelText('Like this post')).toBeInTheDocument();
+            });
+        });
+
+        it('should persist like state across component remounts', async () => {
+            const { unmount } = render(
+                <TestWrapper>
+                    <BlogPostModal
+                        post={mockPost}
+                        onClose={mockOnClose}
+                        isMobile={false}
+                    />
+                </TestWrapper>
+            );
+
+            const likeButton = screen.getByLabelText('Like this post');
+            fireEvent.click(likeButton);
+
+            await waitFor(() => {
+                expect(screen.getByLabelText('Unlike this post')).toBeInTheDocument();
+            });
+
+            unmount();
+
+            // Remount component
+            render(
+                <TestWrapper>
+                    <BlogPostModal
+                        post={mockPost}
+                        onClose={mockOnClose}
+                        isMobile={false}
+                    />
+                </TestWrapper>
+            );
+
+            // Should still be liked
+            await waitFor(() => {
+                expect(screen.getByLabelText('Unlike this post')).toBeInTheDocument();
+            });
+        });
+
+        it('should use design system styling for like button', () => {
+            render(
+                <TestWrapper>
+                    <BlogPostModal
+                        post={mockPost}
+                        onClose={mockOnClose}
+                        isMobile={false}
+                    />
+                </TestWrapper>
+            );
+
+            const styleElements = document.querySelectorAll('style');
+            const hasLikeStyles = Array.from(styleElements).some(
+                style => style.textContent?.includes('.like-button') &&
+                    style.textContent?.includes('var(--color-border-light)') &&
+                    style.textContent?.includes('var(--color-accent)')
+            );
+            expect(hasLikeStyles).toBe(true);
+        });
+
+        it('should have heart animation on like', async () => {
+            render(
+                <TestWrapper>
+                    <BlogPostModal
+                        post={mockPost}
+                        onClose={mockOnClose}
+                        isMobile={false}
+                    />
+                </TestWrapper>
+            );
+
+            const likeButton = screen.getByLabelText('Like this post');
+            fireEvent.click(likeButton);
+
+            await waitFor(() => {
+                expect(likeButton).toHaveClass('animating');
+            });
+        });
+
+        it('should have proper accessibility labels', () => {
+            render(
+                <TestWrapper>
+                    <BlogPostModal
+                        post={mockPost}
+                        onClose={mockOnClose}
+                        isMobile={false}
+                    />
+                </TestWrapper>
+            );
+
+            const likeButton = screen.getByLabelText('Like this post');
+            expect(likeButton).toHaveAttribute('aria-label', 'Like this post');
+            expect(likeButton).toHaveAttribute('title', 'Like this post');
         });
     });
 

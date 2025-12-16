@@ -5,6 +5,7 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark, oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import type { BlogPost } from '../types/blog';
 import { useTheme } from '../context/ThemeContext';
+import { likePost, unlikePost, getLikeCount, hasUserLikedPost } from '../lib/likes';
 
 interface TableOfContentsItem {
     id: string;
@@ -47,6 +48,9 @@ export default function BlogPostModal({
     const [tocItems, setTocItems] = useState<TableOfContentsItem[]>([]);
     const [showToc, setShowToc] = useState(false);
     const [showCopyToast, setShowCopyToast] = useState(false);
+    const [likeCount, setLikeCount] = useState(0);
+    const [hasLiked, setHasLiked] = useState(false);
+    const [isLikeAnimating, setIsLikeAnimating] = useState(false);
     const scrollContainerRef = useRef<HTMLDivElement>(null);
     const contentRef = useRef<HTMLDivElement>(null);
 
@@ -125,6 +129,12 @@ export default function BlogPostModal({
         });
     }, [post.content]);
 
+    // Initialize like state from localStorage
+    useEffect(() => {
+        setLikeCount(getLikeCount(post.slug));
+        setHasLiked(hasUserLikedPost(post.slug));
+    }, [post.slug]);
+
     const formatDate = (dateStr: string) => {
         const date = new Date(dateStr);
         return date.toLocaleDateString('en-US', {
@@ -197,6 +207,26 @@ export default function BlogPostModal({
             } catch (err) {
                 // User cancelled or error occurred
                 console.log('Share cancelled or failed:', err);
+            }
+        }
+    };
+
+    const handleLike = () => {
+        if (hasLiked) {
+            // Unlike
+            const result = unlikePost(post.slug);
+            if (result.success) {
+                setLikeCount(result.count);
+                setHasLiked(false);
+            }
+        } else {
+            // Like with animation
+            const result = likePost(post.slug);
+            if (result.success) {
+                setLikeCount(result.count);
+                setHasLiked(true);
+                setIsLikeAnimating(true);
+                setTimeout(() => setIsLikeAnimating(false), 600);
             }
         }
     };
@@ -629,6 +659,93 @@ export default function BlogPostModal({
           opacity: 1;
           transform: translateY(0);
         }
+
+        .like-button-container {
+          display: flex;
+          align-items: center;
+          gap: var(--space-md);
+          margin-top: var(--space-2xl);
+          padding-top: var(--space-xl);
+          border-top: 1px solid var(--color-border-light);
+        }
+
+        .like-button {
+          display: flex;
+          align-items: center;
+          gap: var(--space-sm);
+          background: none;
+          border: 1px solid var(--color-border-light);
+          color: var(--color-text-tertiary);
+          padding: var(--space-md) var(--space-lg);
+          cursor: pointer;
+          transition: all var(--transition-fast);
+          font-family: var(--font-sans);
+          font-size: 14px;
+          font-weight: 500;
+        }
+
+        .like-button:hover {
+          border-color: var(--color-accent);
+          color: var(--color-accent);
+          transform: translateY(-2px);
+        }
+
+        .like-button.liked {
+          border-color: var(--color-accent);
+          background: var(--color-accent);
+          color: var(--color-background);
+        }
+
+        .like-button.liked:hover {
+          opacity: 0.9;
+          transform: translateY(-2px);
+        }
+
+        .like-button svg {
+          width: 18px;
+          height: 18px;
+          transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .like-button.animating svg {
+          animation: likeHeartBeat 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes likeHeartBeat {
+          0% {
+            transform: scale(1);
+          }
+          25% {
+            transform: scale(1.3);
+          }
+          50% {
+            transform: scale(1.1);
+          }
+          75% {
+            transform: scale(1.25);
+          }
+          100% {
+            transform: scale(1);
+          }
+        }
+
+        .like-count {
+          font-size: 14px;
+          font-weight: 500;
+          color: var(--color-text-secondary);
+        }
+
+        .like-count.has-likes {
+          color: var(--color-text-primary);
+        }
+
+        .like-label {
+          font-size: 11px;
+          font-weight: 500;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          color: var(--color-text-muted);
+        }
       `}</style>
 
             {/* Modal Header */}
@@ -781,6 +898,34 @@ export default function BlogPostModal({
                                     <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
                                 </svg>
                             </button>
+                        )}
+                    </div>
+
+                    {/* Like Button */}
+                    <div className="like-button-container">
+                        <span className="like-label">Enjoyed this?</span>
+                        <button
+                            className={`like-button ${hasLiked ? 'liked' : ''} ${isLikeAnimating ? 'animating' : ''}`}
+                            onClick={handleLike}
+                            title={hasLiked ? 'Unlike this post' : 'Like this post'}
+                            aria-label={hasLiked ? 'Unlike this post' : 'Like this post'}
+                        >
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill={hasLiked ? 'currentColor' : 'none'}
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            >
+                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                            </svg>
+                            <span>{hasLiked ? 'Liked' : 'Like'}</span>
+                        </button>
+                        {likeCount > 0 && (
+                            <span className={`like-count ${likeCount > 0 ? 'has-likes' : ''}`}>
+                                {likeCount} {likeCount === 1 ? 'like' : 'likes'}
+                            </span>
                         )}
                     </div>
                 </div>
