@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeContext';
 import { HelmetProvider } from 'react-helmet-async';
 import BasePortfolio from './pages/BasePortfolio';
@@ -8,15 +8,15 @@ function App() {
   return (
     <HelmetProvider>
       <ThemeProvider>
-        <BrowserRouter>
+        <HashRouter>
           <Routes>
             {/* Base portfolio route */}
             <Route path="/" element={<BasePortfolio />} />
 
-            {/* Variant portfolio routes: /company/role */}
+            {/* Variant portfolio routes: /#/company/role */}
             <Route path="/:company/:role" element={<VariantPortfolio />} />
           </Routes>
-        </BrowserRouter>
+        </HashRouter>
       </ThemeProvider>
     </HelmetProvider>
   );
