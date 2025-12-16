@@ -13,10 +13,13 @@ import FooterSection from './sections/FooterSection';
 import CaseStudyDrawer from './case-study/CaseStudyDrawer';
 import AmbientBackground from './common/AmbientBackground';
 import Omnibar from './common/Omnibar';
-import { profile } from '../lib/content';
+import { useVariant } from '../context/VariantContext';
 import type { CaseStudy } from '../types/portfolio';
 
 export default function Portfolio() {
+  // Get profile from variant context (either base or merged with variant)
+  const { profile } = useVariant();
+
   const [isLoaded, setIsLoaded] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);

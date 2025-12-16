@@ -255,3 +255,73 @@ export const BlogPostSchema = z.object({
   thumbnail: z.string().nullable().optional(),
   content: z.string()
 });
+
+// ------------------------------------------------------------------
+// VARIANT CV (Universal Portfolio)
+// ------------------------------------------------------------------
+
+/**
+ * Metadata about the variant generation
+ */
+const VariantMetadataSchema = z.object({
+  company: z.string(),
+  role: z.string(),
+  generatedAt: z.string(),
+  jobDescription: z.string(),
+  generationModel: z.string().optional(), // e.g., "claude-3-5-sonnet-20241022"
+  slug: z.string() // e.g., "bloomberg-senior-engineer"
+});
+
+/**
+ * Overrides for profile fields specific to this variant
+ * All fields optional - only override what's relevant for the job
+ */
+const VariantOverridesSchema = z.object({
+  hero: z.object({
+    status: z.string().optional(),
+    headline: z.array(HeadlineSegmentSchema).optional(),
+    subheadline: z.string().optional()
+  }).optional(),
+  about: z.object({
+    tagline: z.string().optional(),
+    bio: z.array(z.string()).optional(),
+    stats: z.array(StatSchema).optional()
+  }).optional(),
+  sections: z.object({
+    beyondWork: z.boolean().optional(),
+    blog: z.boolean().optional(),
+    onchainIdentity: z.boolean().optional(),
+    skills: z.boolean().optional(),
+    passionProjects: z.boolean().optional()
+  }).optional()
+});
+
+/**
+ * Relevance rankings for existing content
+ * AI determines which case studies, projects, skills to emphasize
+ */
+const VariantRelevanceSchema = z.object({
+  caseStudies: z.array(z.object({
+    slug: z.string(),
+    relevanceScore: z.number().min(0).max(1),
+    reasoning: z.string().optional()
+  })).optional(),
+  skills: z.array(z.object({
+    category: z.string(),
+    relevanceScore: z.number().min(0).max(1)
+  })).optional(),
+  projects: z.array(z.object({
+    slug: z.string(),
+    relevanceScore: z.number().min(0).max(1),
+    reasoning: z.string().optional()
+  })).optional()
+});
+
+/**
+ * Complete variant schema - combines metadata, overrides, and relevance
+ */
+export const VariantSchema = z.object({
+  metadata: VariantMetadataSchema,
+  overrides: VariantOverridesSchema,
+  relevance: VariantRelevanceSchema.optional()
+});
