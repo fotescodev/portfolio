@@ -46,6 +46,7 @@ export default function BlogPostModal({
     const [activeHeading, setActiveHeading] = useState<string>('');
     const [tocItems, setTocItems] = useState<TableOfContentsItem[]>([]);
     const [showToc, setShowToc] = useState(false);
+    const [showCopyToast, setShowCopyToast] = useState(false);
     const scrollContainerRef = useRef<HTMLDivElement>(null);
     const contentRef = useRef<HTMLDivElement>(null);
 
@@ -152,6 +153,51 @@ export default function BlogPostModal({
             await navigator.clipboard.writeText(code);
         } catch (err) {
             console.error('Failed to copy code:', err);
+        }
+    };
+
+    const getPostUrl = () => {
+        // Generate a shareable URL for the post
+        // In a production environment, this would be the actual URL
+        return `${window.location.origin}/#blog?post=${post.slug}`;
+    };
+
+    const shareOnTwitter = () => {
+        const url = getPostUrl();
+        const text = `${post.title} by @kolob0kk`;
+        const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+        window.open(twitterUrl, '_blank', 'width=550,height=420');
+    };
+
+    const shareOnLinkedIn = () => {
+        const url = getPostUrl();
+        const linkedInUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
+        window.open(linkedInUrl, '_blank', 'width=550,height=420');
+    };
+
+    const copyLink = async () => {
+        try {
+            const url = getPostUrl();
+            await navigator.clipboard.writeText(url);
+            setShowCopyToast(true);
+            setTimeout(() => setShowCopyToast(false), 2000);
+        } catch (err) {
+            console.error('Failed to copy link:', err);
+        }
+    };
+
+    const shareNative = async () => {
+        if (navigator.share) {
+            try {
+                await navigator.share({
+                    title: post.title,
+                    text: post.excerpt,
+                    url: getPostUrl()
+                });
+            } catch (err) {
+                // User cancelled or error occurred
+                console.log('Share cancelled or failed:', err);
+            }
         }
     };
 
@@ -521,6 +567,68 @@ export default function BlogPostModal({
           font-size: 12px;
           color: var(--color-text-tertiary);
         }
+
+        .share-buttons-container {
+          display: flex;
+          align-items: center;
+          gap: var(--space-sm);
+          margin-top: var(--space-lg);
+        }
+
+        .share-label {
+          font-size: 11px;
+          font-weight: 500;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          color: var(--color-text-muted);
+        }
+
+        .share-btn {
+          background: none;
+          border: 1px solid var(--color-border-light);
+          color: var(--color-text-tertiary);
+          width: 36px;
+          height: 36px;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all var(--transition-fast);
+          padding: 0;
+        }
+
+        .share-btn:hover {
+          border-color: var(--color-accent);
+          color: var(--color-accent);
+          transform: translateY(-2px);
+        }
+
+        .share-btn svg {
+          width: 16px;
+          height: 16px;
+        }
+
+        .copy-toast {
+          position: fixed;
+          bottom: calc(var(--space-xl) * 2 + 48px);
+          right: var(--space-xl);
+          background: var(--color-background-secondary);
+          border: 1px solid var(--color-accent);
+          color: var(--color-text-primary);
+          padding: var(--space-md) var(--space-lg);
+          font-size: 13px;
+          font-weight: 500;
+          z-index: 1002;
+          opacity: 0;
+          transform: translateY(10px);
+          transition: all var(--transition-fast);
+          pointer-events: none;
+        }
+
+        .copy-toast.visible {
+          opacity: 1;
+          transform: translateY(0);
+        }
       `}</style>
 
             {/* Modal Header */}
@@ -611,6 +719,69 @@ export default function BlogPostModal({
                                 {tag}
                             </span>
                         ))}
+                    </div>
+
+                    {/* Share Buttons */}
+                    <div className="share-buttons-container">
+                        <span className="share-label">Share</span>
+
+                        {/* Twitter/X */}
+                        <button
+                            className="share-btn"
+                            onClick={shareOnTwitter}
+                            title="Share on Twitter/X"
+                            aria-label="Share on Twitter/X"
+                        >
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M4 4l11.733 16h4.267l-11.733 -16z" />
+                                <path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772" />
+                            </svg>
+                        </button>
+
+                        {/* LinkedIn */}
+                        <button
+                            className="share-btn"
+                            onClick={shareOnLinkedIn}
+                            title="Share on LinkedIn"
+                            aria-label="Share on LinkedIn"
+                        >
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                                <rect x="2" y="9" width="4" height="12" />
+                                <circle cx="4" cy="4" r="2" />
+                            </svg>
+                        </button>
+
+                        {/* Copy Link */}
+                        <button
+                            className="share-btn"
+                            onClick={copyLink}
+                            title="Copy link"
+                            aria-label="Copy link to clipboard"
+                        >
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+                                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+                            </svg>
+                        </button>
+
+                        {/* Native Share (Mobile) */}
+                        {typeof navigator !== 'undefined' && 'share' in navigator && (
+                            <button
+                                className="share-btn"
+                                onClick={shareNative}
+                                title="Share"
+                                aria-label="Open share menu"
+                            >
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                    <circle cx="18" cy="5" r="3" />
+                                    <circle cx="6" cy="12" r="3" />
+                                    <circle cx="18" cy="19" r="3" />
+                                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
+                                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+                                </svg>
+                            </button>
+                        )}
                     </div>
                 </div>
 
@@ -831,6 +1002,11 @@ export default function BlogPostModal({
             >
                 ↑
             </button>
+
+            {/* Copy Toast Notification */}
+            <div className={`copy-toast ${showCopyToast ? 'visible' : ''}`}>
+                Link copied to clipboard!
+            </div>
         </div>
     );
 }
