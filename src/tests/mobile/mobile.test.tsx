@@ -9,6 +9,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { ThemeProvider } from '../../context/ThemeContext';
 import { HelmetProvider } from 'react-helmet-async';
 import { caseStudies, profile } from '../../lib/content';
+import { VariantProvider } from '../../context/VariantContext';
 
 // Components
 import CaseStudyDrawer from '../../components/case-study/CaseStudyDrawer';
@@ -25,20 +26,24 @@ import Omnibar from '../../components/common/Omnibar';
 
 // Test wrapper - basic
 const TestWrapper = ({ children }: { children: React.ReactNode }) => (
-    <ThemeProvider>{children}</ThemeProvider>
+    <VariantProvider profile={profile}>
+        <ThemeProvider>{children}</ThemeProvider>
+    </VariantProvider>
 );
 
 // Test wrapper - with HelmetProvider (for components using SEO)
 const TestWrapperWithHelmet = ({ children }: { children: React.ReactNode }) => (
     <HelmetProvider>
-        <ThemeProvider>{children}</ThemeProvider>
+        <VariantProvider profile={profile}>
+            <ThemeProvider>{children}</ThemeProvider>
+        </VariantProvider>
     </HelmetProvider>
 );
 
 // Mock IntersectionObserver
 beforeAll(() => {
     global.IntersectionObserver = class IntersectionObserver {
-        constructor() {}
+        constructor() { }
         observe() { return null; }
         unobserve() { return null; }
         disconnect() { return null; }
@@ -115,7 +120,7 @@ describe('CaseStudyDrawer - Mobile', () => {
 
         // Should have "Case Study" label on mobile top bar
         expect(screen.getByText('Case Study')).toBeInTheDocument();
-        
+
         // Close button should be accessible
         const closeButtons = screen.getAllByRole('button', { name: /close/i });
         expect(closeButtons.length).toBeGreaterThan(0);
@@ -137,7 +142,7 @@ describe('CaseStudyDrawer - Mobile', () => {
         // Find close button in the mobile top bar
         const closeButton = screen.getAllByRole('button', { name: /close/i })[0];
         fireEvent.click(closeButton);
-        
+
         expect(mockOnClose).toHaveBeenCalled();
     });
 
@@ -350,7 +355,7 @@ describe('CaseStudyFooter - Mobile', () => {
 
         const nextButton = screen.getByText(caseStudies[2].title);
         fireEvent.click(nextButton);
-        
+
         expect(mockOnNavigate).toHaveBeenCalledWith(caseStudies[2]);
     });
 
@@ -457,7 +462,7 @@ describe('HeroSection - Mobile', () => {
 
         const primaryBtn = document.querySelector('.hero-primary-btn');
         const secondaryBtn = document.querySelector('.hero-secondary-btn');
-        
+
         expect(primaryBtn).toBeInTheDocument();
         expect(secondaryBtn).toBeInTheDocument();
     });
@@ -508,9 +513,9 @@ describe('CaseStudiesSection - Mobile', () => {
     it('should render on mobile without crashing', () => {
         render(
             <TestWrapper>
-                <CaseStudiesSection 
-                    isMobile={true} 
-                    isTablet={false} 
+                <CaseStudiesSection
+                    isMobile={true}
+                    isTablet={false}
                     sectionPadding="24px"
                     hoveredCase={null}
                     setHoveredCase={mockSetHoveredCase}
@@ -525,9 +530,9 @@ describe('CaseStudiesSection - Mobile', () => {
     it('should display all case study cards on mobile', () => {
         render(
             <TestWrapper>
-                <CaseStudiesSection 
-                    isMobile={true} 
-                    isTablet={false} 
+                <CaseStudiesSection
+                    isMobile={true}
+                    isTablet={false}
                     sectionPadding="24px"
                     hoveredCase={null}
                     setHoveredCase={mockSetHoveredCase}
@@ -536,8 +541,8 @@ describe('CaseStudiesSection - Mobile', () => {
             </TestWrapper>
         );
 
-        // All case studies should be visible
-        caseStudies.forEach(cs => {
+        // Only first 2 case studies should be visible per recent limit
+        caseStudies.slice(0, 2).forEach(cs => {
             expect(screen.getByText(cs.title)).toBeInTheDocument();
         });
     });
@@ -545,9 +550,9 @@ describe('CaseStudiesSection - Mobile', () => {
     it('should handle card click on mobile', () => {
         render(
             <TestWrapper>
-                <CaseStudiesSection 
-                    isMobile={true} 
-                    isTablet={false} 
+                <CaseStudiesSection
+                    isMobile={true}
+                    isTablet={false}
                     sectionPadding="24px"
                     hoveredCase={null}
                     setHoveredCase={mockSetHoveredCase}
@@ -559,7 +564,7 @@ describe('CaseStudiesSection - Mobile', () => {
         // Click on the card area (title h3 is inside the clickable div)
         const card = screen.getByText(caseStudies[0].title).closest('div[style*="cursor: pointer"]');
         if (card) fireEvent.click(card);
-        
+
         expect(mockOnCaseClick).toHaveBeenCalledWith(caseStudies[0]);
     });
 });
@@ -622,7 +627,7 @@ describe('ThemeToggle - Mobile', () => {
         );
 
         const button = screen.getByRole('button');
-        
+
         // Should not throw on click
         expect(() => fireEvent.click(button)).not.toThrow();
     });
@@ -649,12 +654,12 @@ describe('Touch Interactions', () => {
     it('should handle touch events on case study cards', () => {
         const mockOnCaseClick = vi.fn();
         const mockSetHoveredCase = vi.fn();
-        
+
         render(
             <TestWrapper>
-                <CaseStudiesSection 
-                    isMobile={true} 
-                    isTablet={false} 
+                <CaseStudiesSection
+                    isMobile={true}
+                    isTablet={false}
                     sectionPadding="24px"
                     hoveredCase={null}
                     setHoveredCase={mockSetHoveredCase}
@@ -665,14 +670,14 @@ describe('Touch Interactions', () => {
 
         // Find the clickable card container
         const card = screen.getByText(caseStudies[0].title).closest('div[style*="cursor: pointer"]');
-        
+
         // Simulate touch and click
         if (card) {
             fireEvent.touchStart(card);
             fireEvent.touchEnd(card);
             fireEvent.click(card);
         }
-        
+
         expect(mockOnCaseClick).toHaveBeenCalled();
     });
 
@@ -754,7 +759,7 @@ describe('Mobile Accessibility', () => {
                     caseStudy={caseStudies[0]}
                     prevStudy={null}
                     nextStudy={caseStudies[1]}
-                    onNavigate={() => {}}
+                    onNavigate={() => { }}
                     isMobile={true}
                 />
             </TestWrapper>
@@ -778,7 +783,7 @@ describe('Mobile Accessibility', () => {
                     onClose={mockOnClose}
                     caseStudy={caseStudies[0]}
                     isMobile={true}
-                    onNavigate={() => {}}
+                    onNavigate={() => { }}
                 />
             </TestWrapperWithHelmet>
         );
@@ -813,7 +818,7 @@ describe('Responsive Styling', () => {
                     caseStudy={caseStudies[0]}
                     prevStudy={null}
                     nextStudy={caseStudies[1]}
-                    onNavigate={() => {}}
+                    onNavigate={() => { }}
                     isMobile={true}
                 />
             </TestWrapper>
@@ -833,7 +838,7 @@ describe('Responsive Styling', () => {
                     caseStudy={caseStudies[0]}
                     prevStudy={null}
                     nextStudy={caseStudies[1]}
-                    onNavigate={() => {}}
+                    onNavigate={() => { }}
                     isMobile={true}
                 />
             </TestWrapper>
@@ -859,9 +864,9 @@ describe('Full Mobile Flow Integration', () => {
         // Step 1: Render case studies section
         const { rerender } = render(
             <TestWrapper>
-                <CaseStudiesSection 
-                    isMobile={true} 
-                    isTablet={false} 
+                <CaseStudiesSection
+                    isMobile={true}
+                    isTablet={false}
                     sectionPadding="24px"
                     hoveredCase={null}
                     setHoveredCase={mockSetHoveredCase}
