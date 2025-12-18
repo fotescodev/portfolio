@@ -59,6 +59,22 @@ export default function Portfolio() {
 
   const sectionPadding = isMobile ? '48px 24px' : isTablet ? '64px 40px' : '80px 64px';
 
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    e.preventDefault();
+    const element = document.getElementById(id);
+    if (element) {
+      const offset = 80; // Nav height buffer
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
+    if (isMobile) setMobileMenuOpen(false);
+  };
+
   return (
     <>
       <style>{`
@@ -218,6 +234,7 @@ export default function Portfolio() {
               </a>
             </div>
 
+
             {/* Desktop Navigation */}
             {!isMobile && (
               <div style={{ display: 'flex', gap: 'var(--space-xl)', alignItems: 'center' }}>
@@ -225,6 +242,7 @@ export default function Portfolio() {
                   <a
                     key={item}
                     href={`#${item.toLowerCase()}`}
+                    onClick={(e) => handleNavClick(e, item.toLowerCase())}
                     className="nav-link"
                   >
                     {item}
@@ -298,7 +316,13 @@ export default function Portfolio() {
               <a
                 key={item}
                 href={item === 'Contact' ? `mailto:${profile.email}` : `#${item.toLowerCase()}`}
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={(e) => {
+                  if (item !== 'Contact') {
+                    handleNavClick(e, item.toLowerCase());
+                  } else {
+                    setMobileMenuOpen(false);
+                  }
+                }}
                 className="mobile-menu-link"
                 style={{
                   transform: mobileMenuOpen ? 'translateX(0)' : 'translateX(-20px)',
@@ -311,6 +335,7 @@ export default function Portfolio() {
             ))}
           </div>
         )}
+
 
         <main id="main-content" style={{ position: 'relative', zIndex: 1 }}>
           {/* Hero Section */}

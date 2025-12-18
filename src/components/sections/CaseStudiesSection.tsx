@@ -142,7 +142,7 @@ export default function CaseStudiesSection({
         flexDirection: 'column',
         gap: isMobile ? 'var(--space-2xl)' : '0'
       }}>
-        {caseStudies.map((study) => (
+        {caseStudies.slice(0, 2).map((study) => (
           <div
             key={study.id}
             onClick={() => onCaseClick(study)}
@@ -159,12 +159,13 @@ export default function CaseStudiesSection({
               display: 'grid',
               gridTemplateColumns: isMobile ? '1fr' : isTablet ? '200px 1fr' : '260px 1fr',
               gap: isMobile ? 'var(--space-lg)' : isTablet ? '40px' : '56px',
-              alignItems: 'start'
+
             }}>
               {/* Thumbnail */}
               <div style={{
                 position: 'relative',
-                aspectRatio: '4/3',
+                aspectRatio: isMobile ? '4/3' : 'auto',
+                height: isMobile ? 'auto' : '100%',
                 background: 'linear-gradient(135deg, var(--color-thumbnail-bg-start) 0%, var(--color-thumbnail-bg-end) 100%)',
                 border: '1px solid var(--color-border-light)',
                 overflow: 'hidden',
@@ -178,6 +179,9 @@ export default function CaseStudiesSection({
                       style={{
                         width: '100%',
                         height: '100%',
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
                         objectFit: 'cover',
                         transition: 'transform 0.4s ease',
                         transform: hoveredCase === study.id ? 'scale(1.03)' : 'scale(1)'
@@ -232,90 +236,92 @@ export default function CaseStudiesSection({
                 flexDirection: 'column',
                 height: '100%'
               }}>
-                {/* Meta line */}
-                <div style={{
-                  display: 'flex',
-                  gap: 'var(--space-md)',
-                  marginBottom: '14px',
-                  flexWrap: 'wrap',
-                  alignItems: 'center'
-                }}>
-                  <span style={{
-                    fontSize: '12px',
-                    fontWeight: 500,
-                    letterSpacing: '0.05em',
-                    textTransform: 'uppercase',
-                    color: 'var(--color-text-tertiary)'
-                  }}>{study.company}</span>
-                  <span style={{
-                    color: 'var(--color-separator)',
-                    fontSize: '12px'
-                  }}>—</span>
-                  <span style={{
-                    fontSize: '12px',
-                    color: 'var(--color-text-muted)'
-                  }}>{study.year}</span>
-                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
+                  {/* Meta line */}
+                  <div style={{
+                    display: 'flex',
+                    gap: 'var(--space-md)',
+                    marginBottom: '14px',
+                    flexWrap: 'wrap',
+                    alignItems: 'center'
+                  }}>
+                    <span style={{
+                      fontSize: '12px',
+                      fontWeight: 500,
+                      letterSpacing: '0.05em',
+                      textTransform: 'uppercase',
+                      color: 'var(--color-text-tertiary)'
+                    }}>{study.company}</span>
+                    <span style={{
+                      color: 'var(--color-separator)',
+                      fontSize: '12px'
+                    }}>—</span>
+                    <span style={{
+                      fontSize: '12px',
+                      color: 'var(--color-text-muted)'
+                    }}>{study.year}</span>
+                  </div>
 
-                {/* Title */}
-                <h3 style={{
-                  fontSize: isMobile ? '26px' : isTablet ? '32px' : '38px',
-                  fontFamily: 'var(--font-serif)',
-                  fontWeight: 400,
-                  fontStyle: 'italic',
-                  color: 'var(--color-text-secondary)',
-                  marginBottom: '14px',
-                  letterSpacing: '-0.02em',
-                  lineHeight: 1.15,
-                  transition: 'color 0.2s ease'
-                }}>
-                  {study.title}
-                </h3>
-
-                {/* Headline */}
-                <p style={{
-                  fontSize: '15px',
-                  color: 'var(--color-text-tertiary)',
-                  lineHeight: 1.65,
-                  marginBottom: '20px',
-                  maxWidth: '520px'
-                }}>
-                  {study.hook.headline}
-                </p>
-
-                {/* Primary metric only - cleaner */}
-                <div style={{
-                  display: 'flex',
-                  alignItems: 'baseline',
-                  gap: 'var(--space-sm)',
-                  marginBottom: '20px'
-                }}>
-                  <span style={{
-                    fontSize: isMobile ? '28px' : '32px',
+                  {/* Title */}
+                  <h3 style={{
+                    fontSize: isMobile ? '26px' : isTablet ? '32px' : '38px',
                     fontFamily: 'var(--font-serif)',
                     fontWeight: 400,
-                    color: 'var(--color-accent)',
-                    lineHeight: 1
+                    fontStyle: 'italic',
+                    color: 'var(--color-text-secondary)',
+                    marginBottom: '14px',
+                    letterSpacing: '-0.02em',
+                    lineHeight: 1.15,
+                    transition: 'color 0.2s ease'
                   }}>
-                    {study.hook.impactMetric.value}
-                  </span>
-                  <span style={{
-                    fontSize: '13px',
-                    fontWeight: 500,
-                    letterSpacing: '0.02em',
-                    textTransform: 'lowercase',
-                    color: 'var(--color-text-muted)'
-                  }}>
-                    {study.hook.impactMetric.label}
-                  </span>
-                </div>
+                    {study.title}
+                  </h3>
 
+                  {/* Headline */}
+                  <p style={{
+                    fontSize: '15px',
+                    color: 'var(--color-text-tertiary)',
+                    lineHeight: 1.65,
+                    marginBottom: '20px',
+                    maxWidth: '520px'
+                  }}>
+                    {study.hook.headline}
+                  </p>
+
+                  {/* Primary metric only - cleaner */}
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'baseline',
+                    gap: 'var(--space-sm)',
+                    marginBottom: '20px'
+                  }}>
+                    <span style={{
+                      fontSize: isMobile ? '28px' : '32px',
+                      fontFamily: 'var(--font-serif)',
+                      fontWeight: 400,
+                      color: 'var(--color-accent)',
+                      lineHeight: 1
+                    }}>
+                      {study.hook.impactMetric.value}
+                    </span>
+                    <span style={{
+                      fontSize: '13px',
+                      fontWeight: 500,
+                      letterSpacing: '0.02em',
+                      textTransform: 'lowercase',
+                      color: 'var(--color-text-muted)'
+                    }}>
+                      {study.hook.impactMetric.label}
+                    </span>
+                  </div>
+
+                </div>
                 {/* Action buttons row */}
                 <div style={{
                   display: 'flex',
                   alignItems: 'center',
                   gap: 'var(--space-md)',
-                  marginTop: 'auto',
+
                   flexWrap: 'wrap'
                 }}>
                   {/* Demo/Live button */}

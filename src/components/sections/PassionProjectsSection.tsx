@@ -29,7 +29,7 @@ export default function PassionProjectsSection({
     }}>
       <div style={{
         padding: sectionPadding,
-        maxWidth: '1000px',
+        maxWidth: 'var(--layout-max-width)',
         margin: '0 auto',
       }}>
         {/* Section label */}
@@ -78,13 +78,13 @@ export default function PassionProjectsSection({
         <div style={{
           display: 'flex',
           flexDirection: 'column',
-          gap: 'var(--space-md)'
+          gap: 'var(--space-xs)'
         }}>
           {passionProjects.slice(0, 3).map((project) => (
             <article
               key={project.id}
               style={{
-                padding: isMobile ? '20px 16px' : '24px 20px',
+                padding: isMobile ? '16px 16px' : '16px 20px',
                 cursor: project.githubUrl || project.liveUrl ? 'pointer' : 'default',
                 transition: 'all 0.25s ease',
                 background: hoveredProject === project.id ? 'var(--color-card-bg)' : 'transparent',
@@ -137,7 +137,7 @@ export default function PassionProjectsSection({
                     fontSize: '14px',
                     color: 'var(--color-text-tertiary)',
                     lineHeight: 1.6,
-                    marginBottom: 'var(--space-md)',
+                    marginBottom: 'var(--space-sm)',
                     maxWidth: '600px'
                   }}>
                     {project.tagline}

@@ -92,7 +92,7 @@ export default function Blog({ isMobile, isTablet }: BlogProps) {
     const [hoveredPost, setHoveredPost] = useState<string | null>(null);
     const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
 
-    const posts = parseBlogPosts();
+    const posts = parseBlogPosts().slice(0, 2);
 
     const formatDate = (dateStr: string) => {
         const date = new Date(dateStr);
