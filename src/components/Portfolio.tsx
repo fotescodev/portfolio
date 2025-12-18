@@ -54,10 +54,13 @@ export default function Portfolio() {
   const isMobile = windowWidth < 768;
   const isTablet = windowWidth >= 768 && windowWidth < 1024;
 
-  // Section visibility flags from YAML config
   const { sections } = profile;
 
-  const sectionPadding = isMobile ? '48px 24px' : isTablet ? '64px 40px' : '80px 64px';
+  const sectionPadding = isMobile
+    ? 'var(--space-2xl) var(--space-lg)'
+    : isTablet
+      ? 'var(--space-3xl) var(--space-2xl)'
+      : 'var(--space-4xl) var(--layout-padding-x)';
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement> | null, id: string) => {
     if (e) e.preventDefault();
@@ -168,6 +171,7 @@ export default function Portfolio() {
           Skip to content
         </a>
 
+        <div className="wide-screen-vignette" />
         <AmbientBackground />
 
         {/* Navigation - hidden when drawer is open on mobile */}
