@@ -148,6 +148,24 @@ Centralized floating action button for high-value conversions.
 <Omnibar />
 ```
 
+---
+
+## 🎯 Hired-on-Sight Polish (Target: 9/10)
+
+### 1. Trust Battery (Testimonials)
+To convey seniority, testimonials must move beyond a simple list:
+- **Layout**: "Wall of Love" (Staggered Masonry Grid).
+- **Typography**: 1-2 featured testimonials as large pull-quotes.
+- **Motion**: Staggered entrance animations using `AnimatePresence`.
+
+### 2. Light Mode Refinement
+Light mode must not feel like an afterthought:
+- **Elevation**: Increase `box-shadow` opacity to `0.08` for cards.
+- **Vibrancy**: Boost ambient orb opacity to `0.20`.
+- **Polish**: Add a subtle 1px border (`var(--color-separator)`) to cards in light mode for definition.
+
+---
+
 ### Case Study Links
 
 Reusable component for displaying external links (Live, Code, Docs) and media links.

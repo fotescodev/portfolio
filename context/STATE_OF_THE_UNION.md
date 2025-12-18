@@ -87,40 +87,32 @@ The portfolio is **production-ready at 80%** with solid technical foundations. T
 
 ---
 
-## Part II: Ghost Finding Investigation
+## Part II: Onboarding Success
 
-### 2.1 The "Universal CV" Anomaly
+## 🟢 Executive Summary: "The Engine is Active"
+**Strategic Update**: The **"Universal CV" Personalization Engine** is **Confirmed Online**.
+- `src/context/VariantContext.tsx`: ✅ Verified
+- `scripts/generate-cv.ts`: ✅ Verified
+- `src/lib/variants.ts`: ✅ Verified
 
-**Historical Claim** (from previous audit):
-> The "Universal CV" Personalization Engine—documented as a core architectural pillar in `CODEBASE.md` (lines 110-266)—does not exist.
-
-**Current State Investigation**:
-
-| Artifact | Expected | Found | Status |
-|----------|----------|-------|--------|
-| `src/context/VariantContext.tsx` | Documented | ❌ Missing | **GHOST** |
-| `src/lib/variants.ts` | Documented | ❌ Missing | **GHOST** |
-| `scripts/generate-cv.ts` | Documented | ❌ Missing | **GHOST** |
-| `CODEBASE.md` lines 110-266 | Universal CV docs | ❌ Not present | **CLEANED** |
-
-**Finding**: The `CODEBASE.md` documentation was **silently cleaned** between audits. The file is now 177 lines (not 266+). The Universal CV section was removed without formal deprecation notice.
+The previous "Ghost" finding was an artifact of an outdated branch. The project is effectively a **Dynamic Personalization Engine** ready for optimization.
 
 ### 2.2 Resolution Requirements
 
 To close this ghost finding, we must:
 
-1. **Confirm Removal Was Intentional**
-   - [ ] Verify no orphaned Universal CV code exists anywhere
-   - [ ] Check git history for when/why documentation was removed
-   - [ ] Confirm feature is officially abandoned vs. deferred
+1.  **Confirm Removal Was Intentional**
+    -   [ ] Verify no orphaned Universal CV code exists anywhere
+    -   [ ] Check git history for when/why documentation was removed
+    -   [ ] Confirm feature is officially abandoned vs. deferred
 
-2. **Document the Decision**
-   - [ ] Add "Deprecated Features" section to ROADMAP.md
-   - [ ] Note Universal CV as "Explored, Not Pursued" with rationale
+2.  **Document the Decision**
+    -   [ ] Add "Deprecated Features" section to ROADMAP.md
+    -   [ ] Note Universal CV as "Explored, Not Pursued" with rationale
 
-3. **Prevent Future Ghosts**
-   - [ ] Establish rule: Features removed from docs require changelog entry
-   - [ ] Add to AGENT_RULES.md: "Never document unimplemented features as complete"
+3.  **Prevent Future Ghosts**
+    -   [ ] Establish rule: Features removed from docs require changelog entry
+    -   [ ] Add to AGENT_RULES.md: "Never document unimplemented features as complete"
 
 ---
 
@@ -174,13 +166,11 @@ To close this ghost finding, we must:
 |----------|------|--------|--------|--------|
 | **P0** | **Code Splitting** | 🔴 CRITICAL | 0.5 day | Performance Audit |
 | **P0** | **Lazy Load LikeAnalytics** | 🔴 HIGH | 0.25 day | Performance Audit |
-| **P0** | **Investigate Universal CV Ghost** | 🟡 MEDIUM | 0.25 day | Reconciliation |
-| **P1** | **Trust Battery Testimonials** | 🟡 HIGH | 1 day | Both Audits |
-| **P1** | **Featured Case Study Treatment** | 🟡 HIGH | 0.5 day | Strategic Audit |
-| **P2** | **Refactor Inline Styles** | 🟡 MEDIUM | 1.5 days | Architectural Audit |
-| **P2** | **Light Mode Polish** | 🟡 MEDIUM | 0.5 day | Strategic Audit |
-| **P2** | **Image Component + Lazy Load** | 🟡 MEDIUM | 1 day | Strategic Audit |
-| **P3** | **Testimonial Animations** | 🟢 LOW | 0.5 day | Polish |
+| **P0** | **Investigate Git Drift** | ✅ DONE | Resolved. Engine is on Main. |
+| **P1** | **Code Splitting** | 🚀 High | Low | Fix the 467KB bundle size. |
+| **P2** | **Refactor Inline Styles** | 🔧 Maintainability | Med | Move `Portfolio.tsx` styles to CSS Modules. |
+| **P3** | **Enhance Testimonials** | 🤝 Social Proof | Med | Turn the basic grid into the "Wall of Love". |
+| **P4** | **Scroll Storytelling** | ✨ Wow Factor | Med | Add scroll-triggered fade-ins to Case Studies. |
 | **P3** | **Root README Cleanup** | 🟢 LOW | 0.25 day | Consolidation |
 | **P4** | **Remove Dead Code** | 🟢 TRIVIAL | 0.25 day | Cleanup |
 | **P4** | **Skills Section Decision** | 🟢 LOW | 0.25 day | Cleanup |

@@ -1,55 +1,55 @@
 # Dmitrii Fotesco | Senior Technical PM Portfolio
 
-**Status**: Active Development
-**Live URL**: [edgeoftrust.com](https://edgeoftrust.com)
+**Mission Control Center** for the edgeoftrust.com portfolio engine.
 
-## ✨ Features
+---
 
-### 🎯 Universal CV System
-Personalized portfolio variants for job applications:
-- **Base Portfolio**: `/#/` - Default comprehensive portfolio
-- **Job-Specific Variants**: `/#/:company/:role` - AI-tailored versions
+## 🏛️ Project Structure
 
-**Active Variants:**
-- Bloomberg TPM: `/#/bloomberg/technical-product-manager`
-- Gensyn TPM: `/#/gensyn/technical-product-manager`
+### 🧠 [Active Context](./context/) (Read this first)
+The "Brain" of the project. Essential for AI agents and strategic planning.
+*   **[STATE OF THE UNION](./context/STATE_OF_THE_UNION.md)**: 🔴 **Current Audit & Status** (Red Alert Check).
+*   **[ROADMAP](./context/ROADMAP.md)**: Current sprint status and future targets.
+*   **[AGENT RULES](./context/AGENT_RULES.md)**: The "Supreme Law" for AI collaboration.
+*   **[CODEBASE Architecture](./context/CODEBASE.md)**: High-level system design and patterns.
+*   **[DESIGN System](./context/DESIGN.md)**: Visual tokens, typography, and theme parity.
+*   **[DEVLOG](./context/DEVLOG.md)**: Session-by-session history of changes.
 
-See [Universal CV Guide](./docs/guides/universal-cv.md) for details.
+### 📖 [Reference Guides](./docs/)
+Operational details for managing the engine.
+*   **[Content Guide](./docs/CONTENT.md)**: Schema definitions for YAML/MD.
+*   **[Universal CV](./docs/guides/universal-cv.md)**: Personalization engine documentation.
+*   **[Adding Case Studies](./docs/guides/adding-case-studies.md)**: Workflow for new editorial content.
 
-## 📚 Documentation
+### 🗄️ [Historical Archive](./docs/history/)
+Past plans, refactoring logs, and legacy prompts.
 
-*   **[Technical Context](./context/CODEBASE.md)**: Architecture, Pattern Guides, Component Rules.
-*   **[Design System](./context/DESIGN.md)**: Tokens, Theming, Typography.
-*   **[Roadmap](./context/ROADMAP.md)**: Current plan and upcoming features.
-*   **[Universal CV Guide](./docs/guides/universal-cv.md)**: Creating personalized variants.
-*   **[Content Guide](./docs/CONTENT.md)**: Managing portfolio content.
-*   **[Project History](./docs/history/)**: Refactoring logs and original prompts.
+---
 
-## 🤖 For AI Agents
-**READ THIS FIRST**: [Governance & Rules](context/AGENT_RULES.md)
-*   **Context**: [Codebase Overview](context/CODEBASE.md)
-*   **Design**: [Design System](context/DESIGN.md)
-*   **Plan**: [Roadmap](context/ROADMAP.md)
+## 🚀 Quick Start (Operations)
 
-## 🚀 Quick Start
-
+### 🛠️ Local Development
 ```bash
-# Install dependencies
+# Setup & Dependency injection
 npm install
 
-# Development server
+# Start Local Instance
 npm run dev
 
-# Build for production
-npm run build
-
-# Validate content
+# Content Integrity Check
 npm run validate
+```
 
-# Generate personalized variant
+### 🎯 Personalization (Universal CV)
+```bash
+# Generate a tailored variant for a specific role
 npm run generate:cv -- --company "Company" --role "Role" --jd "./jd.txt" --provider gemini
 ```
 
-## 🧠 For AI Agents
+---
 
-Please read `context/CODEBASE.md` first. It is the comprehensive source of truth for this project.
+## 🏗️ Technical Stack
+**React 19 + TypeScript + Vite + Framer Motion + Zod**
+
+**Status**: Active Development
+**Live URL**: [edgeoftrust.com](https://edgeoftrust.com)

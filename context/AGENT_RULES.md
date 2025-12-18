@@ -47,9 +47,14 @@ This document serves as the **Supreme Law** for contributing to this codebase. Y
     *   **Step 3: Document**: Update `context/DESIGN.md` to reflect the new addition.
     *   **Step 4: Implement**: Only then, use the new token in your component.
 
-## 2. Codebase Maintenance
+## 2. Codebase Maintenance & Anti-Hallucination
 *   **Documentation Alignment**: If you refactor code, you **MUST** update the corresponding section in `context/CODEBASE.md` or `context/DESIGN.md`.
+*   **Anti-Hallucination**: NEVER document a feature in `CODEBASE.md` or `ROADMAP.md` as "Implemented" or "Done" unless you have verified its existence in the current branch.
 *   **Data Integrity**: Always maintain Zod validation in `src/lib/content.ts` for any new content fields. Do not bypass type safety.
+
+## 3. Documentation Governance
+*   **Mission Control Sync**: Any move, rename, or deletion of a `.md` file MUST be reflected in the root `README.md` map.
+*   **Deprecation Record**: If a planned feature is abandoned, move its description to a "Deprecated/Abandoned" section in `ROADMAP.md` with rationale, rather than silent deletion.
 
 ## 3. Mandatory UI/UX Verification Checklist
 **MUST** be performed before finalizing any task involving UI/UX changes.
@@ -59,6 +64,7 @@ This document serves as the **Supreme Law** for contributing to this codebase. Y
 - [ ] **Documentation Sync**: If I added a new variable, did I update `context/DESIGN.md`?
 - [ ] **Theme Check**: Did I verify the change works in both Dark AND Light mode? (Are ambient effects visible in both?)
 - [ ] **Mobile Check**: Did I verify responsive behavior (e.g., `isMobile` logic)?
+- [ ] **Honest Docs**: Did I ensure I am not "hallucinating" the completion of any feature in the docs?
 
-## 4. "The Prime Directive" of Design
+## 5. "The Prime Directive" of Design
 > "If it isn't in the Design System, it doesn't exist. If it needs to exist, update the Design System first."

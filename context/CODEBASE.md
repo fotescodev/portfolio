@@ -13,6 +13,16 @@
 
 ---
 
+## Technical Constraints
+
+| Metric | Limit | Rationale |
+|--------|-------|-----------|
+| **Initial Bundle** | < 200KB (Gzipped) | SEO & Mobile LCP performance |
+| **Animation Rate** | 60 FPS | Premium "smooth" feel requirement |
+| **Type Safety** | 100% Zod | Data integrity for YAML-to-JSON pipeline |
+
+---
+
 ## Architecture
 
 ### Directory Structure
