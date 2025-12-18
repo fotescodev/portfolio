@@ -52,7 +52,16 @@ This document serves as the **Supreme Law** for contributing to this codebase. Y
 *   **Anti-Hallucination**: NEVER document a feature in `CODEBASE.md` or `ROADMAP.md` as "Implemented" or "Done" unless you have verified its existence in the current branch.
 *   **Data Integrity**: Always maintain Zod validation in `src/lib/content.ts` for any new content fields. Do not bypass type safety.
 
-## 3. Documentation Governance
+## 3. The "No Direct Push" Law
+*   **Branch Protection**: The `main` branch is PROTECTED. Direct pushes are blocked.
+*   **Workflow**:
+    1. Create a descriptive feature branch (e.g., `feat/bundle-opt`).
+    2. Commit and push to the feature branch.
+    3. Open a Pull Request via `gh pr create`.
+    4. **MANDATORY**: PRs require 1 approval to merge.
+*   **Merge Style**: Use "Squash and Merge" for a clean `main` history.
+
+## 4. Documentation Governance
 *   **Mission Control Sync**: Any move, rename, or deletion of a `.md` file MUST be reflected in the root `README.md` map.
 *   **Deprecation Record**: If a planned feature is abandoned, move its description to a "Deprecated/Abandoned" section in `ROADMAP.md` with rationale, rather than silent deletion.
 
