@@ -8,6 +8,7 @@
 import { render, screen } from '@testing-library/react';
 import { ThemeProvider } from '../../context/ThemeContext';
 import { profile } from '../../lib/content';
+import { VariantProvider } from '../../context/VariantContext';
 
 // Import all migrated components
 import HeroSection from '../../components/sections/HeroSection';
@@ -21,7 +22,9 @@ import Omnibar from '../../components/common/Omnibar';
 
 // Wrapper for components that need ThemeProvider
 const TestWrapper = ({ children }: { children: React.ReactNode }) => (
-    <ThemeProvider>{children}</ThemeProvider>
+    <VariantProvider profile={profile}>
+        <ThemeProvider>{children}</ThemeProvider>
+    </VariantProvider>
 );
 
 describe('Component Integration Tests', () => {
@@ -215,7 +218,7 @@ describe('Component Integration Tests', () => {
         // Mock IntersectionObserver
         beforeAll(() => {
             global.IntersectionObserver = class IntersectionObserver {
-                constructor() {}
+                constructor() { }
                 observe() { return null; }
                 unobserve() { return null; }
                 disconnect() { return null; }

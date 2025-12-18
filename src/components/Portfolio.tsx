@@ -59,8 +59,8 @@ export default function Portfolio() {
 
   const sectionPadding = isMobile ? '48px 24px' : isTablet ? '64px 40px' : '80px 64px';
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
-    e.preventDefault();
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement> | null, id: string) => {
+    if (e) e.preventDefault();
     const element = document.getElementById(id);
     if (element) {
       const offset = 80; // Nav height buffer

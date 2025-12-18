@@ -4,23 +4,19 @@ import { profile } from '../../lib/content';
 
 export default function Omnibar() {
     const [copied, setCopied] = useState(false);
-    const [isVisible, setIsVisible] = useState(false); // Start hidden until we know hero is scrolled past
     const [heroVisible, setHeroVisible] = useState(true);
     const [footerVisible, setFooterVisible] = useState(false);
     const heroObserverRef = useRef<IntersectionObserver | null>(null);
     const footerObserverRef = useRef<IntersectionObserver | null>(null);
+
+    // Derived state: Show omnibar only when hero CTAs are NOT visible AND footer CTA is NOT visible
+    const isVisible = !heroVisible && !footerVisible;
 
     const handleCopyEmail = () => {
         navigator.clipboard.writeText(profile.email);
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
     };
-
-    // Update visibility based on hero and footer state
-    useEffect(() => {
-        // Show omnibar only when hero CTAs are NOT visible AND footer CTA is NOT visible
-        setIsVisible(!heroVisible && !footerVisible);
-    }, [heroVisible, footerVisible]);
 
     // Observe Hero CTA section
     useEffect(() => {

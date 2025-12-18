@@ -22,11 +22,10 @@ export default function CaseStudyDrawer({ isOpen, onClose, caseStudy, isMobile, 
     useEffect(() => {
         if (isOpen) {
             document.body.style.overflow = 'hidden';
-            // Reset scroll position when opening
+            // Reset scroll position when opening (which naturally resets sticky header)
             if (scrollRef.current) {
                 scrollRef.current.scrollTop = 0;
             }
-            setShowStickyHeader(false);
         } else {
             document.body.style.overflow = 'unset';
         }
