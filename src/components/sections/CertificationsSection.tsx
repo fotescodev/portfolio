@@ -55,7 +55,7 @@ export default function CertificationsSection({
           display: 'flex',
           alignItems: 'center',
           gap: 'var(--space-lg)',
-          marginBottom: isMobile ? 'var(--space-xl)' : 'calc(var(--space-xl) + var(--space-sm))'
+          marginBottom: isMobile ? 'var(--space-lg)' : 'var(--space-xl)'
         }}
       >
         <span
@@ -73,7 +73,7 @@ export default function CertificationsSection({
       </div>
 
       {/* Section header */}
-      <div style={{ marginBottom: isMobile ? 'var(--space-xl)' : 'var(--space-2xl)' }}>
+      <div style={{ marginBottom: isMobile ? 'var(--space-lg)' : 'var(--space-xl)' }}>
         <h2
           style={{
             fontSize: isMobile ? '28px' : isTablet ? '36px' : '42px',
@@ -110,7 +110,7 @@ export default function CertificationsSection({
               flexDirection: isMobile ? 'column' : 'row',
               alignItems: isMobile ? 'flex-start' : 'baseline',
               gap: isMobile ? 'var(--space-sm)' : 'var(--space-xl)',
-              padding: 'var(--space-lg) 0',
+              padding: 'var(--space-md) 0',
             }}
           >
             {/* Date column */}

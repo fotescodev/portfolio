@@ -43,7 +43,7 @@ export default function ExperienceSection({ isMobile, isTablet, sectionPadding }
           display: 'flex',
           alignItems: 'center',
           gap: 'var(--space-lg)',
-          marginBottom: isMobile ? 'var(--space-xl)' : '40px'
+          marginBottom: isMobile ? 'var(--space-lg)' : '24px'
         }}>
           <span style={{
             fontSize: '11px',
@@ -73,11 +73,15 @@ export default function ExperienceSection({ isMobile, isTablet, sectionPadding }
                 display: 'grid',
                 gridTemplateColumns: isMobile ? '1fr' : isTablet ? '160px 1fr' : '200px 1fr',
                 gap: isMobile ? 'var(--space-md)' : 'var(--space-2xl)',
-                padding: isMobile ? 'var(--space-lg) 0' : 'var(--space-xl) 0',
+                padding: isMobile ? 'var(--space-md) 0' : '24px 0',
               }}
             >
               {/* Left column - Company & Period */}
-              <div>
+              <div style={{
+                position: 'relative',
+                paddingRight: isMobile ? 0 : 'var(--space-xl)',
+                borderRight: isMobile ? 'none' : '1px solid var(--color-border-light)',
+              }}>
                 <div style={{
                   fontSize: '12px',
                   fontWeight: 600,

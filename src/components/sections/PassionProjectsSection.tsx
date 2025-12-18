@@ -37,7 +37,7 @@ export default function PassionProjectsSection({
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          marginBottom: isMobile ? 'var(--space-xl)' : '40px'
+          marginBottom: isMobile ? 'var(--space-lg)' : '24px'
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-lg)' }}>
             <span style={{
@@ -84,7 +84,7 @@ export default function PassionProjectsSection({
             <article
               key={project.id}
               style={{
-                padding: isMobile ? '16px 16px' : '16px 20px',
+                padding: isMobile ? '12px 16px' : '12px 20px',
                 cursor: project.githubUrl || project.liveUrl ? 'pointer' : 'default',
                 transition: 'all 0.25s ease',
                 background: hoveredProject === project.id ? 'var(--color-card-bg)' : 'transparent',
