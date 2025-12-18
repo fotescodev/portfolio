@@ -376,9 +376,17 @@ npm run test:watch          # Watch mode
 
 ## Useful Commands
 
+### Shipping Workflow (PR-Only)
 ```bash
-npm run dev              # Start dev server (port 5174)
-npm run build            # Production build
-npm run test:design-system  # Run design tests
-npm run lint             # ESLint
+# 1. Create feature branch
+git checkout -b feat/your-feature
+
+# 2. Push work
+git push origin feat/your-feature
+
+# 3. Create Pull Request (via gh CLI)
+gh pr create --title "feat: descriptive title" --body "context about changes"
+
+# 4. Merge after approval
+gh pr merge --squash
 ```

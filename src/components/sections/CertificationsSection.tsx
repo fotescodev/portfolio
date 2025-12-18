@@ -36,7 +36,7 @@ export default function CertificationsSection({
   showOnchainIdentity
 }: CertificationsSectionProps) {
   const shouldShowOnchain = showOnchainIdentity ?? profile.sections.onchainIdentity;
-  const { certifications, credentials, onchainIdentity } = certificationsData;
+  const { certifications, onchainIdentity } = certificationsData;
 
   return (
     <section
@@ -111,7 +111,6 @@ export default function CertificationsSection({
               alignItems: isMobile ? 'flex-start' : 'baseline',
               gap: isMobile ? 'var(--space-sm)' : 'var(--space-xl)',
               padding: 'var(--space-lg) 0',
-              borderBottom: index < certifications.length - 1 ? '1px solid var(--color-border-light)' : 'none'
             }}
           >
             {/* Date column */}
@@ -202,73 +201,7 @@ export default function CertificationsSection({
         ))}
       </div>
 
-      {/* Highlights - Horizontal badges */}
-      <div
-        style={{
-          padding: 'var(--space-xl) 0',
-          borderTop: '1px solid var(--color-border-light)',
-          borderBottom: shouldShowOnchain ? 'none' : '1px solid var(--color-border-light)'
-        }}
-      >
-        <div
-          style={{
-            fontSize: '11px',
-            fontWeight: 600,
-            letterSpacing: '0.15em',
-            textTransform: 'uppercase',
-            color: 'var(--color-text-muted)',
-            marginBottom: 'var(--space-lg)'
-          }}
-        >
-          Highlights
-        </div>
 
-        <div
-          style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            gap: isMobile ? 'var(--space-md)' : 'var(--space-xl)'
-          }}
-        >
-          {credentials.map((cred, index) => (
-            <div
-              key={index}
-              style={{
-                minWidth: isMobile ? '100%' : 'auto'
-              }}
-            >
-              <div
-                style={{
-                  fontSize: '10px',
-                  fontWeight: 700,
-                  letterSpacing: '0.1em',
-                  textTransform: 'uppercase',
-                  color: 'var(--color-text-muted)',
-                  marginBottom: 'var(--space-xs)'
-                }}
-              >
-                {cred.label}
-              </div>
-              {cred.url ? (
-                <a
-                  href={cred.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    fontSize: '14px',
-                    color: 'var(--color-text-primary)',
-                    textDecoration: 'none'
-                  }}
-                >
-                  {cred.value} <span style={{ color: 'var(--color-accent)' }}>↗</span>
-                </a>
-              ) : (
-                <div style={{ fontSize: '14px', color: 'var(--color-text-primary)' }}>{cred.value}</div>
-              )}
-            </div>
-          ))}
-        </div>
-      </div>
 
       {/* On-chain identity - Compact footer style */}
       {shouldShowOnchain && (
