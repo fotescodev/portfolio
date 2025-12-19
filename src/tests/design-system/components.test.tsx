@@ -142,6 +142,48 @@ describe('Component Integration Tests', () => {
 
             expect(screen.getByText('Experience')).toBeInTheDocument();
         });
+
+        it('should render company names as clickable links', () => {
+            render(
+                <TestWrapper>
+                    <ExperienceSection isMobile={false} isTablet={false} sectionPadding="40px" />
+                </TestWrapper>
+            );
+
+            // Check that Anchorage is a link
+            const anchorageLink = screen.getByRole('link', { name: 'Anchorage Digital' });
+            expect(anchorageLink).toBeInTheDocument();
+            expect(anchorageLink).toHaveAttribute('href', 'https://anchorage.com');
+            expect(anchorageLink).toHaveAttribute('target', '_blank');
+            expect(anchorageLink).toHaveAttribute('rel', 'noopener noreferrer');
+        });
+
+        it('should have correct URLs for all company links', () => {
+            render(
+                <TestWrapper>
+                    <ExperienceSection isMobile={false} isTablet={false} sectionPadding="40px" />
+                </TestWrapper>
+            );
+
+            const expectedLinks = [
+                { name: 'Anchorage Digital', url: 'https://anchorage.com' },
+                { name: 'Forte', url: 'https://forte.io' },
+                { name: 'Dapper Labs', url: 'https://flow.com' },
+                { name: 'Ankr', url: 'https://ankr.com' },
+                { name: 'Bloom Protocol', url: 'https://bloom.co' },
+                { name: 'Microsoft', url: 'https://microsoft.com' },
+            ];
+
+            expectedLinks.forEach(({ name, url }) => {
+                const link = screen.getByRole('link', { name });
+                expect(link).toHaveAttribute('href', url);
+            });
+
+            // Mempools appears twice (company link + highlight link), so use getAllByRole
+            const mempoolsLinks = screen.getAllByRole('link', { name: 'Mempools' });
+            expect(mempoolsLinks.length).toBeGreaterThanOrEqual(1);
+            expect(mempoolsLinks[0]).toHaveAttribute('href', 'https://mempools.com');
+        });
     });
 
     describe('CertificationsSection', () => {
