@@ -1,5 +1,5 @@
 import { useParams, useNavigate, Link, Navigate } from 'react-router-dom';
-import { useEffect, useState, useRef, useCallback } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
@@ -241,10 +241,6 @@ export default function BlogPostPage() {
 
     const shareOnTwitter = () => {
         window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(`${post.title} by @kolob0kk`)}&url=${encodeURIComponent(getPostUrl())}`, '_blank', 'width=550,height=420');
-    };
-
-    const shareOnLinkedIn = () => {
-        window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(getPostUrl())}`, '_blank', 'width=550,height=420');
     };
 
     const copyLink = async () => {
