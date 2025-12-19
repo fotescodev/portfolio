@@ -57,9 +57,54 @@ content/
 
 ## Processing Workflow
 
+### Phase 0: Schema Understanding (MANDATORY FIRST STEP)
+
+**Objective**: Read and internalize the actual Zod schemas before writing ANY content.
+
+**CRITICAL**: This step MUST be completed before any file writes. Schema mismatches were the #1 source of validation errors in past runs.
+
+```bash
+# Always read the schema file first
+Read src/lib/schemas.ts
+```
+
+**Key Schema Constraints to Verify**:
+
+| Content Type | Field | Constraint |
+|-------------|-------|------------|
+| Skills | `skills` | `z.array(z.string())` — simple strings only, NOT objects |
+| Case Study Media | `type` | `z.enum(['blog', 'twitter', 'linkedin', 'video', 'article', 'slides'])` |
+| Testimonial | `featured` | `z.boolean()` — required, not optional |
+| Experience | `highlights` | `z.array(z.string())` — simple strings only |
+| Case Study CTA | `action` | `z.enum(['contact', 'calendly', 'linkedin'])` — only these 3 values |
+
+**Before writing any file, confirm**:
+1. ✅ Field types match schema exactly (string vs object vs array)
+2. ✅ Enum values are from the allowed set
+3. ✅ Required fields are present
+4. ✅ Optional fields use correct null/undefined handling
+
+---
+
 ### Phase 1: Data Discovery & Inventory
 
 **Objective**: Map all source files before processing.
+
+#### Step 1a: Check for Existing AI Summaries (HIGH PRIORITY)
+
+**Before parsing raw files**, look for existing AI-generated summaries or reviews. These are often more structured and save significant parsing time.
+
+```bash
+# Look for AI review files
+find [SOURCE_PATH] -name "*review*" -o -name "*summary*" -o -name "*gemini*" -o -name "*claude*" -o -name "*gpt*"
+
+# Check for structured exports
+find [SOURCE_PATH] -name "*.json" -o -name "*export*"
+```
+
+**If found**: Use as PRIMARY source, cross-reference with raw data for verification.
+
+#### Step 1b: Inventory Raw Sources
 
 ```bash
 # For Obsidian vault
@@ -72,12 +117,13 @@ unzip -l [ARCHIVE_PATH] | head -50
 find [SOURCE_PATH] -type f \( -name "*.md" -o -name "*.csv" -o -name "*.txt" -o -name "*.json" \)
 ```
 
-Create an inventory table:
-| File | Type | Category | Priority |
-|------|------|----------|----------|
-| work-history.md | Markdown | Experience | High |
-| skills.csv | CSV | Skills | Medium |
-| testimonials.txt | Text | Social Proof | High |
+Create an inventory table with confidence scores:
+| File | Type | Category | Priority | Confidence |
+|------|------|----------|----------|------------|
+| gemini-review.md | AI Summary | All | HIGH | ⬛⬛⬛ High |
+| work-history.md | Markdown | Experience | High | ⬛⬛⬜ Medium |
+| skills.csv | CSV | Skills | Medium | ⬛⬛⬛ High |
+| testimonials.txt | Text | Social Proof | High | ⬛⬜⬜ Low |
 
 ### Phase 2: Experience Enrichment
 
@@ -90,7 +136,8 @@ jobs:
     role: "Job Title"
     period: "YYYY – YYYY"
     location: "City, State"
-    logo: "/images/logos/company.svg"  # Optional
+    logo: "/images/logos/company.svg"  # Optional, nullable
+    url: "https://company.com"         # Company website - ALWAYS extract if available
     highlights:
       - "Achievement with specific metric (e.g., 15× revenue growth)"
       - "Technical accomplishment with stack details"
@@ -106,6 +153,72 @@ jobs:
 - Technologies and methodologies named
 - Collaboration scope mentioned
 - Key decisions with trade-offs
+
+#### Link Extraction (IMPORTANT)
+
+**Always extract and verify company/project URLs** so viewers can quickly validate the work is real.
+
+**Sources for URLs**:
+1. Company websites mentioned in source docs
+2. LinkedIn company pages
+3. Product URLs, app store links
+4. GitHub repos, documentation sites
+5. Press releases, news articles
+
+**Link extraction process**:
+```bash
+# Search source files for URLs
+grep -oE 'https?://[^\s<>"]+' [SOURCE_FILES]
+
+# Common patterns to look for
+- "company.com", "startup.io", "project.xyz"
+- LinkedIn: linkedin.com/company/[name]
+- GitHub: github.com/[org]
+- Product Hunt, Crunchbase links
+```
+
+**Validation**:
+- Verify URL is still active (not 404)
+- Prefer official company domain over third-party
+- For defunct companies: use archive.org link or LinkedIn
+
+| Company Type | URL Priority |
+|-------------|--------------|
+| Active startup | Official website (e.g., mempools.com) |
+| Enterprise | Company careers/about page |
+| Acquired | Parent company or press release |
+| Defunct | LinkedIn or archive.org |
+
+#### Confidence Scoring for Experience Data
+
+Track extraction confidence for each data point:
+
+| Confidence | Criteria | Action |
+|------------|----------|--------|
+| ⬛⬛⬛ **High** | Exact quote from source, verified metric, named source | Use directly |
+| ⬛⬛⬜ **Medium** | Synthesized from multiple sources, approximated metric | Use with note |
+| ⬛⬜⬜ **Low** | Inferred, placeholder metric like "[X%]", uncertain date | Flag for user review |
+
+**Before writing experience file**:
+1. List all LOW confidence items for user confirmation
+2. Mark uncertain metrics with `[VERIFY]` prefix in draft
+3. Only write after user confirms or provides corrections
+
+#### Pre-Validation Check (Before Writing)
+
+```yaml
+# Validate structure matches schema BEFORE writing
+# ExperienceSchema expects:
+jobs:
+  - company: string      # Required
+    role: string         # Required
+    period: string       # Required: "YYYY – YYYY" format
+    location: string     # Required
+    logo: string | null  # Optional
+    url: string | null   # Optional - but ALWAYS try to populate!
+    highlights: string[] # Required: array of STRINGS (not objects!)
+    tags: string[]       # Required
+```
 
 ### Phase 3: Case Study Mining
 
@@ -151,11 +264,60 @@ cta:
 
 ### Phase 4: Testimonial Extraction
 
-Look for:
-- Direct quotes from colleagues, managers, clients
-- Performance review excerpts
-- LinkedIn recommendations
-- Slack/email praise snippets
+#### Distinguishing Personal vs Project Testimonials (CRITICAL)
+
+**Personal testimonials** (USE these):
+- About the individual: "Working with [Name]...", "[Name] is exceptional at..."
+- Collaboration focused: "...a pleasure to work with", "...always delivered"
+- Skill endorsements: "...best product manager I've worked with"
+- Growth observations: "...grew from... to..."
+
+**Project testimonials** (DO NOT use as personal):
+- About the project/product: "The blockchain solution transformed..."
+- Company endorsements: "Microsoft's approach to..."
+- Generic team praise: "The team delivered..."
+
+#### Detection Heuristics
+
+**High-confidence personal testimonial signals**:
+```
+✅ Contains person's name + positive verb: "[Name] led", "[Name] designed"
+✅ Uses "I" + relationship: "I worked with", "I hired", "I managed"
+✅ Personal qualities: "collaborative", "thoughtful", "proactive"
+✅ Recommendation language: "I recommend", "would hire again"
+✅ Source: LinkedIn recommendation, performance review
+```
+
+**Low-confidence / Project quote signals**:
+```
+⚠️ No personal name mentioned
+⚠️ Focuses on deliverable, not person
+⚠️ Source: press release, case study, marketing material
+⚠️ Generic praise: "great work", "successful project"
+```
+
+#### Search Patterns for Testimonials
+
+```bash
+# Phrases indicating personal testimonials
+grep -i "working with \[name\]" [SOURCE]
+grep -i "I recommend" [SOURCE]
+grep -i "pleasure to work" [SOURCE]
+grep -i "\[name\] is" [SOURCE]
+grep -i "one of the best" [SOURCE]
+
+# LinkedIn recommendation patterns
+grep -i "I had the opportunity" [SOURCE]
+grep -i "I've had the pleasure" [SOURCE]
+```
+
+#### Testimonial Quality Checklist
+
+Before including a testimonial:
+- [ ] Is it about the PERSON, not just the project?
+- [ ] Does it include specific details (not generic praise)?
+- [ ] Can the source be verified (LinkedIn, named author)?
+- [ ] Is the author's relationship clear (manager, peer, report)?
 
 ```yaml
 # Target: content/testimonials/index.yaml
@@ -168,34 +330,81 @@ testimonials:
     role: "Their Role"
     company: "Company Name"
     avatar: null  # Or path to image
-    featured: true  # For prominent display
+    featured: true  # Required boolean - for prominent display
 ```
+
+#### Gap Handling
+
+If no valid personal testimonials found:
+1. **Flag as HIGH priority gap** in gap analysis
+2. Suggest manual follow-up actions:
+   - Export LinkedIn recommendations
+   - Request recommendations from past colleagues
+   - Check old emails for praise snippets
+3. **DO NOT fabricate** or use project quotes as personal testimonials
 
 ### Phase 5: Skills Taxonomy
 
-Build structured skills from evidence:
+#### CRITICAL: Schema Constraint
+
+**The skills schema expects SIMPLE STRINGS, not objects!**
+
+```yaml
+# ❌ WRONG - This will fail validation
+categories:
+  - name: "Technical Leadership"
+    skills:
+      - name: "Platform Architecture"
+        level: "expert"
+        evidence: "..."
+
+# ✅ CORRECT - Simple string array
+categories:
+  - name: "Technical Leadership"
+    skills:
+      - "Platform Architecture"
+      - "API Design"
+      - "System Integration"
+```
+
+#### Preserving Evidence (Workaround)
+
+Since the schema doesn't support evidence fields, preserve context using YAML comments:
 
 ```yaml
 # Target: content/skills/index.yaml
 categories:
   - name: "Technical Leadership"
     skills:
-      - name: "Platform Architecture"
-        level: "expert"  # expert, advanced, intermediate
-        evidence: "Designed multi-client validator infra at Anchorage"
-      - name: "API Design"
-        level: "advanced"
-        evidence: "Shipped Ankr Advanced APIs, 1M+ daily requests"
+      # Evidence: Designed multi-client validator infra at Anchorage
+      - "Platform Architecture"
+      # Evidence: Shipped Ankr Advanced APIs, 1M+ daily requests
+      - "API Design"
 
   - name: "Web3 & Blockchain"
     skills:
-      - name: "Ethereum"
-        level: "expert"
-        evidence: "First smart contract at Microsoft (2016)"
-      - name: "Staking Infrastructure"
-        level: "expert"
-        evidence: "ETF-grade validator provisioning"
+      # Evidence: First smart contract at Microsoft (2016)
+      - "Ethereum"
+      # Evidence: ETF-grade validator provisioning
+      - "Staking Infrastructure"
 ```
+
+#### Pre-Validation Check
+
+```typescript
+// SkillsSchema from src/lib/schemas.ts:
+SkillsSchema = z.object({
+  categories: z.array(z.object({
+    name: z.string(),
+    skills: z.array(z.string())  // <-- STRINGS ONLY!
+  }))
+});
+```
+
+**Before writing skills file**:
+1. Verify each skill is a plain string
+2. Move any evidence/level data to comments
+3. Test parse the YAML structure mentally
 
 ### Phase 6: Validation & Gap Analysis
 
