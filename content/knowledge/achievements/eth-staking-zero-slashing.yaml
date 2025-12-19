@@ -1,0 +1,63 @@
+# ═══════════════════════════════════════════════════════════════
+# ACHIEVEMENT: ETH Staking Zero Slashing
+# ═══════════════════════════════════════════════════════════════
+id: eth-staking-zero-slashing
+headline: "Built ETF-grade staking infrastructure with zero slashing events for institutional clients managing billions in AUM"
+
+metric:
+  value: "Zero"
+  unit: "slashing events"
+  context: "Billions in AUM at stake; single slashing event would damage reputation across institutional market"
+
+situation: |
+  ETF providers and asset managers wanted ETH staking yield but couldn't use existing
+  consumer solutions. Products lacked custody controls, audit trails, and regulatory
+  defensibility required by institutions. Losing a single client to slashing or
+  compliance failure would damage reputation across the entire institutional market.
+
+task: |
+  Build in-house validator infrastructure satisfying institutional custody requirements
+  (full key ownership, SOC 2 compliant, zero slashing tolerance) while maintaining
+  competitive yields within 0.1% of market.
+
+action: |
+  Chose in-house validators over 3-week staking-as-a-service launch despite leadership
+  timeline pressure. Presented compliance risk matrix showing third-party key management
+  as audit blocker. Designed multi-client architecture (Lighthouse 40%, Prysm 30%,
+  Teku 20%, Nimbus 10%) with Web3Signer for air-gapped signing. Built redundant
+  slashing DB with graceful degradation—miss attestations rather than risk slashing.
+
+result: |
+  Zero slashing events across all validators since launch. Galaxy specifically cited
+  'full key ownership' as reason they chose us over competitors. Onboarded Galaxy +
+  ETF-adjacent asset managers with billions in AUM. Yield within 0.1% of market leaders.
+  Created reusable compliance framework for other staking products.
+
+skills:
+  - ethereum
+  - staking
+  - compliance
+  - cross-functional
+  - api-design
+themes:
+  - institutional-crypto
+  - infrastructure
+companies:
+  - anchorage
+years:
+  - 2024
+  - 2025
+
+good_for:
+  - "Infrastructure PM roles"
+  - "Crypto/Web3 positions"
+  - "Compliance-heavy environments"
+  - "B2B enterprise sales"
+  - "Institutional finance"
+  - "Risk-averse organizations"
+
+evidence:
+  case_study: "content/case-studies/01-eth-staking.md"
+  testimonial: null
+  metrics_source: "Internal validator monitoring"
+  artifacts: []

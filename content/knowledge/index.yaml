@@ -1,0 +1,179 @@
+# ═══════════════════════════════════════════════════════════════
+# KNOWLEDGE GRAPH INDEX
+# ═══════════════════════════════════════════════════════════════
+# This file defines entities and relationships for content generation.
+# Skills query this graph to find relevant achievements, stories, and metrics.
+
+# ───────────────────────────────────────────────────────────────
+# ENTITY DEFINITIONS
+# ───────────────────────────────────────────────────────────────
+entities:
+  companies:
+    - id: anchorage
+      name: "Anchorage Digital"
+      period: "2024–present"
+      role: "Senior Product Manager"
+      domain: "Institutional Crypto Custody"
+
+    - id: forte
+      name: "Forte"
+      period: "2023–2024"
+      role: "Product Manager"
+      domain: "Gaming Blockchain Infrastructure"
+
+    - id: dapper
+      name: "Dapper Labs"
+      period: "2022–2023"
+      role: "Product Manager"
+      domain: "Developer Tools & Flow Blockchain"
+
+    - id: ankr
+      name: "Ankr"
+      period: "2021–2022"
+      role: "Product Manager"
+      domain: "RPC Infrastructure"
+
+    - id: microsoft
+      name: "Microsoft"
+      period: "2016–2020"
+      role: "Software Engineer → PM"
+      domain: "Enterprise Blockchain"
+
+  themes:
+    - id: institutional-crypto
+      label: "Institutional Crypto"
+      keywords: ["custody", "compliance", "ETF", "staking", "audit"]
+
+    - id: developer-experience
+      label: "Developer Experience"
+      keywords: ["SDK", "CLI", "tooling", "onboarding", "DX"]
+
+    - id: infrastructure
+      label: "Infrastructure"
+      keywords: ["API", "RPC", "validators", "nodes", "scale"]
+
+    - id: revenue-growth
+      label: "Revenue & Growth"
+      keywords: ["ARR", "revenue", "growth", "monetization"]
+
+    - id: enterprise-blockchain
+      label: "Enterprise Blockchain"
+      keywords: ["enterprise", "B2B", "compliance", "royalties"]
+
+    - id: ai-agents
+      label: "AI & Agents"
+      keywords: ["AI", "agents", "orchestration", "autonomous"]
+
+  skills:
+    - id: ethereum
+      label: "Ethereum"
+      category: "Blockchain & Web3"
+
+    - id: staking
+      label: "Staking Infrastructure"
+      category: "Blockchain & Web3"
+
+    - id: l2s
+      label: "L2s (Optimism, Base, Arbitrum)"
+      category: "Blockchain & Web3"
+
+    - id: api-design
+      label: "API Design"
+      category: "Technical"
+
+    - id: sdk-development
+      label: "SDK Development"
+      category: "Technical"
+
+    - id: compliance
+      label: "Compliance & Audit"
+      category: "Product Management"
+
+    - id: cross-functional
+      label: "Cross-functional Leadership"
+      category: "Product Management"
+
+# ───────────────────────────────────────────────────────────────
+# RELATIONSHIPS (The Graph)
+# ───────────────────────────────────────────────────────────────
+relationships:
+  # Anchorage Achievements
+  - from: achievement:eth-staking-zero-slashing
+    to: company:anchorage
+    type: achieved_at
+  - from: achievement:eth-staking-zero-slashing
+    to: skill:ethereum
+    type: demonstrates
+  - from: achievement:eth-staking-zero-slashing
+    to: skill:staking
+    type: demonstrates
+  - from: achievement:eth-staking-zero-slashing
+    to: skill:compliance
+    type: demonstrates
+  - from: achievement:eth-staking-zero-slashing
+    to: theme:institutional-crypto
+    type: belongs_to
+
+  - from: achievement:l2-protocol-integrations
+    to: company:anchorage
+    type: achieved_at
+  - from: achievement:l2-protocol-integrations
+    to: skill:l2s
+    type: demonstrates
+  - from: achievement:l2-protocol-integrations
+    to: theme:infrastructure
+    type: belongs_to
+
+  # Ankr Achievements
+  - from: achievement:ankr-15x-revenue
+    to: company:ankr
+    type: achieved_at
+  - from: achievement:ankr-15x-revenue
+    to: skill:api-design
+    type: demonstrates
+  - from: achievement:ankr-15x-revenue
+    to: theme:revenue-growth
+    type: belongs_to
+  - from: achievement:ankr-15x-revenue
+    to: theme:infrastructure
+    type: belongs_to
+
+  # Dapper Achievements
+  - from: achievement:flow-cli-dx
+    to: company:dapper
+    type: achieved_at
+  - from: achievement:flow-cli-dx
+    to: skill:sdk-development
+    type: demonstrates
+  - from: achievement:flow-cli-dx
+    to: theme:developer-experience
+    type: belongs_to
+
+  # Microsoft Achievements
+  - from: achievement:xbox-royalties-ethereum
+    to: company:microsoft
+    type: achieved_at
+  - from: achievement:xbox-royalties-ethereum
+    to: skill:ethereum
+    type: demonstrates
+  - from: achievement:xbox-royalties-ethereum
+    to: theme:enterprise-blockchain
+    type: belongs_to
+
+  # Story → Achievement mappings
+  - from: story:galaxy-compliance-win
+    to: achievement:eth-staking-zero-slashing
+    type: contains
+
+  - from: story:ankr-pivot-to-protocols
+    to: achievement:ankr-15x-revenue
+    type: contains
+
+  # Case Study → Story mappings (what generated what)
+  - from: case-study:01-eth-staking
+    to: story:galaxy-compliance-win
+    type: generated_from
+
+  - from: case-study:04-ankr-rpc
+    to: story:ankr-pivot-to-protocols
+    type: generated_from

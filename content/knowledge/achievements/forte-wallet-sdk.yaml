@@ -1,0 +1,55 @@
+# ═══════════════════════════════════════════════════════════════
+# ACHIEVEMENT: Forte Wallet-as-a-Service SDK
+# ═══════════════════════════════════════════════════════════════
+id: forte-wallet-sdk
+headline: "Built Wallet-as-a-Service infrastructure with MPC custody for AAA gaming studios"
+
+metric:
+  value: "Multiple"
+  unit: "AAA gaming partners"
+  context: "SDK powering non-custodial wallets for major gaming studios"
+
+situation: |
+  Gaming studios wanted to integrate Web3 features (NFTs, tokens) but lacked
+  blockchain expertise. Existing wallet solutions were either too complex for
+  gamers (self-custody) or too centralized for regulatory comfort (custodial).
+
+task: |
+  Build Wallet-as-a-Service infrastructure that gaming studios could integrate
+  easily while providing non-custodial security through MPC (multi-party computation).
+  Design SDK for developer adoption.
+
+action: |
+  Designed MPC custody solution allowing key shares distributed across studio and
+  player—non-custodial without seed phrase complexity. Built SDK abstracting wallet
+  operations for gaming use cases. Created integration guides for major game engines.
+  Worked with legal on regulatory positioning.
+
+result: |
+  Launched SDK used by multiple AAA gaming partners. Enabled gaming studios to
+  add Web3 features without blockchain expertise. MPC architecture satisfied
+  regulatory requirements while maintaining user experience.
+
+skills:
+  - sdk-development
+  - api-design
+themes:
+  - infrastructure
+companies:
+  - forte
+years:
+  - 2023
+  - 2024
+
+good_for:
+  - "Gaming industry roles"
+  - "Wallet infrastructure"
+  - "SDK development"
+  - "MPC/cryptography discussions"
+  - "B2B platform roles"
+
+evidence:
+  case_study: null
+  testimonial: null
+  metrics_source: "Partner adoption"
+  artifacts: []
