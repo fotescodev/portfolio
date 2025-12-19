@@ -4,21 +4,26 @@ slug: xbox-royalties-ethereum
 title: Royalties on Ethereum
 company: Microsoft / Xbox
 year: 2016–20
-tags: [Smart Contracts, Gaming, Enterprise, Ethereum]
+tags: [Smart Contracts, Gaming, Enterprise, Ethereum, Quorum, EY]
 duration: 2 years
 role: Software Engineer → Technical PM
 
 hook:
-  headline: Built Microsoft's first production smart contract—an Ethereum royalty system for Xbox
+  headline: Built Microsoft's first production blockchain—an Ethereum royalty system serving 2.7B+ gaming consumers
   impactMetric:
-    value: "First"
-    label: smart contract at MSFT
+    value: "99%"
+    label: faster processing
   subMetrics:
-    - value: "Xbox-scale"
-      label: payment processing
-    - value: "Docker/K8s"
-      label: consortium infra
+    - value: "45d→4min"
+      label: royalty access time
+    - value: "2.7B+"
+      label: consumers served
   thumbnail: /images/case-study-xbox-royalties.png
+
+media:
+  - type: article
+    url: https://www.ey.com/en_gl/insights/consulting/how-blockchain-helped-a-gaming-platform-become-a-game-changer
+    label: EY Case Study
 
 cta:
   headline: Exploring enterprise blockchain applications?
@@ -27,7 +32,7 @@ cta:
   linkText: Let's discuss →
 ---
 
-Royalty disputes with major publishers were costing millions in legal fees and damaging relationships. A transparent system could eliminate disputes entirely.
+Royalty disputes with major publishers were costing millions in legal fees and damaging relationships. The $120B gaming industry needed a transparent system that could eliminate disputes and give publishers real-time visibility into their earnings.
 
 ## The Challenge
 
@@ -87,11 +92,16 @@ Chose private consortium. Gave publishers what they actually needed (independent
 
 ## Results
 
-- **First smart contract at Microsoft** — Pioneered enterprise blockchain adoption before 'Web3' existed as a term
-- **Xbox-scale transaction processing** — System capable of handling millions of royalty calculations
-- **Zero disputed payments post-launch** — Transparent audit trail eliminated publisher payment disputes
+- **99% faster processing** — Reduced royalty calculation time from weeks to near real-time automated processing
+- **45 days → 4 minutes** — Publishers went from waiting 45 days for royalty data to accessing it in under 4 minutes
+- **40%+ operational effort reduction** — Automated system eliminated manual reconciliation overhead
+- **Zero disputed payments post-launch** — Transparent, immutable audit trail eliminated publisher payment disputes
 
-Project became reference implementation for Azure blockchain services. Established internal expertise that informed Microsoft's broader blockchain strategy.
+The blockchain solution processes royalty payments for Microsoft's gaming ecosystem serving **2.7B+ consumers worldwide**. EY and Microsoft published this as a reference case study for enterprise blockchain adoption.
+
+> "By implementing a blockchain-based network and streamlined royalty processing, game publishers and Xbox benefit from a more trusted, transparent and connected system from contract creation through to royalty settlements." — Luke Fewel, General Manager, Global Finance Operations, Microsoft
+
+Partnership with **Ubisoft** as early adopter. EY Global Blockchain Leader Paul Brody cited this as a breakthrough in "ecosystem-level automation."
 
 ## What I Learned
 
