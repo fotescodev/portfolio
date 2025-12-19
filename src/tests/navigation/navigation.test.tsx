@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach, beforeAll } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import { ThemeProvider } from '../../context/ThemeContext';
 import { VariantProvider } from '../../context/VariantContext';
 import { HelmetProvider } from 'react-helmet-async';
@@ -24,11 +25,13 @@ beforeAll(() => {
 });
 
 const TestWrapper = ({ children }: { children: React.ReactNode }) => (
-    <HelmetProvider>
-        <VariantProvider profile={profile}>
-            <ThemeProvider>{children}</ThemeProvider>
-        </VariantProvider>
-    </HelmetProvider>
+    <MemoryRouter>
+        <HelmetProvider>
+            <VariantProvider profile={profile}>
+                <ThemeProvider>{children}</ThemeProvider>
+            </VariantProvider>
+        </HelmetProvider>
+    </MemoryRouter>
 );
 
 describe('Navigation Flow', () => {
@@ -36,7 +39,7 @@ describe('Navigation Flow', () => {
         scrollToMock.mockClear();
         // Mock getElementById to return a mock element with getBoundingClientRect
         document.getElementById = vi.fn().mockImplementation((id) => {
-            if (id === 'work' || id === 'about' || id === 'blog') {
+            if (id === 'experience' || id === 'work' || id === 'about' || id === 'blog' || id === 'contact') {
                 return {
                     getBoundingClientRect: () => ({
                         top: 1000,
@@ -59,9 +62,9 @@ describe('Navigation Flow', () => {
             </TestWrapper>
         );
 
-        // Find work link in desktop nav - using role 'link' is more robust
-        const workLink = screen.getAllByRole('link', { name: /work/i })[0];
-        fireEvent.click(workLink);
+        // Find Cases link in desktop nav (points to 'work' section)
+        const casesLink = screen.getAllByRole('link', { name: /cases/i })[0];
+        fireEvent.click(casesLink);
 
         // Should call scrollTo with 1000 - 80 = 920
         expect(scrollToMock).toHaveBeenCalledWith({

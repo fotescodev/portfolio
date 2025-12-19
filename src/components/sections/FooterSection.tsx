@@ -4,9 +4,9 @@ interface FooterSectionProps {
 
 export default function FooterSection({ isMobile }: FooterSectionProps) {
   return (
-    <footer style={{
+    <footer id="contact" style={{
       padding: isMobile ? 'var(--space-xl) var(--space-lg)' : 'var(--space-2xl) var(--space-3xl)',
-      borderTop: '1px solid var(--color-experience-border)',
+      borderTop: '1px solid var(--color-border-light)',
       display: 'flex',
       flexDirection: isMobile ? 'column' : 'row',
       justifyContent: 'space-between',

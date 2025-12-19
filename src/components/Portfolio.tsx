@@ -242,18 +242,27 @@ export default function Portfolio() {
             {/* Desktop Navigation */}
             {!isMobile && (
               <div style={{ display: 'flex', gap: 'var(--space-xl)', alignItems: 'center' }}>
-                {['Work', 'About', 'Blog'].map((item) => (
+                {[
+                  { label: 'Experience', id: 'experience' },
+                  { label: 'Cases', id: 'work' },
+                  { label: 'Blog', id: 'blog' },
+                  { label: 'About', id: 'about' }
+                ].map((item) => (
                   <a
-                    key={item}
-                    href={`#${item.toLowerCase()}`}
-                    onClick={(e) => handleNavClick(e, item.toLowerCase())}
+                    key={item.id}
+                    href={`#${item.id}`}
+                    onClick={(e) => handleNavClick(e, item.id)}
                     className="nav-link"
                   >
-                    {item}
+                    {item.label}
                   </a>
                 ))}
                 <ThemeToggle />
-                <a href="https://calendar.google.com/calendar/u/0/appointments/AcZssZ2leGghBAF6F4IbGMZQErnaR21wvu-mYWXP06o=" target="_blank" rel="noopener noreferrer" className="nav-cta">
+                <a
+                  href="#contact"
+                  onClick={(e) => handleNavClick(e, 'contact')}
+                  className="nav-cta"
+                >
                   Get in Touch
                 </a>
               </div>
@@ -316,17 +325,17 @@ export default function Portfolio() {
               pointerEvents: mobileMenuOpen ? 'auto' : 'none',
               transition: 'opacity 0.3s ease, background 0.4s ease'
             }}>
-            {['Work', 'About', 'Blog', 'Contact'].map((item, i) => (
+            {[
+              { label: 'Experience', id: 'experience' },
+              { label: 'Cases', id: 'work' },
+              { label: 'Blog', id: 'blog' },
+              { label: 'About', id: 'about' },
+              { label: 'Get in Touch', id: 'contact' }
+            ].map((item, i) => (
               <a
-                key={item}
-                href={item === 'Contact' ? `mailto:${profile.email}` : `#${item.toLowerCase()}`}
-                onClick={(e) => {
-                  if (item !== 'Contact') {
-                    handleNavClick(e, item.toLowerCase());
-                  } else {
-                    setMobileMenuOpen(false);
-                  }
-                }}
+                key={item.id}
+                href={`#${item.id}`}
+                onClick={(e) => handleNavClick(e, item.id)}
                 className="mobile-menu-link"
                 style={{
                   transform: mobileMenuOpen ? 'translateX(0)' : 'translateX(-20px)',
@@ -334,7 +343,7 @@ export default function Portfolio() {
                   transition: `all 0.4s ease ${i * 0.08}s`
                 }}
               >
-                {item}
+                {item.label}
               </a>
             ))}
           </div>

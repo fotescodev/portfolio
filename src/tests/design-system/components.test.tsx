@@ -229,7 +229,7 @@ describe('Component Integration Tests', () => {
             );
 
             const footer = document.querySelector('footer');
-            expect(footer?.style.borderTop).toContain('var(--color-experience-border)');
+            expect(footer?.style.borderTop).toContain('var(--color-border-light)');
         });
     });
 
