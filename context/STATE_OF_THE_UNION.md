@@ -1,7 +1,7 @@
 # State of the Union: Portfolio Audit
-**Version**: 2.0
-**Date**: 2024-12-18
-**Branch**: `regroup`
+**Version**: 2.1
+**Date**: 2025-12-19
+**Branch**: `main`
 **Auditors**: Claude (Technical), Gemini (Reconciliation)
 
 ---

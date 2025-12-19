@@ -20,6 +20,14 @@ Operational details for managing the engine.
 *   **[Content Guide](./docs/CONTENT.md)**: Schema definitions for YAML/MD.
 *   **[Universal CV](./docs/guides/universal-cv.md)**: Personalization engine documentation.
 *   **[Adding Case Studies](./docs/guides/adding-case-studies.md)**: Workflow for new editorial content.
+*   **[CV Data Ingestion](./docs/guides/cv-data-ingestion.md)**: AI-assisted career data import.
+
+### 🤖 [Claude Code Skills](./.claude/skills/)
+AI-powered automation skills for content management.
+*   **[cv-data-ingestion](./.claude/skills/cv-data-ingestion/SKILL.md)**: Import career data from Obsidian, CSV, zip archives.
+*   **[cv-content-generator](./.claude/skills/cv-content-generator/SKILL.md)**: Generate case studies, blog posts, variants.
+*   **[cv-content-editor](./.claude/skills/cv-content-editor/SKILL.md)**: Edit existing CV content.
+*   **[cv-knowledge-query](./.claude/skills/cv-knowledge-query/SKILL.md)**: Query achievements and stories.
 
 ### 🗄️ [Historical Archive](./docs/history/)
 Past plans, refactoring logs, and legacy prompts.
