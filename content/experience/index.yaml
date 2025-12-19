@@ -48,7 +48,7 @@ jobs:
     logo: "/images/logos/mempools.svg"
     url: "https://mempools.com"
     highlights:
-      - "Co-founded Web3 SaaS platform achieving 200+ DAU for real-time on-chain alerting with sub-second delivery"
+      - "Co-founded [Mempools](https://mempools.com) Web3 SaaS platform achieving 200+ DAU for real-time on-chain alerting with sub-second delivery"
       - "Launched [Archway-Alerts.com](https://archway-alerts.com) as default alerting platform on mainnet launch day, securing Luganodes partnership"
       - "Shipped [mempools-sdk](https://www.npmjs.com/package/mempools-sdk) and no-code scenario builder supporting 5 chains (Ethereum, Arbitrum, Archway, Juno, Canto)"
     tags: ["Founder", "Web3 SaaS", "Alerting", "Cosmos"]
