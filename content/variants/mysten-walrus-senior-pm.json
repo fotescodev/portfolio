@@ -1,0 +1,165 @@
+{
+  "metadata": {
+    "company": "Mysten Labs",
+    "role": "Sr. Product Manager, Walrus",
+    "slug": "mysten-walrus-senior-pm",
+    "generatedAt": "2025-12-19T12:00:00Z",
+    "jobDescription": "Sr. Product Manager for Walrus, owning the core data platform and key product surfaces including Walrus Sites. Role sits at intersection of storage, data delivery, and developer experience. Responsible for developer-facing abstractions (APIs, SDKs, tooling, documentation), working with engineering on performance/scalability/reliability, and supporting internal teams + external partners adopting Walrus in production.",
+    "generationModel": "manual-v1"
+  },
+  "overrides": {
+    "hero": {
+      "status": "Open to Platform PM roles — Distributed Storage, Developer Infrastructure, Web3",
+      "companyAccent": [
+        {
+          "text": "for",
+          "style": "muted"
+        },
+        {
+          "text": "Mysten Labs",
+          "style": "accent"
+        },
+        {
+          "text": "Walrus",
+          "style": "muted"
+        }
+      ],
+      "subheadline": "Senior PM with 8+ years building infrastructure products developers love. From RPC APIs serving 1M+ daily requests to SDK ecosystems for gaming studios—I turn complex distributed systems into reliable, scalable platforms. Passionate about the intersection of storage, data delivery, and developer experience."
+    },
+    "about": {
+      "tagline": "Eight years shipping infrastructure products that developers build on—from enterprise blockchain at Microsoft to institutional staking platforms. I find PMF in technical markets and turn engineering excellence into developer adoption.",
+      "bio": [
+        "Currently at Anchorage Digital, I own staking infrastructure serving billions in AUM with zero slashing events. I've shipped 7+ L2 integrations (Optimism, Base, Arbitrum) using a RICE evaluation framework I built, reducing integration time by 40%. Before that, at Ankr I drove 15× revenue growth ($130K to $2M ARR) by repositioning RPC infrastructure from developers to protocols—building Advanced APIs and an SDK that scaled to 1M+ daily requests. At Forte, I designed Wallet-as-a-Service SDKs with MPC custody for AAA gaming studios.",
+        "At Dapper Labs, I led Flow CLI and Cadence Playground to reduce developer onboarding time by 60%. I started at Microsoft shipping Xbox royalties on Ethereum—one of the first production smart contracts in enterprise. Walrus's mission resonates deeply: I've spent my career making complex infrastructure accessible to developers, building the platforms that ecosystems depend on. I understand what it takes to evolve a protocol product from early adoption to production maturity while balancing performance, reliability, and developer experience."
+      ],
+      "stats": [
+        {
+          "value": "8+",
+          "label": "Years in Product"
+        },
+        {
+          "value": "3",
+          "label": "SDKs Shipped"
+        },
+        {
+          "value": "1M+",
+          "label": "Daily API Requests"
+        }
+      ]
+    },
+    "sections": {
+      "beyondWork": false,
+      "blog": true,
+      "onchainIdentity": true,
+      "skills": true,
+      "passionProjects": true
+    },
+    "experience": [
+      {
+        "company": "Anchorage Digital",
+        "highlights": [
+          "Built ETF-grade staking infrastructure with zero slashing events—reliability at scale",
+          "Shipped 7+ L2 protocol integrations with 40% faster cycle time using RICE framework",
+          "Designed validator APIs serving billions in AUM for institutional clients"
+        ],
+        "tags": ["Platform Infrastructure", "Reliability", "Developer APIs"]
+      },
+      {
+        "company": "Ankr",
+        "highlights": [
+          "Drove 15× revenue growth by repositioning RPC infrastructure for protocol partnerships",
+          "Built Advanced APIs and Ankr.JS SDK scaling to 1M+ daily requests",
+          "Found PMF in commoditized market through developer experience differentiation"
+        ],
+        "tags": ["API Infrastructure", "SDK Development", "Developer Experience"]
+      },
+      {
+        "company": "Forte",
+        "highlights": [
+          "Designed Wallet-as-a-Service SDK with MPC custody for gaming studios",
+          "Built infrastructure enabling AAA partners to integrate Web3 seamlessly",
+          "Shipped SDK abstracting complex cryptography into simple developer APIs"
+        ],
+        "tags": ["SDK Architecture", "Platform APIs", "Partner Ecosystem"]
+      },
+      {
+        "company": "Dapper Labs",
+        "highlights": [
+          "Led Flow CLI and Cadence Playground reducing onboarding time by 60%",
+          "Shipped developer tools for blockchain developers at scale",
+          "Built documentation and tooling ecosystem for Flow protocol"
+        ],
+        "tags": ["Developer Tools", "Tooling", "Developer Onboarding"]
+      },
+      {
+        "company": "Microsoft",
+        "highlights": [
+          "Shipped Xbox royalties on Ethereum—first production smart contract at Microsoft",
+          "Built Docker/K8s orchestration for blockchain node infrastructure",
+          "Pioneered enterprise blockchain before 'Web3' existed"
+        ],
+        "tags": ["Enterprise Infrastructure", "Production Systems", "Pioneering Tech"]
+      }
+    ]
+  },
+  "relevance": {
+    "caseStudies": [
+      {
+        "slug": "ankr-rpc",
+        "relevanceScore": 1,
+        "reasoning": "API infrastructure at scale, SDK development, developer tools, 15x revenue growth—directly parallel to Walrus platform PM responsibilities"
+      },
+      {
+        "slug": "developer-analytics",
+        "relevanceScore": 0.95,
+        "reasoning": "Flow CLI and developer tools—exact match for Walrus developer-facing abstractions and tooling work"
+      },
+      {
+        "slug": "eth-staking",
+        "relevanceScore": 0.90,
+        "reasoning": "Infrastructure platform with reliability/performance requirements—demonstrates platform thinking and technical depth"
+      },
+      {
+        "slug": "protocol-integration",
+        "relevanceScore": 0.85,
+        "reasoning": "Multi-quarter initiatives with cross-functional teams, framework building—relevant for Walrus ecosystem expansion"
+      },
+      {
+        "slug": "xbox-royalties",
+        "relevanceScore": 0.75,
+        "reasoning": "Pioneering blockchain infrastructure, enterprise production systems—shows ability to bring new technology to production"
+      }
+    ],
+    "skills": [
+      {
+        "category": "Blockchain & Web3",
+        "relevanceScore": 1
+      },
+      {
+        "category": "Technical Leadership",
+        "relevanceScore": 0.95
+      },
+      {
+        "category": "Product Strategy",
+        "relevanceScore": 0.90
+      }
+    ],
+    "projects": [
+      {
+        "slug": "flow-playground",
+        "relevanceScore": 0.95,
+        "reasoning": "Developer tools for blockchain—directly relevant to Walrus Sites and developer experience"
+      },
+      {
+        "slug": "ai-agent-framework",
+        "relevanceScore": 0.85,
+        "reasoning": "Framework development demonstrates builder mentality and system design skills"
+      },
+      {
+        "slug": "defi-analytics",
+        "relevanceScore": 0.80,
+        "reasoning": "Data infrastructure and Web3-native tooling"
+      }
+    ]
+  }
+}
