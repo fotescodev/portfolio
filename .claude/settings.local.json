@@ -29,7 +29,11 @@
       "Bash(pkill:*)",
       "Bash(gh pr create:*)",
       "Skill(cv-data-ingestion)",
-      "Bash(gh pr merge:*)"
+      "Bash(gh pr merge:*)",
+      "Bash(open http://localhost:5173/)",
+      "Bash(npm run test:*)",
+      "Bash(grep:*)",
+      "Bash(xargs -I {} sh -c 'echo \"\"=== {} ===\"\" && head -15 {}')"
     ],
     "deny": [],
     "ask": []

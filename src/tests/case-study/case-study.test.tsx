@@ -21,13 +21,13 @@ const TestWrapper = ({ children }: { children: React.ReactNode }) => (
 );
 
 describe('Case Study Content Loading', () => {
-    it('should load all 6 case studies', () => {
-        expect(caseStudies).toHaveLength(6);
+    it('should load all 4 case studies', () => {
+        expect(caseStudies).toHaveLength(4);
     });
 
     it('should sort case studies by id', () => {
         const ids = caseStudies.map(cs => cs.id);
-        expect(ids).toEqual([1, 2, 3, 4, 5, 6]);
+        expect(ids).toEqual([1, 2, 3, 4]);
     });
 
     it('should have required fields in each case study', () => {
@@ -87,7 +87,7 @@ describe('Case Study Helper Functions', () => {
     it('getCaseStudyById should return correct case study', () => {
         const cs = getCaseStudyById(2);
         expect(cs).toBeDefined();
-        expect(cs?.title).toBe('Protocol Integration Framework');
+        expect(cs?.title).toBe('On-Chain Alerting Platform');
     });
 
     it('getCaseStudyById should return undefined for non-existent id', () => {
@@ -388,31 +388,32 @@ describe('Case Study Content Specific Tests', () => {
         expect(cs?.hook.impactMetric.label).toBe('slashing events');
     });
 
-    it('Protocol Integration case study should have correct data', () => {
+    it('Mempools case study should have correct data', () => {
         const cs = getCaseStudyById(2);
-        expect(cs?.title).toBe('Protocol Integration Framework');
-        expect(cs?.hook.impactMetric.value).toBe('7+');
-    });
-
-    it('Xbox Royalties case study should have correct data', () => {
-        const cs = getCaseStudyById(3);
-        expect(cs?.title).toBe('Royalties on Ethereum');
-        expect(cs?.company).toBe('Microsoft / Xbox');
-        expect(cs?.hook.impactMetric.value).toBe('First');
+        expect(cs?.title).toBe('On-Chain Alerting Platform');
+        expect(cs?.company).toBe('Mempools (Founder)');
+        expect(cs?.hook.impactMetric.value).toBe('200+');
     });
 
     it('Ankr RPC case study should have correct data', () => {
-        const cs = getCaseStudyById(4);
+        const cs = getCaseStudyById(3);
         expect(cs?.title).toBe('RPC Infrastructure & APIs');
         expect(cs?.company).toBe('Ankr');
         expect(cs?.hook.impactMetric.value).toBe('15×');
+    });
+
+    it('Xbox Royalties case study should have correct data', () => {
+        const cs = getCaseStudyById(4);
+        expect(cs?.title).toBe('Royalties on Ethereum');
+        expect(cs?.company).toBe('Microsoft / Xbox');
+        expect(cs?.hook.impactMetric.value).toBe('99%');
     });
 });
 
 describe('Case Study Links Schema', () => {
     it('should support optional demoUrl, githubUrl, docsUrl fields', () => {
         // Ankr case study has all three
-        const ankr = getCaseStudyById(4);
+        const ankr = getCaseStudyById(3);
         expect(ankr?.demoUrl).toBeDefined();
         expect(ankr?.githubUrl).toBeDefined();
         expect(ankr?.docsUrl).toBeDefined();
@@ -427,11 +428,11 @@ describe('Case Study Links Schema', () => {
     });
 
     it('should support media array with type and url', () => {
-        const ankr = getCaseStudyById(4);
+        const ankr = getCaseStudyById(3);
         expect(ankr?.media).toBeDefined();
         expect(Array.isArray(ankr?.media)).toBe(true);
         expect(ankr?.media?.length).toBeGreaterThan(0);
-        
+
         ankr?.media?.forEach(item => {
             expect(item.type).toBeDefined();
             expect(item.url).toBeDefined();
@@ -448,7 +449,7 @@ describe('Case Study Links Schema', () => {
     });
 
     it('media items can have optional labels', () => {
-        const ankr = getCaseStudyById(4);
+        const ankr = getCaseStudyById(3);
         // At least some media items should have labels
         const hasLabels = ankr?.media?.some(item => item.label !== undefined);
         expect(hasLabels).toBe(true);
@@ -463,12 +464,12 @@ describe('CaseStudyLinks Component', () => {
                 <CaseStudyLinks caseStudy={noLinksCaseStudy} />
             </TestWrapper>
         );
-        
+
         expect(container.firstChild).toBeNull();
     });
 
     it('should render Live button when demoUrl exists', () => {
-        const ankr = getCaseStudyById(4)!;
+        const ankr = getCaseStudyById(3)!;
         render(
             <TestWrapper>
                 <CaseStudyLinks caseStudy={ankr} />
@@ -479,59 +480,59 @@ describe('CaseStudyLinks Component', () => {
     });
 
     it('should render Code button when githubUrl exists', () => {
-        const ankr = getCaseStudyById(4)!;
+        const ankr = getCaseStudyById(3)!;
         render(
             <TestWrapper>
                 <CaseStudyLinks caseStudy={ankr} />
             </TestWrapper>
         );
-        
+
         expect(screen.getByText('Code')).toBeInTheDocument();
     });
 
     it('should render Docs button when docsUrl exists', () => {
-        const ankr = getCaseStudyById(4)!;
+        const ankr = getCaseStudyById(3)!;
         render(
             <TestWrapper>
                 <CaseStudyLinks caseStudy={ankr} />
             </TestWrapper>
         );
-        
+
         expect(screen.getByText('Docs')).toBeInTheDocument();
     });
 
     it('should render media icon buttons with tooltips', () => {
-        const ankr = getCaseStudyById(4)!;
+        const ankr = getCaseStudyById(3)!;
         render(
             <TestWrapper>
                 <CaseStudyLinks caseStudy={ankr} />
             </TestWrapper>
         );
-        
+
         // Media buttons should have title attributes (tooltips)
         const buttons = document.querySelectorAll('button[title]');
-        const mediaButtonCount = Array.from(buttons).filter(btn => 
+        const mediaButtonCount = Array.from(buttons).filter(btn =>
             btn.getAttribute('title') && !['Live', 'Code', 'Docs'].includes(btn.textContent || '')
         ).length;
-        
+
         expect(mediaButtonCount).toBeGreaterThan(0);
     });
 
     it('should render links in hero section', () => {
-        const ankr = getCaseStudyById(4)!;
+        const ankr = getCaseStudyById(3)!;
         render(
             <TestWrapper>
                 <CaseStudyHero caseStudy={ankr} isMobile={false} />
             </TestWrapper>
         );
-        
+
         // Links should be in the hero
         expect(screen.getByText('Live')).toBeInTheDocument();
         expect(screen.getByText('Code')).toBeInTheDocument();
     });
 
     it('should render links only in hero (not footer for consistency)', () => {
-        const ankr = getCaseStudyById(4)!;
+        const ankr = getCaseStudyById(3)!;
         render(
             <TestWrapper>
                 <CaseStudyFooter 
