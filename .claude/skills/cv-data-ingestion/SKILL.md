@@ -148,11 +148,32 @@ jobs:
 ```
 
 **Enrichment criteria**:
-- 5-7 highlights per role (not 3)
-- Specific metrics > vague claims
+- 3-4 highlights per role (focused, not exhaustive)
+- Specific metrics > vague claims (SMART: Specific, Measurable, Achievable, Relevant)
 - Technologies and methodologies named
 - Collaboration scope mentioned
 - Key decisions with trade-offs
+
+#### Product Links in Highlights (IMPORTANT)
+
+**Highlights support markdown links** — use `[Product Name](url)` to link to shipped products, docs, or proof.
+
+```yaml
+# Example with inline product links
+highlights:
+  - "Shipped [Advanced API](https://ankr.com/docs/advanced-api/) from 0→1, serving 1M+ daily requests"
+  - "Built [Xbox royalties blockchain](https://ey.com/case-study) achieving 99% faster processing"
+  - "Launched [Playground V2](https://play.flow.com/) improving developer onboarding by 60%"
+```
+
+**Link priority for highlights**:
+1. Live product/demo URLs (highest credibility)
+2. Official documentation
+3. NPM/PyPI package pages
+4. GitHub repos
+5. Case studies or press coverage
+
+**Why this matters**: Recruiters verify claims. A clickable link to a live product instantly validates the work is real.
 
 #### Link Extraction (IMPORTANT)
 

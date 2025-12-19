@@ -2,6 +2,48 @@ import { useVariant } from '../../context/VariantContext';
 import { useTheme } from '../../context/ThemeContext';
 import { getExperienceWithOverrides } from '../../lib/variants';
 
+// Parse markdown links [text](url) into clickable anchors
+function parseLinks(text: string): React.ReactNode {
+  const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
+  const parts: React.ReactNode[] = [];
+  let lastIndex = 0;
+  let match;
+
+  while ((match = linkRegex.exec(text)) !== null) {
+    // Add text before the link
+    if (match.index > lastIndex) {
+      parts.push(text.slice(lastIndex, match.index));
+    }
+    // Add the link
+    parts.push(
+      <a
+        key={match.index}
+        href={match[2]}
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{
+          color: 'var(--color-accent)',
+          textDecoration: 'none',
+          borderBottom: '1px solid transparent',
+          transition: 'border-color 0.2s'
+        }}
+        onMouseEnter={(e) => e.currentTarget.style.borderBottomColor = 'var(--color-accent)'}
+        onMouseLeave={(e) => e.currentTarget.style.borderBottomColor = 'transparent'}
+      >
+        {match[1]}
+      </a>
+    );
+    lastIndex = match.index + match[0].length;
+  }
+
+  // Add remaining text
+  if (lastIndex < text.length) {
+    parts.push(text.slice(lastIndex));
+  }
+
+  return parts.length > 0 ? parts : text;
+}
+
 interface Job {
   company: string;
   role: string;
@@ -162,7 +204,7 @@ export default function ExperienceSection({ isMobile, isTablet, sectionPadding }
                         left: 0,
                         color: 'var(--color-accent)'
                       }}>→</span>
-                      {highlight}
+                      {parseLinks(highlight)}
                     </li>
                   ))}
                 </ul>
