@@ -20,6 +20,12 @@ body {
   transition: background var(--transition-medium), color var(--transition-medium);
 }
 
+/* Reset anchor colors - let components control link styling */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
 /* Prevent in-page anchor jumps from hiding under the fixed nav */
 section[id] {
   scroll-margin-top: var(--space-5xl);

@@ -23,9 +23,9 @@ function parseLinks(text: string): React.ReactNode {
         rel="noopener noreferrer"
         style={{
           color: 'var(--color-accent)',
-          textDecoration: 'none',
-          borderBottom: '1px solid transparent',
-          transition: 'border-color 0.2s'
+          textDecoration: 'underline',
+          textDecorationColor: 'var(--color-accent)',
+          textUnderlineOffset: '2px'
         }}
         onMouseEnter={(e) => e.currentTarget.style.borderBottomColor = 'var(--color-accent)'}
         onMouseLeave={(e) => e.currentTarget.style.borderBottomColor = 'transparent'}

@@ -163,8 +163,12 @@ export default function HeroSection({ profile, isMobile, isTablet, isLoaded }: H
               flexDirection: 'column',
               gap: 'var(--space-md)'
             }}>
-              <a
-                href={hero.cta.primary.href}
+              <button
+                onClick={() => {
+                  const target = hero.cta.primary.href.replace('#', '');
+                  const el = document.getElementById(target);
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }}
                 className="hero-primary-btn"
                 style={{
                   padding: isMobile ? '16px 28px' : '18px 32px',
@@ -176,12 +180,14 @@ export default function HeroSection({ profile, isMobile, isTablet, isLoaded }: H
                   alignItems: 'center',
                   justifyContent: 'space-between',
                   width: isMobile ? '100%' : 'fit-content',
-                  minWidth: '220px'
+                  minWidth: '220px',
+                  border: 'none',
+                  cursor: 'pointer'
                 }}
               >
                 <span>{hero.cta.primary.label}</span>
                 <span style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic' }}>↓</span>
-              </a>
+              </button>
               <a
                 href={hero.cta.secondary.href}
                 download="Dmitrii-Fotesco-Resume.pdf"
