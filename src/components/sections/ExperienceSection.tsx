@@ -153,14 +153,34 @@ export default function ExperienceSection({ isMobile, isTablet, sectionPadding }
                       }}
                     />
                   )}
-                  <span style={{
-                    fontSize: isMobile ? '16px' : '18px',
-                    fontFamily: 'var(--font-serif)',
-                    fontStyle: 'italic',
-                    color: 'var(--color-text-secondary)'
-                  }}>
-                    {job.company}
-                  </span>
+                  {job.url ? (
+                    <a
+                      href={job.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        fontSize: isMobile ? '16px' : '18px',
+                        fontFamily: 'var(--font-serif)',
+                        fontStyle: 'italic',
+                        color: 'var(--color-text-secondary)',
+                        textDecoration: 'none',
+                        transition: 'color 0.2s ease'
+                      }}
+                      onMouseEnter={(e) => e.currentTarget.style.color = 'var(--color-accent)'}
+                      onMouseLeave={(e) => e.currentTarget.style.color = 'var(--color-text-secondary)'}
+                    >
+                      {job.company}
+                    </a>
+                  ) : (
+                    <span style={{
+                      fontSize: isMobile ? '16px' : '18px',
+                      fontFamily: 'var(--font-serif)',
+                      fontStyle: 'italic',
+                      color: 'var(--color-text-secondary)'
+                    }}>
+                      {job.company}
+                    </span>
+                  )}
                 </div>
                 <div style={{
                   fontSize: '12px',
