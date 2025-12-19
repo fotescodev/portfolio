@@ -1,0 +1,60 @@
+# ═══════════════════════════════════════════════════════════════
+# ACHIEVEMENT TEMPLATE
+# ═══════════════════════════════════════════════════════════════
+# Atomic unit of accomplishment. Use STAR format for narratives.
+# These feed case studies, resume bullets, and variant customization.
+
+id: achievement-slug                # Unique identifier (kebab-case)
+headline: "One-line achievement"    # Resume bullet format
+
+# ───────────────────────────────────────────────────────────────
+# QUANTIFIED IMPACT
+# ───────────────────────────────────────────────────────────────
+metric:
+  value: "X"                        # Number or descriptor
+  unit: "metric type"               # e.g., "revenue growth", "users", "reduction"
+  context: "why this matters"       # Business context
+
+# ───────────────────────────────────────────────────────────────
+# STAR NARRATIVE (Situation, Task, Action, Result)
+# ───────────────────────────────────────────────────────────────
+situation: |
+  What was the context? What problem existed?
+  Include constraints, stakeholders, and stakes.
+
+task: |
+  What were you specifically responsible for?
+  What was your role and mandate?
+
+action: |
+  What did you actually do? Be specific.
+  Include key decisions, trade-offs, and methodology.
+
+result: |
+  What was the outcome? Quantify if possible.
+  Include downstream effects and learnings.
+
+# ───────────────────────────────────────────────────────────────
+# TAGGING FOR RETRIEVAL
+# ───────────────────────────────────────────────────────────────
+skills: []          # Technical and soft skills demonstrated
+themes: []          # Business themes (see index.yaml)
+companies: []       # Company IDs (see index.yaml)
+years: []           # Years this applies to
+
+# ───────────────────────────────────────────────────────────────
+# REUSABILITY HINTS
+# ───────────────────────────────────────────────────────────────
+good_for:
+  - "Role types this resonates with"
+  - "Company types that would value this"
+  - "Interview question categories"
+
+# ───────────────────────────────────────────────────────────────
+# EVIDENCE & ARTIFACTS
+# ───────────────────────────────────────────────────────────────
+evidence:
+  case_study: null                  # Link to full case study if exists
+  testimonial: null                 # Link to testimonial if exists
+  metrics_source: null              # Where the numbers come from
+  artifacts: []                     # Screenshots, docs, links

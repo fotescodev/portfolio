@@ -1,0 +1,83 @@
+# ═══════════════════════════════════════════════════════════════
+# STORY: Galaxy Compliance Win
+# ═══════════════════════════════════════════════════════════════
+id: galaxy-compliance-win
+title: "How 'Boring and Defensible' Won Galaxy's Business"
+type: case-study
+
+hook: |
+  Galaxy specifically cited 'full key ownership' as the reason they chose us over
+  competitors using third-party staking providers. The decision we almost didn't make.
+
+narrative:
+  problem: |
+    ETF providers and asset managers wanted ETH staking yield but couldn't use
+    existing solutions. Consumer staking products lacked the custody controls,
+    audit trails, and regulatory defensibility that institutional clients require.
+    Losing a single institutional client to a slashing event would damage reputation
+    across the entire market—a market where trust spreads by word of mouth.
+
+  insight: |
+    Third-party staking providers offered 3-week launch vs our 6-month build.
+    Leadership pressure to ship faster. But when I mapped compliance risk against
+    client requirements, third-party key management was a clear audit blocker for
+    ETF-grade clients. The faster path was actually the wrong path.
+
+  approach: |
+    Chose in-house validators despite timeline pressure. Presented compliance risk
+    matrix to leadership showing the regulatory exposure. Designed for "boring and
+    defensible" over "innovative and risky"—multi-client validator architecture
+    with Web3Signer for air-gapped signing, prioritizing auditability and slashing
+    prevention over yield maximization.
+
+  execution: |
+    12+ discovery calls with Galaxy and prospective institutional clients to map
+    non-negotiables. Created 'custody compatibility matrix' with legal. Designed
+    multi-client architecture (Lighthouse 40%, Prysm 30%, Teku 20%, Nimbus 10%).
+    Built redundant slashing DB with 'graceful degradation'—miss attestations
+    rather than risk slashing. Onboarded Galaxy as design partner.
+
+  outcome: |
+    Zero slashing events since launch—the only metric that matters for institutional
+    trust. Galaxy + multiple ETF-adjacent clients onboarded. Yield within 0.1% of
+    market leaders—proved we didn't sacrifice performance for compliance. Established
+    Anchorage as credible institutional staking provider.
+
+  reflection: |
+    In regulated crypto infrastructure, the competitive moat isn't technical
+    innovation—it's trust, auditability, and the paper trail that proves you did
+    things right. If I did it again, I'd run a 'compliance design review' as a
+    formal gate before any architecture decisions.
+
+achievements:
+  - eth-staking-zero-slashing
+skills_demonstrated:
+  - ethereum
+  - staking
+  - compliance
+  - cross-functional
+themes:
+  - institutional-crypto
+companies:
+  - anchorage
+
+word_count_target: 1000
+tone: professional
+audience:
+  - "Institutional finance hiring managers"
+  - "Crypto infrastructure roles"
+  - "Compliance-focused organizations"
+
+key_quote: |
+  In regulated crypto infrastructure, the competitive moat isn't technical
+  innovation—it's trust, auditability, and the paper trail that proves you
+  did things right.
+
+evidence:
+  testimonials:
+    - "content/testimonials/index.yaml"  # JD testimonial
+  metrics:
+    - "Zero slashing events"
+    - "Galaxy + institutional clients"
+    - "<0.1% yield gap vs market"
+  artifacts: []
