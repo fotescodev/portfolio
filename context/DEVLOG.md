@@ -2,11 +2,124 @@
 
 ---
 
+## Session Learnings & Patterns (AI RAMP-UP GUIDE)
+
+Quick-reference patterns established through iterations. **Read this first** to avoid re-learning.
+
+### Experience Section Patterns
+
+| Pattern | Implementation |
+|---------|----------------|
+| **Markdown links in highlights** | `[Product](url)` renders as clickable accent-colored links |
+| **SMART bullets** | 3-4 per role, format: `[Action verb] + [What] + [Metric] + [Context]` |
+| **Product links** | Always link to live demos, docs, npm packages — recruiters verify claims |
+| **Metrics first** | $, %, ×, time savings visible in first 10 words |
+
+**Example bullet:**
+```yaml
+- "Shipped [Advanced API](https://ankr.com/docs/) from 0→1, serving 1M+ daily requests"
+```
+
+### CV Data Ingestion Skill
+
+| Step | Why |
+|------|-----|
+| **Phase 0: Read schemas first** | Prevents 100% of validation errors |
+| **Check for AI summaries** | Gemini/Claude reviews save parsing time |
+| **3-4 highlights max** | Scannable in 10 seconds |
+| **Add product links** | Credibility boost for recruiters |
+
+### Component Capabilities
+
+| Component | Feature |
+|-----------|---------|
+| `ExperienceSection.tsx` | `parseLinks()` converts `[text](url)` to `<a>` tags |
+| `CaseStudyLinks.tsx` | Renders demoUrl, githubUrl, docsUrl, media array |
+| Case study highlights | Support markdown links |
+
+### Content File Locations
+
+| Content | File |
+|---------|------|
+| **Input (raw data)** | `source-data/` (gitignored) |
+| Experience | `content/experience/index.yaml` |
+| Case Studies | `content/case-studies/*.md` |
+| Skills | `content/skills/index.yaml` |
+| Testimonials | `content/testimonials/index.yaml` |
+| Variants | `content/variants/*.yaml` |
+| Schemas | `src/lib/schemas.ts` |
+
+### Validation Commands
+
+```bash
+npm run validate  # Check all content against Zod schemas
+npm run build     # Full production build
+npm run dev       # Local dev server at :5173
+```
+
+### Known Gaps (Manual Tasks)
+
+- **Testimonials**: Need real LinkedIn recommendations (currently synthetic)
+- **Bundle size**: 467KB needs code splitting (P0 priority)
+
+---
+
 ## Active Project Pulse (AI START HERE)
 **Current Objective**: Bundle size reduction and performance optimization.
-**Last Action**: Re-validated cv-data-ingestion skill — zero schema errors (down from 2 in initial run).
+**Last Action**: Optimized experience section — 42→24 bullets, added 12 product links, SMART format.
 **Next Focus**: Bundle size reduction (Code Splitting) and Style Refactor.
 **Red Alert**: Performance (467KB bundle) is the primary blocker for LCP.
+
+---
+
+## Session: December 19, 2025 (Night) — Experience Section Optimization
+
+### Summary
+Optimized experience section for ATS/recruiter scanning with SMART bullets, product links, and reduced noise.
+
+### Changes Made
+
+#### 1. Experience Content Optimization
+- Reduced highlights from 42 to 24 (43% reduction)
+- Added 12 inline product links for credibility
+- Applied SMART format: `[Action] + [What] + [Metric] + [Context]`
+- Fixed Bloom WACI attribution (contributed, not authored)
+
+| Company | Before | After | Links Added |
+|---------|--------|-------|-------------|
+| Anchorage | 7 | 4 | Aztec, Liquid Collective |
+| Forte | 5 | 3 | — |
+| Dapper | 6 | 4 | Playground V2, kapa.ai |
+| Mempools | 6 | 3 | mempools.com, Archway-Alerts, npm |
+| Ankr | 7 | 4 | Advanced API, Ankr.js, Pricing |
+| Bloom | 5 | 3 | WACI (DIF) |
+| Microsoft | 6 | 3 | EY case study |
+
+#### 2. Component Enhancement
+- Added `parseLinks()` function to `ExperienceSection.tsx`
+- Supports `[text](url)` markdown syntax in highlights
+- Links render with accent color and hover underline
+
+#### 3. Skill Update
+- Added "Product Links in Highlights" section to cv-data-ingestion skill
+- Updated enrichment criteria from 5-7 to 3-4 bullets
+- Added link priority guidance
+
+### Key Learnings
+1. **Recruiters verify claims** — clickable links to live products instantly validate work
+2. **3-4 bullets max** — scannable in 10 seconds vs. overwhelming 7
+3. **Metrics in first 10 words** — $1M, 15×, 99% catch attention
+4. **Link to proof** — npm packages, docs, case studies > vague claims
+
+### Files Changed
+- `content/experience/index.yaml` — Full rewrite with links
+- `src/components/sections/ExperienceSection.tsx` — Added parseLinks()
+- `.claude/skills/cv-data-ingestion/SKILL.md` — Product link guidance
+
+**Session Value Summary:**
+- Experience now ATS-optimized and recruiter-scannable
+- 12 product links add instant credibility
+- Pattern documented for future sessions
 
 ---
 

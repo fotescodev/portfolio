@@ -7,6 +7,19 @@ description: Ingest and organize raw career data from Obsidian notes, CSV files,
 
 Transforms unstructured career data into the portfolio's content structure, ready for variant generation and "hired-on-sight" presentation.
 
+## Input Directory
+
+**Drop all source files in `source-data/`** — this directory is gitignored.
+
+```
+source-data/
+├── obsidian-vault/       # Obsidian folders with .md files
+├── linkedin-export.csv   # CSV exports
+├── resume.pdf            # Resumes
+├── gemini-review.md      # AI summaries (processed first)
+└── archive.zip           # Bulk exports
+```
+
 ## Target Output Structure
 
 All output goes to the existing `content/` directory:
@@ -96,10 +109,10 @@ Read src/lib/schemas.ts
 
 ```bash
 # Look for AI review files
-find [SOURCE_PATH] -name "*review*" -o -name "*summary*" -o -name "*gemini*" -o -name "*claude*" -o -name "*gpt*"
+find source-data/ -name "*review*" -o -name "*summary*" -o -name "*gemini*" -o -name "*claude*" -o -name "*gpt*"
 
 # Check for structured exports
-find [SOURCE_PATH] -name "*.json" -o -name "*export*"
+find source-data/ -name "*.json" -o -name "*export*"
 ```
 
 **If found**: Use as PRIMARY source, cross-reference with raw data for verification.
@@ -108,13 +121,13 @@ find [SOURCE_PATH] -name "*.json" -o -name "*export*"
 
 ```bash
 # For Obsidian vault
-find [VAULT_PATH] -name "*.md" -type f | head -50
+find source-data/ -name "*.md" -type f | head -50
 
-# For zip archive
-unzip -l [ARCHIVE_PATH] | head -50
+# For zip archive (extract first)
+unzip -l source-data/*.zip | head -50
 
 # Categorize by type
-find [SOURCE_PATH] -type f \( -name "*.md" -o -name "*.csv" -o -name "*.txt" -o -name "*.json" \)
+find source-data/ -type f \( -name "*.md" -o -name "*.csv" -o -name "*.txt" -o -name "*.json" \)
 ```
 
 Create an inventory table with confidence scores:
@@ -440,8 +453,9 @@ npm run validate
 - [ ] All required fields populated
 - [ ] No placeholder URLs (demo.com, example.com)
 - [ ] Metrics are specific, not vague ("improved" → "improved by 40%")
-- [ ] Each experience has 5+ highlights
-- [ ] At least 5 testimonials for "Wall of Love"
+- [ ] Missing metrics marked with `[METRIC]` for user to fill (e.g., "Increased revenue by [METRIC]%")
+- [ ] Each experience has 3-4 highlights (focused, not exhaustive)
+- [ ] Product links included for every shipped product/tool
 - [ ] All dates in consistent format (YYYY or YYYY–YY)
 
 ---
@@ -456,7 +470,8 @@ npm run validate
   period: string;       // Required: "YYYY – YYYY" or "YYYY – Present"
   location: string;     // Required
   logo?: string;        // Optional: path to logo
-  highlights: string[]; // Required: 3-7 items
+  url?: string;         // Optional: company website - ALWAYS include if available
+  highlights: string[]; // Required: 3-4 items with [Product](url) links where possible
   tags: string[];       // Required: 2-5 tags
 }
 ```
