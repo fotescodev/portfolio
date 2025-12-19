@@ -1,9 +1,10 @@
 import { useParams, useNavigate, Link, Navigate } from 'react-router-dom';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark, oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { Helmet } from 'react-helmet-async';
 import { useTheme } from '../context/ThemeContext';
 import { likePost, unlikePost, getLikeCount, hasUserLikedPost } from '../lib/likes';
 import { profile } from '../lib/content';
@@ -104,7 +105,14 @@ export default function BlogPostPage() {
     const [isClapping, setIsClapping] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
     const [copiedCode, setCopiedCode] = useState<string | null>(null);
+    const [emailCopied, setEmailCopied] = useState(false);
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [tocOpen, setTocOpen] = useState(false);
+    const [imageLoaded, setImageLoaded] = useState(false);
     const contentRef = useRef<HTMLDivElement>(null);
+
+    // Calculate reading time remaining based on scroll progress
+    const readingTimeRemaining = post ? Math.max(0, Math.ceil(post.readingTime * (1 - scrollProgress / 100))) : 0;
 
     useEffect(() => {
         const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -167,6 +175,29 @@ export default function BlogPostPage() {
         window.scrollTo(0, 0);
     }, [slug]);
 
+    // Keyboard navigation
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            // Don't trigger if user is typing in an input
+            if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
+
+            if (e.key === 'Escape') {
+                navigate('/#blog');
+            } else if (e.key === 'j' && nextPost) {
+                navigate(`/blog/${nextPost.slug}`);
+            } else if (e.key === 'k' && prevPost) {
+                navigate(`/blog/${prevPost.slug}`);
+            }
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [navigate, nextPost, prevPost]);
+
+    // Close mobile menu on route change
+    useEffect(() => {
+        setMobileMenuOpen(false);
+    }, [slug]);
+
     if (!post) return <Navigate to="/" replace />;
 
     const formatDate = (dateStr: string) => {
@@ -193,6 +224,16 @@ export default function BlogPostPage() {
             setTimeout(() => setCopiedCode(null), 2000);
         } catch (err) {
             console.error('Failed to copy code:', err);
+        }
+    };
+
+    const copyEmail = async () => {
+        try {
+            await navigator.clipboard.writeText(profile.email);
+            setEmailCopied(true);
+            setTimeout(() => setEmailCopied(false), 2000);
+        } catch (err) {
+            console.error('Failed to copy email:', err);
         }
     };
 
@@ -304,19 +345,27 @@ export default function BlogPostPage() {
                 .code-copy-btn svg { width: 14px; height: 14px; }
                 .code-content { padding: 20px; overflow-x: auto; }
                 .code-content pre { margin: 0 !important; background: transparent !important; }
+                .code-content code { background: transparent !important; }
+                .code-content span { background: transparent !important; }
 
                 /* Author bio card */
-                .author-card { display: flex; flex-direction: column; gap: 24px; padding: 32px; background: var(--color-background-secondary); border-radius: 0; border: 1px solid var(--color-border-light); margin-top: 48px; }
-                @media (min-width: 768px) { .author-card { flex-direction: row; align-items: center; } }
-                .author-card-avatar { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; filter: grayscale(1); flex-shrink: 0; }
+                .author-card { display: flex; flex-direction: column; gap: 20px; padding: 24px; background: var(--color-background-secondary); border: 1px solid var(--color-border-light); margin-top: 32px; margin-bottom: 48px; }
+                @media (min-width: 768px) { .author-card { flex-direction: row; align-items: flex-start; gap: 24px; padding: 28px; } }
+                .author-card-avatar { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; filter: grayscale(1); flex-shrink: 0; }
                 .author-card-content { flex: 1; }
-                .author-card-title { font-family: var(--font-serif); font-style: italic; font-size: 20px; color: var(--color-text-primary); margin-bottom: 8px; }
-                .author-card-bio { font-size: 14px; color: var(--color-text-tertiary); line-height: 1.6; margin-bottom: 16px; font-family: var(--font-sans); }
-                .author-card-link { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-accent); text-decoration: none; font-family: var(--font-sans); transition: color var(--transition-fast); }
-                .author-card-link:hover { color: var(--color-accent-hover); }
+                .author-card-title { font-family: var(--font-serif); font-style: italic; font-size: 18px; color: var(--color-text-primary); margin-bottom: 6px; }
+                .author-card-bio { font-size: 13px; color: var(--color-text-tertiary); line-height: 1.5; margin-bottom: 16px; font-family: var(--font-sans); }
+                .author-card-actions { display: inline-flex; align-items: center; gap: 4px; padding: 4px; background: var(--color-background); border: 1px solid var(--color-border-light); }
+                .author-card-btn { display: flex; align-items: center; gap: 5px; padding: 6px 12px; background: transparent; border: none; color: var(--color-text-secondary); font-size: 11px; font-weight: 500; font-family: var(--font-sans); cursor: pointer; text-decoration: none; transition: all 0.2s ease; white-space: nowrap; }
+                .author-card-btn:hover { color: var(--color-text-primary); background: var(--color-tag-hover); }
+                .author-card-btn svg { width: 12px; height: 12px; opacity: 0.7; }
+                .author-card-btn-primary { background: var(--color-accent); color: var(--color-background); }
+                .author-card-btn-primary:hover { background: var(--color-accent-hover); color: var(--color-background); }
+                .author-card-btn-primary svg { opacity: 1; }
+                .author-card-divider { width: 1px; height: 14px; background: var(--color-border-light); }
 
                 /* Tags footer */
-                .tags-footer { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--color-border-light); }
+                .tags-footer { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--color-border-light); }
                 .tags-label { font-size: 14px; font-weight: 500; color: var(--color-text-muted); margin-right: 8px; font-family: var(--font-sans); }
                 .tag-link { font-size: 14px; color: var(--color-text-tertiary); text-decoration: none; transition: color var(--transition-fast); font-family: var(--font-sans); }
                 .tag-link:hover { color: var(--color-accent); }
@@ -334,13 +383,13 @@ export default function BlogPostPage() {
                 .thought-card:hover .thought-cta svg { transform: translateX(4px); }
 
                 /* TOC */
-                .toc-container { position: sticky; top: 100px; padding: 24px; background: var(--color-background-secondary); border: 1px solid var(--color-border-light); border-radius: 0; }
+                .toc-container { position: sticky; top: 100px; padding: 20px; background: transparent; border: none; border-radius: 0; }
                 .toc-title { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 16px; font-family: var(--font-sans); }
-                .toc-item { display: block; font-size: 13px; color: var(--color-text-tertiary); padding: 8px 0; cursor: pointer; transition: color var(--transition-fast); border-left: 2px solid transparent; padding-left: 12px; margin-left: -12px; font-family: var(--font-sans); }
+                .toc-item { display: block; font-size: 13px; color: var(--color-text-tertiary); padding: 8px 0; cursor: pointer; transition: color var(--transition-fast); border-left: 2px solid var(--color-border-light); padding-left: 12px; font-family: var(--font-sans); background: transparent; border-top: none; border-right: none; border-bottom: none; text-align: left; width: 100%; }
                 .toc-item:hover { color: var(--color-text-primary); }
                 .toc-item.active { color: var(--color-accent); border-left-color: var(--color-accent); }
-                .toc-item.level-2 { padding-left: 24px; }
-                .toc-item.level-3 { padding-left: 36px; font-size: 12px; }
+                .toc-item.level-2 { padding-left: 20px; }
+                .toc-item.level-3 { padding-left: 28px; font-size: 12px; }
 
                 /* Utils */
                 .back-to-top { position: fixed; bottom: 24px; right: 24px; width: 48px; height: 48px; border-radius: 0; background: var(--color-background-secondary); border: 1px solid var(--color-border); color: var(--color-text-secondary); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 20px; z-index: 100; opacity: 0; transform: translateY(20px); pointer-events: none; transition: all var(--transition-fast); font-family: var(--font-serif); }
@@ -355,11 +404,103 @@ export default function BlogPostPage() {
                 .clap-btn svg { width: 20px; height: 20px; }
                 .clap-btn.animating svg { animation: clapBounce 0.6s var(--ease-smooth); }
                 @keyframes clapBounce { 0% { transform: scale(1); } 25% { transform: scale(1.3); } 50% { transform: scale(1.1); } 75% { transform: scale(1.25); } 100% { transform: scale(1); } }
+
+                /* Drop cap */
+                .blog-prose > p:first-of-type::first-letter { float: left; font-family: var(--font-serif); font-size: 3.5em; line-height: 0.8; padding-right: 12px; padding-top: 4px; color: var(--color-text-primary); font-weight: 400; }
+
+                /* Reading time remaining */
+                .reading-indicator { position: fixed; top: 3px; right: 24px; font-size: 11px; color: var(--color-text-muted); font-family: var(--font-sans); z-index: 1002; opacity: 0; transition: opacity var(--transition-fast); }
+                .reading-indicator.visible { opacity: 1; }
+
+                /* Prev/Next navigation */
+                .post-nav { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--color-border-light); }
+                @media (max-width: 640px) { .post-nav { grid-template-columns: 1fr; } }
+                .post-nav-link { display: flex; flex-direction: column; padding: 20px; background: var(--color-background-secondary); border: 1px solid var(--color-border-light); text-decoration: none; transition: all var(--transition-fast); }
+                .post-nav-link:hover { border-color: var(--color-accent); background: var(--color-card-hover); }
+                .post-nav-link.next { text-align: right; }
+                .post-nav-label { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 8px; font-family: var(--font-sans); display: flex; align-items: center; gap: 6px; }
+                .post-nav-link.next .post-nav-label { justify-content: flex-end; }
+                .post-nav-title { font-family: var(--font-serif); font-style: italic; font-size: 16px; color: var(--color-text-primary); line-height: 1.3; transition: color var(--transition-fast); }
+                .post-nav-link:hover .post-nav-title { color: var(--color-accent); }
+
+                /* Mobile menu */
+                .mobile-menu { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--color-background); z-index: 99; display: flex; flex-direction: column; justify-content: center; padding: 0 24px; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+                .mobile-menu.open { opacity: 1; pointer-events: auto; }
+                .mobile-menu-link { color: var(--color-text-primary); text-decoration: none; font-family: var(--font-serif); font-size: 32px; font-style: italic; padding: 16px 0; border-bottom: 1px solid var(--color-border); transition: color var(--transition-fast); }
+                .mobile-menu-link:hover { color: var(--color-accent); }
+
+                /* Mobile TOC */
+                .toc-mobile { margin-bottom: 32px; }
+                .toc-toggle { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 16px; background: var(--color-background-secondary); border: 1px solid var(--color-border-light); color: var(--color-text-primary); font-size: 14px; font-weight: 500; cursor: pointer; font-family: var(--font-sans); transition: all var(--transition-fast); }
+                .toc-toggle:hover { background: var(--color-background-tertiary); }
+                .toc-toggle svg { width: 16px; height: 16px; transition: transform var(--transition-fast); color: var(--color-text-muted); }
+                .toc-toggle.open svg { transform: rotate(180deg); }
+                .toc-mobile-content { padding: 16px; background: var(--color-background-secondary); border: 1px solid var(--color-border-light); border-top: none; display: none; }
+                .toc-mobile-content.open { display: block; }
+                .toc-mobile-content .toc-item { display: block; text-align: left; width: 100%; background: transparent; border: none; }
+
+                /* Desktop TOC sidebar */
+                .toc-sidebar { position: fixed; top: 120px; right: max(24px, calc((100vw - 1200px) / 2 - 200px)); width: 200px; display: none; }
+                @media (min-width: 1280px) { .toc-sidebar { display: block; } }
+
+                /* Anchor links on headings */
+                .heading-anchor { opacity: 0; margin-left: 8px; color: var(--color-text-muted); text-decoration: none; transition: opacity var(--transition-fast); }
+                .blog-prose h2:hover .heading-anchor, .blog-prose h3:hover .heading-anchor { opacity: 1; }
+                .heading-anchor:hover { color: var(--color-accent); }
+
+                /* Image blur-up */
+                .hero-image { transition: opacity 0.5s ease, filter 0.5s ease; }
+                .hero-image.loading { filter: blur(10px); opacity: 0.6; }
+                .hero-image.loaded { filter: blur(0); opacity: 0.85; }
+
+                /* Print styles */
+                @media print {
+                    .progress-bar, .blog-nav, .back-to-top, .copy-toast, .toc-sidebar, .toc-mobile, .post-nav, .more-thoughts, .author-card-actions, .action-btn, .clap-btn, .mobile-menu { display: none !important; }
+                    .blog-prose { max-width: 100% !important; }
+                    .blog-prose a { color: inherit; text-decoration: underline; }
+                    .blog-prose a::after { content: " (" attr(href) ")"; font-size: 0.8em; color: #666; }
+                    .code-block { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+                    .author-card { break-inside: avoid; }
+                    body { font-size: 12pt; line-height: 1.5; }
+                    h1 { font-size: 24pt; }
+                    h2 { font-size: 18pt; }
+                    h3 { font-size: 14pt; }
+                }
+
+                /* Keyboard hints */
+                .keyboard-hints { position: fixed; bottom: 24px; left: 24px; display: none; gap: 8px; font-size: 11px; color: var(--color-text-muted); font-family: var(--font-sans); z-index: 50; }
+                @media (min-width: 1024px) { .keyboard-hints { display: flex; } }
+                .kbd { display: inline-flex; align-items: center; justify-content: center; min-width: 20px; height: 20px; padding: 0 6px; background: var(--color-background-secondary); border: 1px solid var(--color-border); font-size: 10px; font-weight: 600; }
             `}</style>
+
+            {/* Open Graph Meta Tags */}
+            <Helmet>
+                <title>{post.title} | Dmitrii Fotesco</title>
+                <meta name="description" content={post.excerpt} />
+                <meta property="og:title" content={post.title} />
+                <meta property="og:description" content={post.excerpt} />
+                <meta property="og:type" content="article" />
+                <meta property="og:url" content={`${window.location.origin}/#/blog/${post.slug}`} />
+                {post.thumbnail && <meta property="og:image" content={post.thumbnail} />}
+                <meta name="twitter:card" content="summary_large_image" />
+                <meta name="twitter:title" content={post.title} />
+                <meta name="twitter:description" content={post.excerpt} />
+                <meta name="twitter:creator" content="@kolob0kk" />
+                <meta property="article:published_time" content={post.date} />
+                <meta property="article:author" content="Dmitrii Fotesco" />
+                {post.tags.map((tag, i) => (
+                    <meta key={i} property="article:tag" content={tag} />
+                ))}
+            </Helmet>
 
             {/* Progress bar */}
             <div className="progress-bar">
                 <div className="progress-fill" style={{ width: `${scrollProgress}%` }} />
+            </div>
+
+            {/* Reading time remaining */}
+            <div className={`reading-indicator ${scrollProgress > 5 && scrollProgress < 95 ? 'visible' : ''}`}>
+                {readingTimeRemaining} min left
             </div>
 
             {/* Main Portfolio Nav - consistent across all pages */}
@@ -451,12 +592,70 @@ export default function BlogPostPage() {
                         </div>
                     )}
 
-                    {/* Mobile: Theme toggle only */}
+                    {/* Mobile: Theme toggle and hamburger */}
                     {isMobile && (
-                        <ThemeToggle isMobile />
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                            <ThemeToggle isMobile />
+                            <button
+                                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                                aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+                                style={{
+                                    background: 'transparent',
+                                    border: 'none',
+                                    padding: '8px',
+                                    cursor: 'pointer',
+                                    color: 'var(--color-text-primary)',
+                                    fontSize: '14px',
+                                    fontWeight: 600,
+                                    textTransform: 'uppercase',
+                                    letterSpacing: '0.1em',
+                                    fontFamily: 'var(--font-sans)'
+                                }}
+                            >
+                                {mobileMenuOpen ? 'Close' : 'Menu'}
+                            </button>
+                        </div>
                     )}
                 </div>
             </nav>
+
+            {/* Mobile Menu Overlay */}
+            <div className={`mobile-menu ${mobileMenuOpen ? 'open' : ''}`}>
+                {[
+                    { label: 'Experience', id: 'experience' },
+                    { label: 'Cases', id: 'work' },
+                    { label: 'Blog', id: 'blog' },
+                    { label: 'About', id: 'about' },
+                    { label: 'Get in Touch', id: 'contact' }
+                ].map((item) => (
+                    <a
+                        key={item.id}
+                        href={`/#${item.id}`}
+                        className="mobile-menu-link"
+                        onClick={() => setMobileMenuOpen(false)}
+                    >
+                        {item.label}
+                    </a>
+                ))}
+            </div>
+
+            {/* Desktop TOC Sidebar */}
+            {tocItems.length > 0 && (
+                <aside className="toc-sidebar">
+                    <div className="toc-container">
+                        <div className="toc-title">Contents</div>
+                        {tocItems.map((item) => (
+                            <button
+                                key={item.id}
+                                className={`toc-item level-${item.level} ${activeHeading === item.id ? 'active' : ''}`}
+                                onClick={() => scrollToHeading(item.id)}
+                            >
+                                {item.text}
+                            </button>
+                        ))}
+                    </div>
+                </aside>
+            )}
 
             {/* Main */}
             <main style={{ paddingTop: isMobile ? '80px' : '100px', paddingBottom: '0' }}>
@@ -471,6 +670,29 @@ export default function BlogPostPage() {
                             Back to Thoughts
                         </a>
                     </div>
+
+                    {/* Mobile TOC */}
+                    {isMobile && tocItems.length > 0 && (
+                        <div className="toc-mobile">
+                            <button className={`toc-toggle ${tocOpen ? 'open' : ''}`} onClick={() => setTocOpen(!tocOpen)}>
+                                <span>Table of Contents</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <polyline points="6 9 12 15 18 9" />
+                                </svg>
+                            </button>
+                            <div className={`toc-mobile-content ${tocOpen ? 'open' : ''}`}>
+                                {tocItems.map((item) => (
+                                    <button
+                                        key={item.id}
+                                        className={`toc-item level-${item.level} ${activeHeading === item.id ? 'active' : ''}`}
+                                        onClick={() => { scrollToHeading(item.id); setTocOpen(false); }}
+                                    >
+                                        {item.text}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+                    )}
 
                     {/* Tags */}
                     <div style={{ display: 'flex', gap: '12px', marginBottom: '24px', flexWrap: 'wrap' }}>
@@ -513,9 +735,9 @@ export default function BlogPostPage() {
                             </div>
                         </div>
                         <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                            <button className={`clap-btn ${hasClapped ? 'clapped' : ''} ${isClapping ? 'animating' : ''}`} onClick={handleClap} title={hasClapped ? 'Remove clap' : 'Clap'}>
-                                <svg viewBox="0 0 24 24" fill={hasClapped ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="1.5">
-                                    <path d="M8.5 14.5L5 11.5C4.33 10.83 4.33 9.73 5 9.06C5.67 8.39 6.77 8.39 7.44 9.06L8.5 10.12M8.5 14.5L14.56 20.56C15.93 21.93 18.14 21.93 19.51 20.56C20.88 19.19 20.88 16.98 19.51 15.61L16.5 12.6M8.5 14.5L11.5 11.5M16.5 12.6L13.5 9.6C12.83 8.93 12.83 7.83 13.5 7.16C14.17 6.49 15.27 6.49 15.94 7.16L16.5 7.72M16.5 12.6L16.5 7.72M16.5 7.72L17.5 6.72C18.17 6.05 19.27 6.05 19.94 6.72C20.61 7.39 20.61 8.49 19.94 9.16L19.5 9.6M11.5 11.5L9.5 9.5C8.83 8.83 8.83 7.73 9.5 7.06C10.17 6.39 11.27 6.39 11.94 7.06L13.5 8.62M11.5 11.5L13.5 9.5" strokeLinecap="round" strokeLinejoin="round"/>
+                            <button className={`clap-btn ${hasClapped ? 'clapped' : ''} ${isClapping ? 'animating' : ''}`} onClick={handleClap} title={hasClapped ? 'Unlike' : 'Like'}>
+                                <svg viewBox="0 0 24 24" fill={hasClapped ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2">
+                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" strokeLinecap="round" strokeLinejoin="round"/>
                                 </svg>
                                 {clapCount > 0 && <span style={{ fontSize: '13px', fontWeight: 500 }}>{clapCount}</span>}
                             </button>
@@ -529,11 +751,17 @@ export default function BlogPostPage() {
                         </div>
                     </div>
 
-                    {/* Hero image */}
+                    {/* Hero image with blur-up loading */}
                     {post.thumbnail && (
                         <figure className="hero-figure">
                             <div className="hero-image-wrapper">
-                                <img src={post.thumbnail} alt={post.title} className="hero-image" />
+                                <img
+                                    src={post.thumbnail}
+                                    alt={post.title}
+                                    className={`hero-image ${imageLoaded ? 'loaded' : 'loading'}`}
+                                    loading="lazy"
+                                    onLoad={() => setImageLoaded(true)}
+                                />
                                 <div className="hero-gradient" />
                             </div>
                             <figcaption className="hero-caption">Visualization of agent-to-protocol interaction layers.</figcaption>
@@ -545,6 +773,26 @@ export default function BlogPostPage() {
                         <ReactMarkdown
                             remarkPlugins={[remarkGfm]}
                             components={{
+                                h2({ children, ...props }) {
+                                    const text = String(children);
+                                    const id = text.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-');
+                                    return (
+                                        <h2 id={id} {...props}>
+                                            {children}
+                                            <a href={`#${id}`} className="heading-anchor" aria-label={`Link to ${text}`}>#</a>
+                                        </h2>
+                                    );
+                                },
+                                h3({ children, ...props }) {
+                                    const text = String(children);
+                                    const id = text.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-');
+                                    return (
+                                        <h3 id={id} {...props}>
+                                            {children}
+                                            <a href={`#${id}`} className="heading-anchor" aria-label={`Link to ${text}`}>#</a>
+                                        </h3>
+                                    );
+                                },
                                 code({ className, children, ...props }) {
                                     const match = /language-(\w+)/.exec(className || '');
                                     const isInline = !match;
@@ -576,10 +824,10 @@ export default function BlogPostPage() {
                                             </div>
                                             <div className="code-content">
                                                 <SyntaxHighlighter
-                                                    style={isDark ? oneDark : oneDark}
+                                                    style={isDark ? oneDark : oneLight}
                                                     language={lang}
                                                     PreTag="div"
-                                                    customStyle={{ margin: 0, padding: 0, background: 'transparent', fontSize: '14px', lineHeight: '1.6' }}
+                                                    customStyle={{ margin: 0, padding: 0, background: 'transparent', fontSize: '14px', lineHeight: '1.6', fontFamily: 'ui-monospace, SFMono-Regular, "SF Mono", Menlo, Monaco, Consolas, monospace' }}
                                                 >
                                                     {code}
                                                 </SyntaxHighlighter>
@@ -609,11 +857,66 @@ export default function BlogPostPage() {
                         <div className="author-card-content">
                             <h4 className="author-card-title">About {author.name.split(' ')[0]}</h4>
                             <p className="author-card-bio">{author.bio}</p>
-                            <a href={author.twitter} target="_blank" rel="noopener noreferrer" className="author-card-link">
-                                Follow on Twitter ↗
-                            </a>
+                            <div className="author-card-actions">
+                                <button onClick={copyEmail} className="author-card-btn">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                        {emailCopied ? (
+                                            <polyline points="20 6 9 17 4 12" />
+                                        ) : (
+                                            <>
+                                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                                            </>
+                                        )}
+                                    </svg>
+                                    {emailCopied ? 'Copied!' : 'Copy Email'}
+                                </button>
+                                <div className="author-card-divider" />
+                                <a href="/dmitrii-fotesco-resume.pdf" target="_blank" rel="noopener noreferrer" className="author-card-btn">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                        <polyline points="7 10 12 15 17 10" />
+                                        <line x1="12" y1="15" x2="12" y2="3" />
+                                    </svg>
+                                    Resume
+                                </a>
+                                <div className="author-card-divider" />
+                                <a href="https://calendly.com/dmitriifotesco" target="_blank" rel="noopener noreferrer" className="author-card-btn author-card-btn-primary">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                                        <line x1="16" y1="2" x2="16" y2="6" />
+                                        <line x1="8" y1="2" x2="8" y2="6" />
+                                        <line x1="3" y1="10" x2="21" y2="10" />
+                                    </svg>
+                                    Let's Talk
+                                </a>
+                            </div>
                         </div>
                     </div>
+
+                    {/* Prev/Next Navigation */}
+                    {(prevPost || nextPost) && (
+                        <nav className="post-nav">
+                            {prevPost ? (
+                                <Link to={`/blog/${prevPost.slug}`} className="post-nav-link prev">
+                                    <span className="post-nav-label">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="15 18 9 12 15 6"/></svg>
+                                        Previous
+                                    </span>
+                                    <span className="post-nav-title">{prevPost.title}</span>
+                                </Link>
+                            ) : <div />}
+                            {nextPost ? (
+                                <Link to={`/blog/${nextPost.slug}`} className="post-nav-link next">
+                                    <span className="post-nav-label">
+                                        Next
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="9 18 15 12 9 6"/></svg>
+                                    </span>
+                                    <span className="post-nav-title">{nextPost.title}</span>
+                                </Link>
+                            ) : <div />}
+                        </nav>
+                    )}
                 </article>
 
                 {/* More Thoughts */}
@@ -643,6 +946,13 @@ export default function BlogPostPage() {
 
             {/* Toast */}
             <div className={`copy-toast ${showCopyToast ? 'visible' : ''}`}>Link copied to clipboard!</div>
+
+            {/* Keyboard hints */}
+            <div className="keyboard-hints">
+                <span><span className="kbd">J</span> Next</span>
+                <span><span className="kbd">K</span> Prev</span>
+                <span><span className="kbd">Esc</span> Back</span>
+            </div>
         </div>
     );
 }
