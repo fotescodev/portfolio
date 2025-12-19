@@ -407,10 +407,15 @@ export default function BlogPostPage() {
                     {/* Desktop Navigation */}
                     {!isMobile && (
                         <div style={{ display: 'flex', gap: 'var(--space-xl)', alignItems: 'center' }}>
-                            {['Work', 'About', 'Blog'].map((item) => (
+                            {[
+                                { label: 'Experience', id: 'experience' },
+                                { label: 'Cases', id: 'work' },
+                                { label: 'Blog', id: 'blog' },
+                                { label: 'About', id: 'about' }
+                            ].map((item) => (
                                 <a
-                                    key={item}
-                                    href={`/#${item.toLowerCase()}`}
+                                    key={item.id}
+                                    href={`/#${item.id}`}
                                     style={{
                                         textDecoration: 'none',
                                         fontSize: '14px',
@@ -422,14 +427,12 @@ export default function BlogPostPage() {
                                     onMouseEnter={(e) => e.currentTarget.style.color = 'var(--color-text-primary)'}
                                     onMouseLeave={(e) => e.currentTarget.style.color = 'var(--color-text-secondary)'}
                                 >
-                                    {item}
+                                    {item.label}
                                 </a>
                             ))}
                             <ThemeToggle />
                             <a
-                                href="https://calendar.google.com/calendar/u/0/appointments/AcZssZ2leGghBAF6F4IbGMZQErnaR21wvu-mYWXP06o="
-                                target="_blank"
-                                rel="noopener noreferrer"
+                                href="/#contact"
                                 style={{
                                     padding: '10px 20px',
                                     background: 'var(--color-accent)',

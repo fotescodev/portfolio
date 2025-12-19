@@ -69,7 +69,7 @@ export default function ExperienceSection({ isMobile, isTablet, sectionPadding }
   const isDark = theme === 'dark';
 
   return (
-    <section style={{
+    <section id="experience" style={{
       width: '100%',
       backgroundColor: 'var(--color-background-secondary)',
       position: 'relative',
