@@ -27,3 +27,8 @@ dist-ssr
 .env
 .env.local
 .env.*.local
+
+# Raw source data (not for version control)
+the-vault/
+*.zip
+test_output.txt

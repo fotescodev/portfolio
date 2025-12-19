@@ -142,7 +142,7 @@ export default function CaseStudiesSection({
         flexDirection: 'column',
         gap: isMobile ? 'var(--space-2xl)' : '0'
       }}>
-        {caseStudies.slice(0, 2).map((study) => (
+        {caseStudies.map((study) => (
           <div
             key={study.id}
             onClick={() => onCaseClick(study)}

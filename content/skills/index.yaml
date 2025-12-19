@@ -1,41 +1,61 @@
 # ═══════════════════════════════════════════════════════════════
 # SKILLS & EXPERTISE
 # ═══════════════════════════════════════════════════════════════
+# Evidence notes (for reference):
+# - Ethereum: First smart contract at Microsoft (2016), ETF-grade staking at Anchorage
+# - Staking: Multi-client validators, zero slashing events
+# - L2s: 7+ integrations at Anchorage
+# - MPC: Wallet-as-a-Service at Forte
+# - RPC: 19+ mainnets at Ankr
+# - 0→1: Ankr Advanced APIs, Mempools, Cadence Playground V2
+# - Pricing: PAYG model at Ankr ($0.10=1M credits)
+# ═══════════════════════════════════════════════════════════════
 categories:
   - name: "Blockchain & Web3"
     skills:
-      - "Ethereum"
-      - "Solidity"
-      - "L2s (Optimism, Base, Arbitrum)"
+      - "Ethereum & EVM"
       - "Staking Infrastructure"
+      - "L2s (Optimism, Base, Arbitrum)"
       - "MPC Custody"
-      - "ENS"
-      - "DeFi Protocols"
+      - "Solidity / Smart Contracts"
+      - "Cosmos SDK"
+      - "RPC Infrastructure"
+      - "Decentralized Identity (DIDs)"
 
-  - name: "Product Management"
+  - name: "Product Leadership"
     skills:
-      - "PRDs & Specs"
-      - "Roadmapping"
-      - "Agile/Scrum"
-      - "Cross-functional Leadership"
-      - "Stakeholder Management"
-      - "Go-to-Market"
-
-  - name: "Technical"
-    skills:
-      - "API Design"
-      - "Docker/Kubernetes"
-      - "Smart Contracts"
-      - "SDK Development"
-      - "System Architecture"
+      - "0→1 Product Development"
+      - "B2B/Enterprise Strategy"
+      - "Pricing & Monetization"
       - "Developer Experience"
+      - "Compliance-First Product"
+      - "Cross-functional Leadership"
+      - "Technical PRDs & Specs"
+      - "Go-to-Market Strategy"
 
-  - name: "Tools"
+  - name: "Technical Execution"
     skills:
-      - "Jira"
-      - "Linear"
-      - "Notion"
-      - "Figma"
+      - "API Design (JSON-RPC, REST)"
+      - "SDK Development"
+      - "Docker / Kubernetes"
+      - "System Architecture"
+      - "Technical Documentation"
+      - "Smart Contract Integration"
+
+  - name: "Domain Expertise"
+    skills:
+      - "Institutional Custody"
+      - "Gaming & Entertainment"
+      - "Protocol Economics"
+      - "Web3 Infrastructure"
+      - "Validator Operations"
+      - "ETF-Grade Compliance"
+
+  - name: "Tools & Platforms"
+    skills:
+      - "Linear / Jira"
+      - "Notion / Confluence"
       - "GitHub"
-      - "Dune Analytics"
-      - "Etherscan"
+      - "Dune Analytics / Etherscan"
+      - "Figma"
+      - "Datadog"
