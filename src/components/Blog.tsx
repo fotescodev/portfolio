@@ -1,6 +1,6 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import type { BlogPost } from '../types/blog';
-import BlogPostModal from './BlogPostModal';
 
 // Auto-discover blog posts using import.meta.glob
 const blogPostFiles = import.meta.glob('../../content/blog/*.md', { query: '?raw', eager: true });
@@ -90,7 +90,6 @@ function parseBlogPosts(): BlogPost[] {
 
 export default function Blog({ isMobile, isTablet }: BlogProps) {
     const [hoveredPost, setHoveredPost] = useState<string | null>(null);
-    const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
 
     const posts = parseBlogPosts().slice(0, 2);
 
@@ -101,33 +100,6 @@ export default function Blog({ isMobile, isTablet }: BlogProps) {
             day: '2-digit',
             year: '2-digit'
         }).replace(/\//g, '.');
-    };
-
-    const handleNavigate = (direction: 'prev' | 'next') => {
-        if (!selectedPost) return;
-        const currentIndex = posts.findIndex(p => p.slug === selectedPost.slug);
-        const newIndex = direction === 'prev' ? currentIndex - 1 : currentIndex + 1;
-        if (newIndex >= 0 && newIndex < posts.length) {
-            setSelectedPost(posts[newIndex]);
-        }
-    };
-
-    const getRelatedPosts = (currentPost: BlogPost): BlogPost[] => {
-        if (!currentPost.tags || currentPost.tags.length === 0) return [];
-
-        // Find posts with shared tags, excluding current post
-        const relatedPosts = posts
-            .filter(post => post.slug !== currentPost.slug)
-            .map(post => {
-                const sharedTags = post.tags.filter(tag => currentPost.tags.includes(tag));
-                return { post, sharedTagCount: sharedTags.length };
-            })
-            .filter(({ sharedTagCount }) => sharedTagCount > 0)
-            .sort((a, b) => b.sharedTagCount - a.sharedTagCount)
-            .slice(0, 3) // Max 3 related posts
-            .map(({ post }) => post);
-
-        return relatedPosts;
     };
 
     const sectionPadding = isMobile ? '48px 24px' : isTablet ? '64px 40px' : '80px 64px';
@@ -197,8 +169,12 @@ export default function Blog({ isMobile, isTablet }: BlogProps) {
                     gap: '0'
                 }}>
                     {posts.map((post, index) => (
-                        <article
+                        <Link
                             key={post.slug}
+                            to={`/blog/${post.slug}`}
+                            style={{ textDecoration: 'none', display: 'block' }}
+                        >
+                        <article
                             style={{
                                 borderTop: index === 0 ? '1px solid var(--color-border)' : 'none',
                                 borderBottom: '1px solid var(--color-border)',
@@ -209,7 +185,6 @@ export default function Blog({ isMobile, isTablet }: BlogProps) {
                             }}
                             onMouseEnter={() => !isMobile && setHoveredPost(post.slug)}
                             onMouseLeave={() => !isMobile && setHoveredPost(null)}
-                            onClick={() => setSelectedPost(post)}
                         >
                             <div style={{
                                 display: 'grid',
@@ -309,25 +284,10 @@ export default function Blog({ isMobile, isTablet }: BlogProps) {
                                 )}
                             </div>
                         </article>
+                        </Link>
                     ))}
                 </div>
             </section>
-
-            {/* Blog Post Modal */}
-            {selectedPost && (
-                <BlogPostModal
-                    post={selectedPost}
-                    onClose={() => setSelectedPost(null)}
-                    onNavigate={handleNavigate}
-                    hasPrev={posts.findIndex(p => p.slug === selectedPost.slug) > 0}
-                    hasNext={posts.findIndex(p => p.slug === selectedPost.slug) < posts.length - 1}
-                    prevTitle={posts[posts.findIndex(p => p.slug === selectedPost.slug) - 1]?.title}
-                    nextTitle={posts[posts.findIndex(p => p.slug === selectedPost.slug) + 1]?.title}
-                    isMobile={isMobile}
-                    relatedPosts={getRelatedPosts(selectedPost)}
-                    onPostSelect={setSelectedPost}
-                />
-            )}
         </>
     );
 }

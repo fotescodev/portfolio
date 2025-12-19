@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach, beforeAll } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import { ThemeProvider } from '../../context/ThemeContext';
 import { VariantProvider } from '../../context/VariantContext';
 import { HelmetProvider } from 'react-helmet-async';
@@ -24,11 +25,13 @@ beforeAll(() => {
 });
 
 const TestWrapper = ({ children }: { children: React.ReactNode }) => (
-    <HelmetProvider>
-        <VariantProvider profile={profile}>
-            <ThemeProvider>{children}</ThemeProvider>
-        </VariantProvider>
-    </HelmetProvider>
+    <MemoryRouter>
+        <HelmetProvider>
+            <VariantProvider profile={profile}>
+                <ThemeProvider>{children}</ThemeProvider>
+            </VariantProvider>
+        </HelmetProvider>
+    </MemoryRouter>
 );
 
 describe('Navigation Flow', () => {
