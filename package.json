@@ -12,7 +12,8 @@
     "test:watch": "vitest",
     "test:design-system": "vitest run --reporter=verbose src/tests/design-system",
     "validate": "tsx scripts/validate-content.ts",
-    "generate:cv": "tsx scripts/generate-cv.ts"
+    "generate:cv": "tsx scripts/generate-cv.ts",
+    "generate:og": "node scripts/generate-og-images.js"
   },
   "dependencies": {
     "@types/react-syntax-highlighter": "^15.5.13",
@@ -50,6 +51,7 @@
     "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",
     "jsdom": "^27.0.1",
+    "puppeteer": "^24.34.0",
     "tsx": "^4.21.0",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.46.4",
