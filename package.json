@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "predev": "npm run variants:sync",
     "build": "tsc -b && vite build",
+    "prebuild": "npm run validate && npm run variants:sync",
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "vitest run",
@@ -13,7 +15,15 @@
     "test:design-system": "vitest run --reporter=verbose src/tests/design-system",
     "validate": "tsx scripts/validate-content.ts",
     "generate:cv": "tsx scripts/generate-cv.ts",
-    "generate:og": "node scripts/generate-og-images.js"
+    "generate:og": "node scripts/generate-og-images.js",
+    "variants:sync": "tsx scripts/sync-variants.ts",
+    "variants:check": "tsx scripts/sync-variants.ts --check",
+    "eval:variant": "tsx scripts/evaluate-variants.ts",
+    "eval:all": "tsx scripts/evaluate-variants.ts --all",
+    "eval:check": "tsx scripts/evaluate-variants.ts --check --all",
+    "redteam:variant": "tsx scripts/redteam.ts",
+    "redteam:all": "tsx scripts/redteam.ts --all",
+    "redteam:check": "tsx scripts/redteam.ts --check --all"
   },
   "dependencies": {
     "@types/react-syntax-highlighter": "^15.5.13",

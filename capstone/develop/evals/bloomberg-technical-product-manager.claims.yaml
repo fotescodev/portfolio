@@ -1,0 +1,114 @@
+version: 1
+variant:
+  slug: bloomberg-technical-product-manager
+  variantFile: content/variants/bloomberg-technical-product-manager.yaml
+  contentHash: 57912f096acd845f9135abe2b6a914140de9995782fa41471e60d61345474b06
+  evaluatedAt: 2025-12-20T23:53:48.921Z
+claims:
+  - id: metric-1080fe1903
+    location: overrides.hero.subheadline
+    text: Senior Technical PM with 8 years shipping developer-facing platforms—from enterprise blockchain infrastructure at
+      Microsoft to institutional crypto APIs at Anchorage
+    anchors:
+      - 8 years
+    candidateSources:
+      - path: content/experience/index.yaml
+        score: 0.09
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 60%
+      - path: content/knowledge/achievements/xbox-royalties-ethereum.yaml
+        score: 0.07
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 47%
+      - path: content/knowledge/achievements/ankr-15x-revenue.yaml
+        score: 0.06
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 40%
+      - path: content/knowledge/achievements/eth-staking-zero-slashing.yaml
+        score: 0.06
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 40%
+      - path: content/knowledge/achievements/l2-protocol-integrations.yaml
+        score: 0.06
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 40%
+    verified:
+      status: unverified
+      sources: []
+      notes: ""
+  - id: metric-bad5514090
+    location: overrides.about.bio[0]
+    text: I've shipped 7+ L2 protocol integrations (Optimism, Base, Arbitrum) with consistent API patterns that scale
+    anchors:
+      - 7+
+      - Optimism, Base, Arbitrum
+    candidateSources:
+      - path: content/knowledge/achievements/l2-protocol-integrations.yaml
+        score: 1
+        matchedAnchors:
+          - 7+
+          - Optimism, Base, Arbitrum
+        note: anchors 2/2 • overlap 67%
+      - path: content/experience/index.yaml
+        score: 0.1
+        matchedAnchors: []
+        note: anchors 0/2 • overlap 67%
+    verified:
+      status: unverified
+      sources: []
+      notes: ""
+  - id: metric-0356894578
+    location: overrides.about.bio[0]
+    text: Before that, I built Wallet-as-a-Service SDKs at Forte and Flow CLI/Cadence Playground developer tools at Dapper
+      Labs—reducing time-to-first-deploy by 60%.
+    anchors:
+      - 60%
+    candidateSources:
+      - path: content/knowledge/achievements/flow-cli-dx.yaml
+        score: 1
+        matchedAnchors:
+          - 60%
+        note: anchors 1/1 • overlap 59%
+      - path: content/knowledge/achievements/l2-protocol-integrations.yaml
+        score: 1
+        matchedAnchors:
+          - 60%
+        note: anchors 1/1 • overlap 24%
+      - path: content/experience/index.yaml
+        score: 1
+        matchedAnchors:
+          - 60%
+        note: anchors 1/1 • overlap 76%
+      - path: content/knowledge/achievements/forte-wallet-sdk.yaml
+        score: 0.044
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 29%
+    verified:
+      status: unverified
+      sources: []
+      notes: ""
+  - id: metric-d07b4c9bd6
+    location: overrides.about.stats[0].value
+    text: 8+
+    anchors:
+      - 8+
+    candidateSources: []
+    verified:
+      status: unverified
+      sources: []
+      notes: ""
+  - id: metric-60ecdf8a3a
+    location: overrides.about.stats[1].value
+    text: 7+
+    anchors:
+      - 7+
+    candidateSources:
+      - path: content/knowledge/achievements/l2-protocol-integrations.yaml
+        score: 1
+        matchedAnchors:
+          - 7+
+        note: anchors 1/1 • overlap 0%
+    verified:
+      status: unverified
+      sources: []
+      notes: ""

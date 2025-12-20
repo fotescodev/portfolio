@@ -6,6 +6,28 @@
 ## Overview
 
 This framework defines how we evaluate the quality, accuracy, and safety of AI-generated content in Universal CV. Every generated variant must pass these evaluations before deployment.
+---
+
+## Executable Version (CLI)
+
+This doc is the **conceptual rubric**.
+
+The executable version lives here:
+
+- Generate claims ledger + checklist:
+  ```bash
+  npm run eval:variant -- --slug <slug>
+  ```
+- Strict gate (machine-checkable):
+  ```bash
+  npm run eval:check
+  ```
+
+Outputs:
+- `capstone/develop/evals/<slug>.claims.yaml` (verified claims + sources)
+- `capstone/develop/evals/<slug>.eval.md` (human checklist)
+
+
 
 ---
 

@@ -73,14 +73,30 @@ portfolio/
 │   ├── experience/index.yaml
 │   ├── case-studies/*.md
 │   ├── blog/*.md
-│   └── variants/                     # 🆕 Personalized variants
+│   ├── knowledge/                    # 🆕 Source of truth for facts
+│   │   ├── index.yaml                # Entity relationships
+│   │   ├── achievements/             # STAR-format accomplishments
+│   │   └── stories/                  # Extended narratives
+│   └── variants/                     # Personalized variants
 │       ├── README.md
 │       ├── _template.yaml
 │       ├── bloomberg-technical-product-manager.{yaml,json}
 │       └── gensyn-technical-product-manager.{yaml,json}
 ├── scripts/
 │   ├── validate-content.ts           # Content validation CLI
-│   └── generate-cv.ts                # 🆕 Variant generation CLI
+│   ├── generate-cv.ts                # Variant generation CLI
+│   ├── sync-variants.ts              # 🆕 YAML→JSON sync
+│   ├── evaluate-variants.ts          # 🆕 Claims ledger generator
+│   └── redteam.ts                    # 🆕 Adversarial scanner
+├── capstone/                         # 🆕 AI Product Quality Framework
+│   ├── develop/
+│   │   ├── evaluation.md             # Evaluation rubric
+│   │   ├── red-teaming.md            # Threat model
+│   │   ├── evals/                    # Claims ledgers per variant
+│   │   └── redteam/                  # Red team reports per variant
+│   ├── define/
+│   ├── discover/
+│   └── deliver/
 ├── docs/
 │   ├── guides/
 │   │   ├── adding-case-studies.md
@@ -272,6 +288,89 @@ const variantFiles = import.meta.glob('../../content/variants/*.json', {
   eager: false  // Lazy load only when needed
 });
 ```
+
+---
+
+## Capstone Quality Pipeline (NEW)
+
+The capstone project wraps the Universal CV system with production-grade AI product evaluation.
+
+### Core Concept
+
+```
+YAML is canonical → JSON is derived
+Facts live in knowledge base → Variants reference them
+Every claim must be traceable → Machine-checkable ledger
+```
+
+### Quality Scripts
+
+| Script | Purpose | Command |
+|--------|---------|---------|
+| `sync-variants.ts` | YAML→JSON sync | `npm run variants:sync` |
+| `evaluate-variants.ts` | Generate claims ledger | `npm run eval:variant -- --slug <slug>` |
+| `redteam.ts` | Adversarial scanning | `npm run redteam:variant -- --slug <slug>` |
+
+### Build Integration
+
+```json
+"predev": "npm run variants:sync",
+"prebuild": "npm run validate && npm run variants:sync"
+```
+
+Every `npm run dev` and `npm run build` now enforces YAML/JSON parity.
+
+### Knowledge Base
+
+```
+content/knowledge/
+├── index.yaml           # Entity graph
+├── achievements/        # STAR-format: Situation, Task, Action, Result
+│   ├── ankr-15x-revenue.yaml
+│   ├── eth-staking-zero-slashing.yaml
+│   └── ...
+└── stories/             # Extended narratives
+```
+
+**Golden Rule**: Fix facts in the knowledge base, not in the variant output.
+
+### Claims Ledger
+
+For each variant, the evaluation script extracts metric-like claims and generates:
+- `capstone/develop/evals/<slug>.claims.yaml` — Machine-checkable
+- `capstone/develop/evals/<slug>.eval.md` — Human checklist
+
+```bash
+npm run eval:variant -- --slug bloomberg-technical-product-manager
+npm run eval:check  # Fails if unverified claims
+```
+
+### Red Team Checks
+
+| Check ID | Catches |
+|----------|---------|
+| `RT-SEC-SECRETS` | API keys, tokens |
+| `RT-SEC-CONFIDENTIAL` | NDA language |
+| `RT-TONE-SYCOPHANCY` | "thrilled", "dream company" |
+| `RT-ACC-INFLATION` | "about 15×" near metrics |
+| `RT-XVAR-CONTAM` | Mentions other target company |
+
+```bash
+npm run redteam:variant -- --slug bloomberg-technical-product-manager
+npm run redteam:check --strict  # WARN = FAIL
+```
+
+### PM Workflow
+
+Work one variant at a time through the pipeline:
+1. `npm run variants:sync`
+2. `npm run eval:variant -- --slug <slug>`
+3. Verify claims in `*.claims.yaml`
+4. `npm run eval:check`
+5. `npm run redteam:variant -- --slug <slug>`
+6. `npm run redteam:check`
+7. Fix KB or variant wording until clean
+8. Commit + deploy
 
 ---
 
