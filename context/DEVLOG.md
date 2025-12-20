@@ -65,10 +65,90 @@ npm run dev       # Local dev server at :5173
 ---
 
 ## Active Project Pulse (AI START HERE)
-**Current Objective**: Bundle size reduction and performance optimization.
-**Last Action**: Consolidated context docs, created sprint-sync skill, fixed OG images for social sharing.
-**Next Focus**: Bundle size reduction (Code Splitting) — P0 blocker.
-**Red Alert**: Performance (467KB bundle) is the primary blocker for LCP.
+**Current Objective**: Capstone quality pipeline integration and hands-on practice.
+**Last Action**: Merged full capstone pipeline (scripts, knowledge base, framework docs).
+**Next Focus**: Run the PM workflow on existing variants to learn the system.
+**Red Alert**: Performance (480KB bundle) remains P0 blocker after capstone practice.
+
+### Capstone Quick Start
+```bash
+npm run variants:sync                           # Sync YAML→JSON
+npm run eval:variant -- --slug <slug>           # Generate claims ledger
+npm run redteam:variant -- --slug <slug>        # Run adversarial scan
+```
+
+---
+
+## Session: December 20, 2025 — Capstone Quality Pipeline Merge
+
+### Summary
+Merged the full capstone quality pipeline from `portfolio_capstone_pipeline_full.zip` into the main codebase. This adds executable scripts for variant sync, evaluation, and red-teaming. Also added the knowledge base structure with STAR-format achievements.
+
+### Changes Made
+
+#### 1. New Scripts (3 files, ~1,160 lines)
+- `scripts/sync-variants.ts` — YAML→JSON sync, drift detection
+- `scripts/evaluate-variants.ts` — Claims ledger generation
+- `scripts/redteam.ts` — Adversarial scanning
+
+#### 2. New Directories
+- `content/knowledge/` — Source of truth for facts
+  - `achievements/` — 6 STAR-format accomplishment files
+  - `stories/` — Extended narratives
+- `capstone/` — AI product quality framework
+  - `develop/evaluation.md` — Evaluation rubric
+  - `develop/red-teaming.md` — Threat model
+  - `develop/evals/` — Claims ledger outputs
+  - `develop/redteam/` — Red team report outputs
+
+#### 3. Package.json Updates
+```json
+"predev": "npm run variants:sync",
+"prebuild": "npm run validate && npm run variants:sync",
+"variants:sync": "tsx scripts/sync-variants.ts",
+"variants:check": "tsx scripts/sync-variants.ts --check",
+"eval:variant": "tsx scripts/evaluate-variants.ts",
+"eval:all": "tsx scripts/evaluate-variants.ts --all",
+"eval:check": "tsx scripts/evaluate-variants.ts --check --all",
+"redteam:variant": "tsx scripts/redteam.ts",
+"redteam:all": "tsx scripts/redteam.ts --all",
+"redteam:check": "tsx scripts/redteam.ts --check --all"
+```
+
+#### 4. Context Documentation Updates
+- `STATE_OF_THE_UNION.md` — Added Part IX: Capstone Quality Pipeline
+- `CODEBASE.md` — Added Capstone Quality Pipeline section, updated directory tree
+- `.claude/PROJECT_CONTEXT.md` — AI agent handoff document
+
+### Key Concepts Introduced
+
+| Concept | Implementation |
+|---------|----------------|
+| **YAML is canonical** | JSON derived via `variants:sync` |
+| **Knowledge base** | Facts live in `content/knowledge/`, not variants |
+| **Claims ledger** | Machine-checkable traceability |
+| **Red team harness** | Adversarial checks for portfolio risks |
+| **Golden rule** | Fix facts in KB first, then regenerate |
+
+### PM Workflow (Practice This)
+1. `npm run variants:sync`
+2. `npm run eval:variant -- --slug <slug>`
+3. Review `capstone/develop/evals/<slug>.claims.yaml`
+4. `npm run redteam:variant -- --slug <slug>`
+5. Review `capstone/develop/redteam/<slug>.redteam.md`
+6. Fix issues in knowledge base or variant wording
+7. Repeat until gates pass
+
+### Files Changed
+- `scripts/sync-variants.ts` — NEW
+- `scripts/evaluate-variants.ts` — NEW
+- `scripts/redteam.ts` — NEW
+- `content/knowledge/**` — NEW (6 achievement files)
+- `capstone/**` — NEW (framework docs)
+- `package.json` — Added 10 scripts
+- `context/STATE_OF_THE_UNION.md` — Added Part IX
+- `context/CODEBASE.md` — Added Capstone section
+- `.claude/PROJECT_CONTEXT.md` — NEW
 
 ---
 

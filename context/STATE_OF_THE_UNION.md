@@ -21,6 +21,7 @@ The portfolio is **production-ready at 80%** with solid technical foundations. T
 | VI | Agent Governance | Rarely (rules are stable) |
 | VII | Roadmap | After phase completions |
 | VIII | Sprint Briefings | Every session (append-only) |
+| IX | Capstone Quality Pipeline | After pipeline changes |
 
 ---
 
@@ -554,6 +555,381 @@ engine is online and operational.
 
 ───────────────────────────────────────────────────────────────────────────────
 
+═══════════════════════════════════════════════════════════════════════════════
+SPRINT BRIEFING — 2025-12-20 17:25
+Mode: Hardcore (Full Deep Dive)
+═══════════════════════════════════════════════════════════════════════════════
+
+## Executive Summary
+
+Portfolio at **80% production-ready**. Phase 3 (Social & Content) is 60% complete
+with Blog UX sprint done. **P0 BLOCKER: 480KB bundle size** threatens Core Web
+Vitals and "hired-on-sight" goal. Tests healthy at 192 passing. Universal CV
+engine is online with 3 active variants.
+
+---
+
+## PM Deep Dive: Roadmap & Priorities
+
+```
+┌─ ROADMAP STATUS ─────────────────────────────────────────────────────────────┐
+│                                                                              │
+│  Phase 1: Foundation    ████████████████████ 100%  COMPLETE                  │
+│  Phase 2: Polish        ████████████████████ 100%  COMPLETE                  │
+│  Phase 3: Social        ████████████░░░░░░░░  60%  IN PROGRESS               │
+│  Phase 4: Performance   ░░░░░░░░░░░░░░░░░░░░   0%  BLOCKED                   │
+│                                                                              │
+│  ┌─ P0 CRITICAL PATH ────────────────────────────────────────────────────┐   │
+│  │  [ ] Code Splitting         480KB → <200KB        BLOCKING LCP        │   │
+│  │  [ ] Lazy Load Analytics    505-line component    BLOCKING INITIAL    │   │
+│  └───────────────────────────────────────────────────────────────────────┘   │
+│                                                                              │
+│  ┌─ P1 CONVERSION DRIVERS ───────────────────────────────────────────────┐   │
+│  │  [ ] Trust Battery Testimonials    Social proof gap                   │   │
+│  │  [ ] Featured Case Study           Visual hierarchy                   │   │
+│  └───────────────────────────────────────────────────────────────────────┘   │
+│                                                                              │
+│  Current Focus: Capstone quality pipeline integration                        │
+│  Last Action:   Sprint-sync skill, OG images, meta tags                      │
+│  Risk Level:    HIGH (performance blocking "hired-on-sight" goal)            │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+```
+
+**Sprint Velocity**: 132 commits in last 7 days
+**Blockers**: Bundle size (480KB gzipped) is sole P0 blocker
+**New Work**: Capstone quality pipeline for AI product evaluation
+
+---
+
+## Designer Deep Dive: Design System Health
+
+```
+┌─ DESIGN SYSTEM HEALTH ───────────────────────────────────────────────────────┐
+│                                                                              │
+│  CSS Variables Inventory: 118 tokens total                                   │
+│  ├── Colors:     ~40 tokens    [✓ Complete]                                  │
+│  ├── Spacing:    ~15 tokens    [✓ Complete]                                  │
+│  ├── Typography: ~12 tokens    [✓ Complete]                                  │
+│  ├── Effects:    ~20 tokens    [✓ Complete]                                  │
+│  └── Layout:     ~31 tokens    [✓ Complete]                                  │
+│                                                                              │
+│  Theme Parity Analysis:                                                      │
+│  ┌─────────────────────┬─────────────────────┐                               │
+│  │      DARK MODE      │     LIGHT MODE      │                               │
+│  ├─────────────────────┼─────────────────────┤                               │
+│  │ ✓ Background #08080a│ ✓ Background #fafafa│                               │
+│  │ ✓ Text #e8e6e3      │ ✓ Text #050505      │                               │
+│  │ ✓ Accent #c29a6c    │ ✓ Accent #8a6642    │                               │
+│  │ ✓ Orbs @ 0.25       │ ⚠ Orbs @ 0.15 MUTED │                               │
+│  │ ✓ Card Shadows      │ ⚠ Shadows FLAT      │                               │
+│  └─────────────────────┴─────────────────────┘                               │
+│                                                                              │
+│  Premium Score: 7.5/10 ──────────────▶ Target: 9/10                          │
+│                                                                              │
+│  Recent Additions:                                                           │
+│  ├── Wide-screen vignette effect (1440px+)                                   │
+│  ├── Tertiary orb for ambient depth                                          │
+│  └── Adaptive padding with clamp()                                           │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+```
+
+**Compliance**: Design system is well-established (118 CSS variables)
+**Theme Risk**: Light mode needs P2 polish pass
+**No Violations**: Recent commits follow token-first approach
+
+---
+
+## Architect Deep Dive: System Architecture
+
+```
+┌─ ARCHITECTURE OVERVIEW ──────────────────────────────────────────────────────┐
+│                                                                              │
+│  DATA FLOW:                                                                  │
+│  ┌──────────────┐    ┌──────────────┐    ┌───────────────┐                   │
+│  │ content/     │───▶│ src/lib/     │───▶│ Zod Schemas   │                   │
+│  │ *.yaml *.md  │    │ content.ts   │    │ (9 schemas)   │                   │
+│  └──────────────┘    └──────────────┘    └───────────────┘                   │
+│         │                    │                   │                           │
+│         │                    ▼                   │                           │
+│         │            ┌──────────────┐            │                           │
+│         │            │ validate()   │◀───────────┘                           │
+│         │            │ Type-safe    │                                        │
+│         │            └──────────────┘                                        │
+│         │                    │                                               │
+│         ▼                    ▼                                               │
+│  ┌──────────────┐    ┌──────────────┐    ┌───────────────┐                   │
+│  │ Variant      │───▶│ Portfolio.tsx│───▶│ Section       │                   │
+│  │ Context      │    │              │    │ Components    │                   │
+│  └──────────────┘    └──────────────┘    └───────────────┘                   │
+│         ▲                    │                                               │
+│         │                    ▼                                               │
+│  ┌──────────────┐    ┌──────────────┐                                        │
+│  │ HashRouter   │    │ Framer       │                                        │
+│  │ /#/:co/:role │    │ Motion       │                                        │
+│  └──────────────┘    └──────────────┘                                        │
+│                                                                              │
+│  HEALTH METRICS:                                                             │
+│  ├── Tests:        192 passing (8 test files)         ✓ HEALTHY              │
+│  ├── Type Safety:  9/10 (1 escape hatch in Blog.tsx)  ✓ SOLID                │
+│  ├── Zod Coverage: 9 schemas                          ✓ COMPLETE             │
+│  ├── Bundle:       480KB gzipped                      ✗ CRITICAL             │
+│  └── Chunk Warn:   1,505KB pre-minify                 ✗ NEEDS SPLIT          │
+│                                                                              │
+│  TECH STACK:                                                                 │
+│  React 19 • TypeScript • Vite 7 • Framer Motion • Zod • HashRouter           │
+│                                                                              │
+│  ACTIVE VARIANTS (3):                                                        │
+│  ├── bloomberg-technical-product-manager (5.1KB)                             │
+│  ├── gensyn-technical-product-manager (5.6KB)                                │
+│  └── mysten-walrus-senior-pm (5.9KB)                                         │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+```
+
+**Architecture**: Sound. Data pipeline is type-safe with Zod validation.
+**Test Health**: 192 tests passing, good coverage of components
+**Critical Issue**: Bundle size requires immediate code splitting
+
+---
+
+## Engineer Deep Dive: Recent Activity
+
+```
+┌─ ENGINEERING PULSE ──────────────────────────────────────────────────────────┐
+│                                                                              │
+│  RECENT COMMITS (last 10):                                                   │
+│  ├── 142ac18f docs: add session log for Dec 20 sprint-sync and OG work       │
+│  ├── 7120e516 fix: simplify meta description wording                         │
+│  ├── 62314e6a content: update meta descriptions with career narrative        │
+│  ├── dd840bf6 fix: update OG meta tags to use edgeoftrust.com domain         │
+│  ├── dcbacc27 Merge PR #46: eloquent-hermann                                 │
+│  ├── 5dcb7276 feat: add OG image generation script                           │
+│  ├── d4bf954d style: add accent color to tagline, remove email               │
+│  ├── ccc54f9d fix: align OG images with design system                        │
+│  ├── 9b136995 feat: consolidate context docs and add sprint-sync skill       │
+│  └── a10a68a5 feat: add OG image templates for social sharing                │
+│                                                                              │
+│  CHANGE VOLUME (last 10 commits):                                            │
+│  ├── 24 files changed                                                        │
+│  ├── +3,516 lines added                                                      │
+│  └── -296 lines removed                                                      │
+│                                                                              │
+│  HOT FILES (most activity):                                                  │
+│  ├── src/pages/BlogPostPage.tsx              (+961 lines) NEW                │
+│  ├── .claude/skills/sprint-sync/SKILL.md     (+399 lines) NEW                │
+│  ├── context/STATE_OF_THE_UNION.md           (consolidated)                  │
+│  └── scripts/generate-og-images.js           (+104 lines) NEW                │
+│                                                                              │
+│  TEST STATUS:                                                                │
+│  ┌────────────────────────────────────────────────────────────────────┐      │
+│  │  ✓ 192 passed  │  ✗ 0 failed  │  8 files  │  Duration: 3.61s      │      │
+│  └────────────────────────────────────────────────────────────────────┘      │
+│                                                                              │
+│  WHAT'S WORKING:              NEEDS ATTENTION:                               │
+│  ├── Blog UX (full sprint)    ├── Bundle size 480KB (P0)                     │
+│  ├── OG image generation      ├── Code splitting needed                      │
+│  ├── Sprint-sync skill        ├── LikeAnalytics lazy load                    │
+│  ├── Universal CV engine      └── Light mode polish                          │
+│  └── Context consolidation                                                   │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+```
+
+**Velocity**: Very High (132 commits/7 days, +3516/-296 lines in last 10)
+**Quality**: Tests passing, no regressions
+**Focus**: Context consolidation complete, now pivot to capstone/performance
+
+---
+
+## Cross-Functional Risk Matrix
+
+```
+┌─ PRIORITY MATRIX ────────────────────────────────────────────────────────────┐
+│                                                                              │
+│               │  LOW EFFORT   │  MED EFFORT   │  HIGH EFFORT  │              │
+│  ─────────────┼───────────────┼───────────────┼───────────────┤              │
+│  HIGH IMPACT  │ ★ Code Split  │ Capstone      │               │              │
+│               │ ★ Lazy Load   │ Pipeline      │               │              │
+│  ─────────────┼───────────────┼───────────────┼───────────────┤              │
+│  MED IMPACT   │               │ Testimonials  │ Scroll Story  │              │
+│               │               │ Featured Case │               │              │
+│  ─────────────┼───────────────┼───────────────┼───────────────┤              │
+│  LOW IMPACT   │ Dead Code     │ Style Refactor│               │              │
+│               │ Cleanup       │ (324 inline)  │               │              │
+│  ─────────────┴───────────────┴───────────────┴───────────────┘              │
+│                                                                              │
+│  ★ = START HERE (P0 Critical Path)                                           │
+│                                                                              │
+│  NEW WORK STREAM: Capstone Quality Pipeline                                  │
+│  ├── YAML→JSON variant sync                                                  │
+│  ├── Claims ledger evaluation                                                │
+│  └── Red team harness                                                        │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Recommended Actions (Priority Order)
+
+| # | Action | Impact | Effort | Owner |
+|---|--------|--------|--------|-------|
+| 1 | Implement code splitting in `vite.config.ts` | CRITICAL | Low | Engineer |
+| 2 | Lazy load `LikeAnalytics.tsx` with `React.lazy()` | HIGH | Low | Engineer |
+| 3 | Integrate capstone quality pipeline | HIGH | Med | PM + Engineer |
+| 4 | Measure bundle size post-split (target <200KB) | CRITICAL | Low | Engineer |
+| 5 | After P0: Begin Trust Battery Testimonials | MED | Med | Designer+Eng |
+
+---
+
+## Session Context for AI Agents
+
+**Start Here**: Bundle size reduction is the only P0 priority.
+**New Work**: Capstone quality pipeline for AI product evaluation.
+**Don't Touch**: Blog UX is complete, Experience section is optimized.
+**Watch Out**: Light mode polish is P2, don't get distracted.
+**Pattern**: This codebase uses CSS variables exclusively (118 tokens in globals.css).
+
+───────────────────────────────────────────────────────────────────────────────
+
+---
+
+## Part IX: Capstone Quality Pipeline
+
+> **Purpose**: Turn qualitative AI safety concepts into executable, repeatable system gates.
+
+The capstone project treats the Universal CV / Variant system as a case study of responsible AI product deployment. Every AI-generated variant must pass quality gates before shipping.
+
+### 9.1 Two-System Mental Model
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│  SYSTEM A: Runtime (what visitors see)                                       │
+│  - React + Vite portfolio website                                            │
+│  - Loads content from content/                                               │
+│  - Loads variant JSON dynamically based on URL                               │
+├─────────────────────────────────────────────────────────────────────────────┤
+│  SYSTEM B: AI Product Pipeline (capstone focus)                              │
+│  - Authoring, evaluation, red-teaming, deployment                            │
+│  - Lives in: capstone/, scripts/, .claude/                                   │
+│  - Enforces quality gates before shipping                                    │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+### 9.2 Canonical vs Runtime Artifacts
+
+| Layer | Format | Location | Purpose |
+|-------|--------|----------|---------|
+| **Canonical** | YAML | `content/variants/*.yaml` | Human-editable, reviewable |
+| **Runtime** | JSON | `content/variants/*.json` | Vite loads these |
+
+**Rule**: YAML is the source of truth. JSON is derived. Never edit JSON directly.
+
+**Enforced by**:
+```bash
+npm run variants:sync   # Generate JSON from YAML
+npm run variants:check  # Fail if drift detected
+```
+
+### 9.3 Knowledge Base (Source of Truth)
+
+```
+content/knowledge/
+├── index.yaml           # Entity definitions & relationships
+├── achievements/        # STAR-format accomplishments
+│   ├── ankr-15x-revenue.yaml
+│   ├── eth-staking-zero-slashing.yaml
+│   └── ...
+└── stories/             # Extended narratives
+    └── galaxy-compliance-win.yaml
+```
+
+**Golden Rule**: Never fix facts in the variant first. Fix the knowledge base, then regenerate.
+
+### 9.4 Evaluation Framework (Claims Ledger)
+
+Every metric-like claim in a variant must be:
+1. Extracted automatically
+2. Traced to a knowledge base source
+3. Verified with anchors (exact strings)
+
+**Commands**:
+```bash
+npm run eval:variant -- --slug <slug>   # Generate claims ledger
+npm run eval:check                       # Fail if unverified claims
+```
+
+**Outputs**:
+- `capstone/develop/evals/<slug>.claims.yaml` — Machine-checkable ledger
+- `capstone/develop/evals/<slug>.eval.md` — Human checklist
+
+### 9.5 Red Team Harness
+
+Adversarial checks specific to portfolio risks:
+
+| Check | Severity | What It Catches |
+|-------|----------|-----------------|
+| `RT-ACC-CLAIMS` | FAIL | Missing/unverified claims ledger |
+| `RT-SEC-SECRETS` | FAIL | API keys, tokens in text |
+| `RT-SEC-CONFIDENTIAL` | FAIL | NDA/confidential language |
+| `RT-TONE-SYCOPHANCY` | WARN | "thrilled", "dream company" |
+| `RT-ACC-INFLATION` | WARN | "about 15×" near metrics |
+| `RT-INPUT-INJECTION` | WARN | Prompt injection in JD |
+| `RT-XVAR-CONTAM` | WARN | Mentions other target company |
+
+**Commands**:
+```bash
+npm run redteam:variant -- --slug <slug>  # Generate report
+npm run redteam:check                      # Gate (WARN ok)
+npm run redteam:check -- --strict          # Gate (WARN = FAIL)
+```
+
+### 9.6 End-to-End Quality Loop
+
+```
+Knowledge Base (truth)
+      ↓
+Variant YAML (AI output)
+      ↓
+variants:sync  →  JSON (deployable artifact)
+      ↓
+eval           →  claims ledger + checklist
+      ↓
+redteam        →  adversarial report
+      ↓
+Deploy (only if gates pass)
+```
+
+### 9.7 PM Workflow (Capstone Practice)
+
+Work **one variant at a time**:
+
+1. `npm run variants:sync`
+2. `npm run eval:variant -- --slug <slug>`
+3. Verify claims in `*.claims.yaml`
+4. `npm run eval:check`
+5. `npm run redteam:variant -- --slug <slug>`
+6. `npm run redteam:check`
+7. Fix KB or variant wording until clean
+8. Commit + deploy
+
+### 9.8 Files Reference
+
+| Purpose | Path |
+|---------|------|
+| Capstone Framework | `capstone/` |
+| Evaluation Rubric | `capstone/develop/evaluation.md` |
+| Threat Model | `capstone/develop/red-teaming.md` |
+| Claims Ledgers | `capstone/develop/evals/*.claims.yaml` |
+| Red Team Reports | `capstone/develop/redteam/*.redteam.md` |
+| Knowledge Base | `content/knowledge/` |
+| Variant Sync | `scripts/sync-variants.ts` |
+| Evaluation CLI | `scripts/evaluate-variants.ts` |
+| Red Team CLI | `scripts/redteam.ts` |
+| AI Handoff | `.claude/PROJECT_CONTEXT.md` |
+
 ---
 
 ## Appendix: Document Lineage
@@ -563,6 +939,7 @@ engine is online and operational.
 | 1.0 | Dec 2024 | Initial "Ghost in the Machine" audit |
 | 2.0 | 2024-12-18 | Unified strategic + performance audit |
 | 3.0 | 2025-12-20 | **Consolidated**: Merged AGENT_RULES.md + ROADMAP.md |
+| 3.1 | 2025-12-20 | **Added Part IX**: Capstone Quality Pipeline |
 
 ### Archived Files
 

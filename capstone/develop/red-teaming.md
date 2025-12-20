@@ -6,6 +6,28 @@
 ## Overview
 
 This document identifies potential failure modes, attacks, and misuse scenarios for the Universal CV system. For each threat, we assess likelihood, impact, and implement mitigations.
+---
+
+## Executable Version (CLI)
+
+This doc is the **threat model**.
+
+The executable scan lives here:
+
+- Generate a report:
+  ```bash
+  npm run redteam:variant -- --slug <slug>
+  ```
+- Strict gate:
+  ```bash
+  npm run redteam:check
+  npm run redteam:check -- --strict
+  ```
+
+Outputs:
+- `capstone/develop/redteam/<slug>.redteam.md`
+
+
 
 ---
 
