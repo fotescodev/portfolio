@@ -66,9 +66,94 @@ npm run dev       # Local dev server at :5173
 
 ## Active Project Pulse (AI START HERE)
 **Current Objective**: Bundle size reduction and performance optimization.
-**Last Action**: Optimized experience section — 42→24 bullets, added 12 product links, SMART format.
-**Next Focus**: Bundle size reduction (Code Splitting) and Style Refactor.
+**Last Action**: Consolidated context docs, created sprint-sync skill, fixed OG images for social sharing.
+**Next Focus**: Bundle size reduction (Code Splitting) — P0 blocker.
 **Red Alert**: Performance (467KB bundle) is the primary blocker for LCP.
+
+---
+
+## Session: December 20, 2025 — Sprint-Sync Skill & OG Image Overhaul
+
+### Summary
+Created sprint-sync skill for multi-perspective project onboarding. Consolidated context documentation. Fixed OG images to match design system and updated social meta tags.
+
+### Changes Made
+
+#### 1. Documentation Consolidation
+- Merged `AGENT_RULES.md` into `STATE_OF_THE_UNION.md` Part VI
+- Merged `ROADMAP.md` into `STATE_OF_THE_UNION.md` Part VII
+- Added Part VIII: Sprint Briefings (append-only history)
+- Archived old files to `docs/history/`
+- Reduced context/ from 6 files to 4
+
+| Before | After |
+|--------|-------|
+| AGENT_RULES.md | → SOTU Part VI |
+| ROADMAP.md | → SOTU Part VII |
+| STATE_OF_THE_UNION.md | Consolidated v3.0 |
+
+#### 2. Sprint-Sync Skill Created
+- New skill: `.claude/skills/sprint-sync/SKILL.md`
+- Multi-perspective onboarding (PM, Designer, Architect, Engineer)
+- Modes: Quick, Hardcore (full deep dive), Deep [section]
+- Generates ASCII diagrams for visual context
+- Appends briefings to SOTU Part VIII
+
+**Usage:**
+```bash
+/sprint-sync              # Quick sync
+/sprint-sync --hardcore   # Full deep dive with diagrams
+/sprint-sync --deep pm    # PM perspective only
+```
+
+#### 3. OG Image Fixes
+- Fixed fonts: Cormorant/Inter → **Instrument Serif/Sans**
+- Fixed colors to match design system tokens
+- Added accent color to "transact" in tagline
+- Removed email (cleaner layout)
+- Created `scripts/generate-og-images.js` (Puppeteer)
+
+**New npm script:**
+```bash
+npm run generate:og       # Generate PNG from HTML templates
+```
+
+#### 4. Meta Tag Updates
+- Changed domain: `dmitriif.eth.limo` → `edgeoftrust.com`
+- Updated description: "Senior Technical Product Manager, building Web3 products since 2017 - from RPC infrastructure and tooling, to institutional custody. Now exploring the intersection of Agentic AI and Web3."
+
+### Files Changed
+- `context/STATE_OF_THE_UNION.md` — Consolidated v3.0
+- `context/AGENT_RULES.md` → `docs/history/`
+- `context/ROADMAP.md` → `docs/history/`
+- `.claude/skills/sprint-sync/SKILL.md` — New skill
+- `public/og-image-dark.html` — Design system aligned
+- `public/og-image-light.html` — Design system aligned
+- `public/images/og-image.png` — Regenerated
+- `public/images/og-image-light.png` — New
+- `scripts/generate-og-images.js` — New Puppeteer script
+- `index.html` — Meta tags updated
+
+### Key Learnings
+1. **Consolidation > Fragmentation** — 6 context files was too many; 4 is manageable
+2. **OG images need design system compliance** — Fonts/colors must match portfolio
+3. **Social platforms cache aggressively** — Use LinkedIn Post Inspector to clear cache
+4. **Puppeteer for automation** — `generate:og` script saves manual screenshots
+
+### Outcomes
+
+| Area | Outcome |
+|------|---------|
+| Documentation | Consolidated, easier to navigate |
+| Onboarding | Sprint-sync skill for quick context |
+| Social Sharing | OG images match brand, meta tags updated |
+| Automation | `npm run generate:og` for future updates |
+
+**Session Value Summary:**
+- Reduced cognitive load (fewer files to track)
+- Created reusable onboarding skill
+- Fixed social sharing brand consistency
+- Added automation for OG image generation
 
 ---
 
