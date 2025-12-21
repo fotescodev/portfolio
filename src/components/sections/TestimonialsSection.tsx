@@ -89,6 +89,7 @@ export default function TestimonialsSection({ isMobile, isTablet, sectionPadding
           return (
             <article
               key={index}
+              className="light-card"
               style={{
                 flex: '0 0 auto',
                 width: isMobile ? '86vw' : isTablet ? '420px' : '460px',
@@ -98,7 +99,7 @@ export default function TestimonialsSection({ isMobile, isTablet, sectionPadding
                 border: isHovered ? '1px solid var(--color-border)' : '1px solid var(--color-border-light)',
                 padding: isMobile ? 'var(--space-lg)' : 'var(--space-xl)',
                 position: 'relative',
-                transition: 'border-color var(--transition-fast), transform var(--transition-fast)',
+                transition: 'border-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast)',
                 transform: isHovered ? 'translateY(-2px)' : 'translateY(0)'
               }}
               onMouseEnter={() => !isMobile && setHovered(index)}

@@ -47,14 +47,14 @@ Portfolio at **90% production-ready**. Universal CV engine online with 5 variant
 
 ### 1.4 Design Fidelity
 
-**Premium Score**: 7.5/10 → Target: 9/10
+**Premium Score**: 8.5/10 → Target: 9/10
 
 | Aspect | Status |
 |--------|--------|
 | Typography | Strong (Instrument Serif/Sans) |
 | Color Palette | Elegant (#c29a6c accent) |
 | Dark Mode | Complete |
-| Light Mode | Needs polish (muted orbs, flat shadows) |
+| Light Mode | ✅ Polished (boosted orbs, card shadows) |
 | 120+ CSS Variables | Complete |
 
 ---
@@ -79,7 +79,7 @@ Portfolio at **90% production-ready**. Universal CV engine online with 5 variant
 
 | Task | Impact | Status |
 |------|--------|--------|
-| Light Mode Polish | Theme parity | Deferred |
+| ~~Light Mode Polish~~ | ~~Theme parity~~ | ✅ DONE |
 | Inline Style Refactor | Maintainability | Backlog |
 
 ---
@@ -220,19 +220,38 @@ npm run dev       # Dev server at :5173
 ### Current Status
 
 **Date**: 2025-12-21
-**Objective**: Portfolio optimization complete
-**Bundle**: 195KB initial (target achieved!)
-**Tests**: 211 passing
+**Objective**: Portfolio at 92% production-ready
+**Bundle**: ~197KB gzip initial (target <200KB ✅)
+**Tests**: 211 passing (10 suites)
 **Variants**: 5 active
+**CSS Variables**: 122 (added card shadow/border tokens)
+**Premium Score**: 8.5/10 (up from 7.5)
 
 **Blockers**: None
 
 **Recent Wins**:
-- Code splitting shipped (59% bundle reduction)
-- Fixed React version mismatch (tests now pass)
-- Consolidated context docs (87% size reduction)
-- UCV-CLI dashboard shipped (`npm run ucv-cli`)
-- SEO improvements (BrowserRouter, sitemap.xml)
+- Light mode polish shipped (boosted orbs, card shadows)
+- "Get in Touch" nav → Google Calendar link
+- Code splitting shipped (59% bundle reduction, PR #58)
+- Context docs consolidated (87% size reduction, PR #55)
+
+**Next Priority**:
+1. Trust Battery Testimonials (social proof)
+2. Featured Case Study (visual hierarchy)
+
+---
+
+### Session: December 21, 2025 — Light Mode Polish & Nav Fix
+
+**Summary**: Enhanced light mode with boosted orb vibrancy, card shadows, and visual definition. Updated nav CTA to link to Google Calendar.
+
+**Changes**:
+- `src/styles/globals.css` — Light mode orb boost (0.22/0.15), card shadow tokens
+- `src/components/sections/TestimonialsSection.tsx` — Added light-card class
+- `src/pages/BlogPostPage.tsx` — Added shadows to author/thought cards
+- `src/components/Portfolio.tsx` — "Get in Touch" → Google Calendar link
+
+**Next**: Trust Battery Testimonials
 
 ---
 

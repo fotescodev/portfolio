@@ -59,6 +59,11 @@
   /* Shadows */
   --shadow-omnibar: 0 8px 32px rgba(0, 0, 0, 0.12);
   --shadow-drawer: -10px 0 40px rgba(0, 0, 0, 0.2);
+  --shadow-card: none;
+  --shadow-card-hover: 0 4px 16px rgba(0, 0, 0, 0.15);
+
+  /* Card borders - dark mode (subtle) */
+  --color-card-border: transparent;
 
   /* Typography */
   --font-serif: 'Instrument Serif', Georgia, serif;
@@ -116,12 +121,12 @@
   --color-danger: #ef4444;
   --color-code-bg: #f8f8f8;
 
-  /* Effects - Light */
+  /* Effects - Light (boosted vibrancy) */
   --color-nav-gradient-start: rgba(250, 250, 250, 1);
   --color-nav-gradient-end: rgba(250, 250, 250, 0);
   --color-grid-overlay: rgba(0, 0, 0, 0.03);
-  --color-orb-accent: rgba(166, 124, 82, 0.15);
-  --color-orb-secondary: rgba(34, 197, 94, 0.1);
+  --color-orb-accent: rgba(166, 124, 82, 0.22);
+  --color-orb-secondary: rgba(34, 197, 94, 0.15);
   --color-scrollbar-thumb: rgba(26, 26, 28, 0.15);
   --color-scrollbar-thumb-hover: rgba(26, 26, 28, 0.25);
   --color-card-hover: rgba(166, 124, 82, 0.03);
@@ -155,9 +160,14 @@
   --color-success-border: rgba(34, 197, 94, 0.15);
   --color-success-border-subtle: rgba(34, 197, 94, 0.1);
 
-  /* Shadows - light mode */
+  /* Shadows - light mode (elevated) */
   --shadow-omnibar: 0 8px 32px rgba(0, 0, 0, 0.08);
   --shadow-drawer: -10px 0 40px rgba(0, 0, 0, 0.1);
+  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.06), 0 4px 16px rgba(0, 0, 0, 0.04);
+  --shadow-card-hover: 0 4px 12px rgba(0, 0, 0, 0.08), 0 8px 24px rgba(0, 0, 0, 0.06);
+
+  /* Card borders - light mode definition */
+  --color-card-border: rgba(0, 0, 0, 0.06);
 }
 
 /* Custom Scrollbar */
@@ -318,4 +328,38 @@
     width: fit-content;
     min-width: 220px;
   }
+}
+
+/* ============================================
+   Light Mode Card Enhancements
+   Adds shadows and borders for visual definition
+   ============================================ */
+
+[data-theme="light"] .light-card {
+  box-shadow: var(--shadow-card);
+  border: 1px solid var(--color-card-border);
+  transition: box-shadow var(--transition-fast), border-color var(--transition-fast);
+}
+
+[data-theme="light"] .light-card:hover {
+  box-shadow: var(--shadow-card-hover);
+  border-color: var(--color-border);
+}
+
+/* Light mode orb animation boost */
+[data-theme="light"] .orb-primary {
+  opacity: 0.9;
+}
+
+[data-theme="light"] .orb-tertiary {
+  opacity: 0.4;
+}
+
+/* Light mode vignette - softer */
+[data-theme="light"] .wide-screen-vignette {
+  background: radial-gradient(circle at center,
+      transparent 0%,
+      transparent 50%,
+      rgba(0, 0, 0, 0.03) 80%,
+      rgba(0, 0, 0, 0.08) 100%);
 }
