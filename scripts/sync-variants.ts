@@ -14,32 +14,32 @@
  *   npm run variants:sync
  *   npm run variants:sync -- --slug mysten-walrus-senior-pm
  *   npm run variants:check
+ *   npm run variants:sync -- --json
  */
 
 import { existsSync, readFileSync, readdirSync, writeFileSync } from 'fs';
 import { join } from 'path';
 import YAML from 'yaml';
+import ora from 'ora';
 import { VariantSchema } from '../src/lib/schemas.js';
-
-const colors = {
-  reset: '\x1b[0m',
-  green: '\x1b[32m',
-  red: '\x1b[31m',
-  yellow: '\x1b[33m',
-  blue: '\x1b[34m',
-  gray: '\x1b[90m',
-  bold: '\x1b[1m'
-};
+import { theme, HEADER_COMPACT, kv, box } from './cli/theme.js';
 
 type Args = {
   slug?: string;
   check: boolean;
   quiet: boolean;
+  json: boolean;
+};
+
+type SyncResult = {
+  slug: string;
+  status: 'synced' | 'updated' | 'created' | 'error';
+  message?: string;
 };
 
 function parseArgs(): Args {
   const argv = process.argv.slice(2);
-  const out: Args = { check: false, quiet: false };
+  const out: Args = { check: false, quiet: false, json: false };
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
     const n = argv[i + 1];
@@ -50,13 +50,14 @@ function parseArgs(): Args {
       out.check = true;
     } else if (a === '--quiet') {
       out.quiet = true;
+    } else if (a === '--json') {
+      out.json = true;
     }
   }
   return out;
 }
 
 function stableJson(obj: unknown): string {
-  // Ensure consistent output across runs.
   return JSON.stringify(obj, null, 2) + '\n';
 }
 
@@ -66,50 +67,97 @@ function listVariantYamlFiles(variantsDir: string): string[] {
     .filter(f => !f.startsWith('_'));
 }
 
-function syncOneVariant(variantsDir: string, yamlFile: string, checkOnly: boolean): { slug: string; changed: boolean } {
+function syncOneVariant(variantsDir: string, yamlFile: string, checkOnly: boolean): SyncResult {
   const slugFromFile = yamlFile.replace(/\.yaml$/, '');
   const yamlPath = join(variantsDir, yamlFile);
   const jsonPath = join(variantsDir, `${slugFromFile}.json`);
 
-  const raw = readFileSync(yamlPath, 'utf-8');
-  const parsed = YAML.parse(raw);
-  const validated = VariantSchema.parse(parsed);
+  try {
+    const raw = readFileSync(yamlPath, 'utf-8');
+    const parsed = YAML.parse(raw);
+    const validated = VariantSchema.parse(parsed);
 
-  if (validated.metadata.slug !== slugFromFile) {
-    throw new Error(
-      `Slug mismatch in ${yamlFile}: metadata.slug='${validated.metadata.slug}' but filename implies '${slugFromFile}'. Fix the YAML.`
-    );
-  }
-
-  const nextJson = stableJson(validated);
-  const hadJson = existsSync(jsonPath);
-  const prevJson = hadJson ? readFileSync(jsonPath, 'utf-8') : '';
-
-  if (!hadJson) {
-    if (checkOnly) {
-      throw new Error(`Missing JSON artifact: ${jsonPath}. Run: npm run variants:sync`);
+    if (validated.metadata.slug !== slugFromFile) {
+      return {
+        slug: slugFromFile,
+        status: 'error',
+        message: `Slug mismatch: metadata.slug='${validated.metadata.slug}' but filename implies '${slugFromFile}'`
+      };
     }
-    writeFileSync(jsonPath, nextJson, 'utf-8');
-    return { slug: slugFromFile, changed: true };
-  }
 
-  if (prevJson !== nextJson) {
-    if (checkOnly) {
-      throw new Error(`Variant drift detected for '${slugFromFile}'. Run: npm run variants:sync`);
+    const nextJson = stableJson(validated);
+    const hadJson = existsSync(jsonPath);
+    const prevJson = hadJson ? readFileSync(jsonPath, 'utf-8') : '';
+
+    if (!hadJson) {
+      if (checkOnly) {
+        return {
+          slug: slugFromFile,
+          status: 'error',
+          message: `Missing JSON artifact. Run: npm run variants:sync`
+        };
+      }
+      writeFileSync(jsonPath, nextJson, 'utf-8');
+      return { slug: slugFromFile, status: 'created' };
     }
-    writeFileSync(jsonPath, nextJson, 'utf-8');
-    return { slug: slugFromFile, changed: true };
-  }
 
-  return { slug: slugFromFile, changed: false };
+    if (prevJson !== nextJson) {
+      if (checkOnly) {
+        return {
+          slug: slugFromFile,
+          status: 'error',
+          message: `Drift detected. Run: npm run variants:sync`
+        };
+      }
+      writeFileSync(jsonPath, nextJson, 'utf-8');
+      return { slug: slugFromFile, status: 'updated' };
+    }
+
+    return { slug: slugFromFile, status: 'synced' };
+  } catch (err) {
+    return {
+      slug: slugFromFile,
+      status: 'error',
+      message: err instanceof Error ? err.message : String(err)
+    };
+  }
 }
 
 async function main() {
   const args = parseArgs();
   const variantsDir = join(process.cwd(), 'content', 'variants');
 
+  // JSON output mode - minimal, machine-readable
+  if (args.json) {
+    if (!existsSync(variantsDir)) {
+      console.log(JSON.stringify({ variants: [], errors: [] }));
+      process.exit(0);
+    }
+
+    const allYaml = listVariantYamlFiles(variantsDir);
+    const targets = args.slug ? allYaml.filter(f => f === `${args.slug}.yaml`) : allYaml;
+    const results = targets.map(f => syncOneVariant(variantsDir, f, args.check));
+
+    const output = {
+      mode: args.check ? 'check' : 'sync',
+      variants: results.filter(r => r.status !== 'error'),
+      errors: results.filter(r => r.status === 'error')
+    };
+
+    console.log(JSON.stringify(output, null, 2));
+    process.exit(output.errors.length > 0 ? 1 : 0);
+  }
+
+  // Interactive output
+  if (!args.quiet) {
+    console.log(HEADER_COMPACT);
+    console.log();
+  }
+
   if (!existsSync(variantsDir)) {
-    console.log(`${colors.gray}No variants directory found. Nothing to do.${colors.reset}`);
+    if (!args.quiet) {
+      console.log(theme.muted('No variants directory found. Nothing to do.'));
+    }
     process.exit(0);
   }
 
@@ -117,36 +165,60 @@ async function main() {
   const targets = args.slug ? allYaml.filter(f => f === `${args.slug}.yaml`) : allYaml;
 
   if (args.slug && targets.length === 0) {
-    console.error(`${colors.red}Error:${colors.reset} Variant YAML not found for slug '${args.slug}'. Expected file: content/variants/${args.slug}.yaml`);
+    console.error(`${theme.icons.error} Variant YAML not found: ${theme.bold(args.slug)}`);
+    console.error(theme.muted(`  Expected: content/variants/${args.slug}.yaml`));
     process.exit(1);
   }
 
-  if (!args.quiet) {
-    console.log(`${colors.bold}${colors.blue}${args.check ? 'Checking' : 'Syncing'} variants${colors.reset}`);
-    console.log(`${colors.gray}${variantsDir}${colors.reset}\n`);
+  const spinner = ora({
+    text: args.check ? 'Checking variants...' : 'Syncing variants...',
+    color: 'yellow'
+  }).start();
+
+  const results: SyncResult[] = [];
+
+  for (const yamlFile of targets) {
+    const result = syncOneVariant(variantsDir, yamlFile, args.check);
+    results.push(result);
   }
 
-  let changedCount = 0;
-  for (const yamlFile of targets) {
-    const { slug, changed } = syncOneVariant(variantsDir, yamlFile, args.check);
-    if (!args.quiet) {
-      if (changed) {
-        console.log(`${colors.green}✓${colors.reset} ${slug} ${args.check ? '(drift detected)' : '(updated JSON)'}`);
+  spinner.stop();
+
+  // Display results
+  const updated = results.filter(r => r.status === 'updated' || r.status === 'created');
+  const synced = results.filter(r => r.status === 'synced');
+  const errors = results.filter(r => r.status === 'error');
+
+  if (!args.quiet) {
+    console.log(theme.bold(args.check ? 'Checking variants' : 'Syncing variants'));
+    console.log(theme.muted(variantsDir));
+    console.log();
+
+    for (const r of results) {
+      if (r.status === 'error') {
+        console.log(`${theme.icons.error} ${r.slug} ${theme.error('error')}`);
+        if (r.message) console.log(theme.muted(`  ${r.message}`));
+      } else if (r.status === 'created') {
+        console.log(`${theme.icons.success} ${r.slug} ${theme.success('(created)')}`);
+      } else if (r.status === 'updated') {
+        console.log(`${theme.icons.success} ${r.slug} ${theme.warning('(updated)')}`);
       } else {
-        console.log(`${colors.green}✓${colors.reset} ${slug} (in sync)`);
+        console.log(`${theme.icons.success} ${r.slug} ${theme.muted('(in sync)')}`);
       }
     }
-    if (changed) changedCount++;
+
+    console.log();
+    console.log(theme.muted('Summary:'), `${results.length} variant(s), ${updated.length} updated, ${errors.length} errors`);
   }
 
-  if (!args.quiet) {
-    console.log(`\n${colors.gray}Summary:${colors.reset} ${targets.length} variant(s), ${changedCount} updated`);
+  if (errors.length > 0) {
+    process.exit(1);
   }
 
   process.exit(0);
 }
 
 main().catch((err) => {
-  console.error(`${colors.red}${colors.bold}Fatal:${colors.reset} ${err instanceof Error ? err.message : String(err)}`);
+  console.error(`${theme.icons.error} ${theme.error('Fatal:')} ${err instanceof Error ? err.message : String(err)}`);
   process.exit(1);
 });

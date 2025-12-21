@@ -64,6 +64,93 @@ npm run dev       # Local dev server at :5173
 
 ---
 
+## Session: December 21, 2025 — CLI Polish & Brand Integration
+
+### Summary
+Polished the capstone CLI scripts with consistent branding, colors, spinners, and machine-readable JSON output. Inspired by Claude Code CLI design patterns.
+
+### Changes Made
+
+#### 1. Created Shared CLI Theme (`scripts/cli/theme.ts`)
+- Brand colors from `globals.css` design system
+- Semantic color functions (success, warning, error, info, muted)
+- Unicode icons with consistent coloring (✓, ✗, ⚠, ℹ)
+- ASCII art header with "Universal CV" branding
+- Utility functions: `box()`, `kv()`, `li()`, `step()`, `progressBar()`
+
+```typescript
+const BRAND = {
+  accent: '#c29a6c',      // --color-accent
+  success: '#4ade80',     // --color-success
+  warning: '#facc15',     // Yellow
+  error: '#ef4444',       // --color-danger
+  info: '#60a5fa',        // Blue
+  muted: '#6b7280',       // Gray
+};
+```
+
+#### 2. Updated `scripts/sync-variants.ts`
+- Replaced raw ANSI codes with theme utilities
+- Added `ora` spinner for loading states
+- Added `--json` flag for CI/machine-readable output
+- Added `--quiet` flag for silent mode
+
+#### 3. Updated `scripts/evaluate-variants.ts`
+- Same treatment: theme colors, ora spinner
+- Added `--json` and `--quiet` flags
+- Structured `EvalResult` type for JSON output
+
+#### 4. Updated `scripts/redteam.ts`
+- Same treatment: theme colors, ora spinner
+- Added `--json` and `--quiet` flags
+- Structured `RedteamResult` type for JSON output
+
+#### 5. New Dependencies
+- `chalk@5.6.2` — Terminal colors
+- `ora@9.0.0` — Elegant terminal spinners
+
+### CLI Design Principles Applied
+
+| Principle | Implementation |
+|-----------|----------------|
+| **Dual-mode output** | Interactive (colors, spinners) + JSON (machine-readable) |
+| **Exit codes** | 0 = success, 1 = failure (CI-friendly) |
+| **Quiet mode** | `--quiet` suppresses non-essential output |
+| **Brand consistency** | Colors match portfolio design system |
+| **Progressive disclosure** | Spinner during work, summary after |
+
+### Files Changed
+- `scripts/cli/theme.ts` — NEW (shared CLI theme)
+- `scripts/sync-variants.ts` — Theme + spinner + --json
+- `scripts/evaluate-variants.ts` — Theme + spinner + --json
+- `scripts/redteam.ts` — Theme + spinner + --json
+- `package.json` — Added chalk, ora
+
+### Testing
+```bash
+npm run variants:sync              # Interactive with spinner
+npm run variants:sync -- --json    # Machine-readable JSON
+npm run eval:all                   # Interactive evaluation
+npm run redteam:all                # Interactive red team scan
+```
+
+### Outcomes
+
+| Area | Outcome |
+|------|---------|
+| Developer Experience | Professional CLI matching portfolio brand |
+| CI Integration | `--json` flag enables machine parsing |
+| Maintainability | Shared theme eliminates color duplication |
+| Brand Consistency | CLI uses same colors as website |
+
+**Session Value Summary:**
+- Created shared CLI theme with brand colors
+- All 3 capstone scripts now have consistent polish
+- Added --json flag for CI/automation
+- Professional "Universal CV" branding in terminal
+
+---
+
 ## Active Project Pulse (AI START HERE)
 **Current Objective**: Capstone quality pipeline integration and hands-on practice.
 **Last Action**: Merged full capstone pipeline (scripts, knowledge base, framework docs).

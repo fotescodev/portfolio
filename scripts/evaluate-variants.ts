@@ -22,26 +22,16 @@
  *   npm run eval:variant -- --slug mysten-walrus-senior-pm
  *   npm run eval:all
  *   npm run eval:check
- *
- * Optional write-back helpers:
- *   npm run eval:variant -- --slug mysten-walrus-senior-pm --verify metric-abc123=content/knowledge/achievements/ankr-15x-revenue.yaml
+ *   npm run eval:variant -- --json
  */
 
 import { existsSync, readFileSync, readdirSync, mkdirSync, writeFileSync } from 'fs';
 import { join } from 'path';
 import crypto from 'crypto';
 import YAML from 'yaml';
+import ora from 'ora';
 import { VariantSchema } from '../src/lib/schemas.js';
-
-const colors = {
-  reset: '\x1b[0m',
-  green: '\x1b[32m',
-  red: '\x1b[31m',
-  yellow: '\x1b[33m',
-  blue: '\x1b[34m',
-  gray: '\x1b[90m',
-  bold: '\x1b[1m'
-};
+import { theme, HEADER_COMPACT } from './cli/theme.js';
 
 type VerifyArg = { id: string; sourcePath: string };
 
@@ -50,6 +40,7 @@ type Args = {
   all: boolean;
   check: boolean;
   noWrite: boolean;
+  json: boolean;
   verify: VerifyArg[];
 };
 
@@ -89,9 +80,18 @@ type ClaimsLedger = {
   claims: ClaimEntry[];
 };
 
+type EvalResult = {
+  slug: string;
+  status: 'ok' | 'error';
+  claims: number;
+  verified: number;
+  unverified: number;
+  message?: string;
+};
+
 function parseArgs(): Args {
   const argv = process.argv.slice(2);
-  const out: Args = { all: false, check: false, noWrite: false, verify: [] };
+  const out: Args = { all: false, check: false, noWrite: false, json: false, verify: [] };
 
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
@@ -105,6 +105,8 @@ function parseArgs(): Args {
       out.check = true;
     } else if (a === '--no-write') {
       out.noWrite = true;
+    } else if (a === '--json') {
+      out.json = true;
     } else if (a === '--verify') {
       const v = n || '';
       const [id, sourcePath] = v.split('=');
@@ -148,8 +150,6 @@ function stableJson(obj: unknown): string {
 }
 
 function computeVariantContentHash(validatedVariant: any): string {
-  // Important: exclude metadata.generatedAt (and jobDescription) to avoid false positives.
-  // We want the hash to change when the *output content* changes.
   const payload = stableJson({
     slug: validatedVariant.metadata.slug,
     company: validatedVariant.metadata.company,
@@ -201,7 +201,6 @@ function collectStrings(value: any, path: string, out: Array<{ location: string;
 function splitSentences(text: string): string[] {
   const normalized = text.replace(/\s+/g, ' ').trim();
   if (!normalized) return [];
-  // Simple sentence split (good enough for this workflow).
   return normalized
     .split(/(?:\.\s+|\?\s+|!\s+|\n+)/)
     .map(s => s.trim())
@@ -209,18 +208,17 @@ function splitSentences(text: string): string[] {
 }
 
 const metricWordRe = /\b(zero|billions?|millions?|thousands?|hundreds?|dozens?)\b/gi;
-const approxWordRe = /\b(about|around|roughly|nearly|approx(?:\.|imately)?|~)\b/gi;
 
 function extractAnchors(sentence: string): string[] {
   const anchors = new Set<string>();
 
   const patterns: RegExp[] = [
-    /\$[0-9][0-9.,]*(?:\s?[KMB])?\+?/g,        // $130K, $2M, $200K
-    /\b[0-9][0-9.,]*\s?%/g,                   // 40%, 0.1%
-    /\b[0-9][0-9.,]*\s?[x×]\b/gi,             // 15x, 15×
-    /\b[0-9]+\+/g,                            // 7+
-    /\b[0-9][0-9.,]*\s?(?:weeks?|months?|years?|days?)\b/gi, // 8 months, 12+ weeks
-    /\b[0-9][0-9.,]*\s?(?:K|M|B)\b/g          // 1M, 2B
+    /\$[0-9][0-9.,]*(?:\s?[KMB])?\+?/g,
+    /\b[0-9][0-9.,]*\s?%/g,
+    /\b[0-9][0-9.,]*\s?[x×]\b/gi,
+    /\b[0-9]+\+/g,
+    /\b[0-9][0-9.,]*\s?(?:weeks?|months?|years?|days?)\b/gi,
+    /\b[0-9][0-9.,]*\s?(?:K|M|B)\b/g
   ];
 
   for (const re of patterns) {
@@ -228,11 +226,9 @@ function extractAnchors(sentence: string): string[] {
     matches?.forEach(m => anchors.add(m.trim()));
   }
 
-  // Quantifier words like "billions", "zero"
   const quant = sentence.match(metricWordRe);
   quant?.forEach(q => anchors.add(q.trim()));
 
-  // Parenthetical named entities like "(Optimism, Base, Arbitrum)"
   const parens = [...sentence.matchAll(/\(([A-Za-z0-9][^)]{0,80})\)/g)].map(m => m[1]);
   for (const p of parens) {
     const trimmed = p.trim();
@@ -283,7 +279,6 @@ function loadKnowledgeSources(): SourceDoc[] {
     }
   }
 
-  // Also include experience index as a fallback source of truth.
   const exp = join(process.cwd(), 'content', 'experience', 'index.yaml');
   if (existsSync(exp)) files.push(exp);
 
@@ -303,7 +298,6 @@ function candidateSourcesForClaim(claim: { anchors: string[]; text: string }, so
     const matchedAnchors = claim.anchors.filter(a => src.raw.includes(a));
     const anchorScore = matchedAnchors.length / Math.max(1, claim.anchors.length);
 
-    // Word overlap is a weak signal; anchors are stronger.
     let overlapScore = 0;
     if (claimTokenList.length > 0) {
       const hit = claimTokenList.filter(t => src.tokens.has(t)).length;
@@ -404,7 +398,6 @@ function applyVerifyWrites(ledger: ClaimsLedger, verifyArgs: VerifyArg[]) {
     const claim = byId.get(v.id);
     if (!claim) throw new Error(`--verify references unknown claim id: ${v.id}`);
 
-    // Ensure source exists
     const full = join(process.cwd(), v.sourcePath);
     if (!existsSync(full)) throw new Error(`--verify source path not found: ${v.sourcePath}`);
 
@@ -416,11 +409,11 @@ function applyVerifyWrites(ledger: ClaimsLedger, verifyArgs: VerifyArg[]) {
   }
 }
 
-function checkLedgerStrict(slug: string, ledgerPath: string, ledger: ClaimsLedger, currentHash: string) {
+function checkLedgerStrict(slug: string, ledgerPath: string, ledger: ClaimsLedger, currentHash: string): string[] {
   const errors: string[] = [];
 
   if (ledger.variant.contentHash !== currentHash) {
-    errors.push(`Ledger hash mismatch for '${slug}'. Re-run: npm run eval:variant -- --slug ${slug}`);
+    errors.push(`Ledger hash mismatch. Re-run: npm run eval:variant -- --slug ${slug}`);
   }
 
   for (const claim of ledger.claims) {
@@ -443,17 +436,12 @@ function checkLedgerStrict(slug: string, ledgerPath: string, ledger: ClaimsLedge
     }
   }
 
-  if (errors.length) {
-    console.error(`${colors.red}${colors.bold}✗ eval:check failed for ${slug}${colors.reset}`);
-    errors.forEach(e => console.error(`  ${colors.red}•${colors.reset} ${e}`));
-    process.exit(1);
-  }
+  return errors;
 }
 
 function buildLedger(slug: string): { ledger: ClaimsLedger; ledgerPath: string; mdPath: string; notes: string[] } {
   const { yamlPath, validated } = readVariantYaml(slug);
 
-  // Detect YAML/JSON drift (not a hard error here, but we surface it)
   const json = readVariantJsonIfExists(slug);
   const nextJson = stableJson(validated);
   const notes: string[] = [];
@@ -465,7 +453,6 @@ function buildLedger(slug: string): { ledger: ClaimsLedger; ledgerPath: string; 
 
   const contentHash = computeVariantContentHash(validated);
 
-  // Extract metric-like claims from overrides only (exclude metadata.jobDescription).
   const snippets: Array<{ location: string; text: string }> = [];
   collectStrings(validated.overrides, 'overrides', snippets);
 
@@ -509,7 +496,6 @@ function buildLedger(slug: string): { ledger: ClaimsLedger; ledgerPath: string; 
   const ledgerPath = join(evalDir, `${slug}.claims.yaml`);
   const mdPath = join(evalDir, `${slug}.eval.md`);
 
-  // Preserve existing verifications
   const existing = readLedgerIfExists(ledgerPath);
   if (existing?.claims?.length) {
     const prevById = new Map(existing.claims.map(c => [c.id, c]));
@@ -535,45 +521,75 @@ function buildLedger(slug: string): { ledger: ClaimsLedger; ledgerPath: string; 
   return { ledger, ledgerPath, mdPath, notes };
 }
 
-async function evalOne(slug: string, args: Args) {
-  const { ledger, ledgerPath, mdPath, notes } = buildLedger(slug);
+async function evalOne(slug: string, args: Args): Promise<EvalResult> {
+  try {
+    const { ledger, ledgerPath, mdPath, notes } = buildLedger(slug);
 
-  // Apply optional CLI write-back verification
-  applyVerifyWrites(ledger, args.verify);
+    applyVerifyWrites(ledger, args.verify);
 
-  if (args.check) {
-    if (!existsSync(ledgerPath)) {
-      console.error(`${colors.red}${colors.bold}✗ Missing claims ledger for ${slug}${colors.reset}`);
-      console.error(`  Run: npm run eval:variant -- --slug ${slug}`);
-      process.exit(1);
+    if (args.check) {
+      if (!existsSync(ledgerPath)) {
+        return {
+          slug,
+          status: 'error',
+          claims: 0,
+          verified: 0,
+          unverified: 0,
+          message: `Missing claims ledger. Run: npm run eval:variant -- --slug ${slug}`
+        };
+      }
+      const currentHash = ledger.variant.contentHash;
+      const onDisk = readLedgerIfExists(ledgerPath);
+      if (!onDisk) {
+        return {
+          slug,
+          status: 'error',
+          claims: 0,
+          verified: 0,
+          unverified: 0,
+          message: 'Missing claims ledger'
+        };
+      }
+      const errors = checkLedgerStrict(slug, ledgerPath, onDisk, currentHash);
+      if (errors.length > 0) {
+        return {
+          slug,
+          status: 'error',
+          claims: onDisk.claims.length,
+          verified: onDisk.claims.filter(c => c.verified.status === 'verified').length,
+          unverified: onDisk.claims.filter(c => c.verified.status !== 'verified').length,
+          message: errors.join('; ')
+        };
+      }
+      return {
+        slug,
+        status: 'ok',
+        claims: onDisk.claims.length,
+        verified: onDisk.claims.filter(c => c.verified.status === 'verified').length,
+        unverified: onDisk.claims.filter(c => c.verified.status !== 'verified').length
+      };
     }
-    // In check mode, validate strictness using the *current* hash, not the one in the (rebuilt) ledger object.
-    const currentHash = ledger.variant.contentHash;
-    const onDisk = readLedgerIfExists(ledgerPath);
-    if (!onDisk) {
-      console.error(`${colors.red}${colors.bold}✗ Missing claims ledger for ${slug}${colors.reset}`);
-      process.exit(1);
+
+    if (!args.noWrite) {
+      writeLedger(ledgerPath, ledger);
+      writeEvalMd(mdPath, slug, ledger, notes);
     }
-    checkLedgerStrict(slug, ledgerPath, onDisk, currentHash);
-    console.log(`${colors.green}✓${colors.reset} ${slug} (eval check passed)`);
-    return;
-  }
 
-  if (!args.noWrite) {
-    writeLedger(ledgerPath, ledger);
-    writeEvalMd(mdPath, slug, ledger, notes);
-  }
+    const total = ledger.claims.length;
+    const verified = ledger.claims.filter(c => c.verified.status === 'verified').length;
+    const unverified = total - verified;
 
-  const total = ledger.claims.length;
-  const verified = ledger.claims.filter(c => c.verified.status === 'verified').length;
-  const unverified = total - verified;
-
-  console.log(`${colors.green}✓${colors.reset} ${slug}: ${total} claim(s) • ${verified} verified • ${unverified} unverified`);
-  if (notes.length) {
-    notes.forEach(n => console.log(`${colors.yellow}⚠${colors.reset} ${n}`));
+    return { slug, status: 'ok', claims: total, verified, unverified };
+  } catch (err) {
+    return {
+      slug,
+      status: 'error',
+      claims: 0,
+      verified: 0,
+      unverified: 0,
+      message: err instanceof Error ? err.message : String(err)
+    };
   }
-  console.log(`${colors.gray}  Ledger:${colors.reset} capstone/develop/evals/${slug}.claims.yaml`);
-  console.log(`${colors.gray}  Checklist:${colors.reset} capstone/develop/evals/${slug}.eval.md`);
 }
 
 async function main() {
@@ -581,19 +597,81 @@ async function main() {
 
   const slugs = args.all ? listVariantSlugs() : [args.slug!];
   if (slugs.length === 0) {
-    console.log(`${colors.gray}No variants found. Nothing to evaluate.${colors.reset}`);
+    if (args.json) {
+      console.log(JSON.stringify({ results: [] }));
+    } else {
+      console.log(theme.muted('No variants found. Nothing to evaluate.'));
+    }
     process.exit(0);
   }
 
-  console.log(`${colors.bold}${colors.blue}${args.check ? 'Checking' : 'Evaluating'} variants${colors.reset}`);
-  console.log(`${colors.gray}${slugs.length} variant(s)${colors.reset}\n`);
+  // JSON output mode
+  if (args.json) {
+    const results: EvalResult[] = [];
+    for (const slug of slugs) {
+      results.push(await evalOne(slug, args));
+    }
+    const output = {
+      mode: args.check ? 'check' : 'eval',
+      results,
+      errors: results.filter(r => r.status === 'error')
+    };
+    console.log(JSON.stringify(output, null, 2));
+    process.exit(output.errors.length > 0 ? 1 : 0);
+  }
 
+  // Interactive output
+  console.log(HEADER_COMPACT);
+  console.log();
+
+  const spinner = ora({
+    text: args.check ? 'Checking claims ledgers...' : 'Evaluating variants...',
+    color: 'yellow'
+  }).start();
+
+  const results: EvalResult[] = [];
   for (const slug of slugs) {
-    await evalOne(slug, args);
+    results.push(await evalOne(slug, args));
+  }
+
+  spinner.stop();
+
+  console.log(theme.bold(args.check ? 'Checking variants' : 'Evaluating variants'));
+  console.log(theme.muted(`${slugs.length} variant(s)`));
+  console.log();
+
+  for (const r of results) {
+    if (r.status === 'error') {
+      console.log(`${theme.icons.error} ${r.slug} ${theme.error('failed')}`);
+      if (r.message) console.log(theme.muted(`  ${r.message}`));
+    } else {
+      const statusText = r.unverified > 0
+        ? theme.warning(`${r.verified}/${r.claims} verified`)
+        : theme.success(`${r.verified}/${r.claims} verified`);
+      console.log(`${theme.icons.success} ${r.slug}: ${statusText}`);
+      if (!args.check) {
+        console.log(theme.muted(`  Ledger: capstone/develop/evals/${r.slug}.claims.yaml`));
+      }
+    }
+  }
+
+  const errors = results.filter(r => r.status === 'error');
+  if (errors.length > 0) {
+    console.log();
+    console.log(`${theme.icons.error} ${theme.error(`${errors.length} variant(s) failed`)}`);
+    process.exit(1);
+  }
+
+  console.log();
+  const totalUnverified = results.reduce((acc, r) => acc + r.unverified, 0);
+  if (totalUnverified > 0) {
+    console.log(theme.warning(`${theme.icons.warning} ${totalUnverified} unverified claim(s) remaining`));
+  } else {
+    console.log(theme.success(`${theme.icons.success} All claims verified`));
   }
 }
 
 main().catch((err) => {
-  console.error(`${colors.red}${colors.bold}Fatal:${colors.reset} ${err instanceof Error ? err.message : String(err)}`);
+  console.error(`${theme.icons.error} ${theme.error('Fatal:')} ${err instanceof Error ? err.message : String(err)}`);
   process.exit(1);
 });

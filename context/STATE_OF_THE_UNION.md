@@ -1436,16 +1436,67 @@ Work **one variant at a time**:
 7. Fix KB or variant wording until clean
 8. Commit + deploy
 
-### 9.8 Files Reference
+### 9.8 CLI Design System
+
+The capstone CLI tools share a unified theme derived from the portfolio design system.
+
+#### Shared Theme (`scripts/cli/theme.ts`)
+
+```typescript
+const BRAND = {
+  accent: '#c29a6c',      // --color-accent (matches portfolio)
+  success: '#4ade80',     // --color-success
+  warning: '#facc15',     // Yellow
+  error: '#ef4444',       // --color-danger
+};
+```
+
+#### CLI Flags (All Scripts)
+
+| Flag | Purpose |
+|------|---------|
+| `--json` | Machine-readable JSON output (for CI/automation) |
+| `--quiet` | Suppress non-essential output |
+| `--check` | Verification mode (exit 1 on failure) |
+
+#### Dual-Mode Output
+
+All scripts support two modes:
+- **Interactive**: Colored output, spinners, branded header
+- **Non-interactive**: `--json` flag returns structured data
+
+```bash
+# Interactive (human)
+npm run redteam:all
+
+# Machine-readable (CI)
+npm run redteam:all -- --json | jq '.errors'
+```
+
+#### Exit Codes
+
+| Code | Meaning |
+|------|---------|
+| 0 | Success (all checks pass) |
+| 1 | Failure (errors detected) |
+
+### 9.9 Workflow Guide
+
+For a complete step-by-step walkthrough with examples, see:
+**[docs/guides/capstone-workflow.md](../docs/guides/capstone-workflow.md)**
+
+### 9.10 Files Reference
 
 | Purpose | Path |
 |---------|------|
+| **Workflow Guide** | `docs/guides/capstone-workflow.md` |
 | Capstone Framework | `capstone/` |
 | Evaluation Rubric | `capstone/develop/evaluation.md` |
 | Threat Model | `capstone/develop/red-teaming.md` |
 | Claims Ledgers | `capstone/develop/evals/*.claims.yaml` |
 | Red Team Reports | `capstone/develop/redteam/*.redteam.md` |
 | Knowledge Base | `content/knowledge/` |
+| CLI Theme | `scripts/cli/theme.ts` |
 | Variant Sync | `scripts/sync-variants.ts` |
 | Evaluation CLI | `scripts/evaluate-variants.ts` |
 | Red Team CLI | `scripts/redteam.ts` |
@@ -1461,6 +1512,7 @@ Work **one variant at a time**:
 | 2.0 | 2024-12-18 | Unified strategic + performance audit |
 | 3.0 | 2025-12-20 | **Consolidated**: Merged AGENT_RULES.md + ROADMAP.md |
 | 3.1 | 2025-12-20 | **Added Part IX**: Capstone Quality Pipeline |
+| 3.2 | 2025-12-21 | **Added 9.8**: CLI Design System documentation |
 
 ### Archived Files
 
