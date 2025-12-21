@@ -204,9 +204,9 @@ export default function Omnibar() {
 
                         <div style={{ width: '1px', height: '16px', background: 'var(--color-border-light)' }} />
 
-                        {/* Book Call (Primary) */}
+                        {/* Book Time (Primary) */}
                         <motion.a
-                            href="https://calendly.com/dmitriifotesco"
+                            href="https://calendar.google.com/calendar/u/0/appointments/AcZssZ2leGghBAF6F4IbGMZQErnaR21wvu-mYWXP06o="
                             target="_blank"
                             rel="noopener noreferrer"
                             whileTap={{ scale: 0.98 }}
@@ -227,7 +227,7 @@ export default function Omnibar() {
                                 <line x1="8" y1="2" x2="8" y2="6" />
                                 <line x1="3" y1="10" x2="21" y2="10" />
                             </svg>
-                            <span>Let's Talk</span>
+                            <span>Book Time</span>
                         </motion.a>
                     </motion.div>
                 )}
