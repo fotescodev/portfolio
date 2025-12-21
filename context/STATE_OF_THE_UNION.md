@@ -794,6 +794,261 @@ engine is online with 3 active variants.
 
 ───────────────────────────────────────────────────────────────────────────────
 
+═══════════════════════════════════════════════════════════════════════════════
+SPRINT BRIEFING — 2025-12-21 00:48
+Mode: Hardcore (Full Deep Dive)
+═══════════════════════════════════════════════════════════════════════════════
+
+## Executive Summary
+
+Portfolio at **85% production-ready**. Capstone quality pipeline is fully integrated
+with executable evaluation and red-team scripts. **P0 BLOCKER: 480KB bundle size**
+remains critical. Tests healthy at 192 passing. Universal CV engine now supports
+5 active variants with YAML→JSON sync automation.
+
+---
+
+## PM Deep Dive: Roadmap & Priorities
+
+```
+┌─ ROADMAP STATUS ─────────────────────────────────────────────────────────────┐
+│                                                                              │
+│  Phase 1: Foundation    ████████████████████ 100%  COMPLETE                  │
+│  Phase 2: Polish        ████████████████████ 100%  COMPLETE                  │
+│  Phase 3: Social        ████████████░░░░░░░░  60%  IN PROGRESS               │
+│  Phase 4: Performance   ░░░░░░░░░░░░░░░░░░░░   0%  BLOCKED                   │
+│                                                                              │
+│  ┌─ P0 CRITICAL PATH ────────────────────────────────────────────────────┐   │
+│  │  [ ] Code Splitting         480KB → <200KB        BLOCKING LCP        │   │
+│  │  [ ] Lazy Load Analytics    505-line component    BLOCKING INITIAL    │   │
+│  └───────────────────────────────────────────────────────────────────────┘   │
+│                                                                              │
+│  ┌─ CAPSTONE PIPELINE (NEW) ────────────────────────────────────────────┐   │
+│  │  [✓] YAML→JSON Sync         npm run variants:sync                    │   │
+│  │  [✓] Claims Ledger          npm run eval:variant                     │   │
+│  │  [✓] Red Team Harness       npm run redteam:variant                  │   │
+│  │  [✓] Build Integration      predev + prebuild hooks                  │   │
+│  └───────────────────────────────────────────────────────────────────────┘   │
+│                                                                              │
+│  Current Focus: Capstone pipeline practice + README update                   │
+│  Last Action:   Merged full capstone quality pipeline (PR #47)               │
+│  Risk Level:    MEDIUM (capstone complete, bundle still P0)                  │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+```
+
+**Sprint Velocity**: 143 commits in last 7 days
+**New Work Stream**: Capstone quality pipeline fully integrated
+**Variants Active**: 5 (bloomberg, gensyn, mysten-walrus, stripe-crypto, template)
+
+---
+
+## Designer Deep Dive: Design System Health
+
+```
+┌─ DESIGN SYSTEM HEALTH ───────────────────────────────────────────────────────┐
+│                                                                              │
+│  CSS Variables Inventory: 118 tokens total                                   │
+│  ├── Colors:     ~40 tokens    [✓ Complete]                                  │
+│  ├── Spacing:    ~15 tokens    [✓ Complete]                                  │
+│  ├── Typography: ~12 tokens    [✓ Complete]                                  │
+│  ├── Effects:    ~20 tokens    [✓ Complete]                                  │
+│  └── Layout:     ~31 tokens    [✓ Complete]                                  │
+│                                                                              │
+│  Theme Parity Analysis:                                                      │
+│  ┌─────────────────────┬─────────────────────┐                               │
+│  │      DARK MODE      │     LIGHT MODE      │                               │
+│  ├─────────────────────┼─────────────────────┤                               │
+│  │ ✓ Background #08080a│ ✓ Background #fafafa│                               │
+│  │ ✓ Text #e8e6e3      │ ✓ Text #050505      │                               │
+│  │ ✓ Accent #c29a6c    │ ✓ Accent #8a6642    │                               │
+│  │ ✓ Orbs @ 0.25       │ ⚠ Orbs @ 0.15 MUTED │                               │
+│  │ ✓ Card Shadows      │ ⚠ Shadows FLAT      │                               │
+│  └─────────────────────┴─────────────────────┘                               │
+│                                                                              │
+│  Premium Score: 7.5/10 ──────────────▶ Target: 9/10                          │
+│                                                                              │
+│  Recent Additions:                                                           │
+│  ├── OG images aligned with Instrument Serif/Sans                            │
+│  ├── Wide-screen vignette effect (1440px+)                                   │
+│  ├── Tertiary orb for ambient depth                                          │
+│  └── Accent color on tagline "transact"                                      │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+```
+
+**Compliance**: Design system is well-established (118 CSS variables)
+**OG Images**: Now match portfolio design system (fonts, colors)
+**Theme Risk**: Light mode needs P2 polish pass
+
+---
+
+## Architect Deep Dive: System Architecture
+
+```
+┌─ ARCHITECTURE OVERVIEW ──────────────────────────────────────────────────────┐
+│                                                                              │
+│  DATA FLOW (Extended with Capstone):                                         │
+│  ┌──────────────┐    ┌──────────────┐    ┌───────────────┐                   │
+│  │ content/     │───▶│ src/lib/     │───▶│ Zod Schemas   │                   │
+│  │ *.yaml *.md  │    │ content.ts   │    │ (9 schemas)   │                   │
+│  └──────────────┘    └──────────────┘    └───────────────┘                   │
+│         │                    │                   │                           │
+│         ▼                    │                   │                           │
+│  ┌──────────────┐            ▼                   │                           │
+│  │ knowledge/   │    ┌──────────────┐            │                           │
+│  │ achievements │    │ validate()   │◀───────────┘                           │
+│  │ stories      │    └──────────────┘                                        │
+│  └──────────────┘            │                                               │
+│         │                    │                                               │
+│         ▼                    ▼                                               │
+│  ┌──────────────┐    ┌──────────────┐    ┌───────────────┐                   │
+│  │ variants/    │───▶│ sync-        │───▶│ *.json        │                   │
+│  │ *.yaml       │    │ variants.ts  │    │ (runtime)     │                   │
+│  └──────────────┘    └──────────────┘    └───────────────┘                   │
+│         │                                        │                           │
+│         ▼                                        ▼                           │
+│  ┌──────────────┐                        ┌──────────────┐                    │
+│  │ eval +       │                        │ Portfolio.tsx│                    │
+│  │ redteam      │                        │ + Sections   │                    │
+│  └──────────────┘                        └──────────────┘                    │
+│                                                                              │
+│  HEALTH METRICS:                                                             │
+│  ├── Tests:        192 passing (8 test files)         ✓ HEALTHY              │
+│  ├── Type Safety:  9/10 (1 escape hatch in Blog.tsx)  ✓ SOLID                │
+│  ├── Zod Coverage: 9 schemas                          ✓ COMPLETE             │
+│  ├── Bundle:       480KB gzipped                      ✗ CRITICAL             │
+│  └── Chunk Warn:   1,505KB pre-minify                 ✗ NEEDS SPLIT          │
+│                                                                              │
+│  NEW SCRIPTS (Capstone):                                                     │
+│  ├── scripts/sync-variants.ts      (152 lines)  YAML→JSON                    │
+│  ├── scripts/evaluate-variants.ts  (599 lines)  Claims ledger                │
+│  └── scripts/redteam.ts            (407 lines)  Adversarial scan             │
+│                                                                              │
+│  TECH STACK:                                                                 │
+│  React 19 • TypeScript • Vite 7 • Framer Motion • Zod • HashRouter           │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+```
+
+**Architecture**: Extended with capstone quality pipeline
+**New Scripts**: 1,158 lines of evaluation/red-team tooling
+**Critical Issue**: Bundle size requires immediate code splitting
+
+---
+
+## Engineer Deep Dive: Recent Activity
+
+```
+┌─ ENGINEERING PULSE ──────────────────────────────────────────────────────────┐
+│                                                                              │
+│  RECENT COMMITS (last 10):                                                   │
+│  ├── 5ec04dc Merge PR #47: capstone-prep                                     │
+│  ├── cbd9a47 feat: integrate capstone quality pipeline                       │
+│  ├── 142ac18 docs: add session log for Dec 20 sprint-sync                    │
+│  ├── 7120e51 fix: simplify meta description wording                          │
+│  ├── 62314e6 content: update meta descriptions with career narrative         │
+│  ├── dd840bf fix: update OG meta tags to use edgeoftrust.com                 │
+│  ├── dcbacc2 Merge PR #46: eloquent-hermann                                  │
+│  ├── 5dcb727 feat: add OG image generation script                            │
+│  ├── d4bf954 style: add accent color to tagline                              │
+│  └── ccc54f9 fix: align OG images with design system                         │
+│                                                                              │
+│  CHANGE VOLUME (last 10 commits):                                            │
+│  ├── 32 files changed                                                        │
+│  ├── +4,933 lines added                                                      │
+│  └── -340 lines removed                                                      │
+│                                                                              │
+│  HOT FILES (most activity):                                                  │
+│  ├── context/STATE_OF_THE_UNION.md      (+1032 lines) consolidated           │
+│  ├── scripts/evaluate-variants.ts       (+599 lines) NEW                     │
+│  ├── .claude/skills/sprint-sync/SKILL.md (+399 lines) NEW                    │
+│  └── scripts/redteam.ts                 (+407 lines) NEW                     │
+│                                                                              │
+│  NEW TOOLING:                                                                │
+│  ┌────────────────────────────────────────────────────────────────────┐      │
+│  │  npm run variants:sync    │  YAML→JSON sync                        │      │
+│  │  npm run eval:variant     │  Generate claims ledger                │      │
+│  │  npm run redteam:variant  │  Run adversarial scan                  │      │
+│  │  npm run generate:og      │  Generate OG images (Puppeteer)        │      │
+│  └────────────────────────────────────────────────────────────────────┘      │
+│                                                                              │
+│  VARIANTS ACTIVE (5):                                                        │
+│  ├── bloomberg-technical-product-manager.yaml  (claims verified)             │
+│  ├── gensyn-technical-product-manager.yaml                                   │
+│  ├── mysten-walrus-senior-pm.yaml              (NEW)                         │
+│  ├── stripe-crypto.yaml                                                      │
+│  └── _template.yaml                                                          │
+│                                                                              │
+│  WHAT'S WORKING:              NEEDS ATTENTION:                               │
+│  ├── Capstone pipeline        ├── Bundle size 480KB (P0)                     │
+│  ├── OG image generation      ├── Code splitting needed                      │
+│  ├── Sprint-sync skill        ├── LikeAnalytics lazy load                    │
+│  ├── Universal CV (5 vars)    ├── Light mode polish                          │
+│  └── Context consolidation    └── README outdated                            │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+```
+
+**Velocity**: Extremely High (+4933/-340 lines in last 10 commits)
+**Quality**: All systems green, capstone pipeline integrated
+**Focus**: Documentation update, then pivot to performance
+
+---
+
+## Cross-Functional Risk Matrix
+
+```
+┌─ PRIORITY MATRIX ────────────────────────────────────────────────────────────┐
+│                                                                              │
+│               │  LOW EFFORT   │  MED EFFORT   │  HIGH EFFORT  │              │
+│  ─────────────┼───────────────┼───────────────┼───────────────┤              │
+│  HIGH IMPACT  │ ★ Code Split  │               │               │              │
+│               │ ★ Lazy Load   │               │               │              │
+│  ─────────────┼───────────────┼───────────────┼───────────────┤              │
+│  MED IMPACT   │ README Update │ Testimonials  │ Scroll Story  │              │
+│               │ (in progress) │ Featured Case │               │              │
+│  ─────────────┼───────────────┼───────────────┼───────────────┤              │
+│  LOW IMPACT   │ Dead Code     │ Style Refactor│               │              │
+│               │ Cleanup       │ (324 inline)  │               │              │
+│  ─────────────┴───────────────┴───────────────┴───────────────┘              │
+│                                                                              │
+│  ★ = START NEXT (P0 Critical Path after README)                              │
+│                                                                              │
+│  CAPSTONE QUALITY GATES:                                                     │
+│  ├── [✓] variants:sync — Build integration                                   │
+│  ├── [✓] eval:variant — Claims ledger works                                  │
+│  ├── [✓] redteam:variant — Adversarial scan works                            │
+│  └── [ ] Run full workflow on all 5 variants                                 │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Recommended Actions (Priority Order)
+
+| # | Action | Impact | Effort | Owner |
+|---|--------|--------|--------|-------|
+| 1 | Update README with recent changes | MED | Low | In Progress |
+| 2 | Implement code splitting in `vite.config.ts` | CRITICAL | Low | Engineer |
+| 3 | Lazy load `LikeAnalytics.tsx` with `React.lazy()` | HIGH | Low | Engineer |
+| 4 | Run capstone workflow on all 5 variants | MED | Med | PM |
+| 5 | Measure bundle size post-split (target <200KB) | CRITICAL | Low | Engineer |
+
+---
+
+## Session Context for AI Agents
+
+**Immediate**: Update README to reflect recent changes (capstone, OG images, sprint-sync).
+**Then**: Bundle size reduction is the P0 priority.
+**New Tools**: `npm run variants:sync`, `eval:variant`, `redteam:variant`, `generate:og`.
+**Don't Touch**: Blog UX is complete, Experience section is optimized.
+**Watch Out**: Light mode polish is P2, don't get distracted.
+**Pattern**: This codebase uses CSS variables exclusively (118 tokens in globals.css).
+
+───────────────────────────────────────────────────────────────────────────────
+
 ---
 
 ## Part IX: Capstone Quality Pipeline
