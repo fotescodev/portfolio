@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OG Image - Dark</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      width: 1200px;
+      height: 630px;
+      overflow: hidden;
+    }
+
+    .og-container {
+      width: 1200px;
+      height: 630px;
+      background: #08080a;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 100px;
+      position: relative;
+    }
+
+    /* Subtle vignette effect */
+    .og-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0.3) 100%);
+      pointer-events: none;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .tagline {
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-size: 72px;
+      font-weight: 400;
+      font-style: italic;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: #e8e6e3;
+      margin-bottom: 48px;
+    }
+
+    .tagline .muted {
+      color: #666;
+    }
+
+    .tagline .accent {
+      color: #c29a6c;
+    }
+
+    .divider {
+      width: 60px;
+      height: 2px;
+      background: #c29a6c;
+      margin-bottom: 48px;
+    }
+
+    .name {
+      font-family: 'Instrument Sans', -apple-system, sans-serif;
+      font-size: 28px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #e8e6e3;
+      margin-bottom: 12px;
+    }
+
+    .role {
+      font-family: 'Instrument Sans', -apple-system, sans-serif;
+      font-size: 18px;
+      font-weight: 500;
+      color: #a0a0a0;
+      margin-bottom: 16px;
+    }
+
+    .domains {
+      font-family: 'Instrument Sans', -apple-system, sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #c29a6c;
+    }
+
+    .domains span {
+      margin: 0 12px;
+      color: #444;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="og-container">
+    <div class="content">
+      <div class="tagline">
+        From Institutional Web3<br>
+        <span class="muted">to</span> agents that <span class="accent">transact</span>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="name">Dmitrii Fotesco</div>
+      <div class="role">Technical Product Manager</div>
+      <div class="domains">Web3 Infrastructure<span>·</span>DevEx<span>·</span>AI</div>
+    </div>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,25 @@
+# ═══════════════════════════════════════════════════════════════
+# TESTIMONIALS
+# ═══════════════════════════════════════════════════════════════
+testimonials:
+  - quote: >
+      Dmitrii has a rare ability to bridge complex technical systems with business value.
+      His work on our staking infrastructure was exceptional—he understood the compliance
+      constraints while pushing for the best possible product.
+    author: "Engineering Lead"
+    initials: "JD"
+    role: "Former Colleague"
+    company: "Anchorage Digital"
+    avatar: null
+    featured: true
+
+  - quote: >
+      Working with Dmitrii on the Flow CLI was a masterclass in developer experience.
+      He has an intuition for what developers need and the technical depth to
+      make those improvements happen.
+    author: "Senior Developer Advocate"
+    initials: "SR"
+    role: "Former Colleague"
+    company: "Dapper Labs"
+    avatar: null
+    featured: true

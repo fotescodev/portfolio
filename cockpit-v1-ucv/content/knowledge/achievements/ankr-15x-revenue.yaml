@@ -1,0 +1,61 @@
+# ═══════════════════════════════════════════════════════════════
+# ACHIEVEMENT: Ankr 15x Revenue Growth
+# ═══════════════════════════════════════════════════════════════
+id: ankr-15x-revenue
+headline: "Drove 15× revenue growth ($130K to $2M ARR) by pivoting RPC product from developers to blockchain protocols"
+
+metric:
+  value: "15×"
+  unit: "revenue growth"
+  context: "$130K to $2M ARR in 8 months. Team jobs were on the line without PMF."
+
+situation: |
+  Ankr's RPC infrastructure was underutilized and treated as commodity. Competing
+  on price with Infura and Alchemy in developer segment was race to the bottom.
+  Limited resources (5 engineers), established competitors with strong developer brand.
+  Product needed differentiation and sustainable business model or would be shut down.
+
+task: |
+  Find product-market fit for RPC infrastructure with limited resources against
+  well-funded competitors. Create sustainable revenue model in commoditized market.
+
+action: |
+  Pivoted primary customer from developers to protocols—developers became users served
+  through protocol partnerships. Interviewed 15+ protocol teams about infrastructure
+  pain points. Designed protocol-tier pricing with SLA guarantees. Built Advanced APIs
+  (NFT, token, query) as differentiation. Created Ankr.JS SDK. Launched outbound sales
+  targeting protocol BD teams.
+
+result: |
+  15× revenue growth in 8 months ($130K to $2M ARR). Achieved target that seemed
+  impossible at start. 1M+ daily API requests through protocol partnerships.
+  Proved B2B model for infrastructure. Ankr raised additional funding citing traction.
+  Team avoided layoffs hitting other crypto companies.
+
+skills:
+  - api-design
+  - sdk-development
+themes:
+  - revenue-growth
+  - infrastructure
+companies:
+  - ankr
+years:
+  - 2021
+  - 2022
+
+good_for:
+  - "Growth/revenue stories"
+  - "Pivot narratives"
+  - "Finding PMF"
+  - "B2B sales motion"
+  - "Infrastructure PM roles"
+  - "Startup experience"
+
+evidence:
+  case_study: "content/case-studies/04-ankr-rpc.md"
+  testimonial: null
+  metrics_source: "Internal revenue tracking"
+  artifacts:
+    - "https://www.ankr.com/rpc/"
+    - "https://github.com/ankr-network/ankr.js"

@@ -1,0 +1,53 @@
+# ═══════════════════════════════════════════════════════════════
+# SOCIAL LINKS
+# ═══════════════════════════════════════════════════════════════
+links:
+  - platform: "twitter"
+    label: "X / Twitter"
+    handle: "@kolob0kk"
+    url: "https://x.com/kolob0kk"
+    icon: "twitter"
+    primary: true
+
+  - platform: "linkedin"
+    label: "LinkedIn"
+    handle: "/in/0xdmitri"
+    url: "https://www.linkedin.com/in/0xdmitri/"
+    icon: "linkedin"
+    primary: true
+
+  - platform: "github"
+    label: "GitHub"
+    handle: "@fotescodev"
+    url: "https://github.com/fotescodev"
+    icon: "github"
+    primary: false
+
+  - platform: "email"
+    label: "Email"
+    handle: "dmitrii.fotesco@gmail.com"
+    url: "mailto:dmitrii.fotesco@gmail.com"
+    icon: "mail"
+    primary: true
+
+# ═══════════════════════════════════════════════════════════════
+# CONTACT CTA (Footer)
+# ═══════════════════════════════════════════════════════════════
+contactCta:
+  headline: "Let's build something together"
+  subtext: "Open to PM roles in AI, Infrastructure, and Web3"
+  buttons:
+    - label: "Get in Touch"
+      href: "mailto:dmitrii.fotesco@gmail.com"
+      style: "primary"
+    - label: "Schedule a Call"
+      href: "https://calendly.com/dmitriif"
+      style: "secondary"
+
+# ═══════════════════════════════════════════════════════════════
+# NEWSLETTER (Coming Soon)
+# ═══════════════════════════════════════════════════════════════
+newsletter:
+  enabled: false
+  launchDate: "Q1 2025"
+  teaser: "Newsletter launching Q1 2025"

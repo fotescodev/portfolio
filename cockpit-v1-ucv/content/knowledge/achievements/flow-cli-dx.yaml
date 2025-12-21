@@ -1,0 +1,56 @@
+# ═══════════════════════════════════════════════════════════════
+# ACHIEVEMENT: Flow CLI Developer Experience
+# ═══════════════════════════════════════════════════════════════
+id: flow-cli-dx
+headline: "Improved Flow developer onboarding by 60% through CLI and Cadence Playground redesign"
+
+metric:
+  value: "60%"
+  unit: "reduction in time-to-first-deploy"
+  context: "Developer onboarding was key blocker for Flow ecosystem growth"
+
+situation: |
+  Dapper Labs needed to grow the Flow blockchain developer ecosystem. Developer
+  tools were fragmented—CLI was hard to use, playground was disconnected from
+  real development workflow. Time-to-first-deploy was too long, causing developer
+  drop-off.
+
+task: |
+  Lead developer tooling products (Flow CLI, Cadence Playground) to improve
+  onboarding experience and reduce time-to-first-deploy. Work with cross-functional
+  team of 8 engineers.
+
+action: |
+  Shipped Flow CLI improvements focused on common developer workflows. Redesigned
+  Cadence Playground for interactive learning. Created guided onboarding path
+  connecting playground to local development. Conducted user research with developers
+  at different skill levels to identify pain points.
+
+result: |
+  Reduced time-to-first-deploy by 60%. Improved developer retention in first-week
+  experience. Created intuition for developer experience that informed future
+  tooling decisions.
+
+skills:
+  - sdk-development
+  - cross-functional
+themes:
+  - developer-experience
+companies:
+  - dapper
+years:
+  - 2022
+  - 2023
+
+good_for:
+  - "Developer experience roles"
+  - "Developer tools PM"
+  - "User research stories"
+  - "Onboarding optimization"
+  - "Cross-functional leadership"
+
+evidence:
+  case_study: null
+  testimonial: "content/testimonials/index.yaml"  # SR testimonial
+  metrics_source: "Internal analytics"
+  artifacts: []

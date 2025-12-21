@@ -1,0 +1,69 @@
+# ═══════════════════════════════════════════════════════════════
+# PERSONAL IDENTITY
+# ═══════════════════════════════════════════════════════════════
+name: "Dmitrii Fotesco"
+ens: "dmitriif.eth"
+email: "dmitrii.fotesco@gmail.com"
+location: "Charlotte, NC"
+timezone: "EST"
+photo: "/images/headshot.jpg"
+
+# ═══════════════════════════════════════════════════════════════
+# HERO SECTION
+# ═══════════════════════════════════════════════════════════════
+hero:
+  status: "Open to PM roles — AI, Infrastructure, Web3"
+  headline:
+    - text: "Building"
+      style: "italic"
+    - text: "at the edge of"
+      style: "muted"
+    - text: "trust"
+      style: "accent"
+  subheadline: >
+    Senior Technical PM shipping institutional crypto infrastructure.
+    From Xbox royalties on Ethereum to ETF-grade custody.
+    Now exploring where AI agents meet on-chain execution.
+  cta:
+    primary:
+      label: "View Work"
+      href: "#work"
+    secondary:
+      label: "Download Resume"
+      href: "/dmitrii-fotesco-resume.pdf"
+
+# ═══════════════════════════════════════════════════════════════
+# ABOUT SECTION
+# ═══════════════════════════════════════════════════════════════
+about:
+  tagline: >
+    Eight years shipping products where complexity
+    meets compliance—from enterprise to crypto to whatever comes next.
+  bio:
+    - >
+      Currently at Anchorage Digital, I lead protocol integrations and staking
+      products for institutional clients—Galaxy, ETF providers, and enterprises
+      navigating crypto custody. Before that, I built Wallet-as-a-Service at Forte,
+      developer tooling at Dapper Labs, and API infrastructure at Ankr.
+    - >
+      I started in enterprise blockchain at Microsoft, shipping Xbox royalties
+      on Ethereum before "Web3" was a term. I'm drawn to problems at the
+      intersection of deterministic systems and probabilistic intelligence—where
+      smart contracts meet AI agents.
+  stats:
+    - value: "8+"
+      label: "Years in Product"
+    - value: "5"
+      label: "Years in Web3"
+    - value: "6"
+      label: "Companies Shipped"
+
+# ═══════════════════════════════════════════════════════════════
+# SECTION VISIBILITY FLAGS
+# ═══════════════════════════════════════════════════════════════
+sections:
+  beyondWork: false
+  blog: true
+  onchainIdentity: false
+  skills: false
+  passionProjects: true

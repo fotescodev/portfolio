@@ -1,0 +1,60 @@
+# ═══════════════════════════════════════════════════════════════
+# ACHIEVEMENT: L2 Protocol Integrations Framework
+# ═══════════════════════════════════════════════════════════════
+id: l2-protocol-integrations
+headline: "Shipped 7+ L2 protocol integrations with 40% faster cycle time using scalable RICE evaluation framework"
+
+metric:
+  value: "7+"
+  unit: "protocols shipped"
+  context: "Optimism, Base, Arbitrum, Plume, Citrea, BOB, Aztec—institutional custody support"
+
+situation: |
+  Rapid L2 ecosystem growth meant constant requests to support new chains. Each
+  integration required coordination across 4+ internal teams with no standardized
+  process. 12+ week average integration time. Leaving revenue on the table while
+  competitors moved faster.
+
+task: |
+  Create scalable evaluation framework that lets us confidently reject 60% of requests
+  while fast-tracking high-value integrations. Turn compliance bottleneck into
+  competitive advantage of "institutional rigor."
+
+action: |
+  Built RICE-based evaluation framework with parallel workstreams—security, compliance,
+  and engineering running simultaneously instead of sequentially. Created RACI matrix
+  clarifying ownership. Negotiated SLAs: 2-week assessment, 6-week full integration.
+  Trained BD team to self-serve initial RICE scoring. Piloted with Base and Arbitrum
+  running in parallel.
+
+result: |
+  Reduced per-integration effort by 40% (12+ weeks to ~7 weeks). First time shipping
+  3 protocols simultaneously. Framework became company standard. BD team self-serves
+  on initial evaluation, reducing PM involvement by 60%. Saved estimated $200K in
+  hiring costs while increasing throughput.
+
+skills:
+  - l2s
+  - cross-functional
+  - compliance
+themes:
+  - infrastructure
+  - institutional-crypto
+companies:
+  - anchorage
+years:
+  - 2024
+  - 2025
+
+good_for:
+  - "Platform PM roles"
+  - "Process improvement stories"
+  - "Scaling teams without headcount"
+  - "Cross-functional coordination"
+  - "Framework design questions"
+
+evidence:
+  case_study: "content/case-studies/02-protocol-integration.md"
+  testimonial: null
+  metrics_source: "Internal project tracking"
+  artifacts: []

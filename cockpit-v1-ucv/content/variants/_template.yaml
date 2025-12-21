@@ -1,0 +1,102 @@
+# ═══════════════════════════════════════════════════════════════
+# VARIANT METADATA
+# ═══════════════════════════════════════════════════════════════
+metadata:
+  company: "Company Name"
+  role: "Role Title"
+  slug: "company-role-slug"
+  generatedAt: "2025-12-16T00:00:00Z"
+  # NOTE: jobDescription should be a SHORT EXCERPT (not the full JD).
+  # Store the full/raw JD in source-data/ (gitignored) for safety.
+  jobDescription: |
+    Paste a short excerpt of the job description here (e.g., first 600-900 chars).
+
+    This will be used by the AI to generate
+    personalized content that highlights relevant
+    experience and skills.
+  generationModel: "claude-3-5-sonnet-20241022"
+  sourceUrl: "https://example.com/job-posting"
+  # Optional URL segments for /:company/:role routing
+  companyKey: "company"
+  roleKey: "role-slug"
+  # Publishing gate
+  publishStatus: "draft" # draft | published
+  # Set when publishing (ISO timestamp)
+  # publishedAt: "2025-12-21T00:00:00Z"
+
+# ═══════════════════════════════════════════════════════════════
+# OVERRIDES (Optional - only override what's relevant)
+# ═══════════════════════════════════════════════════════════════
+overrides:
+  # Hero section customizations
+  hero:
+    status: "Open to [Role Type] roles at [Company or similar]"
+    headline:
+      - text: "Building"
+        style: "italic"
+      - text: "solutions for"
+        style: "muted"
+      - text: "[Key Company Value]"
+        style: "accent"
+    subheadline: >
+      Tailored elevator pitch emphasizing skills and experience
+      most relevant to this specific role and company.
+
+  # About section customizations
+  about:
+    tagline: >
+      Reframed professional summary highlighting the intersection
+      of your experience with this company's needs.
+    bio:
+      - >
+        First paragraph: Current role and most relevant recent experience.
+        Emphasize projects/technologies mentioned in the job description.
+      - >
+        Second paragraph: Career journey that leads to this role making sense.
+        Connect dots between past experiences and this opportunity.
+    stats:
+      - value: "8+"
+        label: "Years [Relevant Skill]"
+      - value: "5"
+        label: "[Domain] Projects"
+      - value: "$10M+"
+        label: "[Relevant Metric]"
+
+  # Section visibility (show/hide based on job relevance)
+  sections:
+    beyondWork: false
+    blog: true
+    onchainIdentity: false
+    skills: true
+    passionProjects: true
+
+# ═══════════════════════════════════════════════════════════════
+# RELEVANCE SCORING (AI-generated)
+# ═══════════════════════════════════════════════════════════════
+relevance:
+  # Case studies ranked by relevance (0.0 - 1.0)
+  caseStudies:
+    - slug: "eth-staking"
+      relevanceScore: 0.95
+      reasoning: "Direct experience with institutional custody matches role requirements"
+    - slug: "protocol-integration"
+      relevanceScore: 0.85
+      reasoning: "API integration experience aligns with technical needs"
+    - slug: "ai-agent-orchestration"
+      relevanceScore: 0.60
+      reasoning: "Innovation angle but less directly relevant to core role"
+
+  # Skills ranked by category relevance
+  skills:
+    - category: "Technical Leadership"
+      relevanceScore: 0.90
+    - category: "Blockchain & Web3"
+      relevanceScore: 0.85
+    - category: "Product Strategy"
+      relevanceScore: 0.75
+
+  # Passion projects ranked by relevance
+  projects:
+    - slug: "project-slug"
+      relevanceScore: 0.70
+      reasoning: "Demonstrates technical skills but in different domain"
