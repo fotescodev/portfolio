@@ -349,7 +349,7 @@ export default function BlogPostPage() {
                 .code-content span { background: transparent !important; }
 
                 /* Author bio card */
-                .author-card { display: flex; flex-direction: column; gap: 20px; padding: 24px; background: var(--color-background-secondary); border: 1px solid var(--color-border-light); margin-top: 32px; margin-bottom: 48px; }
+                .author-card { display: flex; flex-direction: column; gap: 20px; padding: 24px; background: var(--color-background-secondary); border: 1px solid var(--color-border-light); margin-top: 32px; margin-bottom: 48px; box-shadow: var(--shadow-card); transition: box-shadow var(--transition-fast); }
                 @media (min-width: 768px) { .author-card { flex-direction: row; align-items: flex-start; gap: 24px; padding: 28px; } }
                 .author-card-avatar { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; filter: grayscale(1); flex-shrink: 0; }
                 .author-card-content { flex: 1; }
@@ -373,8 +373,8 @@ export default function BlogPostPage() {
                 /* More thoughts section */
                 .more-thoughts { background: var(--color-background-secondary); border-top: 1px solid var(--color-border-light); padding: 80px 0; margin-top: 80px; }
                 .more-thoughts-title { font-family: var(--font-serif); font-style: italic; font-size: 24px; color: var(--color-text-primary); margin-bottom: 32px; }
-                .thought-card { display: block; padding: 24px; background: var(--color-background); border: 1px solid var(--color-border-light); border-radius: 0; text-decoration: none; transition: all var(--transition-fast); }
-                .thought-card:hover { border-color: var(--color-accent); background: var(--color-card-hover); }
+                .thought-card { display: block; padding: 24px; background: var(--color-background); border: 1px solid var(--color-border-light); border-radius: 0; text-decoration: none; transition: all var(--transition-fast); box-shadow: var(--shadow-card); }
+                .thought-card:hover { border-color: var(--color-accent); background: var(--color-card-hover); box-shadow: var(--shadow-card-hover); }
                 .thought-date { font-size: 12px; font-weight: 600; color: var(--color-text-muted); margin-bottom: 8px; font-family: var(--font-sans); }
                 .thought-title { font-family: var(--font-serif); font-style: italic; font-size: 20px; color: var(--color-text-primary); margin-bottom: 12px; transition: color var(--transition-fast); }
                 .thought-card:hover .thought-title { color: var(--color-accent); }
