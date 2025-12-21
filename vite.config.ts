@@ -9,4 +9,15 @@ export default defineConfig({
     yaml()
   ],
   base: '/',
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'vendor-react': ['react', 'react-dom', 'react-router-dom'],
+          'vendor-markdown': ['react-markdown', 'react-syntax-highlighter', 'remark-gfm'],
+          'vendor-motion': ['framer-motion'],
+        }
+      }
+    }
+  }
 })
