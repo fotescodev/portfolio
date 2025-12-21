@@ -1,14 +1,10 @@
-import { describe, it, expect, vi, beforeAll } from 'vitest';
-import { render, screen, waitFor } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
-import { ThemeProvider } from '../../context/ThemeContext';
-import { HelmetProvider } from 'react-helmet-async';
-import { Suspense, lazy } from 'react';
+import { describe, it, expect, beforeAll } from 'vitest';
+import { lazy } from 'react';
 
 // Mock IntersectionObserver for tests
 beforeAll(() => {
   global.IntersectionObserver = class IntersectionObserver {
-    constructor(callback: IntersectionObserverCallback) {}
+    constructor(_callback: IntersectionObserverCallback) {}
     observe() { return null; }
     unobserve() { return null; }
     disconnect() { return null; }
