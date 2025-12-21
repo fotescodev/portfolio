@@ -1,0 +1,91 @@
+# ═══════════════════════════════════════════════════════════════
+# WORK EXPERIENCE
+# Optimized: SMART bullets, product links, 4 highlights max
+# ═══════════════════════════════════════════════════════════════
+jobs:
+  - company: "Anchorage Digital"
+    role: "Senior Product Manager"
+    period: "2024 – Present"
+    location: "Remote"
+    logo: "/images/logos/anchorage.svg"
+    url: "https://anchorage.com"
+    highlights:
+      - "Delivered $1M [Aztec](https://stake.aztec.network/) custody and staking integration, onboarding a16z and enabling secondary sale staking via novel ATP architecture"
+      - "Shipped ETH Liquid Staking MVP with [Liquid Collective](https://alluvial.finance/sms/), partnering with Fidelity and 3iQ as design partners for ETF-grade infrastructure"
+      - "Led 8 protocol integrations (Base, Optimism, Stellar, Plume, BOB, Succinct) averaging <2 weeks per chain — 4× faster than industry standard"
+      - "Built ERC20 Xpress platform eliminating engineering dependency, enabling instant token custody across any EVM chain"
+    tags: ["Staking", "Protocol Integration", "Institutional Custody", "ETF-Grade"]
+
+  - company: "Forte"
+    role: "Senior Product Manager"
+    period: "2023 – 2024"
+    location: "Remote"
+    logo: "/images/logos/forte.svg"
+    url: "https://forte.io"
+    highlights:
+      - "Led Wallet-as-a-Service productization using MPC technology, enabling non-custodial wallets embedded directly into AAA games"
+      - "Developed 'Compliance as a Service' framework automating regulatory adherence for gaming studios integrating Web3"
+      - "Defined security architecture and privacy standards for gaming wallet infrastructure adopted by enterprise partners"
+    tags: ["MPC", "Gaming", "Wallet Infrastructure", "Compliance"]
+
+  - company: "Dapper Labs"
+    role: "Senior Product Manager, Developer Experience"
+    period: "2022 – 2023"
+    location: "Remote"
+    logo: "/images/logos/dapper.svg"
+    url: "https://flow.com"
+    highlights:
+      - "Shipped [Cadence Playground V2](https://play.flow.com/) with multi-project management and enhanced debugging, improving developer onboarding by 60%"
+      - "Launched new Developer Portal consolidating docs, saving 1 engineering resource in maintenance"
+      - "Integrated [kapa.ai](https://kapa.ai/) support bot answering 1,000+ questions in 4 weeks with 98% accuracy — equivalent to 2 full-time engineers"
+      - "Led Flow CLI upgrades including scaffold feature for quickstart templates"
+    tags: ["Developer Tools", "Flow", "Cadence", "DevEx"]
+
+  - company: "Mempools"
+    role: "Co-founder & Product Lead"
+    period: "2022 – 2023"
+    location: "Remote"
+    logo: "/images/logos/mempools.svg"
+    url: "https://mempools.com"
+    highlights:
+      - "Co-founded [Mempools](https://mempools.com) Web3 SaaS platform achieving 200+ DAU for real-time on-chain alerting with sub-second delivery"
+      - "Launched [Archway-Alerts.com](https://archway-alerts.com) as default alerting platform on mainnet launch day, securing Luganodes partnership"
+      - "Shipped [mempools-sdk](https://www.npmjs.com/package/mempools-sdk) and no-code scenario builder supporting 5 chains (Ethereum, Arbitrum, Archway, Juno, Canto)"
+    tags: ["Founder", "Web3 SaaS", "Alerting", "Cosmos"]
+
+  - company: "Ankr"
+    role: "Senior Product Manager"
+    period: "2021 – 2022"
+    location: "Remote"
+    logo: "/images/logos/ankr.svg"
+    url: "https://ankr.com"
+    highlights:
+      - "Shipped [Advanced API](https://www.ankr.com/docs/advanced-api/overview/) from 0→1: 17 methods across NFT, Token, Query APIs serving 1M+ daily requests"
+      - "Drove 15× revenue growth to $2M ARR through B2B pivot, landing Polygon, Nansen, SushiSwap, and Messari"
+      - "Built SDK suite ([Ankr.js](https://www.npmjs.com/package/@ankr.com/ankr.js), Ankr.py, React Hooks) with 1,900+ weekly downloads"
+      - "Architected [Pay-As-You-Go pricing](https://www.ankr.com/docs/rpc-service/service-plans/) ($0.10 = 1M credits) that doubled developer signups"
+    tags: ["APIs", "RPC", "Growth", "SDK", "Pricing Strategy"]
+
+  - company: "Bloom Protocol"
+    role: "Developer Experience Lead"
+    period: "2020 – 2021"
+    location: "Remote"
+    logo: "/images/logos/bloom.svg"
+    url: "https://bloom.co"
+    highlights:
+      - "Led migration from proprietary attestation to W3C Verifiable Credentials standard, future-proofing platform interoperability"
+      - "Contributed to [WACI wallet protocol](https://identity.foundation/waci-didcomm/) development, collaborating with DIF community to create one of the first VC wallet specs"
+      - "Drove global expansion into East Asia, Europe, and Australia markets"
+    tags: ["Decentralized Identity", "Verifiable Credentials", "W3C", "DIF"]
+
+  - company: "Microsoft"
+    role: "Software Engineer → Program Manager"
+    period: "2016 – 2020"
+    location: "Seattle, WA"
+    logo: "/images/logos/microsoft.svg"
+    url: "https://microsoft.com"
+    highlights:
+      - "Built [Xbox royalties blockchain](https://www.ey.com/en_gl/insights/consulting/how-blockchain-helped-a-gaming-platform-become-a-game-changer) with EY, achieving 99% faster processing (45 days → 4 minutes) for 2.7B+ gaming consumers"
+      - "Shipped first production smart contract at Microsoft (2016) using Ethereum/Quorum, partnering with Ubisoft for rollout"
+      - "Architected Docker/Kubernetes infrastructure for Microsoft's first enterprise blockchain consortium"
+    tags: ["Enterprise Blockchain", "Xbox", "Smart Contracts", "Quorum"]

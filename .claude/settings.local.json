@@ -33,7 +33,19 @@
       "Bash(open http://localhost:5173/)",
       "Bash(npm run test:*)",
       "Bash(grep:*)",
-      "Bash(xargs -I {} sh -c 'echo \"\"=== {} ===\"\" && head -15 {}')"
+      "Bash(xargs -I {} sh -c 'echo \"\"=== {} ===\"\" && head -15 {}')",
+      "Bash(claude login:*)",
+      "Bash(cat:*)",
+      "WebSearch",
+      "Bash(npm run ucv-cli:*)",
+      "Bash(npx tsc:*)",
+      "Skill(sprint-sync)",
+      "Bash(wc:*)",
+      "Bash(du:*)",
+      "Bash(git pull:*)",
+      "Bash(find:*)",
+      "Bash(gh run view:*)",
+      "Bash(gh run list:*)"
     ],
     "deny": [],
     "ask": []

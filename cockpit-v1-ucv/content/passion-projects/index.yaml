@@ -1,0 +1,110 @@
+projects:
+  - id: 1
+    slug: repo-flattener
+    title: Repo Flattener
+    tagline: Drop a repository, download a flattened zip for import into Claude or notebooks
+    year: "2024"
+    tags: [CLI, Developer Tools, AI]
+    thumbnail: null
+    githubUrl: https://github.com/fotescodev/repo-flattener
+    liveUrl: null
+    docsUrl: null
+
+  - id: 2
+    slug: dev-output-manager
+    title: Dev Output Manager
+    tagline: Track and analyze developer output metrics across teams and projects
+    year: "2024"
+    tags: [Analytics, Management, Productivity]
+    thumbnail: null
+    githubUrl: https://github.com/fotescodev/dev-output-manager
+    liveUrl: null
+    docsUrl: null
+
+  - id: 3
+    slug: programmable-planning
+    title: Programmable Planning
+    tagline: Workflow automation tools for product planning and task management
+    year: "2023"
+    tags: [Workflow, Planning, Automation]
+    thumbnail: null
+    githubUrl: https://github.com/fotescodev/programmable-planning
+    liveUrl: null
+    docsUrl: null
+
+  - id: 4
+    slug: smart-contract-explorer
+    title: Smart Contract Explorer
+    tagline: Interactive visualization tool for exploring Ethereum smart contract dependencies
+    year: "2023"
+    tags: [Web3, Visualization, Ethereum]
+    thumbnail: null
+    githubUrl: https://github.com/fotescodev/contract-explorer
+    liveUrl: https://contract-explorer.demo.com
+    docsUrl: null
+
+  - id: 5
+    slug: api-spec-validator
+    title: API Spec Validator
+    tagline: Automated OpenAPI validation and testing framework for REST APIs
+    year: "2024"
+    tags: [API, Testing, DevOps]
+    thumbnail: null
+    githubUrl: https://github.com/fotescodev/api-validator
+    liveUrl: null
+    docsUrl: https://api-validator.docs.dev
+
+  - id: 6
+    slug: markdown-slides
+    title: Markdown Slides
+    tagline: Convert markdown files to beautiful presentation slides with live preview
+    year: "2023"
+    tags: [Markdown, Presentations, Tools]
+    thumbnail: null
+    githubUrl: https://github.com/fotescodev/md-slides
+    liveUrl: https://md-slides.app
+    docsUrl: null
+
+  - id: 7
+    slug: git-metrics
+    title: Git Metrics Dashboard
+    tagline: Visualize team contribution patterns and code review metrics from Git history
+    year: "2024"
+    tags: [Git, Analytics, Dashboard]
+    thumbnail: null
+    githubUrl: https://github.com/fotescodev/git-metrics
+    liveUrl: null
+    docsUrl: null
+
+  - id: 8
+    slug: node-dependency-graph
+    title: Node Dependency Graph
+    tagline: Generate visual dependency graphs for Node.js projects with security insights
+    year: "2023"
+    tags: [Node.js, Security, Visualization]
+    thumbnail: null
+    githubUrl: https://github.com/fotescodev/node-deps
+    liveUrl: null
+    docsUrl: null
+
+  - id: 9
+    slug: prompt-library
+    title: Prompt Library
+    tagline: Curated collection of LLM prompts with version control and A/B testing
+    year: "2024"
+    tags: [AI, LLM, Tooling]
+    thumbnail: null
+    githubUrl: https://github.com/fotescodev/prompt-library
+    liveUrl: https://prompts.tools
+    docsUrl: null
+
+  - id: 10
+    slug: content-validator
+    title: Content Validator CLI
+    tagline: TypeScript CLI for validating markdown and YAML content with Zod schemas
+    year: "2024"
+    tags: [CLI, TypeScript, Validation, DevTools]
+    thumbnail: null
+    githubUrl: https://github.com/fotescodev/content-validator
+    liveUrl: null
+    docsUrl: https://validator.docs.dev

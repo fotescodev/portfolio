@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkedIn Background</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #08080a;
+            padding: 20px;
+        }
+
+        /* LinkedIn banner: 1584x396 desktop, but mobile crops ~300px from each side */
+        .banner {
+            width: 1584px;
+            height: 396px;
+            background: #08080a;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px 320px;
+            /* Safe zone for mobile cropping */
+            position: relative;
+        }
+
+        /* Mobile safe zone indicator (dev only) */
+        .banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 300px;
+            right: 300px;
+            bottom: 0;
+            border-left: 1px dashed rgba(255, 255, 255, 0.1);
+            border-right: 1px dashed rgba(255, 255, 255, 0.1);
+            pointer-events: none;
+            display: none;
+            /* Hide in production */
+        }
+
+        .tagline {
+            font-family: 'Instrument Serif', serif;
+            font-style: italic;
+            font-size: 56px;
+            line-height: 1.3;
+            margin-bottom: 32px;
+        }
+
+        .tagline .building {
+            color: #ffffff;
+        }
+
+        .tagline .edge {
+            color: #6a6864;
+        }
+
+        .tagline .trust {
+            color: #c29a6c;
+        }
+
+        .accent-line {
+            width: 80px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #c29a6c, transparent);
+            margin-bottom: 24px;
+        }
+
+        .role {
+            font-family: 'Instrument Sans', sans-serif;
+            font-weight: 600;
+            font-size: 28px;
+            color: #a8a5a0;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .keywords {
+            font-family: 'Instrument Sans', sans-serif;
+            font-weight: 500;
+            font-size: 18px;
+            color: #8a8680;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        .keywords span {
+            color: #9a9590;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="banner">
+        <div class="tagline">
+            <span class="building">Building</span> <span class="edge">at the edge of</span> <span
+                class="trust">trust</span>
+        </div>
+        <div class="accent-line"></div>
+        <div class="role">Product Management</div>
+        <div class="keywords">Web3 <span>·</span> AI <span>·</span> DevEx</div>
+    </div>
+</body>
+
+</html>

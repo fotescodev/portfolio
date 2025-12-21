@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Article - Where AI Agents Meet On-Chain Execution</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#8C7356", // Earthy bronze/gold
+                        secondary: "#D4C5B0",
+                        "background-light": "#FDFDFC", // Warm off-white
+                        "background-dark": "#0A0A0A", // Deep black
+                        "surface-light": "#F3F4F6",
+                        "surface-dark": "#171717",
+                        "code-bg": "#1e1e1e",
+                        "code-header": "#252526",
+                    },
+                    fontFamily: {
+                        display: ["Playfair Display", "serif"],
+                        sans: ["Inter", "sans-serif"],
+                        mono: ["SFMono-Regular", "Menlo", "Monaco", "Consolas", "Liberation Mono", "Courier New", "monospace"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.5rem",
+                    },
+                    typography: (theme) => ({
+                        DEFAULT: {
+                            css: {
+                                code: {
+                                    backgroundColor: theme('colors.gray.100'),
+                                    color: theme('colors.gray.800'),
+                                    fontWeight: '400',
+                                    "border-radius": "0.25rem",
+                                },
+                                "code::before": {
+                                    content: '""',
+                                },
+                                "code::after": {
+                                    content: '""',
+                                },
+                            },
+                        },
+                        invert: {
+                            css: {
+                                code: {
+                                    backgroundColor: theme('colors.zinc.800'),
+                                    color: theme('colors.gray.200'),
+                                },
+                            },
+                        },
+                    }),
+                },
+            },
+        };
+    </script>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet"/>
+<style>html {
+    scroll-behavior: smooth
+    }::-webkit-scrollbar {
+    width: 8px
+    }
+::-webkit-scrollbar-track {
+    background: transparent
+    }
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px
+    }.bg-grain {
+    position: relative
+    }
+.bg-grain::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuDWtUDiKUrvI1MVFS5M0XhDBqOzIsy06F464DrXC6QtEcGu49U_cdlCR5ZCji3_Rn9RVJihy3StbIluYXXuNpWdLcCYJRajdT3VTWSfRJDb-rpbbEbbTsn07DiS2EJcjhdlUvU1FKo8i_I_ytnAeTPgOaO0TeQ6UKymp4c4omlmlwABDydLwP4Ar6CeO3bzrp5gX5X-9pmC-Wx09woxqVUNS7SNMTGmJhSoT8ipVX6bmnBEdoOPAnBaFYb4pplJOJStVJK_rjdQDTQ);
+    pointer-events: none;
+    z-index: 50;
+    opacity: 0.4
+    }.token-keyword { color: #c678dd; }
+    .token-function { color: #61afef; }
+    .token-string { color: #98c379; }
+    .token-comment { color: #5c6370; font-style: italic; }
+    .token-type { color: #e5c07b; }
+    .token-operator { color: #56b6c2; }
+    .token-number { color: #d19a66; }
+    .token-boolean { color: #d19a66; }
+    .token-property { color: #e06c75; }
+</style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-gray-800 dark:text-gray-200 transition-colors duration-300 font-sans selection:bg-primary selection:text-white">
+<nav class="fixed w-full z-40 top-0 left-0 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-800">
+<div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+<a class="font-display font-semibold text-xl tracking-tight dark:text-white" href="#">Dmitrii.</a>
+<div class="flex items-center gap-6 text-sm font-medium">
+<a class="hidden md:block hover:text-primary transition-colors" href="#">Work</a>
+<a class="hidden md:block hover:text-primary transition-colors" href="#">About</a>
+<a class="hidden md:block text-primary transition-colors" href="#">Thoughts</a>
+<a class="hidden md:block hover:text-primary transition-colors" href="#contact">Contact</a>
+<button class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" onclick="document.documentElement.classList.toggle('dark')">
+<span class="material-icons-outlined text-lg dark:text-white">brightness_6</span>
+</button>
+</div>
+</div>
+</nav>
+<main class="relative z-10 pt-24 md:pt-32">
+<article class="max-w-3xl mx-auto px-6 mb-24">
+<div class="mb-10">
+<a class="group inline-flex items-center text-sm font-medium text-gray-500 hover:text-primary transition-colors" href="#">
+<span class="material-icons-outlined text-sm mr-2 group-hover:-translate-x-1 transition-transform">arrow_back</span>
+                Back to Thoughts
+            </a>
+</div>
+<header class="mb-12">
+<div class="flex gap-3 mb-6">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded text-xs font-medium bg-primary/10 text-primary border border-primary/20">
+                    Infrastructure
+                </span>
+<span class="inline-flex items-center px-2.5 py-0.5 rounded text-xs font-medium bg-gray-100 dark:bg-zinc-800 text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-zinc-700">
+                    AI Agents
+                </span>
+</div>
+<h1 class="font-display text-4xl md:text-5xl lg:text-6xl leading-[1.1] text-gray-900 dark:text-white mb-8">
+                Where AI Agents Meet On-Chain Execution
+            </h1>
+<p class="text-xl md:text-2xl text-gray-600 dark:text-gray-400 leading-relaxed mb-10 font-light">
+                We are moving from a world of deterministic smart contracts to one of probabilistic agents. The bridge between them isn't just code—it's trust.
+            </p>
+<div class="flex items-center justify-between border-y border-gray-200 dark:border-gray-800 py-6">
+<div class="flex items-center gap-4">
+<img alt="Dmitrii" class="w-12 h-12 rounded-full object-cover grayscale ring-2 ring-gray-100 dark:ring-zinc-800" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAOn8TZfdAiXc-QLMe9FPNvhHndJcGyRGGzpIKI3dmvi6_J79tHx5wGZRjXK4aTEK4NJ3XMd88kjS69MMqVlIAUDclCARhkYkwpek1gOqpQxBr_MjsoiTmaHzpoo5_HeyyhYYzTS_T2B20GM_vb7KrYx7r0GR2crDb5YRhE_ZonrPpSqQpMEvRisrbwu3CnD3Iq3VdOB1jP3x1fKY86Q_hsMUXs51tvPXCe7KCtScCyRfXrkPLO_Sel4B0GR2sfSlHHMo-G_08B2Ho"/>
+<div>
+<div class="text-sm font-bold text-gray-900 dark:text-white">Dmitrii</div>
+<div class="text-xs text-gray-500">August 2, 2024 • 6 min read</div>
+</div>
+</div>
+<div class="flex gap-2">
+<button class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-50 dark:bg-zinc-800 text-gray-400 hover:text-primary hover:bg-primary/5 transition-all">
+<span class="material-icons-outlined text-sm">share</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-50 dark:bg-zinc-800 text-gray-400 hover:text-primary hover:bg-primary/5 transition-all">
+<span class="material-icons-outlined text-sm">bookmark_border</span>
+</button>
+</div>
+</div>
+</header>
+<figure class="mb-16">
+<div class="relative aspect-video rounded-xl overflow-hidden shadow-2xl bg-zinc-900">
+<img alt="Abstract Nodes" class="object-cover w-full h-full opacity-80" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYBnWsQCNB9lhvjc6MTdxtDFs8SIBiRHuKf07Y0IF5gandkORTZQCd9fGGW2SKT0OtaTEVjChBJmqz4b1PXfFmQa2PlqVj39AcszDGUlsnYxJVXPtP2Jy2sYgfihkmW8qCyBXQzE3PbGiybC5dZ3N7or-GfWZRgiu16JtOFi5xx-uMnrrgmBcUX1sBhZF9oaMIkiNLMh8FPRtNGm-Wuoc8gLOc6Rs1-lJvmyNdtzz3BfOYwnYNtqAwhRm-6RbX-2FbSadL0U-16BA"/>
+<div class="absolute inset-0 bg-gradient-to-tr from-black/40 to-transparent"></div>
+</div>
+<figcaption class="mt-4 text-xs text-center text-gray-500 italic">
+                Visualization of agent-to-protocol interaction layers.
+            </figcaption>
+</figure>
+<div class="prose prose-lg prose-slate dark:prose-invert max-w-none prose-headings:font-display prose-headings:font-medium prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-blockquote:border-l-primary prose-blockquote:bg-gray-50 dark:prose-blockquote:bg-zinc-900/50 prose-blockquote:py-2 prose-blockquote:px-4 prose-blockquote:rounded-r-lg prose-blockquote:not-italic prose-blockquote:font-normal prose-blockquote:text-gray-700 dark:prose-blockquote:text-gray-300 prose-img:rounded-xl prose-img:shadow-lg prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-code:font-normal">
+<p>
+                The last decade of crypto infrastructure has been about building <strong>deterministic rails</strong> for human finance. We built wallets for people to sign transactions. We built interfaces for people to read data. We built custody solutions for institutions to secure assets.
+            </p>
+<p>
+                But the next decade won't just be about humans. It will be about agents.
+            </p>
+<h3>The Deterministic vs. Probabilistic Divide</h3>
+<p>
+                Blockchains are deterministic state machines. Input A plus State B always equals Output C. This reliability is why we trust them with billions of dollars. AI models, conversely, are probabilistic. They hallucinate, they approximate, and they evolve.
+            </p>
+<p>
+                When you try to connect a probabilistic agent to a deterministic execution layer, you hit the "Oracle Problem" on steroids. How do you trust an agent to execute a trade, manage a treasury, or vote in a DAO without human oversight?
+            </p>
+<blockquote>
+                "The real scalability bottleneck for crypto isn't TPS. It's the cognitive bandwidth of the humans operating the keys."
+            </blockquote>
+<p>
+                We are seeing the early signs of this shift. Trading bots were the proto-agents. Now we have LLMs writing code that interacts with on-chain endpoints. The gap is in the <em>middleware</em>.
+            </p>
+<h3>Why Agents Need Wallets (and Identity)</h3>
+<p>
+                Currently, most AI agents are "read-only" regarding the blockchain. They can analyze charts, read whitepapers, and summarize governance proposals. To be truly useful, they need "write" access. They need to be able to sign.
+            </p>
+<ul>
+<li><strong>Scoped Permissions:</strong> We need account abstraction standards (ERC-4337) that allow agents to spend only X amount per day, or interact only with specific contracts.</li>
+</ul>
+<div class="not-prose my-10 rounded-xl overflow-hidden border border-gray-200 dark:border-zinc-700 bg-code-bg shadow-xl">
+<div class="flex items-center justify-between px-4 py-2 bg-code-header border-b border-zinc-700">
+<div class="flex items-center gap-3">
+<div class="flex gap-1.5">
+<div class="w-2.5 h-2.5 rounded-full bg-[#FF5F56]"></div>
+<div class="w-2.5 h-2.5 rounded-full bg-[#FFBD2E]"></div>
+<div class="w-2.5 h-2.5 rounded-full bg-[#27C93F]"></div>
+</div>
+<span class="text-xs font-mono text-gray-400 ml-2">AgentScope.sol</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-[10px] uppercase font-bold text-gray-500 tracking-wider">Solidity</span>
+</div>
+</div>
+<div class="p-5 overflow-x-auto">
+<pre class="font-mono text-sm leading-6 text-gray-300"><code><span class="token-keyword">contract</span> <span class="token-class-name">AgentScope</span> {
+    <span class="token-comment">// Define granular spending limits for agent addresses</span>
+    <span class="token-keyword">mapping</span>(<span class="token-type">address</span> =&gt; <span class="token-type">uint256</span>) <span class="token-keyword">public</span> dailySpendLimit;
+    <span class="token-keyword">mapping</span>(<span class="token-type">address</span> =&gt; <span class="token-type">uint256</span>) <span class="token-keyword">public</span> currentSpend;
+    <span class="token-keyword">function</span> <span class="token-function">authorizeTx</span>(<span class="token-type">address</span> _agent, <span class="token-type">uint256</span> _amount) <span class="token-keyword">external</span> <span class="token-keyword">view</span> <span class="token-keyword">returns</span> (<span class="token-type">bool</span>) {
+        <span class="token-comment">// Check if agent exceeds daily allowance</span>
+        <span class="token-keyword">if</span> (currentSpend[_agent] + _amount &gt; dailySpendLimit[_agent]) {
+            <span class="token-keyword">revert</span> <span class="token-function">ExceedsAllowance</span>();
+        }
+        <span class="token-keyword">return</span> <span class="token-boolean">true</span>;
+    }
+}</code></pre>
+</div>
+</div>
+<ul>
+<li><strong>Verifiable Inference:</strong> We need to know <em>why</em> an agent made a decision. ZKML (Zero-Knowledge Machine Learning) offers a path to prove a model was run correctly without revealing the model weights.</li>
+<li><strong>Reputation:</strong> Agents need on-chain history. An agent with a track record of profitable, safe execution becomes more valuable than a fresh instance.</li>
+</ul>
+<figure>
+<img alt="Framework Diagram" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-GFS7lDe32Udfzaw64mgaA1ZdI7pbswBSalT7qGGwjkItybhkAy0EG5uRC7XZsqNjDz7OEJuhsTtJ-yHU2c9tEc4aewV2xvM4rHbFWbIe7mf_pMYo_EjAp_kJZ0PFd3RrSG1itB59Zyr1UH1Qjl_64IWhFwHSoC_XE0U2-Q9JEGGcZQU5q-DLZxagTLTeEvxYyixSaiFhWBZrXjf9GdKmVo-rZAf6YnreGllOeqaHr2aDG8fxc3mcuI2DDuuxBbwp7yUIKvQiO2Q"/>
+<figcaption class="text-center">Drafting the architecture for secure agent execution environments.</figcaption>
+</figure>
+<h3>The Infrastructure Gap</h3>
+<p>
+                At Microsoft, I saw how enterprise systems struggled to integrate with public blockchains because of compliance and finality concerns. With AI agents, the concern is safety and intent alignment.
+            </p>
+<p>
+                We are missing the "Agent Wallet" stack. It’s not just a MetaMask for a bot. It’s a policy engine that sits between the LLM’s output and the chain’s mempool. This is where I believe the most exciting work in the next cycle will happen. It's where the <a href="#">edge of trust</a> is currently located.
+            </p>
+<div class="not-prose my-10 rounded-xl overflow-hidden border border-gray-200 dark:border-zinc-700 bg-code-bg shadow-xl">
+<div class="flex items-center justify-between px-4 py-2 bg-code-header border-b border-zinc-700">
+<div class="flex items-center gap-3">
+<span class="material-icons-outlined text-gray-500 text-sm">settings</span>
+<span class="text-xs font-mono text-gray-400">policy_config.json</span>
+</div>
+<button class="text-gray-500 hover:text-white transition-colors" title="Copy code">
+<span class="material-icons-outlined text-sm">content_copy</span>
+</button>
+</div>
+<div class="p-5 overflow-x-auto">
+<pre class="font-mono text-sm leading-6 text-gray-300"><code>{
+  <span class="token-property">"policy_id"</span>: <span class="token-string">"safe_defi_agent_v1"</span>,
+  <span class="token-property">"constraints"</span>: {
+    <span class="token-property">"max_slippage_bps"</span>: <span class="token-number">50</span>,
+    <span class="token-property">"allowed_protocols"</span>: [
+      <span class="token-string">"0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984"</span>, <span class="token-comment">// Uniswap V3</span>
+      <span class="token-string">"0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D"</span>  <span class="token-comment">// Uniswap V2</span>
+    ],
+    <span class="token-property">"forbidden_methods"</span>: [<span class="token-string">"transferOwnership"</span>, <span class="token-string">"selfDestruct"</span>]
+  },
+  <span class="token-property">"require_human_sig"</span>: <span class="token-boolean">true</span>
+}</code></pre>
+</div>
+</div>
+<p>
+                The future isn't just humans transacting with humans on-chain. It's a hybrid economy where biological and synthetic actors share the same liquidity layers. We better build the guardrails now.
+            </p>
+</div>
+<div class="mt-16 pt-8 border-t border-gray-200 dark:border-gray-800">
+<div class="flex flex-wrap gap-2 mb-10">
+<span class="text-sm font-medium text-gray-500 mr-2">Tags:</span>
+<a class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary transition-colors" href="#">#AI</a>
+<a class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary transition-colors" href="#">#Web3</a>
+<a class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary transition-colors" href="#">#Infrastructure</a>
+<a class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary transition-colors" href="#">#AccountAbstraction</a>
+</div>
+<div class="bg-gray-50 dark:bg-zinc-900 rounded-2xl p-8 flex flex-col md:flex-row items-start md:items-center gap-6 border border-gray-100 dark:border-zinc-800">
+<img alt="Dmitrii" class="w-20 h-20 rounded-full object-cover grayscale" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAOn8TZfdAiXc-QLMe9FPNvhHndJcGyRGGzpIKI3dmvi6_J79tHx5wGZRjXK4aTEK4NJ3XMd88kjS69MMqVlIAUDclCARhkYkwpek1gOqpQxBr_MjsoiTmaHzpoo5_HeyyhYYzTS_T2B20GM_vb7KrYx7r0GR2crDb5YRhE_ZonrPpSqQpMEvRisrbwu3CnD3Iq3VdOB1jP3x1fKY86Q_hsMUXs51tvPXCe7KCtScCyRfXrkPLO_Sel4B0GR2sfSlHHMo-G_08B2Ho"/>
+<div class="flex-1">
+<h4 class="font-display text-xl text-gray-900 dark:text-white mb-2">About Dmitrii</h4>
+<p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                        Senior Technical PM shipping institutional crypto infrastructure. Currently exploring the intersection of deterministic systems and probabilistic intelligence.
+                    </p>
+<a class="text-xs font-bold text-primary uppercase tracking-wider hover:text-gray-900 dark:hover:text-white transition-colors" href="#contact">
+                        Follow on Twitter ↗
+                    </a>
+</div>
+</div>
+</div>
+</article>
+<section class="border-t border-gray-200 dark:border-gray-800 bg-gray-50/50 dark:bg-zinc-900/30 py-20">
+<div class="max-w-6xl mx-auto px-6">
+<h3 class="font-display text-2xl text-gray-900 dark:text-white mb-8">More Thoughts</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<a class="group block p-6 rounded-2xl bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 hover:border-primary/50 transition-colors shadow-sm hover:shadow-md" href="#">
+<div class="text-xs font-bold text-gray-400 mb-2">12.10.24</div>
+<h4 class="font-display text-xl text-gray-900 dark:text-white mb-3 group-hover:text-primary transition-colors">
+                        Why Content Validation Matters for Developer Portfolios
+                    </h4>
+<span class="text-sm font-medium text-primary flex items-center">
+                        Read Article <span class="material-icons-outlined text-sm ml-1 transition-transform group-hover:translate-x-1">arrow_forward</span>
+</span>
+</a>
+<a class="group block p-6 rounded-2xl bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 hover:border-primary/50 transition-colors shadow-sm hover:shadow-md" href="#">
+<div class="text-xs font-bold text-gray-400 mb-2">10.15.24</div>
+<h4 class="font-display text-xl text-gray-900 dark:text-white mb-3 group-hover:text-primary transition-colors">
+                        Building at the Edge of Trust: A Project Retrospective
+                    </h4>
+<span class="text-sm font-medium text-primary flex items-center">
+                        Read Article <span class="material-icons-outlined text-sm ml-1 transition-transform group-hover:translate-x-1">arrow_forward</span>
+</span>
+</a>
+</div>
+</div>
+</section>
+<footer class="bg-gray-50 dark:bg-zinc-900 pt-20 pb-10 border-t border-gray-200 dark:border-gray-800" id="contact">
+<div class="max-w-6xl mx-auto px-6">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-20">
+<div class="flex flex-col justify-center">
+<div class="inline-block px-3 py-1 mb-6 text-xs font-semibold tracking-wider uppercase border border-primary/30 rounded-full text-primary w-fit">
+                        Contact Me
+                    </div>
+<h2 class="font-display text-4xl md:text-5xl lg:text-6xl text-gray-900 dark:text-white mb-6 leading-tight">
+                        Interested in working together? <span class="italic text-gray-400">Let's talk.</span>
+</h2>
+<p class="text-gray-600 dark:text-gray-400 text-lg leading-relaxed mb-10 max-w-md">
+                        I'm currently open to new opportunities in Product Management, specifically within AI Infrastructure and Web3. Based in Charlotte, NC (EST) but flexible for remote roles.
+                    </p>
+<div class="space-y-6">
+<a class="flex items-center group" href="mailto:hello@dmitrii.com">
+<div class="w-12 h-12 rounded-full bg-white dark:bg-zinc-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center mr-4 group-hover:border-primary transition-colors shadow-sm">
+<span class="material-icons-outlined text-gray-500 dark:text-gray-400 group-hover:text-primary">email</span>
+</div>
+<div>
+<span class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-0.5">Email Me</span>
+<span class="text-lg font-medium text-gray-900 dark:text-white group-hover:text-primary transition-colors">hello@dmitrii.com</span>
+</div>
+</a>
+<div class="flex items-center gap-4 mt-8">
+<a class="w-12 h-12 rounded-full bg-white dark:bg-zinc-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:border-primary hover:text-primary transition-all shadow-sm" href="#">
+<svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-4.466 19.59c-.405.078-.534-.171-.534-.384v-1.671c-4.242.741-5.117-1.75-5.117-1.75-.665-1.699-1.633-2.152-1.633-2.152-1.378-.956.104-.948.104-.948 1.542.109 2.37 1.587 2.37 1.587 1.354 2.34 3.553 1.664 4.417 1.274.137-.99.534-1.667.972-2.049-3.415-.389-7.005-1.707-7.005-7.599 0-1.68.6-3.056 1.588-4.137-.163-.389-.691-1.957.156-4.08 0 0 1.294-.415 4.242 1.583 1.232-.343 2.553-.515 3.869-.521 1.314.006 2.635.178 3.869.521 2.945-1.998 4.237-1.583 4.237-1.583.85 2.123.322 3.691.159 4.08 1.002 1.081 1.588 2.457 1.588 4.137 0 5.906-3.597 7.205-7.022 7.587.549.475 1.037 1.409 1.037 2.842v4.218c0 .216-.131.468-.544.384z"></path></svg>
+</a>
+<a class="w-12 h-12 rounded-full bg-white dark:bg-zinc-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:border-primary hover:text-primary transition-all shadow-sm" href="#">
+<svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"></path></svg>
+</a>
+<a class="w-12 h-12 rounded-full bg-white dark:bg-zinc-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:border-primary hover:text-primary transition-all shadow-sm" href="#">
+<svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"></path></svg>
+</a>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-zinc-800 p-8 md:p-10 rounded-2xl shadow-xl shadow-gray-200/50 dark:shadow-none border border-gray-100 dark:border-zinc-700">
+<form class="space-y-6">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-2">
+<label class="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400" for="name">Name</label>
+<input class="w-full px-4 py-3 rounded bg-gray-50 dark:bg-zinc-900 border-gray-200 dark:border-zinc-700 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors dark:text-white text-sm" id="name" placeholder="Your name" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400" for="email">Email</label>
+<input class="w-full px-4 py-3 rounded bg-gray-50 dark:bg-zinc-900 border-gray-200 dark:border-zinc-700 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors dark:text-white text-sm" id="email" placeholder="hello@example.com" type="email"/>
+</div>
+</div>
+<div class="space-y-2">
+<label class="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400" for="subject">Subject</label>
+<input class="w-full px-4 py-3 rounded bg-gray-50 dark:bg-zinc-900 border-gray-200 dark:border-zinc-700 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors dark:text-white text-sm" id="subject" placeholder="What's this about?" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400" for="message">Message</label>
+<textarea class="w-full px-4 py-3 rounded bg-gray-50 dark:bg-zinc-900 border-gray-200 dark:border-zinc-700 focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors dark:text-white text-sm resize-none" id="message" placeholder="Tell me about your project..." rows="4"></textarea>
+</div>
+<button class="w-full py-4 bg-primary text-white font-medium rounded hover:bg-[#725D44] transition-all shadow-lg shadow-primary/25 hover:shadow-primary/40 flex items-center justify-center gap-2 mt-4" type="submit">
+                            Send Message
+                            <span class="material-icons-outlined text-sm">send</span>
+</button>
+</form>
+</div>
+</div>
+<div class="border-t border-gray-200 dark:border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
+<div class="mb-4 md:mb-0">© 2025 Dmitrii. Designed and Built in Code.</div>
+<div class="flex gap-6">
+<a class="hover:text-primary transition-colors" href="#">Resume</a>
+<a class="hover:text-primary transition-colors" href="#">LinkedIn</a>
+<a class="hover:text-primary transition-colors" href="#">GitHub</a>
+</div>
+</div>
+</div>
+</footer>
+</main>
+</body></html>

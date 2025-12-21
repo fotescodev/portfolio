@@ -1,0 +1,65 @@
+# ═══════════════════════════════════════════════════════════════
+# APPLICATION TRACKING
+# ═══════════════════════════════════════════════════════════════
+# Track your job applications to measure variant effectiveness.
+# This data feeds your capstone results documentation.
+
+# Summary metrics (update as you go)
+summary:
+  total_applications: 0
+  with_variant: 0
+  with_base: 0
+
+  responses:
+    variant: 0
+    base: 0
+
+  interviews:
+    variant: 0
+    base: 0
+
+  # Calculate after 10+ applications
+  variant_response_rate: null
+  base_response_rate: null
+  lift: null
+
+# Individual applications
+applications:
+  # ─────────────────────────────────────────────────────────────
+  # TEMPLATE (copy this for each application)
+  # ─────────────────────────────────────────────────────────────
+  # - company: "Company Name"
+  #   role: "Role Title"
+  #   date: 2025-01-20
+  #   variant: company-role  # or "base" if using base portfolio
+  #   source: linkedin  # linkedin, referral, careers, etc.
+  #
+  #   funnel:
+  #     applied: true
+  #     response: pending  # pending, rejected, interview, offer
+  #     interview_date: null
+  #     offer_date: null
+  #
+  #   notes: |
+  #     Any context about the application
+  #
+  #   # Fill after interview (if applicable)
+  #   feedback:
+  #     what_resonated: ""
+  #     what_to_improve: ""
+  #     interviewer_comments: ""
+
+  # ─────────────────────────────────────────────────────────────
+  # YOUR APPLICATIONS (add below)
+  # ─────────────────────────────────────────────────────────────
+
+  # Example:
+  # - company: "Stripe"
+  #   role: "Platform PM"
+  #   date: 2025-01-20
+  #   variant: stripe-platform-pm
+  #   source: referral
+  #   funnel:
+  #     applied: true
+  #     response: pending
+  #   notes: "Referred by former colleague from Anchorage"

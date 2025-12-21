@@ -1,0 +1,321 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap');
+
+:root {
+  /* Dark Mode (default) */
+  --color-background: #08080a;
+  --color-background-secondary: #141416;
+  --color-background-tertiary: #1a1a1c;
+  --color-text-primary: #e8e6e3;
+  --color-text-secondary: #a8a5a0;
+  --color-text-tertiary: #6b6966;
+  --color-text-muted: #4a4a4c;
+  --color-accent: #c29a6c;
+  --color-accent-hover: #d4ac7e;
+  --color-border: rgba(232, 230, 227, 0.1);
+  --color-border-light: rgba(232, 230, 227, 0.08);
+  --color-success: #4ade80;
+  --color-danger: #ef4444;
+  --color-code-bg: #141416;
+
+  /* Effects - Dark */
+  --color-nav-gradient-start: rgba(8, 8, 10, 1);
+  --color-nav-gradient-end: rgba(8, 8, 10, 0);
+  --color-grid-overlay: rgba(255, 255, 255, 0.05);
+  --color-orb-accent: rgba(194, 154, 108, 0.25);
+  --color-orb-secondary: rgba(74, 222, 128, 0.12);
+  --color-scrollbar-thumb: rgba(232, 230, 227, 0.15);
+  --color-scrollbar-thumb-hover: rgba(232, 230, 227, 0.25);
+  --color-card-hover: rgba(194, 154, 108, 0.02);
+  --color-tag-hover: rgba(194, 154, 108, 0.05);
+
+  /* Glass / overlays */
+  --color-surface-glass: rgba(20, 20, 22, 0.6);
+  --color-surface-glass-strong: rgba(8, 8, 10, 0.72);
+  --color-nav-bg: rgba(8, 8, 10, 0.85);
+  --color-backdrop: rgba(0, 0, 0, 0.45);
+  --color-selection-bg: rgba(194, 154, 108, 0.3);
+
+  /* Component-specific */
+  --color-ens-bg: var(--color-surface-glass);
+  --color-cert-bg-start: rgba(194, 154, 108, 0.08);
+  --color-cert-bg-end: rgba(194, 154, 108, 0.02);
+  --color-cert-border: rgba(194, 154, 108, 0.2);
+  --color-photo-border: rgba(232, 230, 227, 0.06);
+  --color-experience-border: rgba(232, 230, 227, 0.06);
+
+  /* Thumbnail/overlay specific */
+  --color-thumbnail-bg-start: #141416;
+  --color-thumbnail-bg-end: #1a1a1c;
+  --color-overlay-dark: rgba(8, 8, 10, 0.7);
+  --color-overlay-text: #ffffff;
+  --color-placeholder-text: #2a2a2c;
+  --color-separator: #3a3a3c;
+
+  /* Success states */
+  --color-success-bg: rgba(74, 222, 128, 0.05);
+  --color-success-border: rgba(74, 222, 128, 0.15);
+  --color-success-border-subtle: rgba(74, 222, 128, 0.1);
+
+  /* Shadows */
+  --shadow-omnibar: 0 8px 32px rgba(0, 0, 0, 0.12);
+  --shadow-drawer: -10px 0 40px rgba(0, 0, 0, 0.2);
+
+  /* Typography */
+  --font-serif: 'Instrument Serif', Georgia, serif;
+  --font-sans: 'Instrument Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Layout */
+  --layout-max-width: 1600px;
+  --content-max-width: 1200px;
+  --nav-height: 20px;
+  --nav-height-mobile: 16px;
+  /* Adaptive horizontal padding for wide screens */
+  --layout-padding-x: clamp(24px, 8vw, 160px);
+  --drawer-width: min(960px, 95vw);
+  --drawer-z-index: 200;
+  --drawer-padding: var(--space-2xl);
+  --drawer-padding-mobile: var(--space-xl);
+  --drawer-content-max-width: 860px;
+  --omnibar-z-index: 90;
+  --omnibar-height: 56px;
+  --omnibar-bottom-spacing: calc(var(--space-lg) + env(safe-area-inset-bottom));
+
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+
+  /* Extended spacing scale (section rhythm) - Reduced for scannability */
+  --space-4xl: clamp(48px, 6vh, 64px);
+  --space-5xl: clamp(64px, 8vh, 80px);
+  --space-6xl: clamp(80px, 10vh, 96px);
+
+  /* Transitions */
+  --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-fast: 0.2s ease;
+  --transition-medium: 0.4s var(--ease-smooth);
+}
+
+[data-theme="light"] {
+  --color-background: #fafafa;
+  --color-background-secondary: #ffffff;
+  --color-background-tertiary: #f5f5f5;
+  --color-text-primary: #050505;
+  --color-text-secondary: #2a2a2c;
+  --color-text-tertiary: #4a4a4c;
+  --color-text-muted: #666666;
+  --color-accent: #8a6642;
+  --color-accent-hover: #6d5038;
+  --color-border: rgba(26, 26, 28, 0.12);
+  --color-border-light: rgba(26, 26, 28, 0.08);
+  --color-success: #22c55e;
+  --color-danger: #ef4444;
+  --color-code-bg: #f8f8f8;
+
+  /* Effects - Light */
+  --color-nav-gradient-start: rgba(250, 250, 250, 1);
+  --color-nav-gradient-end: rgba(250, 250, 250, 0);
+  --color-grid-overlay: rgba(0, 0, 0, 0.03);
+  --color-orb-accent: rgba(166, 124, 82, 0.15);
+  --color-orb-secondary: rgba(34, 197, 94, 0.1);
+  --color-scrollbar-thumb: rgba(26, 26, 28, 0.15);
+  --color-scrollbar-thumb-hover: rgba(26, 26, 28, 0.25);
+  --color-card-hover: rgba(166, 124, 82, 0.03);
+  --color-tag-hover: rgba(166, 124, 82, 0.05);
+
+  /* Glass / overlays */
+  --color-surface-glass: rgba(255, 255, 255, 0.7);
+  --color-surface-glass-strong: rgba(250, 250, 250, 0.82);
+  --color-nav-bg: rgba(250, 250, 250, 0.85);
+  --color-backdrop: rgba(0, 0, 0, 0.35);
+  --color-selection-bg: rgba(138, 102, 66, 0.22);
+
+  /* Component-specific */
+  --color-ens-bg: var(--color-surface-glass);
+  --color-cert-bg-start: rgba(166, 124, 82, 0.08);
+  --color-cert-bg-end: rgba(166, 124, 82, 0.02);
+  --color-cert-border: rgba(166, 124, 82, 0.2);
+  --color-photo-border: rgba(26, 26, 28, 0.06);
+  --color-experience-border: rgba(26, 26, 28, 0.06);
+
+  /* Thumbnail/overlay specific - light mode */
+  --color-thumbnail-bg-start: #f0f0f0;
+  --color-thumbnail-bg-end: #e5e5e5;
+  --color-overlay-dark: rgba(0, 0, 0, 0.6);
+  --color-overlay-text: #ffffff;
+  --color-placeholder-text: #9a9a9c;
+  --color-separator: #9a9a9c;
+
+  /* Success states - light mode */
+  --color-success-bg: rgba(34, 197, 94, 0.05);
+  --color-success-border: rgba(34, 197, 94, 0.15);
+  --color-success-border-subtle: rgba(34, 197, 94, 0.1);
+
+  /* Shadows - light mode */
+  --shadow-omnibar: 0 8px 32px rgba(0, 0, 0, 0.08);
+  --shadow-drawer: -10px 0 40px rgba(0, 0, 0, 0.1);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-scrollbar-thumb);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-scrollbar-thumb-hover);
+}
+
+/* Animation keyframes */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Ambient Orbs & Gradients */
+.orb-primary {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 80vh;
+  background: radial-gradient(circle at 50% 0%, var(--color-orb-accent) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.8;
+  animation: float 25s ease-in-out infinite;
+}
+
+.orb-tertiary {
+  position: fixed;
+  bottom: 0%;
+  left: -10%;
+  width: 50vw;
+  height: 50vw;
+  background: radial-gradient(circle, var(--color-orb-accent) 0%, transparent 70%);
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.3;
+  animation: float 30s ease-in-out infinite;
+}
+
+.wide-screen-vignette {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+  background: radial-gradient(circle at center,
+      transparent 0%,
+      transparent 40%,
+      rgba(8, 8, 10, 0.15) 80%,
+      rgba(8, 8, 10, 0.4) 100%);
+  opacity: 0;
+}
+
+@media (min-width: 1440px) {
+  .wide-screen-vignette {
+    opacity: 1;
+  }
+}
+
+.bg-grid {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(var(--color-grid-overlay) 1px, transparent 1px);
+  background-size: 32px 32px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Mobile-first responsive utilities */
+.desktop-only {
+  display: none !important;
+}
+
+.mobile-only {
+  display: flex !important;
+}
+
+@media (min-width: 768px) {
+  .desktop-only {
+    display: flex !important;
+  }
+
+  .mobile-only {
+    display: none !important;
+  }
+}
+
+/* Hero section responsive grid */
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-lg);
+  margin-top: var(--space-xl);
+  align-items: start;
+}
+
+@media (min-width: 768px) {
+  .hero-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-2xl);
+    margin-top: 40px;
+  }
+}
+
+/* Hero CTA buttons responsive width */
+.hero-cta-btn {
+  width: 100%;
+  min-width: auto;
+}
+
+@media (min-width: 768px) {
+  .hero-cta-btn {
+    width: fit-content;
+    min-width: 220px;
+  }
+}

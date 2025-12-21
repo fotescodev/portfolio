@@ -1,0 +1,69 @@
+# ═══════════════════════════════════════════════════════════════
+# STORY TEMPLATE
+# ═══════════════════════════════════════════════════════════════
+# Extended narrative that connects multiple achievements.
+# Use for case studies, blog posts, and interview deep-dives.
+
+id: story-slug                      # Unique identifier (kebab-case)
+title: "Story Title"
+type: case-study                    # case-study | blog-post | interview-answer
+
+# ───────────────────────────────────────────────────────────────
+# NARRATIVE STRUCTURE
+# ───────────────────────────────────────────────────────────────
+hook: |
+  One sentence that captures attention and stakes.
+  Why should someone care about this story?
+
+narrative:
+  problem: |
+    What was broken? What was the cost of inaction?
+    Include specific pain points and business impact.
+
+  insight: |
+    What did you realize that others missed?
+    The "aha moment" that led to your approach.
+
+  approach: |
+    What strategy did you choose and why?
+    Include alternatives considered and trade-offs.
+
+  execution: |
+    Key phases and decisions during implementation.
+    Be specific about what you personally did.
+
+  outcome: |
+    Results and impact—quantify where possible.
+    Include downstream effects and learnings.
+
+  reflection: |
+    What worked? What didn't? What would you do differently?
+    Demonstrate growth mindset.
+
+# ───────────────────────────────────────────────────────────────
+# CONNECTED ENTITIES
+# ───────────────────────────────────────────────────────────────
+achievements: []                    # Achievement IDs this story draws from
+skills_demonstrated: []             # Skills proven by this story
+themes: []                          # Themes (from index.yaml)
+companies: []                       # Company context
+
+# ───────────────────────────────────────────────────────────────
+# CONTENT GENERATION HINTS
+# ───────────────────────────────────────────────────────────────
+word_count_target: 800              # Target for case study generation
+tone: professional                  # professional | conversational | technical
+audience:
+  - "Hiring managers"
+  - "Technical recruiters"
+
+# ───────────────────────────────────────────────────────────────
+# QUOTES & EVIDENCE
+# ───────────────────────────────────────────────────────────────
+key_quote: |
+  The most memorable line from this story.
+
+evidence:
+  testimonials: []
+  metrics: []
+  artifacts: []

@@ -1,0 +1,119 @@
+{
+  "metadata": {
+    "company": "Stripe",
+    "role": "Crypto Product Manager",
+    "generatedAt": "2025-12-19T00:00:00Z",
+    "jobDescription": "Stripe Crypto - Product Manager\n\nStripe is building the financial infrastructure for the internet, and crypto\nis becoming an increasingly important part of that infrastructure. We're looking\nfor a PM to help define and execute our crypto strategy—from stablecoin payments\nto on-chain settlement to crypto on-ramps.\n\nYou'll work at the intersection of traditional payments and blockchain,\nbuilding products that bring crypto to Stripe's millions of merchants.\n\nRequirements:\n- 5+ years product management experience\n- Deep understanding of crypto/blockchain ecosystems\n- Experience with payments, fintech, or financial infrastructure\n- Track record shipping developer-facing APIs\n- Comfort with regulatory complexity\n",
+    "publishStatus": "published",
+    "generationModel": "claude-opus-4",
+    "slug": "stripe-crypto"
+  },
+  "overrides": {
+    "hero": {
+      "status": "Open to PM roles — Crypto Infrastructure, Payments, Fintech",
+      "headline": [
+        {
+          "text": "Building",
+          "style": "italic"
+        },
+        {
+          "text": "where crypto meets",
+          "style": "muted"
+        },
+        {
+          "text": "payments infrastructure",
+          "style": "accent"
+        }
+      ],
+      "subheadline": "Senior Technical PM with 8 years bridging institutional finance and crypto—from ETF-grade custody at Anchorage to enterprise blockchain at Microsoft. Expert in shipping compliant crypto infrastructure that scales to millions of transactions.\n"
+    },
+    "about": {
+      "tagline": "Eight years shipping products where crypto complexity meets financial infrastructure—from Xbox royalties on Ethereum to institutional staking serving billions in AUM. Now focused on bringing crypto to mainstream payments.\n",
+      "bio": [
+        "Currently at Anchorage Digital, I lead protocol integrations and staking products for institutional clients—Galaxy, ETF providers, and enterprises navigating crypto custody. I've shipped 7+ L2 integrations (Optimism, Base, Arbitrum) and built ETF-grade staking infrastructure with zero slashing events. Before that, I drove 15× revenue growth at Ankr by repositioning RPC infrastructure from developers to blockchain protocols—proving I can find PMF in crowded markets.\n",
+        "I started in enterprise blockchain at Microsoft, shipping Xbox royalties on Ethereum before \"Web3\" existed. I understand both sides: the compliance rigor that financial institutions demand, and the developer experience that drives crypto adoption. Stripe's position at the intersection of payments and crypto is exactly where I want to build.\n"
+      ],
+      "stats": [
+        {
+          "value": "8+",
+          "label": "Years in Product"
+        },
+        {
+          "value": "$B+",
+          "label": "AUM Supported"
+        },
+        {
+          "value": "15×",
+          "label": "Revenue Growth"
+        }
+      ]
+    },
+    "sections": {
+      "beyondWork": false,
+      "blog": true,
+      "onchainIdentity": true,
+      "skills": true,
+      "passionProjects": true
+    }
+  },
+  "relevance": {
+    "caseStudies": [
+      {
+        "slug": "institutional-eth-staking",
+        "relevanceScore": 0.95,
+        "reasoning": "Institutional crypto infrastructure with compliance focus—directly relevant to Stripe's regulated crypto products"
+      },
+      {
+        "slug": "ankr-rpc-infrastructure",
+        "relevanceScore": 0.92,
+        "reasoning": "API infrastructure and 15× revenue growth—demonstrates ability to scale developer-facing crypto products"
+      },
+      {
+        "slug": "protocol-integration-framework",
+        "relevanceScore": 0.88,
+        "reasoning": "Multi-chain integration framework—relevant to Stripe supporting multiple crypto rails"
+      },
+      {
+        "slug": "xbox-royalties-ethereum",
+        "relevanceScore": 0.85,
+        "reasoning": "Enterprise blockchain + payments (royalties)—shows experience at intersection of crypto and financial transactions"
+      },
+      {
+        "slug": "developer-analytics-dashboard",
+        "relevanceScore": 0.6,
+        "reasoning": "Developer tools and analytics—relevant to Stripe's developer-first approach"
+      },
+      {
+        "slug": "ai-agent-orchestration",
+        "relevanceScore": 0.4,
+        "reasoning": "Infrastructure platform—less directly relevant but shows platform thinking"
+      }
+    ],
+    "skills": [
+      {
+        "category": "Blockchain & Web3",
+        "relevanceScore": 1
+      },
+      {
+        "category": "Technical",
+        "relevanceScore": 0.95
+      },
+      {
+        "category": "Product Management",
+        "relevanceScore": 0.9
+      }
+    ],
+    "projects": [
+      {
+        "slug": "eth-staking",
+        "relevanceScore": 0.95,
+        "reasoning": "Institutional crypto—core to Stripe's crypto expansion"
+      },
+      {
+        "slug": "protocol-integration",
+        "relevanceScore": 0.9,
+        "reasoning": "Multi-chain support—relevant to crypto payments across chains"
+      }
+    ]
+  }
+}

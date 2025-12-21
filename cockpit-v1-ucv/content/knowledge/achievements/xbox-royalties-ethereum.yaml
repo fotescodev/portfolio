@@ -1,0 +1,65 @@
+# ═══════════════════════════════════════════════════════════════
+# ACHIEVEMENT: Xbox Royalties on Ethereum
+# ═══════════════════════════════════════════════════════════════
+id: xbox-royalties-ethereum
+headline: "Built Microsoft's first production smart contract—Ethereum royalty system for Xbox eliminating publisher payment disputes"
+
+metric:
+  value: "First"
+  unit: "smart contract at Microsoft"
+  context: "Pioneered enterprise blockchain before 'Web3' existed as a term"
+
+situation: |
+  Xbox needed transparent, auditable system for royalty payments to game publishers.
+  Existing database systems lacked auditability for complex multi-party calculations.
+  Publishers disputed payment accuracy—costing millions in legal fees and damaging
+  relationships.
+
+task: |
+  Build blockchain-based system providing immutability and transparency publishers
+  needed. Automate complex royalty calculations that were error-prone manually.
+  Handle Xbox-scale transaction volumes (millions of purchases) with privacy.
+
+action: |
+  Chose private Ethereum consortium over public chain—gave publishers independent
+  verification without exposing competitive data. Built Docker/Kubernetes architecture
+  for consortium nodes. Created key management integrated with Azure Key Vault.
+  Developed Solidity contracts for royalty tracking with comprehensive testing framework.
+  Ran parallel processing with existing system for validation.
+
+result: |
+  Zero disputed payments post-launch—transparent audit trail eliminated disputes.
+  System handles Xbox-scale transaction processing. Project became reference
+  implementation for Azure blockchain services. Pattern became template for other
+  Microsoft blockchain projects. Established internal expertise informing broader
+  blockchain strategy.
+
+skills:
+  - ethereum
+  - api-design
+  - cross-functional
+themes:
+  - enterprise-blockchain
+  - infrastructure
+companies:
+  - microsoft
+years:
+  - 2016
+  - 2017
+  - 2018
+  - 2019
+  - 2020
+
+good_for:
+  - "Enterprise blockchain discussions"
+  - "Early crypto adopter credibility"
+  - "Large company experience"
+  - "Technical PM roles"
+  - "Smart contract expertise"
+  - "Gaming industry"
+
+evidence:
+  case_study: "content/case-studies/03-xbox-royalties.md"
+  testimonial: null
+  metrics_source: "Xbox store metrics"
+  artifacts: []
