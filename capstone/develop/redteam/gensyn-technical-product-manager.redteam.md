@@ -1,7 +1,7 @@
 # Red Team Report
 
-- Variant: `bloomberg-technical-product-manager`
-- Generated: 2025-12-21T17:11:12.926Z
+- Variant: `gensyn-technical-product-manager`
+- Generated: 2025-12-21T17:11:12.932Z
 
 ## Summary
 
@@ -25,9 +25,6 @@
 
 ### RT-ACC-CLAIMS — Claims ledger exists and is verified
 
-- metric-1080fe1903 (overrides.hero.subheadline)
-- metric-bad5514090 (overrides.about.bio[0])
-- metric-0356894578 (overrides.about.bio[0])
-- metric-d07b4c9bd6 (overrides.about.stats[0].value)
-- metric-60ecdf8a3a (overrides.about.stats[1].value)
+- Missing ledger: capstone/develop/evals/gensyn-technical-product-manager.claims.yaml
+- Run: npm run eval:variant -- --slug gensyn-technical-product-manager
 
