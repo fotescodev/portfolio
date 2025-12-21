@@ -1,11 +1,11 @@
 /**
  * Blog Post Page Navigation Tests
  *
- * These tests catch routing issues with HashRouter where links like /#section
- * would navigate to invalid routes instead of scrolling to sections on home page.
+ * These tests verify that navigation links from blog pages correctly navigate
+ * back to the home page and scroll to the appropriate section.
  *
- * The bug: Using href="/#section" in HashRouter tries to route to "/section"
- * The fix: Use onClick with navigate('/') + setTimeout scroll to element
+ * With BrowserRouter, links use href="/#section" as fallback anchors,
+ * while onClick handlers navigate('/') + setTimeout scroll to element.
  */
 
 import { render, fireEvent, waitFor, cleanup } from '@testing-library/react';
@@ -67,7 +67,7 @@ const renderBlogPage = () => {
     );
 };
 
-describe('BlogPostPage - HashRouter Navigation Fix', () => {
+describe('BlogPostPage - Navigation', () => {
     beforeEach(() => {
         vi.clearAllMocks();
         document.getElementById = vi.fn().mockImplementation((id) => {
@@ -85,20 +85,19 @@ describe('BlogPostPage - HashRouter Navigation Fix', () => {
         cleanup();
     });
 
-    describe('Critical: Nav links must not break with HashRouter', () => {
-        it('should NOT have href="/#section" pattern (breaks HashRouter)', () => {
+    describe('Critical: Nav links navigate correctly', () => {
+        it('should have valid href patterns for anchor links', () => {
             renderBlogPage();
 
             const nav = document.querySelector('nav[aria-label="Primary"]');
             const allLinks = nav?.querySelectorAll('a') || [];
 
-            // Check each link doesn't have the broken pattern
+            // With BrowserRouter, anchor links should use /#section format
             Array.from(allLinks).forEach(link => {
                 const href = link.getAttribute('href') || '';
-                // Pattern /#section (without second /) breaks HashRouter
-                // Valid patterns: /#/section or #section (for same-page) or /path
+                // Valid patterns: /#section (anchor to home), #section (same-page), /path
                 if (href.startsWith('/#')) {
-                    expect(href).toMatch(/^\/#\//); // Must have /#/ not just /#
+                    expect(href).toMatch(/^\/#[a-z]/); // Must be /#section format
                 }
             });
         });
@@ -239,8 +238,8 @@ describe('BlogPostPage - HashRouter Navigation Fix', () => {
                 links.forEach(link => {
                     const href = link.getAttribute('href') || '';
                     if (href.startsWith('/#')) {
-                        // Must be /#/ format, not /#section
-                        expect(href).toMatch(/^\/#\//);
+                        // With BrowserRouter, should be /#section format
+                        expect(href).toMatch(/^\/#[a-z]/);
                     }
                 });
             }

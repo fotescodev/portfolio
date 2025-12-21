@@ -168,8 +168,7 @@ export default function BlogPostModal({
 
     const getPostUrl = () => {
         // Generate a shareable URL for the post
-        // In a production environment, this would be the actual URL
-        return `${window.location.origin}/#blog?post=${post.slug}`;
+        return `${window.location.origin}/blog/${post.slug}`;
     };
 
     const shareOnTwitter = () => {

@@ -237,7 +237,7 @@ export default function BlogPostPage() {
         }
     };
 
-    const getPostUrl = () => `${window.location.origin}/#/blog/${post.slug}`;
+    const getPostUrl = () => `${window.location.origin}/blog/${post.slug}`;
 
     const shareOnTwitter = () => {
         window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(`${post.title} by @kolob0kk`)}&url=${encodeURIComponent(getPostUrl())}`, '_blank', 'width=550,height=420');
@@ -480,7 +480,7 @@ export default function BlogPostPage() {
                 <meta property="og:title" content={post.title} />
                 <meta property="og:description" content={post.excerpt} />
                 <meta property="og:type" content="article" />
-                <meta property="og:url" content={`${window.location.origin}/#/blog/${post.slug}`} />
+                <meta property="og:url" content={`${window.location.origin}/blog/${post.slug}`} />
                 {post.thumbnail && <meta property="og:image" content={post.thumbnail} />}
                 <meta name="twitter:card" content="summary_large_image" />
                 <meta name="twitter:title" content={post.title} />
@@ -555,7 +555,7 @@ export default function BlogPostPage() {
                         ].map((item) => (
                             <a
                                 key={item.id}
-                                href={`/#/${item.id}`}
+                                href={`/#${item.id}`}
                                 onClick={(e) => {
                                     e.preventDefault();
                                     navigate('/');
@@ -585,7 +585,7 @@ export default function BlogPostPage() {
                         ))}
                         <ThemeToggle />
                         <a
-                            href="/#/contact"
+                            href="/#contact"
                             onClick={(e) => {
                                 e.preventDefault();
                                 navigate('/');
@@ -651,7 +651,7 @@ export default function BlogPostPage() {
                 ].map((item) => (
                     <a
                         key={item.id}
-                        href={`/#/${item.id}`}
+                        href={`/#${item.id}`}
                         className="mobile-menu-link"
                         onClick={(e) => {
                             e.preventDefault();
@@ -694,7 +694,7 @@ export default function BlogPostPage() {
                     {/* Back link */}
                     <div style={{ marginBottom: 'var(--space-xl)' }}>
                         <a
-                            href="/#/blog"
+                            href="/#blog"
                             className="back-link"
                             onClick={(e) => {
                                 e.preventDefault();

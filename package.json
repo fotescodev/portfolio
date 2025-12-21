@@ -7,6 +7,7 @@
     "dev": "vite",
     "predev": "npm run variants:sync",
     "build": "tsc -b && vite build",
+    "postbuild": "cp dist/index.html dist/404.html",
     "prebuild": "npm run validate && npm run variants:sync",
     "lint": "eslint .",
     "preview": "vite preview",
