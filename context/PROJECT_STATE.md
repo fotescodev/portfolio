@@ -32,7 +32,7 @@ Portfolio at **85% production-ready**. Universal CV engine online with 5 variant
 | Component | Status |
 |-----------|--------|
 | Type Safety | 9/10 — Zod validates all content |
-| Tests | 28 passing, 7 suites failing (React 19 issue) |
+| Tests | 203 passing |
 | Bundle | 480KB gzipped (CRITICAL — target <200KB) |
 | Build | Clean TypeScript, Vite 7 |
 
@@ -42,7 +42,6 @@ Portfolio at **85% production-ready**. Universal CV engine online with 5 variant
 |-------|----------|--------|
 | **Bundle Size** (480KB) | CRITICAL | Poor Core Web Vitals |
 | **No Code Splitting** | HIGH | Single chunk loads everything |
-| **Test Regression** | HIGH | 7 suites failing |
 | **Inline Styles** (324) | MEDIUM | Maintainability |
 | **LikeAnalytics.tsx** (505 lines) | MEDIUM | Should lazy load |
 
@@ -66,8 +65,7 @@ Portfolio at **85% production-ready**. Universal CV engine online with 5 variant
 
 | Task | Impact | Status |
 |------|--------|--------|
-| Fix test regression | Unblock CI | URGENT |
-| Code Splitting | 480KB → <200KB | PENDING |
+| Code Splitting | 480KB → <200KB | NEXT |
 | Lazy Load LikeAnalytics | Reduce initial load | PENDING |
 
 ### P1: Conversion Drivers
@@ -222,19 +220,19 @@ npm run dev       # Dev server at :5173
 ### Current Status
 
 **Date**: 2025-12-21
-**Objective**: Fix test regression, then code splitting
+**Objective**: Code splitting (bundle size reduction)
 **Bundle**: 480KB (target <200KB)
-**Tests**: 28 passing, 7 suites failing (React DOM error)
+**Tests**: 203 passing
 **Variants**: 5 active
 
 **Blockers**:
-1. Test regression: `TypeError: Cannot read properties of undefined (reading 'S')`
-2. Bundle size: 480KB needs code splitting
+1. Bundle size: 480KB needs code splitting
 
 **Recent Wins**:
+- Fixed React version mismatch (tests now pass)
+- Consolidated context docs (87% size reduction)
 - UCV-CLI dashboard shipped (`npm run ucv-cli`)
 - SEO improvements (BrowserRouter, sitemap.xml)
-- Capstone pipeline fully integrated
 
 ---
 

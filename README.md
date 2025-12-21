@@ -100,11 +100,10 @@ npm run generate:og
 | Metric | Current | Target |
 |--------|---------|--------|
 | Bundle Size | 480KB | <200KB |
-| Tests | 28 passing (7 suites failing) | All green |
+| Tests | 203 passing | — |
 | CSS Tokens | 120+ | — |
 | Active Variants | 5 | — |
 
 **Status**: Active Development (85% production-ready)
-**P0 Blocker**: Test regression (React 19 + testing-library incompatibility)
 **Live URL**: [edgeoftrust.com](https://edgeoftrust.com)
 **P0 Priority**: Bundle size reduction via code splitting
