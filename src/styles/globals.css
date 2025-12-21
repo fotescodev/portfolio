@@ -270,3 +270,52 @@
   pointer-events: none;
   z-index: 0;
 }
+
+/* Mobile-first responsive utilities */
+.desktop-only {
+  display: none !important;
+}
+
+.mobile-only {
+  display: flex !important;
+}
+
+@media (min-width: 768px) {
+  .desktop-only {
+    display: flex !important;
+  }
+
+  .mobile-only {
+    display: none !important;
+  }
+}
+
+/* Hero section responsive grid */
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-lg);
+  margin-top: var(--space-xl);
+  align-items: start;
+}
+
+@media (min-width: 768px) {
+  .hero-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-2xl);
+    margin-top: 40px;
+  }
+}
+
+/* Hero CTA buttons responsive width */
+.hero-cta-btn {
+  width: 100%;
+  min-width: auto;
+}
+
+@media (min-width: 768px) {
+  .hero-cta-btn {
+    width: fit-content;
+    min-width: 220px;
+  }
+}

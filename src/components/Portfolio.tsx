@@ -239,66 +239,62 @@ export default function Portfolio() {
             </div>
 
 
-            {/* Desktop Navigation */}
-            {!isMobile && (
-              <div style={{ display: 'flex', gap: 'var(--space-xl)', alignItems: 'center' }}>
-                {[
-                  { label: 'Experience', id: 'experience' },
-                  { label: 'Cases', id: 'work' },
-                  { label: 'Blog', id: 'blog' },
-                  { label: 'About', id: 'about' }
-                ].map((item) => (
-                  <a
-                    key={item.id}
-                    href={`#${item.id}`}
-                    onClick={(e) => handleNavClick(e, item.id)}
-                    className="nav-link"
-                  >
-                    {item.label}
-                  </a>
-                ))}
-                <ThemeToggle />
+            {/* Desktop Navigation - always render, CSS controls visibility */}
+            <div className="desktop-only" style={{ display: 'flex', gap: 'var(--space-xl)', alignItems: 'center' }}>
+              {[
+                { label: 'Experience', id: 'experience' },
+                { label: 'Cases', id: 'work' },
+                { label: 'Blog', id: 'blog' },
+                { label: 'About', id: 'about' }
+              ].map((item) => (
                 <a
-                  href="#contact"
-                  onClick={(e) => handleNavClick(e, 'contact')}
-                  className="nav-cta"
+                  key={item.id}
+                  href={`#${item.id}`}
+                  onClick={(e) => handleNavClick(e, item.id)}
+                  className="nav-link"
                 >
-                  Get in Touch
+                  {item.label}
                 </a>
-              </div>
-            )}
+              ))}
+              <ThemeToggle />
+              <a
+                href="#contact"
+                onClick={(e) => handleNavClick(e, 'contact')}
+                className="nav-cta"
+              >
+                Get in Touch
+              </a>
+            </div>
 
-            {/* Mobile Menu Button */}
-            {isMobile && (
-              <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-sm)' }}>
-                <ThemeToggle isMobile />
-                <button
-                  type="button"
-                  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                  aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
-                  aria-expanded={mobileMenuOpen}
-                  aria-controls="mobile-menu"
-                  style={{
-                    background: 'transparent',
-                    border: 'none',
-                    padding: 'var(--space-sm)',
-                    cursor: 'pointer',
-                    zIndex: 101,
-                    position: 'relative',
-                    color: 'var(--color-text-primary)'
-                  }}
-                >
-                  <span style={{
-                    fontSize: '14px',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.1em',
-                    fontWeight: 600
-                  }}>
-                    {mobileMenuOpen ? 'Close' : 'Menu'}
-                  </span>
-                </button>
-              </div>
-            )}
+            {/* Mobile Menu Button - always render, CSS controls visibility */}
+            <div className="mobile-only" style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-sm)' }}>
+              <ThemeToggle isMobile />
+              <button
+                type="button"
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+                aria-expanded={mobileMenuOpen}
+                aria-controls="mobile-menu"
+                style={{
+                  background: 'transparent',
+                  border: 'none',
+                  padding: 'var(--space-sm)',
+                  cursor: 'pointer',
+                  zIndex: 101,
+                  position: 'relative',
+                  color: 'var(--color-text-primary)'
+                }}
+              >
+                <span style={{
+                  fontSize: '14px',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.1em',
+                  fontWeight: 600
+                }}>
+                  {mobileMenuOpen ? 'Close' : 'Menu'}
+                </span>
+              </button>
+            </div>
           </div>
         </nav>
 
