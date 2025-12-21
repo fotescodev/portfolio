@@ -585,17 +585,9 @@ export default function BlogPostPage() {
                         ))}
                         <ThemeToggle />
                         <a
-                            href="/#contact"
-                            onClick={(e) => {
-                                e.preventDefault();
-                                navigate('/');
-                                setTimeout(() => {
-                                    const el = document.getElementById('contact');
-                                    if (el) {
-                                        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                                    }
-                                }, 100);
-                            }}
+                            href="https://calendar.google.com/calendar/u/0/appointments/AcZssZ2leGghBAF6F4IbGMZQErnaR21wvu-mYWXP06o="
+                            target="_blank"
+                            rel="noopener noreferrer"
                             style={{
                                 padding: '12px 24px',
                                 background: 'var(--color-accent)',
@@ -646,8 +638,7 @@ export default function BlogPostPage() {
                     { label: 'Experience', id: 'experience' },
                     { label: 'Cases', id: 'work' },
                     { label: 'Blog', id: 'blog' },
-                    { label: 'About', id: 'about' },
-                    { label: 'Get in Touch', id: 'contact' }
+                    { label: 'About', id: 'about' }
                 ].map((item) => (
                     <a
                         key={item.id}
@@ -668,6 +659,15 @@ export default function BlogPostPage() {
                         {item.label}
                     </a>
                 ))}
+                <a
+                    href="https://calendar.google.com/calendar/u/0/appointments/AcZssZ2leGghBAF6F4IbGMZQErnaR21wvu-mYWXP06o="
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mobile-menu-link"
+                    onClick={() => setMobileMenuOpen(false)}
+                >
+                    Get in Touch
+                </a>
             </div>
 
             {/* Desktop TOC Sidebar */}

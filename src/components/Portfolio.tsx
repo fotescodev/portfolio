@@ -258,8 +258,9 @@ export default function Portfolio() {
               ))}
               <ThemeToggle />
               <a
-                href="#contact"
-                onClick={(e) => handleNavClick(e, 'contact')}
+                href="https://calendar.google.com/calendar/u/0/appointments/AcZssZ2leGghBAF6F4IbGMZQErnaR21wvu-mYWXP06o="
+                target="_blank"
+                rel="noopener noreferrer"
                 className="nav-cta"
               >
                 Get in Touch
@@ -325,8 +326,7 @@ export default function Portfolio() {
               { label: 'Experience', id: 'experience' },
               { label: 'Cases', id: 'work' },
               { label: 'Blog', id: 'blog' },
-              { label: 'About', id: 'about' },
-              { label: 'Get in Touch', id: 'contact' }
+              { label: 'About', id: 'about' }
             ].map((item, i) => (
               <a
                 key={item.id}
@@ -342,6 +342,20 @@ export default function Portfolio() {
                 {item.label}
               </a>
             ))}
+            <a
+              href="https://calendar.google.com/calendar/u/0/appointments/AcZssZ2leGghBAF6F4IbGMZQErnaR21wvu-mYWXP06o="
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mobile-menu-link"
+              onClick={() => setMobileMenuOpen(false)}
+              style={{
+                transform: mobileMenuOpen ? 'translateX(0)' : 'translateX(-20px)',
+                opacity: mobileMenuOpen ? 1 : 0,
+                transition: `all 0.4s ease ${4 * 0.08}s`
+              }}
+            >
+              Get in Touch
+            </a>
           </div>
         )}
 

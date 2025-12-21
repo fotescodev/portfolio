@@ -162,19 +162,16 @@ describe('BlogPostPage - Navigation', () => {
             });
         });
 
-        it('Get in Touch CTA should navigate to home route /', async () => {
+        it('Get in Touch CTA should link to Google Calendar', () => {
             renderBlogPage();
 
             // Find CTA in the nav bar specifically
             const nav = document.querySelector('nav[aria-label="Primary"]');
-            const cta = nav?.querySelector('a[href*="contact"]');
+            const cta = nav?.querySelector('a[href*="calendar.google.com"]');
 
             expect(cta).not.toBeNull();
-            fireEvent.click(cta!);
-
-            await waitFor(() => {
-                expect(currentPath).toBe('/');
-            });
+            expect(cta?.getAttribute('target')).toBe('_blank');
+            expect(cta?.getAttribute('rel')).toBe('noopener noreferrer');
         });
 
         it('should NOT navigate to /experience (invalid route)', async () => {
