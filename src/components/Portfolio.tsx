@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import Blog from './Blog';
 import ThemeToggle from './ThemeToggle';
 import HeroSection from './sections/HeroSection';
@@ -10,11 +10,13 @@ import PassionProjectsSection from './sections/PassionProjectsSection';
 
 import CaseStudiesSection from './sections/CaseStudiesSection';
 import FooterSection from './sections/FooterSection';
-import CaseStudyDrawer from './case-study/CaseStudyDrawer';
 import AmbientBackground from './common/AmbientBackground';
 import Omnibar from './common/Omnibar';
 import { useVariant } from '../context/VariantContext';
 import type { CaseStudy } from '../types/portfolio';
+
+// Lazy load heavy components that use markdown/syntax-highlighter
+const CaseStudyDrawer = lazy(() => import('./case-study/CaseStudyDrawer'));
 
 export default function Portfolio() {
   // Get profile from variant context (either base or merged with variant)
@@ -594,15 +596,17 @@ export default function Portfolio() {
           {/* Omnibar */}
           <Omnibar />
 
-          {/* Case Study Modal */}
+          {/* Case Study Modal - lazy loaded */}
           {modalCase && (
-            <CaseStudyDrawer
-              isOpen={!!modalCase}
-              onClose={() => setModalCase(null)}
-              caseStudy={modalCase}
-              isMobile={isMobile}
-              onNavigate={(study) => setModalCase(study)}
-            />
+            <Suspense fallback={<div style={{ position: 'fixed', inset: 0, background: 'var(--color-background)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-text-secondary)' }}>Loading...</div>}>
+              <CaseStudyDrawer
+                isOpen={!!modalCase}
+                onClose={() => setModalCase(null)}
+                caseStudy={modalCase}
+                isMobile={isMobile}
+                onNavigate={(study) => setModalCase(study)}
+              />
+            </Suspense>
           )}
 
         </main>
