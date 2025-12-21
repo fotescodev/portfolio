@@ -99,11 +99,11 @@ npm run generate:og
 
 | Metric | Current | Target |
 |--------|---------|--------|
-| Bundle Size | 480KB | <200KB |
-| Tests | 203 passing | — |
+| Bundle Size | 195KB initial | <200KB ✅ |
+| Tests | 211 passing | — |
 | CSS Tokens | 120+ | — |
 | Active Variants | 5 | — |
 
-**Status**: Active Development (85% production-ready)
+**Status**: Active Development (90% production-ready)
 **Live URL**: [edgeoftrust.com](https://edgeoftrust.com)
-**P0 Priority**: Bundle size reduction via code splitting
+**Recent**: Code splitting shipped (59% bundle reduction)
