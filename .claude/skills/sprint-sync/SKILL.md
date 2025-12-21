@@ -1,13 +1,13 @@
 ---
 name: sprint-sync
-description: Multi-perspective project onboarding and sprint briefing. Simulates a cross-functional leadership team (PM, Designer, Architect, Engineer) ramping up on project status. Appends briefings to STATE_OF_THE_UNION.md Part VIII.
+description: Multi-perspective project onboarding and sprint briefing. Simulates a cross-functional leadership team (PM, Designer, Architect, Engineer) ramping up on project status. Updates the Current Status section in PROJECT_STATE.md.
 ---
 
 # Sprint Sync
 
 ## Overview
 
-This skill provides comprehensive project context from four leadership perspectives, simulating how a cross-functional team would onboard to the current state of the project. All briefings are appended to `context/STATE_OF_THE_UNION.md` Part VIII for historical reference.
+This skill provides comprehensive project context from four leadership perspectives. Unlike the previous append-only approach, this skill now **updates** the Current Status section in `context/PROJECT_STATE.md` to keep context files manageable.
 
 ## When to Use This Skill
 
@@ -20,282 +20,122 @@ Activate when the user:
 
 ## Invocation Modes
 
-| Command | Mode | Duration | Output |
-|---------|------|----------|--------|
-| `/sprint-sync` | Quick | ~30 sec | Summary briefing |
-| `/sprint-sync --hardcore` | Full deep dive | ~2-3 min | All ASCII diagrams + full analysis |
-| `/sprint-sync --deep pm` | PM deep dive | ~1 min | Roadmap + priorities + blockers |
-| `/sprint-sync --deep design` | Designer deep dive | ~1 min | Design system + theme audit |
-| `/sprint-sync --deep arch` | Architect deep dive | ~1 min | Architecture + dependencies |
-| `/sprint-sync --deep eng` | Engineer deep dive | ~1 min | Recent changes + hot files |
+| Command | Mode | Output |
+|---------|------|--------|
+| `/sprint-sync` | Quick | Summary briefing + status update |
+| `/sprint-sync --hardcore` | Full deep dive | All ASCII diagrams + comprehensive analysis |
+| `/sprint-sync --deep pm` | PM focus | Roadmap + priorities + blockers |
+| `/sprint-sync --deep design` | Design focus | Design system + theme audit |
+| `/sprint-sync --deep arch` | Architect focus | Architecture + dependencies |
+| `/sprint-sync --deep eng` | Engineer focus | Recent changes + hot files |
+
+---
 
 ## Execution Steps
 
 ### Phase 0: Gather Context
 
-**Always read these files first:**
+**Read this file first:**
 
 | File | Extract |
 |------|---------|
-| `context/STATE_OF_THE_UNION.md` | Parts I-V for strategic context, Part VII for roadmap |
-| `context/DEVLOG.md` | "Active Project Pulse" + last 2 session summaries |
+| `context/PROJECT_STATE.md` | Parts I-V for strategic context, Part VI for session log |
 
-**Always run these commands:**
+**Run these commands:**
 
 ```bash
 git log --oneline -10                    # Recent commits
 npm run test 2>&1 | tail -20             # Test status
+npm run build 2>&1 | tail -10            # Bundle size
 ```
 
 ---
 
-### Phase 1: Quick Sync (Default Mode)
+### Phase 1: Generate Briefing
 
-Generate a concise briefing covering all four perspectives in summary form.
+Output the briefing to the user with multi-perspective analysis.
 
-**Output Structure:**
+**Quick Mode Output:**
 ```
-═══════════════════════════════════════════════════════════════════════════════
-SPRINT BRIEFING — [YYYY-MM-DD HH:MM]
-Mode: Quick
-═══════════════════════════════════════════════════════════════════════════════
+## Sprint Sync — [YYYY-MM-DD]
 
-## Project Pulse (PM View)
-- **Current Phase**: [from SOTU Part VII]
-- **Last Action**: [from DEVLOG Active Pulse]
-- **Next Priority**: [from SOTU Part IV P0]
-- **Blockers**: [from SOTU Technical Debt]
+**Status**: [X]% ready | **Bundle**: [X]KB | **Tests**: [X] passing
 
-## Design Status (Designer View)
-- **Design System**: [Compliant / issues found]
-- **Recent UI Changes**: [from git log]
-- **Theme Parity**: [from SOTU 1.3]
+### PM View
+- **Phase**: [current phase]
+- **Focus**: [current objective]
+- **Blockers**: [P0 items]
 
-## Architecture Health (Architect View)
-- **Test Status**: [from npm test output]
-- **Bundle Size**: [from SOTU]
-- **Tech Debt**: [top 2-3 items from SOTU]
+### Architect View
+- **Tests**: [passing/failing]
+- **Bundle**: [size] (target <200KB)
+- **Debt**: [top items]
 
-## Recent Work (Engineer View)
-- **Last 5 Commits**: [from git log]
-- **What's Working**: [recent completions]
-- **Needs Attention**: [blockers/P0 items]
+### Engineer View
+- **Last 5 commits**: [summary]
+- **Working**: [recent wins]
+- **Attention**: [blockers]
 
-## Recommended Actions
-1. [First priority from P0]
-2. [Second priority]
-3. [Third priority]
-
-───────────────────────────────────────────────────────────────────────────────
+### Recommended Actions
+1. [P0 priority]
+2. [P0 priority]
+3. [Next item]
 ```
 
 ---
 
-### Phase 2: Deep Dive Modes
+### Phase 2: Update PROJECT_STATE.md
 
-#### PM Deep Dive (`--deep pm` or `--hardcore`)
-
-**Additional Context:**
-- Full SOTU Part VII (Strategic Roadmap)
-- SOTU Part IV (Priority Action Plan)
-- Last 3 DEVLOG sessions
-- `git log --oneline -20`
-
-**Generate ASCII Diagram:**
-```
-┌─ ROADMAP STATUS ─────────────────────────────────────────────────────────────┐
-│                                                                              │
-│  Phase 1: Foundation    ████████████████████ 100%  COMPLETE                  │
-│  Phase 2: Polish        ████████████████████ 100%  COMPLETE                  │
-│  Phase 3: Social        ████████████░░░░░░░░  60%  IN PROGRESS               │
-│  Phase 4: Performance   ░░░░░░░░░░░░░░░░░░░░   0%  PENDING                   │
-│                                                                              │
-│  ┌─ P0 CRITICAL ─────────────────────────────────────────────────────────┐   │
-│  │  [ ] Code Splitting (467KB → <200KB)                                  │   │
-│  │  [ ] Lazy Load LikeAnalytics                                          │   │
-│  └───────────────────────────────────────────────────────────────────────┘   │
-│                                                                              │
-│  Current Focus: [from DEVLOG]                                                │
-│  Next Milestone: [from roadmap]                                              │
-│  Risk Level: [HIGH/MEDIUM/LOW based on blockers]                             │
-│                                                                              │
-└──────────────────────────────────────────────────────────────────────────────┘
-```
-
-**Analysis Includes:**
-- Milestone completion percentages
-- Dependency mapping between tasks
-- Risk assessment (blockers, technical debt)
-- Sprint velocity (commits per session)
-
----
-
-#### Designer Deep Dive (`--deep design` or `--hardcore`)
-
-**Additional Context:**
-- `context/DESIGN.md`
-- `src/styles/globals.css` (scan CSS variables)
-- SOTU 1.2 (Design Fidelity) and 1.3 (Theme Parity)
-- Recent commits touching styles
-
-**Generate ASCII Diagram:**
-```
-┌─ DESIGN SYSTEM HEALTH ───────────────────────────────────────────────────────┐
-│                                                                              │
-│  CSS Variables Inventory:                                                    │
-│  ├── Colors:     XX tokens    [✓ Complete]                                   │
-│  ├── Spacing:    XX tokens    [✓ Complete]                                   │
-│  ├── Typography: XX tokens    [✓ Complete]                                   │
-│  └── Effects:    XX tokens    [✓ Complete]                                   │
-│                                                                              │
-│  Theme Parity:                                                               │
-│  ┌─────────────────┬─────────────────┐                                       │
-│  │    DARK MODE    │   LIGHT MODE    │                                       │
-│  ├─────────────────┼─────────────────┤                                       │
-│  │ ✓ Background    │ ✓ Background    │                                       │
-│  │ ✓ Text Primary  │ ✓ Text Primary  │                                       │
-│  │ ✓ Accent        │ ✓ Accent        │                                       │
-│  │ ✓ Orbs (0.25)   │ ⚠ Orbs (0.15)   │  ← Light feels muted                  │
-│  │ ✓ Card Shadows  │ ⚠ Card Shadows  │  ← Light feels flat                   │
-│  └─────────────────┴─────────────────┘                                       │
-│                                                                              │
-│  Premium Score: 7.5/10 → Target: 9/10                                        │
-│                                                                              │
-│  Recent UI Changes:                                                          │
-│  └── [from git log --oneline -- '*.css' '*.tsx']                             │
-│                                                                              │
-└──────────────────────────────────────────────────────────────────────────────┘
-```
-
-**Analysis Includes:**
-- Token inventory count
-- Theme parity audit
-- Recent style changes
-- Premium score progress
-
----
-
-#### Architect Deep Dive (`--deep arch` or `--hardcore`)
-
-**Additional Context:**
-- `context/CODEBASE.md`
-- `src/lib/schemas.ts` (count Zod schemas)
-- `package.json` (key dependencies)
-- Test output
-
-**Generate ASCII Diagram:**
-```
-┌─ ARCHITECTURE OVERVIEW ──────────────────────────────────────────────────────┐
-│                                                                              │
-│  DATA FLOW:                                                                  │
-│  ┌──────────────┐    ┌──────────────┐    ┌───────────────┐                   │
-│  │ content/     │───▶│ src/lib/     │───▶│ Zod Schemas   │                   │
-│  │ *.yaml *.md  │    │ content.ts   │    │ (9 schemas)   │                   │
-│  └──────────────┘    └──────────────┘    └───────────────┘                   │
-│                              │                                               │
-│                              ▼                                               │
-│  ┌──────────────┐    ┌──────────────┐    ┌───────────────┐                   │
-│  │ HashRouter   │◀───│ Portfolio.tsx│───▶│ Section       │                   │
-│  │ /#/:company/ │    │              │    │ Components    │                   │
-│  │    :role     │    └──────────────┘    └───────────────┘                   │
-│  └──────────────┘            │                                               │
-│                              ▼                                               │
-│                      ┌──────────────┐                                        │
-│                      │ Variant      │                                        │
-│                      │ Context      │                                        │
-│                      └──────────────┘                                        │
-│                                                                              │
-│  HEALTH METRICS:                                                             │
-│  ├── Tests:        XXX passing                                               │
-│  ├── Bundle:       467KB (TARGET: <200KB)  ⚠ CRITICAL                        │
-│  ├── Type Safety:  9/10                                                      │
-│  └── Zod Coverage: 9 schemas                                                 │
-│                                                                              │
-│  TECH STACK:                                                                 │
-│  React 19 + TypeScript + Vite + Framer Motion + Zod                          │
-│                                                                              │
-└──────────────────────────────────────────────────────────────────────────────┘
-```
-
-**Analysis Includes:**
-- Component relationship map
-- Data flow diagram
-- Test coverage summary
-- Dependency health
-- Bundle size analysis
-
----
-
-#### Engineer Deep Dive (`--deep eng` or `--hardcore`)
-
-**Additional Context:**
-- `git log --oneline -20`
-- `git diff --stat HEAD~10`
-- `git log --format='%h %s' --since='7 days ago'`
-- Full test output
-
-**Generate ASCII Diagram:**
-```
-┌─ ENGINEERING PULSE ──────────────────────────────────────────────────────────┐
-│                                                                              │
-│  RECENT COMMITS (last 10):                                                   │
-│  ├── 6f946f58 feat: add LinkedIn share button                                │
-│  ├── 61cd9e8e Merge PR #43: ux-improvements                                  │
-│  ├── 87c9f878 feat: enhance blog article UX                                  │
-│  ├── 90ec467b feat: update navbar menu                                       │
-│  └── ...                                                                     │
-│                                                                              │
-│  HOT FILES (most changed recently):                                          │
-│  ├── src/components/sections/ExperienceSection.tsx    (5 changes)            │
-│  ├── content/experience/index.yaml                    (4 changes)            │
-│  ├── src/components/Blog.tsx                          (3 changes)            │
-│  └── ...                                                                     │
-│                                                                              │
-│  TEST STATUS:                                                                │
-│  ┌────────────────────────────────────────────────────────────────────┐      │
-│  │  ✓ XXX passed  │  ✗ X failed  │  Duration: X.Xs                    │      │
-│  └────────────────────────────────────────────────────────────────────┘      │
-│                                                                              │
-│  WORKING:                          NEEDS ATTENTION:                          │
-│  ├── Blog UX features              ├── Bundle size (467KB)                   │
-│  ├── Experience section            ├── Code splitting                        │
-│  └── Case study drawer             └── LikeAnalytics lazy load               │
-│                                                                              │
-└──────────────────────────────────────────────────────────────────────────────┘
-```
-
-**Analysis Includes:**
-- Commit frequency analysis
-- Hot files identification
-- Test results breakdown
-- What's working vs. needs attention
-- Immediate action items
-
----
-
-### Phase 3: Save Briefing
-
-**CRITICAL**: All briefings MUST be appended to `context/STATE_OF_THE_UNION.md` Part VIII.
+**CRITICAL**: Update the "Current Status" section in `context/PROJECT_STATE.md`.
 
 **Process:**
-1. Read current STATE_OF_THE_UNION.md
-2. Find Part VIII: Sprint Briefings section
-3. Locate the line `*No briefings yet.*` or end of last briefing
-4. Append new briefing with delimiter format
-5. Write updated file
+1. Read current PROJECT_STATE.md
+2. Find the `### Current Status` section (in Part VI)
+3. Replace the content between `### Current Status` and the next `### Session:` header
+4. Write updated file
 
-**Delimiter Format:**
+**Current Status Format:**
 ```markdown
+### Current Status
 
-═══════════════════════════════════════════════════════════════════════════════
-SPRINT BRIEFING — YYYY-MM-DD HH:MM
-Mode: [Quick | Hardcore | Deep: PM/Design/Arch/Eng]
-═══════════════════════════════════════════════════════════════════════════════
+**Date**: YYYY-MM-DD
+**Objective**: [current focus from analysis]
+**Bundle**: [X]KB (target <200KB)
+**Tests**: [X] passing, [X] failing
+**Variants**: [X] active
 
-[Full briefing content including ASCII diagrams]
+**Blockers**:
+1. [Most critical blocker]
+2. [Second blocker if any]
 
-───────────────────────────────────────────────────────────────────────────────
+**Recent Wins**:
+- [Win 1]
+- [Win 2]
+- [Win 3]
 ```
+
+---
+
+### Phase 3: Add Session Entry (if significant work done)
+
+If the sync reveals significant changes since last session, add a new session entry:
+
+```markdown
+### Session: [Month Day, Year] — [Brief Title]
+
+**Summary**: [1-2 sentences]
+
+**Changes**:
+- [Key change 1]
+- [Key change 2]
+
+**Next**: [What to do next]
+```
+
+**Rules for session entries:**
+- Only add if there are NEW commits since last session
+- Keep only last 3 sessions in PROJECT_STATE.md
+- Archive older sessions to `docs/history/session-archive.md`
 
 ---
 
@@ -304,29 +144,30 @@ Mode: [Quick | Hardcore | Deep: PM/Design/Arch/Eng]
 When `--hardcore` flag is present:
 
 1. Run ALL four deep dives (PM, Design, Arch, Eng)
-2. Generate ALL four ASCII diagrams
+2. Generate ASCII diagrams for visual context
 3. Cross-reference findings between perspectives
-4. Generate comprehensive action plan with priorities
+4. Generate comprehensive action plan
 5. Include risk assessment matrix
 
-**Additional ASCII Diagram for Hardcore Mode:**
+**ASCII Diagrams (output to user, not saved):**
+
 ```
-┌─ CROSS-FUNCTIONAL RISK MATRIX ───────────────────────────────────────────────┐
-│                                                                              │
-│              │ LOW EFFORT │ MED EFFORT │ HIGH EFFORT │                       │
-│  ────────────┼────────────┼────────────┼─────────────┤                       │
-│  HIGH IMPACT │ ★ P0       │            │             │                       │
-│              │ Code Split │            │             │                       │
-│  ────────────┼────────────┼────────────┼─────────────┤                       │
-│  MED IMPACT  │ Lazy Load  │ Testimonial│             │                       │
-│              │ Analytics  │ Redesign   │             │                       │
-│  ────────────┼────────────┼────────────┼─────────────┤                       │
-│  LOW IMPACT  │ Dead Code  │ Style      │             │                       │
-│              │ Cleanup    │ Refactor   │             │                       │
-│  ────────────┴────────────┴────────────┴─────────────┘                       │
-│                                                                              │
-│  ★ = Start here                                                              │
-│                                                                              │
+┌─ ROADMAP STATUS ─────────────────────────────────────────────────────────────┐
+│  Phase 1: Foundation    ████████████████████ 100%  COMPLETE                  │
+│  Phase 2: Polish        ████████████████████ 100%  COMPLETE                  │
+│  Phase 3: Social        ████████████░░░░░░░░  60%  IN PROGRESS               │
+│  Phase 4: Performance   ░░░░░░░░░░░░░░░░░░░░   0%  BLOCKED                   │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌─ PRIORITY MATRIX ────────────────────────────────────────────────────────────┐
+│               │  LOW EFFORT   │  MED EFFORT   │  HIGH EFFORT  │              │
+│  ─────────────┼───────────────┼───────────────┼───────────────┤              │
+│  HIGH IMPACT  │ ★ Code Split  │               │               │              │
+│               │ ★ Lazy Load   │               │               │              │
+│  ─────────────┼───────────────┼───────────────┼───────────────┤              │
+│  MED IMPACT   │               │ Testimonials  │ Scroll Story  │              │
+│  ─────────────┼───────────────┼───────────────┼───────────────┤              │
+│  LOW IMPACT   │ Dead Code     │ Style Refactor│               │              │
 └──────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -336,64 +177,30 @@ When `--hardcore` flag is present:
 
 | Purpose | Path |
 |---------|------|
-| **Primary State** | `context/STATE_OF_THE_UNION.md` |
-| **Session Log** | `context/DEVLOG.md` |
+| **Project State** | `context/PROJECT_STATE.md` |
 | **Codebase Docs** | `context/CODEBASE.md` |
 | **Design System** | `context/DESIGN.md` |
 | **CSS Tokens** | `src/styles/globals.css` |
-| **Zod Schemas** | `src/lib/schemas.ts` |
+| **Briefing Archive** | `docs/history/sprint-briefings-archive.md` |
+| **Session Archive** | `docs/history/session-archive.md` |
 
 ---
 
-## Example Session
+## Key Differences from Previous Version
 
-```
-User: /sprint-sync
-
-Claude: [Reads SOTU, DEVLOG, runs git log and tests]
-
-═══════════════════════════════════════════════════════════════════════════════
-SPRINT BRIEFING — 2025-12-20 10:30
-Mode: Quick
-═══════════════════════════════════════════════════════════════════════════════
-
-## Project Pulse (PM View)
-- **Current Phase**: Phase 3 - Social & Content (60% complete)
-- **Last Action**: Experience section optimization with SMART bullets
-- **Next Priority**: Bundle size reduction (467KB → <200KB)
-- **Blockers**: Performance (bundle size blocking LCP)
-
-## Design Status (Designer View)
-- **Design System**: Compliant (all tokens in globals.css)
-- **Recent UI Changes**: LinkedIn share button, blog reading features
-- **Theme Parity**: Light mode needs polish (muted orbs, flat shadows)
-
-## Architecture Health (Architect View)
-- **Test Status**: 187 passing, 0 failed
-- **Bundle Size**: 467KB (CRITICAL - target <200KB)
-- **Tech Debt**: Code splitting, inline styles (324 occurrences)
-
-## Recent Work (Engineer View)
-- **Last 5 Commits**: LinkedIn share, blog UX, navbar menu, blog routing
-- **What's Working**: Blog, Experience, Case Studies
-- **Needs Attention**: Bundle optimization, code splitting
-
-## Recommended Actions
-1. Implement code splitting in vite.config.ts
-2. Lazy load LikeAnalytics component
-3. Address light mode polish (P2)
-
-───────────────────────────────────────────────────────────────────────────────
-
-[Briefing appended to STATE_OF_THE_UNION.md Part VIII]
-```
+| Before | After |
+|--------|-------|
+| Append briefings to SOTU Part VIII | Update Current Status section |
+| Two files (SOTU + DEVLOG) | One file (PROJECT_STATE.md) |
+| Unlimited briefing history | Last 3 sessions only |
+| Full briefings saved | Compact status format |
 
 ---
 
 ## Notes
 
-- Always run tests as part of sync to catch regressions
-- The DEVLOG "Active Project Pulse" section is the source of truth for current status
-- Never truncate ASCII diagrams - they provide quick visual context
-- Hardcore mode should complete in under 3 minutes
-- Each briefing is timestamped and preserved for historical reference
+- Always run tests and build to get current metrics
+- Update Current Status, don't append
+- Keep session log compact (last 3 sessions only)
+- ASCII diagrams are for user display, not saved to file
+- Archive old sessions when adding new ones

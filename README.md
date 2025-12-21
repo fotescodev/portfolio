@@ -8,26 +8,29 @@
 
 ### 🧠 [Active Context](./context/) (Read this first)
 The "Brain" of the project. Essential for AI agents and strategic planning.
-*   **[STATE OF THE UNION](./context/STATE_OF_THE_UNION.md)**: Consolidated command center including:
-    - Parts I-V: Strategic Audit & Gap Analysis
-    - Part VI: Agent Governance (the "Supreme Law")
-    - Part VII: Strategic Roadmap
-    - Part VIII: Sprint Briefings (append-only history)
-    - Part IX: Capstone Quality Pipeline
+*   **[PROJECT STATE](./context/PROJECT_STATE.md)**: Single source of truth including:
+    - Part I: Strategic Audit
+    - Part II: Priority Action Plan
+    - Part III: Agent Governance
+    - Part IV: Roadmap
+    - Part V: Capstone Pipeline
+    - Part VI: Session Log (last 3 sessions)
 *   **[CODEBASE Architecture](./context/CODEBASE.md)**: High-level system design and patterns.
-*   **[DESIGN System](./context/DESIGN.md)**: Visual tokens (118 CSS variables), typography, and theme parity.
-*   **[DEVLOG](./context/DEVLOG.md)**: Session-by-session history of changes.
+*   **[DESIGN System](./context/DESIGN.md)**: Visual tokens (120+ CSS variables), typography, and theme parity.
 
 ### 📖 [Reference Guides](./docs/)
 Operational details for managing the engine.
-*   **[Content Guide](./docs/CONTENT.md)**: Schema definitions for YAML/MD.
+*   **[Content Management](./docs/guides/content-management.md)**: Schema definitions for YAML/MD.
 *   **[Universal CV](./docs/guides/universal-cv.md)**: Personalization engine documentation.
+*   **[Capstone Workflow](./docs/guides/capstone-workflow.md)**: Quality pipeline (eval → redteam → deploy).
+*   **[Universal CV CLI](./docs/guides/universal-cv-cli.md)**: Interactive dashboard and CLI tools.
 *   **[Adding Case Studies](./docs/guides/adding-case-studies.md)**: Workflow for new editorial content.
 *   **[CV Data Ingestion](./docs/guides/cv-data-ingestion.md)**: AI-assisted career data import.
 
 ### 🤖 [Claude Code Skills](./.claude/skills/)
 AI-powered automation skills for content management.
 *   **[sprint-sync](./.claude/skills/sprint-sync/SKILL.md)**: Multi-perspective project onboarding (PM, Designer, Architect, Engineer views).
+*   **[run-tests](./.claude/skills/run-tests/SKILL.md)**: Run test suite and identify gaps.
 *   **[cv-data-ingestion](./.claude/skills/cv-data-ingestion/SKILL.md)**: Import career data from Obsidian, CSV, zip archives.
 *   **[cv-content-generator](./.claude/skills/cv-content-generator/SKILL.md)**: Generate case studies, blog posts, variants.
 *   **[cv-content-editor](./.claude/skills/cv-content-editor/SKILL.md)**: Edit existing CV content.
@@ -97,8 +100,8 @@ npm run generate:og
 | Metric | Current | Target |
 |--------|---------|--------|
 | Bundle Size | 480KB | <200KB |
-| Tests | 192 | 200+ |
-| CSS Tokens | 118 | — |
+| Tests | 203 passing | — |
+| CSS Tokens | 120+ | — |
 | Active Variants | 5 | — |
 
 **Status**: Active Development (85% production-ready)
