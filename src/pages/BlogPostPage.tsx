@@ -556,33 +556,58 @@ export default function BlogPostPage() {
                             ].map((item) => (
                                 <a
                                     key={item.id}
-                                    href={`/#${item.id}`}
+                                    href={`/#/${item.id}`}
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        navigate('/');
+                                        setTimeout(() => {
+                                            const el = document.getElementById(item.id);
+                                            if (el) {
+                                                el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                            }
+                                        }, 100);
+                                    }}
                                     style={{
                                         textDecoration: 'none',
-                                        fontSize: '14px',
+                                        fontSize: '13px',
                                         fontWeight: 500,
-                                        color: 'var(--color-text-secondary)',
-                                        transition: 'color var(--transition-fast)',
-                                        fontFamily: 'var(--font-sans)'
+                                        letterSpacing: '0.05em',
+                                        textTransform: 'uppercase' as const,
+                                        color: 'var(--color-text-tertiary)',
+                                        transition: 'color 0.2s ease',
+                                        fontFamily: 'var(--font-sans)',
+                                        cursor: 'pointer'
                                     }}
                                     onMouseEnter={(e) => e.currentTarget.style.color = 'var(--color-text-primary)'}
-                                    onMouseLeave={(e) => e.currentTarget.style.color = 'var(--color-text-secondary)'}
+                                    onMouseLeave={(e) => e.currentTarget.style.color = 'var(--color-text-tertiary)'}
                                 >
                                     {item.label}
                                 </a>
                             ))}
                             <ThemeToggle />
                             <a
-                                href="/#contact"
+                                href="/#/contact"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    navigate('/');
+                                    setTimeout(() => {
+                                        const el = document.getElementById('contact');
+                                        if (el) {
+                                            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                        }
+                                    }, 100);
+                                }}
                                 style={{
-                                    padding: '10px 20px',
+                                    padding: '12px 24px',
                                     background: 'var(--color-accent)',
                                     color: 'var(--color-background)',
                                     fontSize: '13px',
-                                    fontWeight: 500,
+                                    fontWeight: 600,
+                                    letterSpacing: '0.02em',
                                     textDecoration: 'none',
-                                    transition: 'all var(--transition-fast)',
-                                    fontFamily: 'var(--font-sans)'
+                                    transition: 'all 0.2s ease',
+                                    fontFamily: 'var(--font-sans)',
+                                    cursor: 'pointer'
                                 }}
                                 onMouseEnter={(e) => e.currentTarget.style.background = 'var(--color-accent-hover)'}
                                 onMouseLeave={(e) => e.currentTarget.style.background = 'var(--color-accent)'}
@@ -630,9 +655,19 @@ export default function BlogPostPage() {
                 ].map((item) => (
                     <a
                         key={item.id}
-                        href={`/#${item.id}`}
+                        href={`/#/${item.id}`}
                         className="mobile-menu-link"
-                        onClick={() => setMobileMenuOpen(false)}
+                        onClick={(e) => {
+                            e.preventDefault();
+                            setMobileMenuOpen(false);
+                            navigate('/');
+                            setTimeout(() => {
+                                const el = document.getElementById(item.id);
+                                if (el) {
+                                    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                }
+                            }, 100);
+                        }}
                     >
                         {item.label}
                     </a>
@@ -663,8 +698,18 @@ export default function BlogPostPage() {
                     {/* Back link */}
                     <div style={{ marginBottom: 'var(--space-xl)' }}>
                         <a
-                            href="/#blog"
+                            href="/#/blog"
                             className="back-link"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                navigate('/');
+                                setTimeout(() => {
+                                    const el = document.getElementById('blog');
+                                    if (el) {
+                                        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                    }
+                                }, 100);
+                            }}
                         >
                             <span style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic', fontSize: '16px' }}>←</span>
                             Back to Thoughts
@@ -884,14 +929,14 @@ export default function BlogPostPage() {
                                     Resume
                                 </a>
                                 <div className="author-card-divider" />
-                                <a href="https://calendly.com/dmitriifotesco" target="_blank" rel="noopener noreferrer" className="author-card-btn author-card-btn-primary">
+                                <a href="https://calendar.google.com/calendar/u/0/appointments/AcZssZ2leGghBAF6F4IbGMZQErnaR21wvu-mYWXP06o=" target="_blank" rel="noopener noreferrer" className="author-card-btn author-card-btn-primary">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                         <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
                                         <line x1="16" y1="2" x2="16" y2="6" />
                                         <line x1="8" y1="2" x2="8" y2="6" />
                                         <line x1="3" y1="10" x2="21" y2="10" />
                                     </svg>
-                                    Let's Talk
+                                    Book Time
                                 </a>
                             </div>
                         </div>

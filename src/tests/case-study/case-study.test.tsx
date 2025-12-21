@@ -295,7 +295,7 @@ describe('CaseStudyFooter Component', () => {
     it('should display CTA buttons (Copy Email, Resume, Book Time)', () => {
         render(
             <TestWrapper>
-                <CaseStudyFooter 
+                <CaseStudyFooter
                     caseStudy={mockCaseStudy}
                     prevStudy={mockPrevStudy}
                     nextStudy={mockNextStudy}
@@ -313,7 +313,7 @@ describe('CaseStudyFooter Component', () => {
     it('should have correct Book Time link', () => {
         render(
             <TestWrapper>
-                <CaseStudyFooter 
+                <CaseStudyFooter
                     caseStudy={mockCaseStudy}
                     prevStudy={mockPrevStudy}
                     nextStudy={mockNextStudy}
