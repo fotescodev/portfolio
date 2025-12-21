@@ -100,14 +100,17 @@ portfolio/
 ├── docs/
 │   ├── guides/
 │   │   ├── adding-case-studies.md
-│   │   └── universal-cv.md           # 🆕 Universal CV guide
-│   └── CONTENT.md
+│   │   ├── capstone-workflow.md      # Quality pipeline guide
+│   │   ├── content-management.md     # Content schema guide
+│   │   ├── cv-data-ingestion.md
+│   │   ├── universal-cv-cli.md       # CLI tools guide
+│   │   └── universal-cv.md           # Universal CV guide
+│   ├── personal/                     # Personal docs (not for AI agents)
+│   └── history/                      # Archived docs
 ├── context/
-│   ├── AGENT_RULES.md                # AI agent governance rules
 │   ├── CODEBASE.md                   # This file - architecture docs
 │   ├── DESIGN.md                     # Design system documentation
-│   ├── DEVLOG.md                     # Developer log (session history)
-│   └── ROADMAP.md                    # Project roadmap
+│   └── PROJECT_STATE.md              # Single source of truth (strategic + session log)
 └── vitest.config.ts                  # Test configuration
 ```
 
