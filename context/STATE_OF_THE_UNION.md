@@ -1480,10 +1480,16 @@ npm run redteam:all -- --json | jq '.errors'
 | 0 | Success (all checks pass) |
 | 1 | Failure (errors detected) |
 
-### 9.9 Files Reference
+### 9.9 Workflow Guide
+
+For a complete step-by-step walkthrough with examples, see:
+**[docs/guides/capstone-workflow.md](../docs/guides/capstone-workflow.md)**
+
+### 9.10 Files Reference
 
 | Purpose | Path |
 |---------|------|
+| **Workflow Guide** | `docs/guides/capstone-workflow.md` |
 | Capstone Framework | `capstone/` |
 | Evaluation Rubric | `capstone/develop/evaluation.md` |
 | Threat Model | `capstone/develop/red-teaming.md` |
