@@ -24,6 +24,156 @@ A complete guide to using the Universal CV quality pipeline CLI — from creatin
 
 ---
 
+## Interactive Mode (Recommended)
+
+The easiest way to use the pipeline is through the interactive CLI:
+
+```bash
+npm run ucv-cli
+```
+
+This launches a terminal dashboard where you can see all variants, their status, and perform actions without remembering individual commands.
+
+### Dashboard View
+
+```
+╭─────────────────────────────────────────────────────────────────────────────╮
+│  ◆ Universal CV                                          Quality Pipeline   │
+╰─────────────────────────────────────────────────────────────────────────────╯
+
+Pipeline Status
+
+  Variant                              Sync    Eval       RedTeam    Status
+  ─────────────────────────────────────────────────────────────────────────────
+→ acme-senior-pm                        ✓      5/5 ✓      PASS       ✅ Ready
+  bloomberg-technical-pm                ✓      0/5        1 FAIL     🔴 Blocked
+  stripe-crypto                         ✓      ○          —          ⏳ Pending
+
+  3 variants │ 1 ready │ 0 review │ 1 blocked │ 1 pending
+
+  [↑↓] Navigate  [Enter] Actions  [c] Create  [q] Quit
+```
+
+### Status Column Meanings
+
+| Status | Meaning |
+|--------|---------|
+| ✅ Ready | All checks pass, ready to ship |
+| ⚠️ Review | Has warnings that should be reviewed |
+| 🔴 Blocked | Has failures that must be fixed |
+| ⏳ Pending | Pipeline not yet complete |
+
+### Keyboard Controls
+
+| Key | Action |
+|-----|--------|
+| `↑` `↓` | Navigate between variants |
+| `Enter` | Open actions menu for selected variant |
+| `c` | Create a new variant |
+| `q` | Quit the CLI |
+
+### Creating a New Variant
+
+Press `c` from the dashboard to start the guided creation flow:
+
+```
+Create New Variant
+
+→ Company: Coinbase
+✓ Role: Product Manager II - Core Infrastructure
+✓ JD Link: https://coinbase.com/careers/123
+✓ JD Description: (1200 chars)
+
+ℹ Slug: coinbase-product-manager-ii-core-infrastructure
+
+Create coinbase-product-manager-ii-core-infrastructure.yaml?
+
+[y] Yes  [n] No  [Esc] Cancel
+```
+
+After confirmation:
+1. Creates the YAML variant file
+2. Auto-syncs to JSON
+3. Takes you to the Actions menu
+
+### Variant Actions Menu
+
+Select a variant and press `Enter` to see available actions:
+
+```
+coinbase-product-manager-ii-core-infrastructure
+
+→ View Issues      See warnings, failures, unverified claims
+  Run Pipeline     Run sync → eval → redteam
+  Sync             YAML → JSON
+  Evaluate         Extract & verify claims
+  Red Team         Security/quality scan
+  ─────────────────────────────────────
+  Back             Return to dashboard
+
+[↑↓] Navigate  [Enter] Select  [Esc/b] Back
+```
+
+### Viewing Issues
+
+Select "View Issues" to see exactly what needs fixing:
+
+```
+Issues: coinbase-product-manager-ii-core-infrastructure
+
+Red Team Issues (1)
+
+⚠ RT-PRIV-JD: Job description exposure risk (public JSON)
+  • jobDescription length is 6926 characters.
+  • Consider storing only a short excerpt in variant metadata.
+
+Unverified Claims (3)
+
+○ metric-abc123
+  "Senior Technical PM with 8 years shipping developer-facing products"
+  Location: overrides.hero.subheadline
+
+────────────────────────────────────────────────────────────────
+To fix:
+  • Red Team: Edit content/variants/coinbase-product-manager-ii.yaml
+  • Claims: Add sources to capstone/develop/evals/coinbase-product-manager-ii.claims.yaml
+
+[Enter/Esc/b] Back to actions
+```
+
+### Running Pipeline Phases
+
+Select any phase to run it with real-time progress:
+
+```
+Running: Pipeline for coinbase-product-manager-ii-core-infrastructure
+
+████████████████████████████░░░░░░░░░░░░  70%
+
+✓ Sync
+✓ Evaluate
+● Red Team...
+
+Running...
+```
+
+### When to Use Interactive vs Commands
+
+| Use Case | Recommended |
+|----------|-------------|
+| Day-to-day variant work | `npm run ucv-cli` |
+| CI/CD pipelines | Individual commands |
+| Scripting/automation | Individual commands with `--json` |
+| Quick single-variant check | Either works |
+
+---
+
+## Individual Commands
+
+For CI pipelines, scripting, or when you prefer direct commands, use the individual npm scripts documented below.
+
+---
+
 ## Phase 1: Create a New Variant
 
 ### Step 1.1: Copy the Template
@@ -543,7 +693,14 @@ portfolio/
 │   └── red-teaming.md                  ← Threat model docs
 │
 └── scripts/
-    ├── cli/theme.ts                    ← CLI styling
+    ├── cli/
+    │   ├── theme.ts                    ← CLI styling/colors
+    │   └── ucv/                        ← Interactive CLI (npm run ucv-cli)
+    │       ├── index.tsx               ← Entry point
+    │       ├── App.tsx                 ← Main app & routing
+    │       ├── screens/                ← Dashboard, Actions, Issues, etc.
+    │       ├── components/             ← Header, etc.
+    │       └── hooks/                  ← useVariants, etc.
     ├── sync-variants.ts
     ├── evaluate-variants.ts
     └── redteam.ts
@@ -625,7 +782,11 @@ The evaluation script finds candidates but doesn't auto-verify. You must:
 │                        UNIVERSAL CV CLI QUICK REFERENCE                      │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │                                                                              │
+│  INTERACTIVE (recommended for daily use)                                     │
+│    npm run ucv-cli                          # Dashboard with all actions     │
+│                                                                              │
 │  CREATE                                                                      │
+│    Press 'c' in ucv-cli                     # Guided creation flow           │
 │    cp content/variants/_template.yaml content/variants/<slug>.yaml           │
 │                                                                              │
 │  SYNC                                                                        │
