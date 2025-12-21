@@ -1,6 +1,7 @@
 # Cockpit-UCV Implementation Analysis
 
 **Date:** 2025-12-21
+**Updated:** 2025-12-21 (incorporated peer review feedback)
 **Branch:** `cockpit-ucv`
 **Analyst:** Claude (Opus 4.5)
 
@@ -324,48 +325,97 @@ The website is visually polished and architecturally sound, but performance is a
 
 ---
 
-## Part 6: Recommendations
+## Part 6: Peer Review Feedback (Incorporated)
 
-### 6.1 Critical (P0)
+> The following section synthesizes feedback from a peer review of this analysis, identifying UX gaps and additional recommendations.
 
-1. **Code Splitting:** Add `manualChunks` to vite.config.ts
-   - Split: vendor (react, framer-motion), blog (react-markdown, syntax-highlighter), main
-   - Target: main chunk <150KB, lazy chunks load on demand
+### 6.1 Creation Flow Friction
 
-2. **Lazy Load Heavy Components:**
-   - `React.lazy()` for LikeAnalytics, BlogPostPage
-   - Consider dynamic import for Framer Motion
+The original analysis rated the creation flow positively, but peer review identified specific friction points:
 
-### 6.2 High Priority (P1)
+| Gap | Current State | Recommended Fix |
+|-----|---------------|-----------------|
+| **No templates/defaults** | Every field entered manually | Auto-populate from base variant or presets |
+| **Input limitations** | Only URL or manual paste | Add file path and clipboard support |
+| **Multi-step creation** | Create, then sync, then eval separately | One-command "Create and Evaluate" flow |
+| **No batch evaluation** | Run eval per-variant | "Evaluate All" dashboard action |
 
-3. **Modularize ucv-cli:** Break 2,600-line file into modules
-   - Separate: UI rendering, data loading, actions, overlays
-   - Easier to maintain and test
+### 6.2 Error Guidance Gap
 
-4. **Non-Interactive Mode:** Complete JSON output for CI/automation
-   - `npm run ucv -- --json` should work without TTY
+The original analysis noted errors are "informative," but peer review identified missing elements:
 
-### 6.3 Medium Priority (P2)
+| Gap | Example | Recommended Fix |
+|-----|---------|-----------------|
+| **Generic failures** | "Command failed (exit 1)" | Show which claim/field failed and why |
+| **No fix suggestions** | Error shown, no next step | "Consider adding a reference or rewording" |
+| **No doc links** | User must search docs | Link to relevant guide or schema |
+| **No terminal hyperlinks** | Paths shown as text | Format as `path/to/file:line:col` for editor jump |
 
-5. **Light Mode Polish:** Orbs at 0.15 opacity feel muted; shadows are flat
+### 6.3 TUI Framework Recommendation
 
-6. **Inline Style Cleanup:** Migrate 324 inline styles to CSS classes
+Both analyses identified the 2,600-line CLI as a concern. Peer review proposes a concrete solution:
 
-7. **Remove Dead Code:** `SocialSection.tsx` is unused
+**Recommendation:** Migrate from raw `readline`/keypress handling to **Ink** (React for CLI) or **Enquirer**.
 
-### 6.4 Strategic
+Benefits:
+- Component-based UI (easier to maintain)
+- Built-in support for menus, forms, spinners
+- Handles window resizing and accessibility
+- Enables advanced patterns (filtering, sub-menus, animations)
 
-8. **Generalize Beyond Crypto:** The UCV system could serve any senior professional
-   - Knowledge base schema is flexible
-   - Evaluation framework is domain-agnostic
+### 6.4 Visual Feedback Gaps
 
-9. **Team Collaboration:** Consider multi-user scenarios
-   - Shared knowledge base
-   - Review workflows for variants
+| Gap | Current State | Recommended Fix |
+|-----|---------------|-----------------|
+| **No spinners** | Static text during long ops | Add `ora` for animated loaders |
+| **Limited status icons** | Text-based status | Icons: ✅ ❌ ⚠️ with colors |
+| **No help footer** | Must remember shortcuts | Persistent `[↑↓] move [Enter] select [q] quit` |
+| **No progress bars** | Unknown completion state | Show progress for multi-step operations |
 
 ---
 
-## Part 7: Conclusion
+## Part 7: Combined Recommendations
+
+> This section merges the original analysis recommendations with peer review feedback, prioritized by impact.
+
+### 7.1 P0: Critical Path (Blockers)
+
+| # | Recommendation | Source | Rationale |
+|---|----------------|--------|-----------|
+| 1 | **Code Splitting** (vite.config.ts) | Original | 484KB bundle blocks "hired-on-sight" |
+| 2 | **One-Command Create-to-Eval Flow** | Peer Review | Core UX improvement for variant creation |
+| 3 | **Detailed Error Messages with Fixes** | Peer Review | Reduces user frustration dramatically |
+
+### 7.2 P1: High Impact
+
+| # | Recommendation | Source | Rationale |
+|---|----------------|--------|-----------|
+| 4 | **Migrate to Ink/Enquirer** | Peer Review | Solves modularization + enables modern UX |
+| 5 | **Template/Defaults for Variants** | Peer Review | Speeds up creation, ensures consistency |
+| 6 | **Status Icons on Dashboard** | Peer Review | At-a-glance understanding of variant health |
+| 7 | **Lazy Load Heavy Components** | Original | React.lazy() for LikeAnalytics, BlogPostPage |
+
+### 7.3 P2: Polish
+
+| # | Recommendation | Source | Rationale |
+|---|----------------|--------|-----------|
+| 8 | **Progress Spinners (ora)** | Peer Review | Professional feel during long operations |
+| 9 | **Light Mode Polish** | Original | Orbs at 0.15 opacity feel muted |
+| 10 | **Contextual Help Footer** | Peer Review | Reduces learning curve |
+| 11 | **Inline Style Cleanup** | Original | Migrate 324 inline styles to CSS classes |
+| 12 | **Non-Interactive Mode** | Original | JSON output for CI/automation |
+
+### 7.4 Strategic (Future)
+
+| # | Recommendation | Source | Rationale |
+|---|----------------|--------|-----------|
+| 13 | **Generalize Beyond Crypto** | Original | UCV system could serve any senior professional |
+| 14 | **Team Collaboration** | Original | Shared knowledge base, review workflows |
+| 15 | **Batch Evaluation** | Peer Review | "Evaluate All" for portfolio-wide checks |
+
+---
+
+## Part 8: Conclusion
 
 The `cockpit-ucv` implementation is **genuinely impressive work**. It transforms the abstract concept of "AI-powered portfolio personalization" into a concrete, repeatable, quality-assured workflow.
 
@@ -377,8 +427,18 @@ The `cockpit-ucv` implementation is **genuinely impressive work**. It transforms
 
 ### Primary Concerns:
 - **Bundle Size:** 484KB is blocking the "hired-on-sight" goal
-- **Complexity:** 2,600-line CLI is hard to maintain
-- **Single-User Focus:** May not scale to teams
+- **Creation Flow Friction:** Too many manual steps for new variants
+- **Error Opacity:** Generic errors without actionable guidance
+- **Complexity:** 2,600-line CLI needs framework migration
+
+### Synthesis of Both Analyses
+
+| Lens | Original Analysis | Peer Review | Combined View |
+|------|-------------------|-------------|---------------|
+| **Focus** | Architecture & Strategy | UX & Workflow | Both are essential |
+| **Verdict** | System is sound | System has friction | Sound architecture, needs UX polish |
+| **Top Priority** | Bundle size | Create-to-eval flow | Both are P0 blockers |
+| **CLI Solution** | "Modularize" (vague) | "Use Ink" (specific) | Ink migration is the path |
 
 ### Final Verdict
 
@@ -387,11 +447,11 @@ This is the work of someone who understands both product management and software
 - Solid engineering (type-safe, validated, tested)
 - Awareness of AI risks (claims ledger, red team)
 
-**Grade: A-** (held back only by the bundle size blocker)
+**Grade: A-** (held back by bundle size and UX friction)
 
 ---
 
-## Appendix: File Reference
+## Appendix A: File Reference
 
 | Purpose | Path |
 |---------|------|
@@ -407,3 +467,9 @@ This is the work of someone who understands both product management and software
 | Variants | `content/variants/` |
 | Documentation | `context/STATE_OF_THE_UNION.md` |
 | Design System | `context/DESIGN.md` |
+
+---
+
+## Appendix B: Implementation Tickets
+
+See `cockpit-v1-ucv-tickets.md` for detailed implementation tickets derived from these recommendations.
