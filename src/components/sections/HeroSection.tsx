@@ -141,13 +141,7 @@ export default function HeroSection({ profile, isMobile, isTablet, isLoaded }: H
           )}
 
           {/* Subheadline */}
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
-            gap: isMobile ? 'var(--space-lg)' : 'var(--space-2xl)',
-            marginTop: isMobile ? 'var(--space-xl)' : '40px',
-            alignItems: 'start'
-          }}>
+          <div className="hero-grid">
             <p style={{
               fontSize: isMobile ? '17px' : '19px',
               color: 'var(--color-text-secondary)',
@@ -169,7 +163,7 @@ export default function HeroSection({ profile, isMobile, isTablet, isLoaded }: H
                   const el = document.getElementById(target);
                   if (el) el.scrollIntoView({ behavior: 'smooth' });
                 }}
-                className="hero-primary-btn"
+                className="hero-primary-btn hero-cta-btn"
                 style={{
                   padding: isMobile ? '16px 28px' : '18px 32px',
                   textDecoration: 'none',
@@ -179,8 +173,6 @@ export default function HeroSection({ profile, isMobile, isTablet, isLoaded }: H
                   display: 'inline-flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
-                  width: isMobile ? '100%' : 'fit-content',
-                  minWidth: '220px',
                   border: 'none',
                   cursor: 'pointer'
                 }}
@@ -193,7 +185,7 @@ export default function HeroSection({ profile, isMobile, isTablet, isLoaded }: H
                 download="Dmitrii-Fotesco-Resume.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hero-secondary-btn"
+                className="hero-secondary-btn hero-cta-btn"
                 style={{
                   padding: isMobile ? '16px 28px' : '18px 32px',
                   textDecoration: 'none',
@@ -202,9 +194,7 @@ export default function HeroSection({ profile, isMobile, isTablet, isLoaded }: H
                   letterSpacing: '0.02em',
                   display: 'inline-flex',
                   alignItems: 'center',
-                  justifyContent: 'space-between',
-                  width: isMobile ? '100%' : 'fit-content',
-                  minWidth: '220px'
+                  justifyContent: 'space-between'
                 }}
               >
                 <span>{hero.cta.secondary.label}</span>

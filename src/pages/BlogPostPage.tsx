@@ -545,102 +545,98 @@ export default function BlogPostPage() {
                         </Link>
                     </div>
 
-                    {/* Desktop Navigation */}
-                    {!isMobile && (
-                        <div style={{ display: 'flex', gap: 'var(--space-xl)', alignItems: 'center' }}>
-                            {[
-                                { label: 'Experience', id: 'experience' },
-                                { label: 'Cases', id: 'work' },
-                                { label: 'Blog', id: 'blog' },
-                                { label: 'About', id: 'about' }
-                            ].map((item) => (
-                                <a
-                                    key={item.id}
-                                    href={`/#/${item.id}`}
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        navigate('/');
-                                        setTimeout(() => {
-                                            const el = document.getElementById(item.id);
-                                            if (el) {
-                                                el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                                            }
-                                        }, 100);
-                                    }}
-                                    style={{
-                                        textDecoration: 'none',
-                                        fontSize: '13px',
-                                        fontWeight: 500,
-                                        letterSpacing: '0.05em',
-                                        textTransform: 'uppercase' as const,
-                                        color: 'var(--color-text-tertiary)',
-                                        transition: 'color 0.2s ease',
-                                        fontFamily: 'var(--font-sans)',
-                                        cursor: 'pointer'
-                                    }}
-                                    onMouseEnter={(e) => e.currentTarget.style.color = 'var(--color-text-primary)'}
-                                    onMouseLeave={(e) => e.currentTarget.style.color = 'var(--color-text-tertiary)'}
-                                >
-                                    {item.label}
-                                </a>
-                            ))}
-                            <ThemeToggle />
+                    {/* Desktop Navigation - always render, CSS controls visibility */}
+                    <div className="desktop-only" style={{ display: 'flex', gap: 'var(--space-xl)', alignItems: 'center' }}>
+                        {[
+                            { label: 'Experience', id: 'experience' },
+                            { label: 'Cases', id: 'work' },
+                            { label: 'Blog', id: 'blog' },
+                            { label: 'About', id: 'about' }
+                        ].map((item) => (
                             <a
-                                href="/#/contact"
+                                key={item.id}
+                                href={`/#/${item.id}`}
                                 onClick={(e) => {
                                     e.preventDefault();
                                     navigate('/');
                                     setTimeout(() => {
-                                        const el = document.getElementById('contact');
+                                        const el = document.getElementById(item.id);
                                         if (el) {
                                             el.scrollIntoView({ behavior: 'smooth', block: 'start' });
                                         }
                                     }, 100);
                                 }}
                                 style={{
-                                    padding: '12px 24px',
-                                    background: 'var(--color-accent)',
-                                    color: 'var(--color-background)',
-                                    fontSize: '13px',
-                                    fontWeight: 600,
-                                    letterSpacing: '0.02em',
                                     textDecoration: 'none',
-                                    transition: 'all 0.2s ease',
+                                    fontSize: '13px',
+                                    fontWeight: 500,
+                                    letterSpacing: '0.05em',
+                                    textTransform: 'uppercase' as const,
+                                    color: 'var(--color-text-tertiary)',
+                                    transition: 'color 0.2s ease',
                                     fontFamily: 'var(--font-sans)',
                                     cursor: 'pointer'
                                 }}
-                                onMouseEnter={(e) => e.currentTarget.style.background = 'var(--color-accent-hover)'}
-                                onMouseLeave={(e) => e.currentTarget.style.background = 'var(--color-accent)'}
+                                onMouseEnter={(e) => e.currentTarget.style.color = 'var(--color-text-primary)'}
+                                onMouseLeave={(e) => e.currentTarget.style.color = 'var(--color-text-tertiary)'}
                             >
-                                Get in Touch
+                                {item.label}
                             </a>
-                        </div>
-                    )}
+                        ))}
+                        <ThemeToggle />
+                        <a
+                            href="/#/contact"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                navigate('/');
+                                setTimeout(() => {
+                                    const el = document.getElementById('contact');
+                                    if (el) {
+                                        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                    }
+                                }, 100);
+                            }}
+                            style={{
+                                padding: '12px 24px',
+                                background: 'var(--color-accent)',
+                                color: 'var(--color-background)',
+                                fontSize: '13px',
+                                fontWeight: 600,
+                                letterSpacing: '0.02em',
+                                textDecoration: 'none',
+                                transition: 'all 0.2s ease',
+                                fontFamily: 'var(--font-sans)',
+                                cursor: 'pointer'
+                            }}
+                            onMouseEnter={(e) => e.currentTarget.style.background = 'var(--color-accent-hover)'}
+                            onMouseLeave={(e) => e.currentTarget.style.background = 'var(--color-accent)'}
+                        >
+                            Get in Touch
+                        </a>
+                    </div>
 
-                    {/* Mobile: Theme toggle and hamburger */}
-                    {isMobile && (
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                            <ThemeToggle isMobile />
-                            <button
-                                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                                aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
-                                style={{
-                                    background: 'transparent',
-                                    border: 'none',
-                                    padding: '8px',
-                                    cursor: 'pointer',
-                                    color: 'var(--color-text-primary)',
-                                    fontSize: '14px',
-                                    fontWeight: 600,
-                                    textTransform: 'uppercase',
-                                    letterSpacing: '0.1em',
-                                    fontFamily: 'var(--font-sans)'
-                                }}
-                            >
-                                {mobileMenuOpen ? 'Close' : 'Menu'}
-                            </button>
-                        </div>
-                    )}
+                    {/* Mobile: Theme toggle and hamburger - always render, CSS controls visibility */}
+                    <div className="mobile-only" style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                        <ThemeToggle isMobile />
+                        <button
+                            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                            aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+                            style={{
+                                background: 'transparent',
+                                border: 'none',
+                                padding: '8px',
+                                cursor: 'pointer',
+                                color: 'var(--color-text-primary)',
+                                fontSize: '14px',
+                                fontWeight: 600,
+                                textTransform: 'uppercase',
+                                letterSpacing: '0.1em',
+                                fontFamily: 'var(--font-sans)'
+                            }}
+                        >
+                            {mobileMenuOpen ? 'Close' : 'Menu'}
+                        </button>
+                    </div>
                 </div>
             </nav>
 
