@@ -14,6 +14,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:design-system": "vitest run --reporter=verbose src/tests/design-system",
+    "test:cli": "vitest run --config vitest.cli.config.ts",
+    "test:cli:watch": "vitest --config vitest.cli.config.ts",
     "validate": "tsx scripts/validate-content.ts",
     "generate:cv": "tsx scripts/generate-cv.ts",
     "generate:og": "node scripts/generate-og-images.js",
@@ -26,12 +28,14 @@
     "redteam:variant": "tsx scripts/redteam.ts",
     "redteam:all": "tsx scripts/redteam.ts --all",
     "redteam:check": "tsx scripts/redteam.ts --check --all",
-    "ucv-cli": "tsx scripts/cli/ucv/index.tsx"
+    "ucv-cli": "tsx scripts/cli/ucv/index.ts"
   },
   "dependencies": {
     "@types/react-syntax-highlighter": "^15.5.13",
     "framer-motion": "^12.23.26",
     "gray-matter": "^4.0.3",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2",
     "react-dom": "19.2.0",
     "react-helmet-async": "^2.0.5",
     "react-markdown": "^10.1.0",

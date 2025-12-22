@@ -6,6 +6,7 @@
  */
 
 import chalk from 'chalk';
+import { join } from 'path';
 
 // Brand colors from globals.css
 const BRAND = {
@@ -35,6 +36,8 @@ export const theme = {
   bold: chalk.bold,
   dim: chalk.dim,
   italic: chalk.italic,
+  underline: chalk.underline,
+  inverse: chalk.inverse,
 
   // Status icons with colors
   icons: {
@@ -47,12 +50,28 @@ export const theme = {
     bullet: chalk.hex(BRAND.muted)('•'),
   },
 
-  // For pass/fail/warn badges
+  // For pass/fail/warn badges (text-only, for inline use)
   badge: {
     pass: chalk.hex(BRAND.success).bold('PASS'),
     fail: chalk.hex(BRAND.error).bold('FAIL'),
     warn: chalk.hex(BRAND.warning).bold('WARN'),
   },
+
+  // Enhanced badges with background colors (for prominent display)
+  badgeBg: {
+    live: chalk.bgGreen.black.bold(' LIVE '),
+    draft: chalk.bgYellow.black(' DRAFT '),
+    pass: chalk.bgGreen.black.bold(' PASS '),
+    fail: chalk.bgRed.white.bold(' FAIL '),
+    warn: chalk.bgYellow.black.bold(' WARN '),
+    error: chalk.bgRed.white(' ERR '),
+    pending: chalk.bgHex('#4b5563').white(' ... '),
+    ok: chalk.bgGreen.black.bold(' OK '),
+  },
+
+  // High-contrast ribbon (used for guided next-step UI)
+  ribbon: (text: string) => chalk.bgHex(BRAND.accent).black.bold(` ${text} `),
+  ribbonMuted: (text: string) => chalk.bgHex(BRAND.muted).black.bold(` ${text} `),
 };
 
 // ASCII Art header - compact version for subcommands
@@ -166,4 +185,101 @@ export function shouldUseColor(): boolean {
   return !process.env.NO_COLOR &&
          !process.env.UCV_NO_COLOR &&
          (process.stdout.isTTY === true || process.env.FORCE_COLOR === '1');
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Clickable Hyperlinks (OSC 8)
+// ─────────────────────────────────────────────────────────────────────────────
+
+/**
+ * Check if the terminal supports OSC 8 hyperlinks.
+ * Supported by: iTerm2, Terminal.app (macOS 10.15+), Windows Terminal,
+ * VSCode terminal, WezTerm, Kitty, most modern Linux terminals.
+ */
+export function supportsHyperlinks(): boolean {
+  // Skip in CI environments or when explicitly disabled
+  if (process.env.CI || process.env.UCV_NO_HYPERLINKS) return false;
+
+  // Must be a TTY
+  if (!process.stdout.isTTY) return false;
+
+  const term = process.env.TERM_PROGRAM || '';
+
+  // Known supporting terminals
+  if (term === 'iTerm.app') return true;
+  if (term === 'Apple_Terminal') return true;
+  if (term === 'vscode') return true;
+  if (term === 'WezTerm') return true;
+  if (term === 'Hyper') return true;
+
+  // Windows Terminal
+  if (process.env.WT_SESSION) return true;
+
+  // Kitty
+  if (process.env.KITTY_WINDOW_ID) return true;
+
+  // GNOME Terminal, Konsole, etc. - check COLORTERM
+  const colorTerm = process.env.COLORTERM || '';
+  if (colorTerm === 'truecolor' || colorTerm === '24bit') {
+    return true;
+  }
+
+  // Default: try anyway if it's a modern 256color terminal
+  return process.env.TERM?.includes('256color') ?? false;
+}
+
+/**
+ * Create a clickable hyperlink using OSC 8 escape sequence.
+ * Falls back to styled (underlined) text when hyperlinks not supported.
+ *
+ * @param url The URL to link to (vscode://, https://, file://, etc.)
+ * @param text The visible text
+ */
+export function hyperlink(url: string, text: string): string {
+  if (!supportsHyperlinks()) {
+    return theme.underline(theme.info(text));
+  }
+
+  // OSC 8 format: \x1b]8;;URL\x07 TEXT \x1b]8;;\x07
+  const start = `\x1b]8;;${url}\x07`;
+  const end = `\x1b]8;;\x07`;
+
+  // Apply visual styling to indicate clickability
+  const styledText = theme.underline(theme.info(text));
+
+  return `${start}${styledText}${end}`;
+}
+
+/**
+ * Build a VSCode URL for opening a file at a specific location.
+ * Format: vscode://file/ABSOLUTE_PATH:LINE:COLUMN
+ *
+ * @param filePath Relative or absolute path to the file
+ * @param line Optional line number (1-indexed)
+ * @param column Optional column number (1-indexed)
+ */
+export function vscodeUrl(filePath: string, line?: number, column?: number): string {
+  const absolutePath = filePath.startsWith('/')
+    ? filePath
+    : join(process.cwd(), filePath);
+
+  let url = `vscode://file${absolutePath}`;
+  if (line !== undefined && line > 0) {
+    url += `:${line}`;
+    if (column !== undefined && column > 0) {
+      url += `:${column}`;
+    }
+  }
+  return url;
+}
+
+/**
+ * Create a clickable file link that opens in VSCode.
+ *
+ * @param filePath Relative path to the file
+ * @param line Optional line number
+ */
+export function fileLink(filePath: string, line?: number): string {
+  const url = vscodeUrl(filePath, line);
+  return hyperlink(url, filePath);
 }
