@@ -36,23 +36,24 @@ hero:
 # ═══════════════════════════════════════════════════════════════
 about:
   tagline: >
-    Eight years shipping infrastructure—from enterprise blockchain at Microsoft
-    to Web3 developer tools to institutional custody.
+    Eight years shipping infrastructure that has to work every time.
   bio:
     - >
-      Most recently I was at Anchorage Digital, shipping staking infrastructure
-      for institutional clients—the kind where a slashing event means losing
-      the account. Before that I built wallet SDKs at Forte, developer tooling
-      at Dapper, and API infrastructure at Ankr.
+      At Anchorage Digital, I shipped integrations for protocols like Aztec, Plume,
+      and Succinct—bringing cutting-edge tech into institutional custody and staking.
+      Before that, I built developer tools at Dapper Labs—Flow Playground, Flow CLI—and
+      Web3 infrastructure at Ankr: Advanced APIs, SDKs, the picks and shovels builders
+      actually need.
     - >
-      I started at Microsoft building Xbox royalties on Ethereum—before 'Web3'
-      was a term. Eight years in, I'm still drawn to the same kind of problems:
-      infrastructure that has to work every time, for people who can't afford
-      it not to.
+      I've been in Web3 since 2017, when I was writing Solidity at Microsoft and
+      shipped one of its first blockchain projects—Xbox Game Store Royalties Tracking.
+      Eight years later, I'm still challenged by the same kind of problems: democratizing
+      infrastructure for builders who can't afford it to fail.
     - >
-      I care about developer experience—helping builders ship fast without
-      fighting their tools. Currently exploring how AI capabilities integrate
-      into existing business flows, especially where Web3 meets AI.
+      {{accent}}This is Web3's moment.{{/accent}} Blockchain is uniquely positioned to become the default
+      transaction layer for the agentic economy that's about to explode. Stablecoin rails,
+      agentic identity attestation, agent-to-agent value transfer—that's what keeps me up at night.
+      Building in this space? Let's talk.
   stats:
     - value: "8+"
       label: "Years in Product"

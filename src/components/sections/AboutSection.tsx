@@ -1,7 +1,42 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, ReactNode } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { social } from '../../lib/content';
 import type { Profile } from '../../types/variant';
+
+// Parse {{accent}}...{{/accent}} markers in text
+function parseStyledText(text: string): ReactNode[] {
+  const parts: ReactNode[] = [];
+  const regex = /\{\{accent\}\}(.*?)\{\{\/accent\}\}/g;
+  let lastIndex = 0;
+  let match;
+
+  while ((match = regex.exec(text)) !== null) {
+    // Add text before the match
+    if (match.index > lastIndex) {
+      parts.push(text.slice(lastIndex, match.index));
+    }
+    // Add styled text
+    parts.push(
+      <span key={match.index} style={{
+        color: 'var(--color-accent)',
+        fontFamily: 'var(--font-serif)',
+        fontStyle: 'italic',
+        fontWeight: 600,
+        fontSize: '1.2em'
+      }}>
+        {match[1]}
+      </span>
+    );
+    lastIndex = regex.lastIndex;
+  }
+
+  // Add remaining text
+  if (lastIndex < text.length) {
+    parts.push(text.slice(lastIndex));
+  }
+
+  return parts.length > 0 ? parts : [text];
+}
 
 interface AboutSectionProps {
   profile: Profile;
@@ -311,7 +346,7 @@ export default function AboutSection({ profile, isMobile, isTablet, sectionPaddi
                 color: 'var(--color-text-tertiary)',
                 marginBottom: '20px'
               }}>
-                {paragraph}
+                {parseStyledText(paragraph)}
               </p>
             ))}
           </div>
