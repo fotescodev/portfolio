@@ -29,7 +29,7 @@
     "about": {
       "tagline": "Eight years shipping B2B products where complexity meets scale—from enterprise blockchain to APIs serving millions of daily requests to AI-powered developer tools.\n",
       "bio": [
-        "Most recently I was at Anchorage Digital, shipping infrastructure for institutional B2B clients—Galaxy, ETF providers, asset managers. Before that I drove 15× revenue growth at Ankr by pivoting our API platform to B2B protocol partnerships (Polygon, Nansen, Messari). At Dapper Labs I shipped an AI support agent handling 1,000+ questions weekly with 98% accuracy—my first production AI deployment.\n",
+        "Most recently I was at Anchorage Digital, shipping infrastructure for institutional B2B clients—Galaxy, ETF providers, asset managers. Before that I drove 15× revenue growth at Ankr by pivoting our API platform to B2B protocol partnerships (Polygon, Arbitrum, Avalanche). At Dapper Labs I shipped an AI support agent handling 1,000+ questions weekly with 98% accuracy—my first production AI deployment.\n",
         "I started at Microsoft building Xbox royalties on Ethereum—B2B infrastructure serving game publishers like Ubisoft. Eight years in, I've shipped APIs, SDKs, and platforms for enterprise customers who can't afford downtime. I know how to navigate 0-to-1 ambiguity (co-founded Mempools) and I know how to ship at scale (2.7B Xbox consumers).\n"
       ],
       "stats": [

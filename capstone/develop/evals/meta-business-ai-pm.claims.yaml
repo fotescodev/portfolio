@@ -38,27 +38,22 @@ claims:
   - id: metric-57cca55832
     location: overrides.about.bio[0]
     text: Before that I drove 15× revenue growth at Ankr by pivoting our API platform to B2B protocol partnerships (Polygon,
-      Nansen, Messari)
+      Arbitrum, Avalanche)
     anchors:
-      - Polygon, Nansen, Messari
+      - Polygon, Arbitrum, Avalanche
     candidateSources:
       - path: content/experience/index.yaml
-        score: 0.112
-        matchedAnchors: []
-        note: anchors 0/1 • overlap 75%
-      - path: content/knowledge/achievements/ankr-15x-revenue.yaml
-        score: 0.088
-        matchedAnchors: []
-        note: anchors 0/1 • overlap 58%
-      - path: content/knowledge/achievements/l2-protocol-integrations.yaml
-        score: 0.05
-        matchedAnchors: []
-        note: anchors 0/1 • overlap 33%
+        score: 1
+        matchedAnchors:
+          - Polygon
+          - Arbitrum
+          - Avalanche
+        note: anchors 3/3 • overlap 75%
     verified:
       status: verified
       sources:
         - content/experience/index.yaml
-      notes: "Experience index lists 'landing Polygon, Nansen, SushiSwap, and Messari'"
+      notes: "Experience index lists 'landing Polygon, Arbitrum, Avalanche, and other L1/L2 protocols'"
   - id: metric-72282af8fb
     location: overrides.about.bio[0]
     text: At Dapper Labs I shipped an AI support agent handling 1,000+ questions weekly with 98% accuracy—my first

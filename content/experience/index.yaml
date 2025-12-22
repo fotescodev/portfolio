@@ -61,7 +61,7 @@ jobs:
     url: "https://ankr.com"
     highlights:
       - "Shipped [Advanced API](https://www.ankr.com/docs/advanced-api/overview/) from 0→1: 17 methods across NFT, Token, Query APIs serving 1M+ daily requests"
-      - "Drove 15× revenue growth to $2M ARR through B2B pivot, landing Polygon, Nansen, SushiSwap, and Messari"
+      - "Drove 15× revenue growth to $2M ARR through B2B pivot, landing Polygon, Arbitrum, Avalanche, and other L1/L2 protocols"
       - "Built SDK suite ([Ankr.js](https://www.npmjs.com/package/@ankr.com/ankr.js), Ankr.py, React Hooks) with 1,900+ weekly downloads"
       - "Architected [Pay-As-You-Go pricing](https://www.ankr.com/docs/rpc-service/service-plans/) ($0.10 = 1M credits) that doubled developer signups"
     tags: ["APIs", "RPC", "Growth", "SDK", "Pricing Strategy"]
