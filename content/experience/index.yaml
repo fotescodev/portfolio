@@ -7,7 +7,7 @@ jobs:
     role: "Senior Product Manager"
     period: "2024 – Present"
     location: "Remote"
-    logo: "/images/logos/anchorage.svg"
+    logo: "/images/logos/anchorage.png"
     url: "https://anchorage.com"
     highlights:
       - "Delivered $1M [Aztec](https://stake.aztec.network/) custody and staking integration, onboarding a16z and enabling secondary sale staking via novel ATP architecture"
@@ -20,7 +20,7 @@ jobs:
     role: "Senior Product Manager"
     period: "2023 – 2024"
     location: "Remote"
-    logo: "/images/logos/forte.svg"
+    logo: "/images/logos/forte.png"
     url: "https://forte.io"
     highlights:
       - "Led Wallet-as-a-Service productization using MPC technology, enabling non-custodial wallets embedded directly into AAA games"
@@ -32,7 +32,7 @@ jobs:
     role: "Senior Product Manager, Developer Experience"
     period: "2022 – 2023"
     location: "Remote"
-    logo: "/images/logos/dapper.svg"
+    logo: "/images/logos/dapper.png"
     url: "https://flow.com"
     highlights:
       - "Shipped [Cadence Playground V2](https://play.flow.com/) with multi-project management and enhanced debugging, improving developer onboarding by 60%"
@@ -57,7 +57,7 @@ jobs:
     role: "Senior Product Manager"
     period: "2021 – 2022"
     location: "Remote"
-    logo: "/images/logos/ankr.svg"
+    logo: "/images/logos/ankr.png"
     url: "https://ankr.com"
     highlights:
       - "Shipped [Advanced API](https://www.ankr.com/docs/advanced-api/overview/) from 0→1: 17 methods across NFT, Token, Query APIs serving 1M+ daily requests"
@@ -70,7 +70,7 @@ jobs:
     role: "Developer Experience Lead"
     period: "2020 – 2021"
     location: "Remote"
-    logo: "/images/logos/bloom.svg"
+    logo: "/images/logos/bloom.ico"
     url: "https://bloom.co"
     highlights:
       - "Led migration from proprietary attestation to W3C Verifiable Credentials standard, future-proofing platform interoperability"
@@ -82,7 +82,7 @@ jobs:
     role: "Software Engineer → Program Manager"
     period: "2016 – 2020"
     location: "Seattle, WA"
-    logo: "/images/logos/microsoft.svg"
+    logo: "/images/logos/microsoft.ico"
     url: "https://microsoft.com"
     highlights:
       - "Built [Xbox royalties blockchain](https://www.ey.com/en_gl/insights/consulting/how-blockchain-helped-a-gaming-platform-become-a-game-changer) with EY, achieving 99% faster processing (45 days → 4 minutes) for 2.7B+ gaming consumers"

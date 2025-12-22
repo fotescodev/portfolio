@@ -1,6 +1,6 @@
 ---
 title: "From Layoff to Launch: Building a Universal CV Engine"
-date: "2024-12-11"
+date: "2024-12-22"
 excerpt: "How getting laid off led to building an AI-powered portfolio system—combining Web3 experience, an AI PM certification capstone, and a lot of late nights."
 tags: ["Career", "AI", "Portfolio", "Capstone"]
 thumbnail: null
