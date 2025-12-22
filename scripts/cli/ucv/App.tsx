@@ -68,6 +68,7 @@ export function App() {
       {screen.type === 'create' && (
         <CreateScreen
           onComplete={(slug) => navigateTo({ type: 'actions', slug })}
+          onRunPipeline={(slug) => navigateTo({ type: 'running', slug, phase: 'pipeline' })}
           onCancel={() => navigateTo({ type: 'dashboard' })}
         />
       )}
