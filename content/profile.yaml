@@ -45,15 +45,10 @@ about:
       Web3 infrastructure at Ankr: Advanced APIs, SDKs, the picks and shovels builders
       actually need.
     - >
-      I've been in Web3 since 2017, when I was writing Solidity at Microsoft and
-      shipped one of its first blockchain projects—Xbox Game Store Royalties Tracking.
-      Eight years later, I'm still challenged by the same kind of problems: democratizing
-      infrastructure for builders who can't afford it to fail.
-    - >
-      {{accent}}This is Web3's moment.{{/accent}} Blockchain is uniquely positioned to become the default
-      transaction layer for the agentic economy that's about to explode. Stablecoin rails,
-      agentic identity attestation, agent-to-agent value transfer—that's what keeps me up at night.
-      Building in this space? Let's talk.
+      I've been in Web3 since 2017, when I shipped one of Microsoft's first blockchain
+      projects. Eight years later, I'm still here because {{accent}}this is Web3's moment{{/accent}}—blockchain
+      as the transaction layer for the agentic economy. Stablecoin rails, identity
+      attestation, agent-to-agent value transfer. Building in this space? Let's talk.
   stats:
     - value: "8+"
       label: "Years in Product"
