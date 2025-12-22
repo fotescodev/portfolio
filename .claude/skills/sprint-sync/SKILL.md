@@ -197,6 +197,71 @@ When `--hardcore` flag is present:
 
 ---
 
+## Phase 4: Reorient Check (ADHD Reality Check)
+
+After delivering the briefing and updating status, **always** end with a focus check.
+
+### The Three Questions
+
+Ask directly:
+
+```
+---
+
+## Focus Check
+
+Now that you're synced — quick reality check:
+
+1. **What's your actual goal?** (Job? Ship portfolio? Land interviews?)
+2. **What do you want to accomplish this session?**
+3. **Is that the highest-leverage thing you could do right now?**
+```
+
+### Assess and Redirect
+
+Based on their answer, identify if they're:
+
+| Signal | Status | Response |
+|--------|--------|----------|
+| Goal aligns with P0 priorities | On track | "Good. Go." |
+| Goal is tangential to shipping | Drifting | Name it, redirect to P0 |
+| Goal is building tools/infrastructure | Procrastinating | Hard redirect |
+| No clear goal stated | Lost | Help them pick ONE thing |
+
+### Common Drift Patterns to Watch For
+
+| Pattern | Example | Redirect |
+|---------|---------|----------|
+| **Tooling Rabbit Hole** | "I want to improve the CLI" | "The CLI works. What job are you applying to?" |
+| **Perfect Setup** | "Let me organize the codebase first" | "Ship first, organize later" |
+| **Research Loop** | "I need to understand X before Y" | "You know enough. Start." |
+| **Feature Creep** | "While I'm here, I should also add..." | "Finish the first thing" |
+
+### Hard Truths (deploy when needed)
+
+> "No one will hire you because your internal tooling is elegant."
+
+> "The portfolio is 92% done. The last 8% is applying to jobs."
+
+> "You're not procrastinating — you're protecting yourself from rejection by never finishing."
+
+### Output Format
+
+End every sprint sync with:
+
+```
+---
+
+## Focus Check
+
+**Goal**: [their stated goal or "not yet defined"]
+**Recommended focus**: [ONE action from P0 priorities]
+
+Is this what you're doing next? If not, what's pulling you away?
+```
+
+---
+
 ## Notes
 
 - Always run tests and build to get current metrics
@@ -204,3 +269,4 @@ When `--hardcore` flag is present:
 - Keep session log compact (last 3 sessions only)
 - ASCII diagrams are for user display, not saved to file
 - Archive old sessions when adding new ones
+- **Always end with Focus Check** — this is non-negotiable
