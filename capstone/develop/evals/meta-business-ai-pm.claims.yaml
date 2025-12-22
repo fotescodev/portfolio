@@ -1,0 +1,143 @@
+version: 1
+variant:
+  slug: meta-business-ai-pm
+  variantFile: content/variants/meta-business-ai-pm.yaml
+  contentHash: e65a88e55cda212cf5b0422c68d2daa71872d5b5613887b485ea12f395d11456
+  evaluatedAt: 2025-12-22T16:49:19.196Z
+claims:
+  - id: metric-70a566b318
+    location: overrides.about.tagline
+    text: Eight years shipping B2B products where complexity meets scale—from enterprise blockchain to APIs serving millions
+      of daily requests to AI-powered developer tools.
+    anchors:
+      - millions
+    candidateSources:
+      - path: content/knowledge/achievements/xbox-royalties-ethereum.yaml
+        score: 1
+        matchedAnchors:
+          - millions
+        note: anchors 1/1 • overlap 28%
+      - path: content/experience/index.yaml
+        score: 0.067
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 44%
+      - path: content/knowledge/achievements/ankr-15x-revenue.yaml
+        score: 0.05
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 33%
+      - path: content/knowledge/achievements/flow-cli-dx.yaml
+        score: 0.042
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 28%
+    verified:
+      status: verified
+      sources:
+        - content/experience/index.yaml
+        - content/knowledge/achievements/ankr-15x-revenue.yaml
+      notes: "Ankr served 1M+ daily API requests per experience index"
+  - id: metric-57cca55832
+    location: overrides.about.bio[0]
+    text: Before that I drove 15× revenue growth at Ankr by pivoting our API platform to B2B protocol partnerships (Polygon,
+      Nansen, Messari)
+    anchors:
+      - Polygon, Nansen, Messari
+    candidateSources:
+      - path: content/experience/index.yaml
+        score: 0.112
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 75%
+      - path: content/knowledge/achievements/ankr-15x-revenue.yaml
+        score: 0.088
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 58%
+      - path: content/knowledge/achievements/l2-protocol-integrations.yaml
+        score: 0.05
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 33%
+    verified:
+      status: verified
+      sources:
+        - content/experience/index.yaml
+      notes: "Experience index lists 'landing Polygon, Nansen, SushiSwap, and Messari'"
+  - id: metric-72282af8fb
+    location: overrides.about.bio[0]
+    text: At Dapper Labs I shipped an AI support agent handling 1,000+ questions weekly with 98% accuracy—my first
+      production AI deployment.
+    anchors:
+      - 98%
+      - 000+
+    candidateSources:
+      - path: content/experience/index.yaml
+        score: 1
+        matchedAnchors:
+          - 98%
+          - 000+
+        note: anchors 2/2 • overlap 75%
+      - path: content/knowledge/achievements/flow-cli-dx.yaml
+        score: 0.05
+        matchedAnchors: []
+        note: anchors 0/2 • overlap 33%
+      - path: content/knowledge/achievements/l2-protocol-integrations.yaml
+        score: 0.05
+        matchedAnchors: []
+        note: anchors 0/2 • overlap 33%
+      - path: content/knowledge/achievements/xbox-royalties-ethereum.yaml
+        score: 0.037
+        matchedAnchors: []
+        note: anchors 0/2 • overlap 25%
+    verified:
+      status: verified
+      sources:
+        - content/experience/index.yaml
+      notes: "Experience index: 'kapa.ai support bot answering 1,000+ questions in 4 weeks with 98% accuracy'"
+  - id: metric-1a045aef6f
+    location: overrides.about.bio[1]
+    text: I know how to navigate 0-to-1 ambiguity (co-founded Mempools) and I know how to ship at scale (2.7B Xbox
+      consumers).
+    anchors:
+      - 2.7B
+    candidateSources:
+      - path: content/experience/index.yaml
+        score: 1
+        matchedAnchors:
+          - 2.7B
+        note: anchors 1/1 • overlap 44%
+    verified:
+      status: verified
+      sources:
+        - content/experience/index.yaml
+      notes: "Experience index: 'Xbox royalties blockchain... for 2.7B+ gaming consumers'"
+  - id: metric-d07b4c9bd6
+    location: overrides.about.stats[0].value
+    text: 8+
+    anchors:
+      - 8+
+    candidateSources: []
+    verified:
+      status: verified
+      sources:
+        - content/profile.yaml
+        - content/experience/index.yaml
+      notes: "Profile and experience show 2016-present = 8+ years (Microsoft 2016 → Anchorage 2024)"
+  - id: metric-d7de684178
+    location: overrides.about.stats[2].value
+    text: 1M+
+    anchors:
+      - 1M
+    candidateSources:
+      - path: content/knowledge/achievements/ankr-15x-revenue.yaml
+        score: 1
+        matchedAnchors:
+          - 1M
+        note: anchors 1/1 • overlap 0%
+      - path: content/experience/index.yaml
+        score: 1
+        matchedAnchors:
+          - 1M
+        note: anchors 1/1 • overlap 0%
+    verified:
+      status: verified
+      sources:
+        - content/experience/index.yaml
+        - content/knowledge/achievements/ankr-15x-revenue.yaml
+      notes: "Both sources confirm 1M+ daily API requests at Ankr"
