@@ -23,9 +23,8 @@ jobs:
     logo: "/images/logos/forte.png"
     url: "https://forte.io"
     highlights:
-      - "Led Wallet-as-a-Service productization using MPC technology, enabling non-custodial wallets embedded directly into AAA games"
-      - "Developed 'Compliance as a Service' framework automating regulatory adherence for gaming studios integrating Web3"
-      - "Defined security architecture and privacy standards for gaming wallet infrastructure adopted by enterprise partners"
+      - "Led Wallet-as-a-Service productization using MPC technology, enabling wallets embedded directly into AAA games"
+      - "Developed Gasless In-game Transactions (EIP-712), decreasing gamer friction and improving the overall user experience"
     tags: ["MPC", "Gaming", "Wallet Infrastructure", "Compliance"]
 
   - company: "Dapper Labs"
@@ -73,9 +72,9 @@ jobs:
     logo: "/images/logos/bloom.ico"
     url: "https://bloom.co"
     highlights:
-      - "Led migration from proprietary attestation to W3C Verifiable Credentials standard, future-proofing platform interoperability"
-      - "Contributed to [WACI wallet protocol](https://identity.foundation/waci-didcomm/) development, collaborating with DIF community to create one of the first VC wallet specs"
-      - "Drove global expansion into East Asia, Europe, and Australia markets"
+      - "Designed and championed new Tokenomics model for Bloom Protocol token, focusing on token utility with Bloom Onramp"
+      - "Collaborated with DIF community to create one of the first VC wallet specs"
+      - "Drove community expansion into East Asia, Europe, and Australia markets"
     tags: ["Decentralized Identity", "Verifiable Credentials", "W3C", "DIF"]
 
   - company: "Microsoft"
@@ -86,6 +85,6 @@ jobs:
     url: "https://microsoft.com"
     highlights:
       - "Built [Xbox royalties blockchain](https://www.ey.com/en_gl/insights/consulting/how-blockchain-helped-a-gaming-platform-become-a-game-changer) with EY, achieving 99% faster processing (45 days → 4 minutes) for 2.7B+ gaming consumers"
-      - "Shipped first production smart contract at Microsoft (2016) using Ethereum/Quorum, partnering with Ubisoft for rollout"
+      - "Shipped one of the first production smart contracts at Microsoft (2016) using Ethereum/Quorum, partnering with Ubisoft for rollout"
       - "Architected Docker/Kubernetes infrastructure for Microsoft's first enterprise blockchain consortium"
     tags: ["Enterprise Blockchain", "Xbox", "Smart Contracts", "Quorum"]
