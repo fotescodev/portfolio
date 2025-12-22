@@ -219,25 +219,31 @@ npm run dev       # Dev server at :5173
 
 ### Current Status
 
-**Date**: 2025-12-21
-**Objective**: Portfolio at 92% production-ready
+**Date**: 2025-12-22
+**Objective**: Capstone Quality Pipeline complete, evaluate CLI vs UI direction
 **Bundle**: ~197KB gzip initial (target <200KB ✅)
 **Tests**: 211 passing (10 suites)
 **Variants**: 5 active
-**CSS Variables**: 122 (added card shadow/border tokens)
-**Premium Score**: 8.5/10 (up from 7.5)
+**CSS Variables**: 122
+**Premium Score**: 8.5/10
 
 **Blockers**: None
 
 **Recent Wins**:
-- Light mode polish shipped (boosted orbs, card shadows)
-- "Get in Touch" nav → Google Calendar link
+- UCV-CLI TUI dashboard shipped (PR #60) — templates, pipeline flow, error handling
 - Code splitting shipped (59% bundle reduction, PR #58)
-- Context docs consolidated (87% size reduction, PR #55)
+- Light mode polish shipped
+- Context docs consolidated (87% size reduction)
+
+**Current Question**:
+- Evaluate CLI vs UI approach for variant management
+- CLI: ~1,400 lines, Ink/React TUI, functional but terminal-bound
+- UI alternative: Web-based backoffice for broader accessibility?
 
 **Next Priority**:
-1. Trust Battery Testimonials (social proof)
-2. Featured Case Study (visual hierarchy)
+1. Strategic decision: Continue CLI or pivot to web UI
+2. Trust Battery Testimonials (deferred)
+3. Featured Case Study (deferred)
 
 ---
 
