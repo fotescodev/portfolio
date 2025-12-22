@@ -88,6 +88,14 @@ function parseBlogPosts(): BlogPost[] {
     return posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 
+// Check if post is new (within last 30 days)
+function isNewPost(dateStr: string): boolean {
+    const postDate = new Date(dateStr);
+    const now = new Date();
+    const diffDays = (now.getTime() - postDate.getTime()) / (1000 * 60 * 60 * 24);
+    return diffDays <= 30;
+}
+
 export default function Blog({ isMobile, isTablet }: BlogProps) {
     const [hoveredPost, setHoveredPost] = useState<string | null>(null);
 
@@ -96,10 +104,10 @@ export default function Blog({ isMobile, isTablet }: BlogProps) {
     const formatDate = (dateStr: string) => {
         const date = new Date(dateStr);
         return date.toLocaleDateString('en-US', {
-            month: '2-digit',
-            day: '2-digit',
-            year: '2-digit'
-        }).replace(/\//g, '.');
+            month: 'short',
+            day: 'numeric',
+            year: 'numeric'
+        });
     };
 
     const sectionPadding = isMobile ? '48px 24px' : isTablet ? '64px 40px' : '80px 64px';
@@ -192,7 +200,7 @@ export default function Blog({ isMobile, isTablet }: BlogProps) {
                                 gap: isMobile ? 'var(--space-md)' : 'var(--space-xl)',
                                 alignItems: 'start'
                             }}>
-                                {/* Date */}
+                                {/* Date + NEW tag */}
                                 <div style={{
                                     fontSize: '12px',
                                     fontWeight: 500,
@@ -200,8 +208,23 @@ export default function Blog({ isMobile, isTablet }: BlogProps) {
                                     color: 'var(--color-text-muted)',
                                     display: 'flex',
                                     alignItems: 'center',
-                                    gap: 'var(--space-sm)'
+                                    gap: 'var(--space-sm)',
+                                    flexWrap: 'wrap'
                                 }}>
+                                    {isNewPost(post.date) && (
+                                        <span style={{
+                                            fontSize: '9px',
+                                            fontWeight: 600,
+                                            letterSpacing: '0.1em',
+                                            textTransform: 'uppercase',
+                                            color: 'var(--color-accent)',
+                                            padding: '2px 6px',
+                                            border: '1px solid var(--color-accent)',
+                                            borderRadius: '2px'
+                                        }}>
+                                            New
+                                        </span>
+                                    )}
                                     <span>{formatDate(post.date)}</span>
                                     <span style={{ color: 'var(--color-separator)' }}>•</span>
                                     <span>{post.readingTime} min</span>
