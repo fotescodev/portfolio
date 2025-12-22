@@ -1,4 +1,5 @@
-import { useMemo, useState, ReactNode } from 'react';
+import { useMemo, useState } from 'react';
+import type { ReactNode } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { social } from '../../lib/content';
 import type { Profile } from '../../types/variant';

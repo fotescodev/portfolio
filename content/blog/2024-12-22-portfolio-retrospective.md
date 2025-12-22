@@ -1,12 +1,12 @@
 ---
-title: "From Layoff to Launch: Building a Universal CV Engine"
+title: "Building a Universal CV Engine"
 date: "2024-12-22"
-excerpt: "How getting laid off led to building an AI-powered portfolio system—combining Web3 experience, an AI PM certification capstone, and a lot of late nights."
+excerpt: "How a career transition led to building an AI-powered portfolio system—combining Web3 experience, an AI PM certification capstone, and a lot of late nights."
 tags: ["Career", "AI", "Portfolio", "Capstone"]
 thumbnail: null
 ---
 
-Got laid off from Anchorage. Sat with the question everyone asks: *what's next?*
+Found myself between roles. Sat with the question everyone asks: *what's next?*
 
 I knew two things: I wanted to stay at the intersection of Web3 and AI, and I needed a better way to present my work. The standard resume wasn't cutting it. LinkedIn felt like shouting into the void.
 
@@ -96,7 +96,7 @@ At the end of this, I'll have:
 2. **Universal CV engine** — AI-powered variant generation with quality gates
 3. **Deep understanding of AI evaluation** — Not just theory, hands-on implementation
 
-Getting laid off wasn't the plan. But it created space to build something I wouldn't have built otherwise.
+Career transitions create space. This one let me build something I wouldn't have built otherwise.
 
 ---
 
