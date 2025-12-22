@@ -1,0 +1,103 @@
+{
+  "metadata": {
+    "company": "Meta",
+    "role": "Product Manager, Business AI",
+    "generatedAt": "2025-12-22T16:30:00Z",
+    "jobDescription": "Product Manager, Business AI — advancing Business AI Agents across WhatsApp,\nMessenger, and Facebook/Instagram ads. Serving 200M+ businesses globally.\nRequires 8+ years PM experience, AI/agents production experience, B2B focus.\n",
+    "generationModel": "claude-opus-4-5",
+    "slug": "meta-business-ai-pm"
+  },
+  "overrides": {
+    "hero": {
+      "status": "Open to PM roles — Business AI, Platform Infrastructure, B2B Products",
+      "headline": [
+        {
+          "text": "Building",
+          "style": "italic"
+        },
+        {
+          "text": "infrastructure for",
+          "style": "muted"
+        },
+        {
+          "text": "businesses at scale",
+          "style": "accent"
+        }
+      ],
+      "subheadline": "Technical Product Manager. Eight years shipping B2B infrastructure—from enterprise blockchain at Microsoft to institutional crypto serving Galaxy and ETF providers. Deployed AI in production at Dapper Labs.\n"
+    },
+    "about": {
+      "tagline": "Eight years shipping B2B products where complexity meets scale—from enterprise blockchain to APIs serving millions of daily requests to AI-powered developer tools.\n",
+      "bio": [
+        "Most recently I was at Anchorage Digital, shipping infrastructure for institutional B2B clients—Galaxy, ETF providers, asset managers. Before that I drove 15× revenue growth at Ankr by pivoting our API platform to B2B protocol partnerships (Polygon, Arbitrum, Avalanche). At Dapper Labs I shipped an AI support agent handling 1,000+ questions weekly with 98% accuracy—my first production AI deployment.\n",
+        "I started at Microsoft building Xbox royalties on Ethereum—B2B infrastructure serving game publishers like Ubisoft. Eight years in, I've shipped APIs, SDKs, and platforms for enterprise customers who can't afford downtime. I know how to navigate 0-to-1 ambiguity (co-founded Mempools) and I know how to ship at scale (2.7B Xbox consumers).\n"
+      ],
+      "stats": [
+        {
+          "value": "8+",
+          "label": "Years in Product"
+        },
+        {
+          "value": "15×",
+          "label": "B2B Revenue Growth"
+        },
+        {
+          "value": "1M+",
+          "label": "Daily API Requests"
+        }
+      ]
+    },
+    "sections": {
+      "beyondWork": false,
+      "blog": true,
+      "onchainIdentity": false,
+      "skills": true,
+      "passionProjects": true
+    }
+  },
+  "relevance": {
+    "caseStudies": [
+      {
+        "slug": "ankr-rpc",
+        "relevanceScore": 0.95,
+        "reasoning": "B2B pivot driving 15× revenue growth—directly demonstrates ability to grow business-facing products and find PMF"
+      },
+      {
+        "slug": "xbox-royalties",
+        "relevanceScore": 0.9,
+        "reasoning": "Enterprise B2B infrastructure at Microsoft scale (2.7B consumers)—shows ability to ship for large business ecosystems"
+      },
+      {
+        "slug": "eth-staking",
+        "relevanceScore": 0.85,
+        "reasoning": "Institutional B2B clients (Galaxy, ETF providers)—demonstrates enterprise customer focus and compliance navigation"
+      },
+      {
+        "slug": "mempools",
+        "relevanceScore": 0.8,
+        "reasoning": "0-to-1 founder experience—directly relevant to navigating ambiguity in new product development"
+      }
+    ],
+    "skills": [
+      {
+        "category": "Product Management",
+        "relevanceScore": 1
+      },
+      {
+        "category": "Technical",
+        "relevanceScore": 0.95
+      },
+      {
+        "category": "Blockchain & Web3",
+        "relevanceScore": 0.6
+      }
+    ],
+    "projects": [
+      {
+        "slug": "mempools",
+        "relevanceScore": 0.85,
+        "reasoning": "Co-founder experience with 200+ DAU SaaS—shows 0-to-1 product development"
+      }
+    ]
+  }
+}
