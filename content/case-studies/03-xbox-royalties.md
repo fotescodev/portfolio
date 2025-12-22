@@ -1,5 +1,5 @@
 ---
-id: 4
+id: 3
 slug: xbox-royalties-ethereum
 title: Royalties on Ethereum
 company: Microsoft / Xbox

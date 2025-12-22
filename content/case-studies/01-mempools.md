@@ -1,5 +1,5 @@
 ---
-id: 2
+id: 1
 slug: mempools-alerting-platform
 title: On-Chain Alerting Platform
 company: Mempools (Founder)
@@ -18,7 +18,7 @@ hook:
       label: alert delivery
     - value: "5 chains"
       label: supported networks
-  thumbnail: /images/case-study-mempools.png
+  thumbnail: /images/mempools.png
 
 media:
   - type: twitter

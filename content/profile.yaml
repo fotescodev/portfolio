@@ -70,4 +70,4 @@ sections:
   blog: true
   onchainIdentity: false
   skills: false
-  passionProjects: true
+  passionProjects: false
