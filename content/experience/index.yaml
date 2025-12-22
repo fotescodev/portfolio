@@ -54,7 +54,7 @@ jobs:
 
   - company: "Ankr"
     role: "Senior Product Manager"
-    period: "2021 – 2022"
+    period: "2020 – 2022"
     location: "Remote"
     logo: "/images/logos/ankr.png"
     url: "https://ankr.com"
@@ -64,18 +64,6 @@ jobs:
       - "Built SDK suite ([Ankr.js](https://www.npmjs.com/package/@ankr.com/ankr.js), Ankr.py, React Hooks) with 1,900+ weekly downloads"
       - "Architected [Pay-As-You-Go pricing](https://www.ankr.com/docs/rpc-service/service-plans/) ($0.10 = 1M credits) that doubled developer signups"
     tags: ["APIs", "RPC", "Growth", "SDK", "Pricing Strategy"]
-
-  - company: "Bloom Protocol"
-    role: "Developer Experience Lead"
-    period: "2020 – 2021"
-    location: "Remote"
-    logo: "/images/logos/bloom.ico"
-    url: "https://bloom.co"
-    highlights:
-      - "Designed and championed new Tokenomics model for Bloom Protocol token, focusing on token utility with Bloom Onramp"
-      - "Collaborated with DIF community to create one of the first VC wallet specs"
-      - "Drove community expansion into East Asia, Europe, and Australia markets"
-    tags: ["Decentralized Identity", "Verifiable Credentials", "W3C", "DIF"]
 
   - company: "Microsoft"
     role: "Software Engineer → Program Manager"

@@ -33,7 +33,11 @@
       "Bash(open http://localhost:5173/)",
       "Bash(npm run test:*)",
       "Bash(grep:*)",
-      "Bash(xargs -I {} sh -c 'echo \"\"=== {} ===\"\" && head -15 {}')"
+      "Bash(xargs -I {} sh -c 'echo \"\"=== {} ===\"\" && head -15 {}')",
+      "Skill(dmitrii-writing-style)",
+      "Bash(head:*)",
+      "WebFetch(domain:framerusercontent.com)",
+      "Bash(curl:*)"
     ],
     "deny": [],
     "ask": []
