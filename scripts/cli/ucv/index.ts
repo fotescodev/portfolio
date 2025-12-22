@@ -27,10 +27,18 @@ import {
   readIssuesLedger,
   queryIssues,
   getIssueCounts,
-  Issue,
 } from '../../../scripts/lib/issues.js';
 
 type PublishStatus = 'draft' | 'published';
+
+// Readline keypress event key object
+type KeypressKey = {
+  sequence?: string;
+  name?: string;
+  ctrl?: boolean;
+  meta?: boolean;
+  shift?: boolean;
+};
 
 type SyncStatus =
   | { kind: 'ok' }
@@ -68,8 +76,8 @@ type VariantRow = {
   redteam: RedteamStatus;
   next: string;
   // Raw machine-readable outputs (when available) for richer UI.
-  evalResult?: any;
-  redteamResult?: any;
+  evalResult?: Record<string, unknown>;
+  redteamResult?: Record<string, unknown>;
 };
 
 type BottomPanelMode = 'activity' | 'eval' | 'redteam' | 'claims' | 'issues';
@@ -133,13 +141,14 @@ const END_MULTILINE_TOKEN = '::end';
 // Small helpers
 // -----------------------------------------------------------------------------
 
+/* eslint-disable no-control-regex */
 function stripAnsi(str: string): string {
-  // eslint-disable-next-line no-control-regex
   return str
     .replace(/\x1B\[[0-9;]*m/g, '')           // CSI color codes
     .replace(/\x1B\]8;;[^\x07]*\x07/g, '')    // OSC 8 hyperlink start
     .replace(/\x1B\]8;;\x07/g, '');           // OSC 8 hyperlink end
 }
+/* eslint-enable no-control-regex */
 
 function padRight(str: string, width: number): string {
   const len = stripAnsi(str).length;
@@ -265,7 +274,7 @@ function tsxBinPath(): string {
   return join(process.cwd(), 'node_modules', '.bin', bin);
 }
 
-async function runTsxJson(scriptRel: string, args: string[]): Promise<{ ok: true; json: any } | { ok: false; error: string; raw?: string }> {
+async function runTsxJson(scriptRel: string, args: string[]): Promise<{ ok: true; json: unknown } | { ok: false; error: string; raw?: string }> {
   const tsx = tsxBinPath();
   if (!existsSync(tsx)) {
     return {
@@ -294,7 +303,7 @@ async function runTsxJson(scriptRel: string, args: string[]): Promise<{ ok: true
       try {
         const json = JSON.parse(out);
         resolve({ ok: true, json });
-      } catch (e) {
+      } catch {
         resolve({ ok: false, error: `Failed to parse JSON output. ${err.trim()}`, raw: out });
       }
     });
@@ -307,7 +316,7 @@ async function runTsxStreaming(
   onLine: (line: string) => void,
   options?: {
     logFile?: string;
-    onEvent?: (event: any) => void;
+    onEvent?: (event: Record<string, unknown>) => void;
   }
 ): Promise<number> {
   const tsx = tsxBinPath();
@@ -425,7 +434,7 @@ async function loadStatuses(): Promise<VariantRow[]> {
   for (const slug of slugs) {
     try {
       metas.push(readVariantMeta(slug));
-    } catch (e) {
+    } catch {
       // Schema errors show as a row with minimal metadata
       metas.push({
         slug,
@@ -448,7 +457,8 @@ async function loadStatuses(): Promise<VariantRow[]> {
     for (const e of syncRes.json.errors ?? []) syncErrors.set(e.slug, e.message || 'Sync error');
   }
 
-  const evalBySlug = new Map<string, any>();
+  type EvalResultItem = { slug: string; status?: string; message?: string; verified?: number; claims?: number };
+  const evalBySlug = new Map<string, EvalResultItem>();
   const evalErrors = new Map<string, string>();
   if (evalRes.ok) {
     for (const r of evalRes.json.results ?? []) {
@@ -457,7 +467,8 @@ async function loadStatuses(): Promise<VariantRow[]> {
     }
   }
 
-  const redBySlug = new Map<string, any>();
+  type RedteamResultItem = { slug: string; status?: string; message?: string; warns?: number; fails?: number };
+  const redBySlug = new Map<string, RedteamResultItem>();
   const redErrors = new Map<string, string>();
   if (redRes.ok) {
     for (const r of redRes.json.results ?? []) {
@@ -542,10 +553,6 @@ function fmtPublish(meta: VariantMeta): string {
   return meta.publishStatus === 'published'
     ? theme.success('LIVE')
     : theme.warning('DRAFT');
-}
-
-function fmtSync(sync: SyncStatus): string {
-  return sync.kind === 'ok' ? theme.success('✓') : theme.error('✗');
 }
 
 function fmtEval(ev: EvalStatus): string {
@@ -1179,9 +1186,8 @@ function renderDetailsPanel(ctx: {
 
   // Redteam details
   lines.push(theme.bold('Redteam (demo highlights)'));
-  const findings: any[] = Array.isArray((row.redteamResult as any)?.findings)
-    ? (row.redteamResult as any).findings
-    : [];
+  const redteamData = row.redteamResult as { findings?: { severity?: string; id?: string; summary?: string }[] } | undefined;
+  const findings = Array.isArray(redteamData?.findings) ? redteamData.findings : [];
 
   const topFindings = findings
     .filter((f) => f && (f.severity === 'FAIL' || f.severity === 'WARN'))
@@ -1727,15 +1733,18 @@ async function parseJobFromHtml(html: string, url: string): Promise<JobExtractio
     try {
       const data = JSON.parse(text);
       const items = Array.isArray(data) ? data : [data];
-      const posting = items.find((x: any) => {
-        const t = x?.['@type'];
+      const posting = items.find((x: unknown) => {
+        const obj = x as Record<string, unknown> | null;
+        const t = obj?.['@type'];
         if (!t) return false;
         if (Array.isArray(t)) return t.includes('JobPosting');
         return t === 'JobPosting';
-      });
+      }) as Record<string, unknown> | undefined;
       if (posting) {
         const role = posting.title || posting.jobTitle;
-        const company = posting.hiringOrganization?.name || posting?.employmentUnit?.name;
+        const hiringOrg = posting.hiringOrganization as Record<string, unknown> | undefined;
+        const empUnit = posting.employmentUnit as Record<string, unknown> | undefined;
+        const company = hiringOrg?.name || empUnit?.name;
         const descHtml = posting.description;
         const description = typeof descHtml === 'string'
           ? htmlToText(descHtml)
@@ -2251,22 +2260,30 @@ async function main() {
 
     const gateProblems: string[] = [];
     if (!s.ok) gateProblems.push(`Sync check failed: ${s.error}`);
-    if (s.ok && (s.json.errors?.length ?? 0) > 0) {
-      gateProblems.push(`Sync not clean: ${s.json.errors[0]?.message || 'error'}`);
+    if (s.ok) {
+      type SyncError = { message?: string };
+      const syncJson = s.json as { errors?: SyncError[] };
+      if ((syncJson.errors?.length ?? 0) > 0) {
+        gateProblems.push(`Sync not clean: ${syncJson.errors?.[0]?.message || 'error'}`);
+      }
     }
 
     if (!e.ok) gateProblems.push(`Eval check failed: ${e.error}`);
     if (e.ok) {
-      const res = (e.json.results || []).find((x: any) => x.slug === slug);
+      type EvalResult = { slug?: string; status?: string; message?: string; unverified?: number };
+      const evalJson = e.json as { results?: EvalResult[] };
+      const res = (evalJson.results || []).find((x) => x.slug === slug);
       if (!res) gateProblems.push('Eval check: missing result');
       else if (res.status === 'error') gateProblems.push(`Eval check: ${res.message || 'error'}`);
-      else if (res.unverified > 0) gateProblems.push(`Eval check: ${res.unverified} unverified claim(s)`);
+      else if ((res.unverified ?? 0) > 0) gateProblems.push(`Eval check: ${res.unverified} unverified claim(s)`);
     }
 
     let redWarns = 0;
     if (!r.ok) gateProblems.push(`Redteam check failed: ${r.error}`);
     if (r.ok) {
-      const res = (r.json.results || []).find((x: any) => x.slug === slug);
+      type RedteamResult = { slug?: string; status?: string; message?: string; fails?: number; warns?: number };
+      const redteamJson = r.json as { results?: RedteamResult[] };
+      const res = (redteamJson.results || []).find((x) => x.slug === slug);
       if (!res) gateProblems.push('Redteam check: missing result');
       else if (res.status === 'error') gateProblems.push(`Redteam check: ${res.message || 'error'}`);
       else if (res.status === 'fail') gateProblems.push(`Redteam check: FAIL (${res.fails} fails, ${res.warns} warns)`);
@@ -2540,7 +2557,7 @@ async function main() {
   readline.emitKeypressEvents(process.stdin);
   if (process.stdin.isTTY) process.stdin.setRawMode(true);
 
-  process.stdin.on('keypress', async (str, key: any) => {
+  process.stdin.on('keypress', async (_str: string, key: KeypressKey) => {
     if (!key) return;
 
     if (key.sequence === '\u0003') {

@@ -5,7 +5,7 @@
  * Uses puppeteer-extra with stealth plugin to bypass bot protection.
  */
 
-import { describe, it, expect, beforeAll, afterAll } from 'vitest';
+import { describe, it, expect } from 'vitest';
 
 // Test URLs from popular job boards
 const TEST_URLS = {
@@ -81,7 +81,7 @@ async function extractWithPuppeteer(url: string): Promise<{
   }
 }
 
-function parseJobFromHtml(html: string, url: string): {
+function parseJobFromHtml(html: string, _url: string): {
   ok: boolean;
   company?: string;
   role?: string;

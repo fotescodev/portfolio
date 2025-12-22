@@ -7,8 +7,8 @@
  * - Clickable links generation
  */
 
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { spawn, ChildProcess } from 'child_process';
+import { describe, it, expect, beforeEach, afterEach } from 'vitest';
+import { spawn } from 'child_process';
 import { existsSync, readFileSync, writeFileSync, unlinkSync, mkdirSync } from 'fs';
 import { join } from 'path';
 import YAML from 'yaml';
@@ -140,7 +140,7 @@ describe('ucv-cli flow tests', () => {
       await runCommand('npx', ['tsx', 'scripts/sync-variants.ts', '--slug', TEST_VARIANT_SLUG]);
 
       // Then eval
-      const result = await runCommand('npx', ['tsx', 'scripts/evaluate-variants.ts', '--slug', TEST_VARIANT_SLUG]);
+      await runCommand('npx', ['tsx', 'scripts/evaluate-variants.ts', '--slug', TEST_VARIANT_SLUG]);
 
       // Eval may have unverified claims, which is expected
       const claimsPath = join(EVALS_DIR, `${TEST_VARIANT_SLUG}.claims.yaml`);
