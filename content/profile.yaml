@@ -36,8 +36,8 @@ hero:
 # ═══════════════════════════════════════════════════════════════
 about:
   tagline: >
-    Eight years shipping products where complexity
-    meets compliance—from enterprise to crypto to whatever comes next.
+    Eight years shipping infrastructure—from enterprise blockchain at Microsoft
+    to Web3 developer tools to institutional custody.
   bio:
     - >
       Most recently I was at Anchorage Digital, shipping staking infrastructure
@@ -49,6 +49,10 @@ about:
       was a term. Eight years in, I'm still drawn to the same kind of problems:
       infrastructure that has to work every time, for people who can't afford
       it not to.
+    - >
+      I care about developer experience—helping builders ship fast without
+      fighting their tools. Currently exploring how AI capabilities integrate
+      into existing business flows, especially where Web3 meets AI.
   stats:
     - value: "8+"
       label: "Years in Product"
