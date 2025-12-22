@@ -1,3 +1,8 @@
+---
+name: reorient
+description: ADHD-aware reality check for productive procrastination. Use when drifting, building tooling instead of shipping, or needing honest feedback about whether current work actually matters. Gives direct, supportive redirection.
+---
+
 # Reorient — ADHD-Aware Reality Check
 
 ## When to Use This Skill
