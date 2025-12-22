@@ -35,21 +35,21 @@ cta:
   linkText: Let's talk →
 ---
 
-Every major blockchain event—liquidations, governance votes, whale movements—was invisible until it was too late. Traders missed opportunities, protocols couldn't react fast enough, and communities struggled with engagement.
+Liquidations, governance votes, whale movements—every major on-chain event was invisible until it was too late. Traders missed opportunities. Protocols couldn't react fast enough. Communities were always behind.
 
 ## The Challenge
 
-I identified a fundamental gap in the blockchain ecosystem: while blockchains are transparent, staying ahead of critical events required complex custom setups, constant polling, or expensive infrastructure. There was no simple way for developers or users to get real-time notifications about on-chain activity.
+Blockchains are transparent, but staying ahead of critical events required complex custom setups, constant polling, or expensive infrastructure. No simple way to get real-time notifications about what's happening on-chain.
 
-**The constraints were real:**
-- Had to bootstrap with limited resources (solo founder initially)
-- Needed to support multiple chains (Ethereum, Cosmos ecosystem)
-- Sub-second latency required—alerts arriving after the fact are worthless
-- Developer SDK needed to be simple enough for quick integration
+The constraints:
+- Bootstrapping solo with limited resources
+- Multiple chains needed (Ethereum, Cosmos ecosystem)
+- Sub-second latency or it's worthless—alerts after the fact are just news
+- Developer SDK simple enough for quick integration
 
 ## The Approach
 
-My hypothesis: a scenario-based alerting platform with no-code configuration would democratize access to real-time blockchain monitoring—making it as easy to track whale wallets as it is to set up a Google Alert.
+The bet: a scenario-based alerting platform with no-code configuration. Make tracking whale wallets as easy as setting up a Google Alert.
 
 ### Alternatives Considered
 
@@ -59,7 +59,7 @@ My hypothesis: a scenario-based alerting platform with no-code configuration wou
 | Developer-only API | Simpler product, focused use case | Missed larger opportunity in no-code market |
 | Single chain focus | Faster development, deeper integration | Multi-chain was the clear direction of the ecosystem |
 
-**Chosen path:** Build both no-code consumer platform AND developer SDK, starting with Cosmos ecosystem where competition was thinner.
+We built both: no-code consumer platform AND developer SDK. Started with Cosmos where competition was thinner.
 
 ## Key Decision
 
@@ -67,55 +67,55 @@ My hypothesis: a scenario-based alerting platform with no-code configuration wou
 
 Archway (Cosmos SDK L1) was launching their mainnet. I pitched Mempools as their official alerting infrastructure.
 
-We launched Archway-Alerts.com on the same day as their mainnet—becoming the default platform for the ecosystem.
+Launched Archway-Alerts.com the same day as their mainnet. Became the default platform for the ecosystem.
 
-> This partnership gave us instant distribution and credibility. Instead of competing for developers, we became the recommended solution.
+> Instead of competing for developers, we became the recommended solution. One partnership gave us instant distribution and credibility.
 
 ## Execution
 
 ### Phase 1: Core Platform (8 weeks)
-- Built real-time event monitoring infrastructure on Ethereum
-- Designed scenario builder allowing AND/OR logic for complex alerts
-- Implemented multi-channel delivery: Telegram, Discord, webhooks, email
+- Real-time event monitoring infrastructure on Ethereum
+- Scenario builder with AND/OR logic for complex alerts
+- Multi-channel delivery: Telegram, Discord, webhooks, email
 
 ### Phase 2: SDK Development (4 weeks)
-- Published mempools-sdk to NPM for developer integration
-- Created documentation and quickstart guides
-- Built embeddable UI templates for white-label deployments
+- Published mempools-sdk to NPM
+- Documentation and quickstart guides
+- Embeddable UI templates for white-label deployments
 
 ### Phase 3: Cosmos Expansion (4 weeks)
-- Extended platform to support Archway, Juno, and Canto networks
-- Built chain-specific event parsing for Cosmos transaction types
-- Launched Archway-Alerts.com as flagship deployment
+- Extended to Archway, Juno, and Canto networks
+- Chain-specific event parsing for Cosmos transaction types
+- Archway-Alerts.com as flagship deployment
 
 ### Phase 4: Partnerships (Ongoing)
-- Secured Luganodes partnership for enhanced node infrastructure
-- Onboarded ecosystem projects as early adopters
-- Community building through Twitter Spaces and Discord engagement
+- Luganodes partnership for enhanced node infrastructure
+- Ecosystem projects onboarded as early adopters
+- Community building through Twitter Spaces and Discord
 
 ## Results
 
 - **200+ Daily Active Users** — Organic growth through ecosystem partnerships
 - **Sub-second delivery** — Alerts arriving before users could manually check
 - **5 chains supported** — Ethereum, Arbitrum, Archway, Juno, Canto
-- **Default Archway provider** — Launched alongside mainnet as official alerting platform
+- **Default Archway provider** — Launched alongside mainnet as official platform
 
-The platform enabled use cases that weren't possible before: arbitrage bots reacting to on-chain signals, portfolio trackers with instant notifications, and governance watchers alerting communities to votes.
+The platform enabled use cases that weren't possible before: arbitrage bots reacting to on-chain signals, portfolio trackers with instant notifications, governance watchers alerting communities to votes.
 
 ## What I Learned
 
 **What worked:**
-- Ecosystem partnerships over raw marketing—one protocol deal was worth 100 Twitter impressions
-- No-code interface dramatically expanded addressable market beyond developers
-- Multi-channel delivery (especially Telegram/Discord) was table stakes for Web3 users
-- Launching with a chain's mainnet gave instant distribution and credibility
+- Ecosystem partnerships over raw marketing—one protocol deal worth 100 Twitter impressions
+- No-code interface expanded addressable market beyond developers
+- Multi-channel delivery (Telegram/Discord) was table stakes for Web3
+- Launching with a chain's mainnet = instant distribution
 
 **What didn't:**
 - Underestimated infrastructure costs for real-time monitoring at scale
-- Initially built too many features—should have shipped MVP faster
+- Built too many features initially—should have shipped MVP faster
 - Discord community building was slower ROI than direct partnership outreach
-- Cross-chain complexity was higher than anticipated (each chain has different event formats)
+- Cross-chain complexity higher than anticipated (each chain has different event formats)
 
-> As a first-time founder, the biggest lesson was that distribution beats product. Having Archway recommend us to their ecosystem was more valuable than any feature we could have built.
+> First-time founder lesson: distribution beats product. Having Archway recommend us to their ecosystem was more valuable than any feature we could have built.
 
-If I did it again, I'd focus even more aggressively on ecosystem partnerships from day 1. The best products in crypto infrastructure win through distribution, not features.
+If I did it again: even more aggressive on ecosystem partnerships from day 1. In crypto infrastructure, you win through distribution, not features.
