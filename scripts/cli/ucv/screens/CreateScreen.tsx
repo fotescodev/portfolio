@@ -8,10 +8,63 @@ import { colors, icons } from '../lib/colors.js';
 
 interface CreateScreenProps {
   onComplete: (slug: string) => void;
+  onRunPipeline: (slug: string) => void;
   onCancel: () => void;
 }
 
-type Step = 'company' | 'role' | 'jdLink' | 'jdDescription' | 'confirm' | 'creating' | 'syncing' | 'done' | 'error';
+type Step = 'template' | 'company' | 'role' | 'jdLink' | 'jdDescription' | 'confirm' | 'creating' | 'syncing' | 'done' | 'error';
+
+type Template = {
+  id: string;
+  name: string;
+  description: string;
+  defaults: {
+    role?: string;
+    sections?: {
+      beyondWork?: boolean;
+      blog?: boolean;
+      onchainIdentity?: boolean;
+      skills?: boolean;
+      passionProjects?: boolean;
+    };
+  };
+};
+
+const TEMPLATES: Template[] = [
+  {
+    id: 'blank',
+    name: 'Blank',
+    description: 'Start from scratch',
+    defaults: {},
+  },
+  {
+    id: 'technical-pm',
+    name: 'Technical PM',
+    description: 'Product Manager with engineering background',
+    defaults: {
+      role: 'Technical Product Manager',
+      sections: { beyondWork: false, blog: true, skills: true, passionProjects: true, onchainIdentity: false },
+    },
+  },
+  {
+    id: 'senior-pm',
+    name: 'Senior PM',
+    description: 'Senior/Staff Product Manager',
+    defaults: {
+      role: 'Senior Product Manager',
+      sections: { beyondWork: false, blog: true, skills: true, passionProjects: true, onchainIdentity: false },
+    },
+  },
+  {
+    id: 'crypto-pm',
+    name: 'Crypto/Web3 PM',
+    description: 'Product Manager in blockchain/crypto',
+    defaults: {
+      role: 'Product Manager',
+      sections: { beyondWork: false, blog: true, skills: true, passionProjects: true, onchainIdentity: true },
+    },
+  },
+];
 
 function slugify(company: string, role: string): string {
   const normalize = (s: string) =>
@@ -23,8 +76,10 @@ function slugify(company: string, role: string): string {
   return `${normalize(company)}-${normalize(role)}`;
 }
 
-export function CreateScreen({ onComplete, onCancel }: CreateScreenProps) {
-  const [step, setStep] = useState<Step>('company');
+export function CreateScreen({ onComplete, onRunPipeline, onCancel }: CreateScreenProps) {
+  const [step, setStep] = useState<Step>('template');
+  const [selectedTemplate, setSelectedTemplate] = useState(0);
+  const [template, setTemplate] = useState<Template>(TEMPLATES[0]);
   const [company, setCompany] = useState('');
   const [role, setRole] = useState('');
   const [jdLink, setJdLink] = useState('');
@@ -40,6 +95,23 @@ export function CreateScreen({ onComplete, onCancel }: CreateScreenProps) {
       return;
     }
 
+    // Template selection
+    if (step === 'template') {
+      if (key.upArrow) {
+        setSelectedTemplate(i => Math.max(0, i - 1));
+      } else if (key.downArrow) {
+        setSelectedTemplate(i => Math.min(TEMPLATES.length - 1, i + 1));
+      } else if (key.return) {
+        const selected = TEMPLATES[selectedTemplate];
+        setTemplate(selected);
+        if (selected.defaults.role) {
+          setRole(selected.defaults.role);
+        }
+        setStep('company');
+      }
+      return;
+    }
+
     if (step === 'confirm') {
       if (input === 'y' || key.return) {
         createVariant();
@@ -48,8 +120,12 @@ export function CreateScreen({ onComplete, onCancel }: CreateScreenProps) {
       }
     }
 
-    if (step === 'done' && key.return) {
-      onComplete(createdSlug!);
+    if (step === 'done') {
+      if (input === 'p') {
+        onRunPipeline(createdSlug!);
+      } else if (key.return) {
+        onComplete(createdSlug!);
+      }
     }
 
     if (step === 'error' && key.return) {
@@ -100,6 +176,15 @@ export function CreateScreen({ onComplete, onCancel }: CreateScreenProps) {
         ? jdDescription.split('\n').map(line => `    ${line}`).join('\n')
         : '    [Paste job description here]';
 
+      // Get section defaults from template
+      const sections = template.defaults.sections || {
+        beyondWork: false,
+        blog: true,
+        onchainIdentity: false,
+        skills: true,
+        passionProjects: true,
+      };
+
       // Create variant content
       const content = `metadata:
   slug: "${slug}"
@@ -109,6 +194,7 @@ export function CreateScreen({ onComplete, onCancel }: CreateScreenProps) {
   jobDescription: |
 ${formattedJd}
   generatedAt: "${new Date().toISOString()}"
+  template: "${template.id}"
 
 overrides:
   hero:
@@ -140,11 +226,11 @@ overrides:
         label: "Key Metric"
 
   sections:
-    beyondWork: false
-    blog: true
-    onchainIdentity: false
-    skills: true
-    passionProjects: true
+    beyondWork: ${sections.beyondWork ?? false}
+    blog: ${sections.blog ?? true}
+    onchainIdentity: ${sections.onchainIdentity ?? false}
+    skills: ${sections.skills ?? true}
+    passionProjects: ${sections.passionProjects ?? true}
 
 relevance:
   caseStudies: []
@@ -187,13 +273,8 @@ relevance:
     };
   }, [step, createdSlug]);
 
-  const isBeforeStep = (current: Step, target: Step) => {
-    const order: Step[] = ['company', 'role', 'jdLink', 'jdDescription', 'confirm', 'creating', 'syncing', 'done', 'error'];
-    return order.indexOf(current) < order.indexOf(target);
-  };
-
   const isAtOrAfterStep = (current: Step, target: Step) => {
-    const order: Step[] = ['company', 'role', 'jdLink', 'jdDescription', 'confirm', 'creating', 'syncing', 'done', 'error'];
+    const order: Step[] = ['template', 'company', 'role', 'jdLink', 'jdDescription', 'confirm', 'creating', 'syncing', 'done', 'error'];
     return order.indexOf(current) >= order.indexOf(target);
   };
 
@@ -201,23 +282,47 @@ relevance:
     <Box flexDirection="column" paddingLeft={2}>
       <Box marginBottom={1}>
         <Text bold>Create New Variant</Text>
-      </Box>
-
-      {/* Company Input */}
-      <Box marginBottom={1}>
-        <Text color={step === 'company' ? colors.accent : colors.muted}>
-          {step === 'company' ? icons.arrow : company ? icons.success : icons.pending}
-        </Text>
-        <Text> Company: </Text>
-        {step === 'company' ? (
-          <TextInput
-            placeholder="e.g., Stripe"
-            onSubmit={handleCompanySubmit}
-          />
-        ) : (
-          <Text bold>{company}</Text>
+        {template.id !== 'blank' && step !== 'template' && (
+          <Text dimColor> ({template.name})</Text>
         )}
       </Box>
+
+      {/* Template Selection */}
+      {step === 'template' && (
+        <Box flexDirection="column" marginBottom={1}>
+          <Text dimColor marginBottom={1}>Select a template:</Text>
+          {TEMPLATES.map((t, index) => (
+            <Box key={t.id}>
+              <Text color={index === selectedTemplate ? colors.accent : undefined}>
+                {index === selectedTemplate ? icons.arrow : ' '}
+              </Text>
+              <Text bold={index === selectedTemplate}> {t.name}</Text>
+              <Text dimColor> — {t.description}</Text>
+            </Box>
+          ))}
+          <Box marginTop={1}>
+            <Text dimColor>[↑↓] Select  [Enter] Confirm  [Esc] Cancel</Text>
+          </Box>
+        </Box>
+      )}
+
+      {/* Company Input */}
+      {isAtOrAfterStep(step, 'company') && (
+        <Box marginBottom={1}>
+          <Text color={step === 'company' ? colors.accent : colors.muted}>
+            {step === 'company' ? icons.arrow : company ? icons.success : icons.pending}
+          </Text>
+          <Text> Company: </Text>
+          {step === 'company' ? (
+            <TextInput
+              placeholder="e.g., Stripe"
+              onSubmit={handleCompanySubmit}
+            />
+          ) : (
+            <Text bold>{company}</Text>
+          )}
+        </Box>
+      )}
 
       {/* Role Input */}
       {isAtOrAfterStep(step, 'role') && (
@@ -325,13 +430,14 @@ relevance:
           </Box>
           <Text color={colors.accent}>  /{company.toLowerCase()}/{createdSlug}</Text>
           <Box marginTop={1}>
-            <Text dimColor>Next steps:</Text>
+            <Text bold>What's next?</Text>
           </Box>
-          <Text dimColor>  1. Edit content/variants/{createdSlug}.yaml to customize</Text>
-          <Text dimColor>  2. Run Evaluate to extract and verify claims</Text>
-          <Text dimColor>  3. Run Red Team for quality checks</Text>
+          <Box marginTop={1} flexDirection="column">
+            <Text>  <Text color={colors.accent}>[p]</Text> Run full pipeline <Text dimColor>(eval + redteam)</Text></Text>
+            <Text>  <Text color={colors.muted}>[Enter]</Text> Go to actions <Text dimColor>(manual steps)</Text></Text>
+          </Box>
           <Box marginTop={1}>
-            <Text dimColor>[Enter] Continue to actions</Text>
+            <Text dimColor>Tip: Press 'p' to automatically evaluate and red-team your variant</Text>
           </Box>
         </Box>
       )}
@@ -342,6 +448,27 @@ relevance:
           <Text color={colors.error}>
             {icons.error} Error: {error}
           </Text>
+          {/* Contextual fix suggestions */}
+          <Box marginTop={1} flexDirection="column">
+            {error?.includes('already exists') && (
+              <>
+                <Text color={colors.warning}>{icons.info} Fix: Choose a different company/role combination</Text>
+                <Text dimColor>   Or delete the existing file: content/variants/{slug}.yaml</Text>
+              </>
+            )}
+            {error?.includes('Sync failed') && (
+              <>
+                <Text color={colors.warning}>{icons.info} Fix: Check YAML syntax in content/variants/{createdSlug}.yaml</Text>
+                <Text dimColor>   Run: npm run validate to see detailed errors</Text>
+              </>
+            )}
+            {error?.includes('permission') && (
+              <Text color={colors.warning}>{icons.info} Fix: Check file permissions in content/variants/</Text>
+            )}
+            {!error?.includes('already exists') && !error?.includes('Sync failed') && !error?.includes('permission') && (
+              <Text color={colors.warning}>{icons.info} Try running: npm run validate for more details</Text>
+            )}
+          </Box>
           <Box marginTop={1}>
             <Text dimColor>[Enter] Back to dashboard</Text>
           </Box>
