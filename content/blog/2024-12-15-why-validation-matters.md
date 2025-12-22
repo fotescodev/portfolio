@@ -6,7 +6,7 @@ tags: ["Developer Tools", "Best Practices", "Automation"]
 thumbnail: null
 ---
 
-I've seen too many portfolios with broken links, malformed YAML, and inconsistent data structures. The solution isn't "be more careful"—it's automation.
+Too many portfolios with broken links, malformed YAML, inconsistent data structures. The solution isn't "be more careful"—it's automation.
 
 ## The Problem with Manual Validation
 
@@ -123,23 +123,23 @@ The key insight: **treat content as code**.
 
 ## Key Takeaways
 
-1. **Validation is infrastructure** - Not optional, it's foundational
-2. **Fail fast** - Catch errors locally, not in production
-3. **Automate everything** - Manual checks don't scale
-4. **Use types** - Schemas + TypeScript = confidence
+- **Validation is infrastructure** — Not optional, foundational
+- **Fail fast** — Catch errors locally, not in production
+- **Automate everything** — Manual checks don't scale
+- **Use types** — Schemas + TypeScript = confidence
 
 ## Next Steps
 
 If you're maintaining a content-heavy portfolio:
 
-1. ✅ Add Zod to your project
-2. ✅ Define schemas for each content type
-3. ✅ Write validation script
-4. ✅ Run validation in CI/CD
-5. ✅ Create templates with correct structure
+1. Add Zod
+2. Define schemas for each content type
+3. Write validation script
+4. Run validation in CI/CD
+5. Create templates with correct structure
 
-Your future self will thank you when you're adding your 20th case study and the CLI catches a missing field before your recruiter sees a broken page.
+Your future self will thank you when the CLI catches a missing field before a recruiter sees a broken page.
 
 ---
 
-**Want to see a real implementation?** Check out my portfolio's [content validation system](https://github.com/fotescodev/portfolio) for a working example with templates and CLI tools.
+*See my portfolio's [content validation system](https://github.com/fotescodev/portfolio) for a working implementation.*

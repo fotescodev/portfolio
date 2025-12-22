@@ -6,11 +6,11 @@ tags: ["AI", "Web3", "Infrastructure", "Agents"]
 thumbnail: null
 ---
 
-The convergence of artificial intelligence and blockchain technology represents one of the most fascinating frontiers in tech. After spending years building infrastructure for institutional crypto custody, I'm increasingly convinced that the next major wave of crypto adoption won't come from retail traders or even traditional institutions—it will come from AI agents.
+After years building infrastructure for institutional crypto custody, I'm convinced the next wave of crypto adoption won't come from retail traders or traditional institutions. It'll come from AI agents.
 
 ## The Problem with Today's AI Agents
 
-Today's AI agents are incredibly powerful at reasoning, planning, and executing complex tasks. But they have a critical limitation: **they can't hold value or make credible commitments**.
+AI agents are powerful at reasoning, planning, and executing complex tasks. But they have a critical limitation: **they can't hold value or make credible commitments**.
 
 When an AI agent promises to do something in exchange for payment, there's no enforcement mechanism. The agent can't:
 - Hold funds in escrow
@@ -18,7 +18,7 @@ When an AI agent promises to do something in exchange for payment, there's no en
 - Be slashed for misbehavior
 - Participate in trustless coordination
 
-This is where on-chain execution becomes essential.
+On-chain execution solves this.
 
 ## Smart Contracts as Agent Infrastructure
 
@@ -57,15 +57,15 @@ A few developments that excite me:
 
 ## The PM Perspective
 
-From a product management lens, this space is fascinating because it inverts traditional user experience design. We're not designing for humans—we're designing for:
+This space inverts traditional UX design. We're not designing for humans—we're designing for:
 
 - **Deterministic execution** over intuitive interfaces
 - **API-first** over UI-first
 - **Composability** over integration
 - **Auditability** over privacy (in many cases)
 
-The primitives we need are different from human-centric crypto products. And that's what makes it exciting.
+The primitives are different from human-centric crypto products. That's what makes it interesting.
 
 ---
 
-*This is an area I'm actively exploring. If you're building in this space, I'd love to connect.*
+*Actively exploring this space. Building here? Let's connect.*

@@ -1,75 +1,103 @@
 ---
-title: "Building at the Edge of Trust: A Portfolio Project Retrospective"
+title: "From Layoff to Launch: Building a Universal CV Engine"
 date: "2024-12-11"
-excerpt: "A reflection on building a personal brand site with AI-assisted development—the wins, the stumbles, and what's next."
-tags: ["Retrospective", "AI", "Engineering", "Design"]
+excerpt: "How getting laid off led to building an AI-powered portfolio system—combining Web3 experience, an AI PM certification capstone, and a lot of late nights."
+tags: ["Career", "AI", "Portfolio", "Capstone"]
 thumbnail: null
 ---
 
-# Building at the Edge of Trust: A Portfolio Retrospective
+Got laid off from Anchorage. Sat with the question everyone asks: *what's next?*
 
-*A collaboration between [User] and Antigravity Agent*
+I knew two things: I wanted to stay at the intersection of Web3 and AI, and I needed a better way to present my work. The standard resume wasn't cutting it. LinkedIn felt like shouting into the void.
 
-## Switching Gears: Reflecting on the Journey
+So I started building.
 
-We've reached a significant milestone. What started as a goal to "build a portfolio" evolved into a deep dive into personal branding, tool creation, and exploring the boundaries of Agent-Human collaboration. This document serves as a retrospective on what we've built, the specific hurdles we overcame (and how), and where we're going next.
+## From Resume to Portfolio
 
-## Goals Attained
+First version was just a static page. More resume than portfolio—bullet points, job titles, the usual. It worked, but it didn't *differentiate*.
 
-Looking back at our commit history and deployed assets, we've achieved several key objectives:
+I needed a brand. Something that captured what I actually do: build trust infrastructure at the edge of new technology. "Edge of Trust" stuck.
 
-*   **A "Wow" Factor Portfolio**: We moved beyond a basic resume site to a dynamic, visually engaging portfolio with smooth transitions, glassmorphism effects, and a premium fail (Light/Dark mode).
-*   **Unified Branding**: We established the "Edge of Trust" tagline and visual identity, ensuring it permeates not just the site, but your external profiles too.
-*   **Custom Asset Generators**: Instead of relying on static, hard-to-edit images, we built:
-    *   **LinkedIn Banner Generator**: A dedicated HTML tool to render your high-def background.
-    *   **Thumbnail Generator**: A tool to create perfect Open Graph images for social sharing.
-*   **Technical Polish**: We tackled SEO basics, semantic HTML, and accessibility (aria labels, contrast).
+The portfolio evolved. Case studies instead of bullet points. Real metrics instead of vague impact claims. A design system that didn't look like every other developer portfolio.
 
-## The "Agentic" Experience: Challenges, Pitfalls, and Solutions
+But I wanted more.
 
-This leverage of an AI Agent wasn't without its friction points. Reflecting on our "self-corrections," two major themes emerged regarding how we handled Agent limitations.
+## The Capstone Connection
 
-### 1. The "Blue Hue" & Color Fidelity
-**The Pitfall**: Early in our design phase, we struggled with color accuracy. I (the Agent) would generate or suggest colors that were *mathematically* close but visually off-brand (the "blue hue" issue) when rendered in different contexts or exports.
-**The Solution**: We moved away from "trusting the output" blindly to "verifying the code." We hard-coded the exact HSL/Hex values into CSS variables (`--primary`, `--accent`) and ensured that our asset generators used these *exact* variables rather than improved approximations.
-**Lesson**: *Consistency requires a Single Source of Truth (CSS variables) that both the site and the asset generators consume.*
+While building the portfolio, I was taking the [AI Product Management Certification](https://maven.com/product-faculty/ai-product-management-certification) from Product Faculty. The course teaches a 4D approach to building AI features: Discover, Define, Develop, Deliver.
 
-### 2. The "Quota" Wall & The Tool-Builder Shift
-**The Pitfall**: You asked for high-quality image assets. I hit an internal wall: my image generation tools have quotas and resolution limits that couldn't match the crisp, retina-ready quality you needed for a professional LinkedIn banner. I couldn't "just send you the file."
-**The Solution**: We pivoted. Instead of acting as the **Manufacturer** (making the image), I acted as the **Engineer** (building the machine). I wrote the `linkedin-banner-generator.html` code so *you* could run it legally on your machine, render the `<div element>`, and capture it at infinite resolution.
-**Lesson**: *When the Agent hits a resource ceiling, the best move is to build a tool that empowers the User to bypass that ceiling.*
+The certification requires a capstone project. Most people build something separate. I thought: why not combine them?
 
-### 3. The "Relative Path" Trap
-**The Pitfall**: Our initial Open Graph (OG) images were broken on social media because we used relative paths (`/images/me.png`).
-**The Solution**: We quickly identified this via deployment checks and switched to absolute URLs, ensuring the preview card renders correctly on LinkedIn/Twitter.
+What if the portfolio itself was the capstone? What if I built an AI-powered system that could generate targeted portfolio variants for specific job applications?
 
-## Lessons Learned & What Not To Do
+That's how Universal CV was born.
 
-Based on our analysis, here is a clear guide on how to navigate Agent-Human collaboration effectively:
+## What Universal CV Actually Is
 
-### Lessons Learned
-*   **Single Source of Truth is Mandatory**: Define your design tokens (colors, fonts, spacing) in one place (CSS variables) and force every tool or component to Reference them. Never hard-code values in multiple places.
-*   **Agents Build Tools, Humans Verify Output**: When precise creative control is needed, don't ask the Agent to *produce* the final asset. Ask the Agent to *build the studio* (the tool/generator) so you can produce the asset with infinite tweaks.
-*   **The "Div" De-Risk**: If you can render it in a browser `<div>`, you can export it. This is always superior to Model-generated images for text-heavy or layout-heavy graphics because it remains editable.
+The core idea is simple: create targeted portfolio pages that are accurate without embellishment, tailored to specific roles based on my actual experience data and the job description I'm applying for.
 
-### What Not To Do
-*   **❌ Do NOT Trust "Close Enough" Colors**: LLMs approximate colors. Never accept "a nice shade of blue." Always demand or provide the specific Hex/HSL code.
-*   **❌ Do NOT Rely on Agent Quotas for Production Assets**: If you need a 4K banner, don't ask the chat interface to generate it (it will compress it). Ask for a script that generates it locally on your machine.
-*   **❌ Do NOT Use Relative Paths for Social Media**: When setting `og:image` tags, never use `/assets/image.png`. It will fail on Twitter/LinkedIn. Always use the full deployment domain `https://yoursite.com/assets/image.png`.
+The system has three parts:
 
-## What's Next: A Prioritized Roadmap
+**1. Knowledge Base**
+All my achievements, metrics, and stories stored in structured YAML. Every claim traceable to a source. No hallucination possible because the AI can only surface what's already documented.
 
-We have a solid foundation, but a product is never finished. Here is the prioritized table for the next phase of development:
+**2. Variant Engine**
+Takes a job description, matches it against my knowledge base, and generates a customized portfolio variant. Different emphasis for different roles—infrastructure PM vs. developer tools PM vs. Web3 PM.
 
-| Priority | Feature | Description | Why? |
-| :--- | :--- | :--- | :--- |
-| **P0** | **Remix & Community** | Add a "Remix this Portfolio" button and instructions. | **Give Back.** Allow job seekers to ingest their resume/photo and spin up a high-quality version of this site easily. |
-| **P1** | **Case Study Content** | Update text & visuals inside existing case studies. | Content is king. The shell is beautiful, now the story needs to match. |
-| **P2** | **Card View 2.0** | Redesign the projects section into a dense, user-friendly card grid. | You have "lots of projects" to add; the current layout may not scale well for density. |
-| **P3** | **Metrics Strategy** | Implement meaningful analytics (not just pageviews). | **Measure Impact.** Focus on: *Time on Case Study*, *Resume Download Conversions*, and *Outbound Link Clicks(LinkedIn)*. |
+**3. Quality Pipeline**
+This is where it gets interesting. I built an eval and red-teaming harness:
 
-## Conclusion
+```
+Knowledge Base → Variant YAML → Sync → Eval → Red Team → Deploy
+```
 
-We've built more than a website; we've built a system for your personal brand. By solving the "Agent limitations" through collaborative tool-building, we've actually created a more robust setup—you now own the generators, not just the JPEGs.
+The eval step extracts every claim and finds candidate sources. The red team step scans for:
+- Sycophantic language ("thrilled to apply")
+- Unverified metrics
+- Cross-variant contamination (mentioning wrong company)
+- Confidential information leaks
 
-**Ready to start on P0: The Remix Button?**
+If a variant doesn't pass the gates, it doesn't ship.
+
+## Why This Matters
+
+Most AI-generated content has a trust problem. It sounds plausible but might be fabricated. For a portfolio—where your professional reputation is on the line—that's unacceptable.
+
+Universal CV inverts the approach. Instead of generating content and hoping it's accurate, it:
+1. Starts with verified source data
+2. Constrains generation to that data
+3. Evaluates every claim against sources
+4. Red-teams for tone and accuracy issues
+
+The AI assists with targeting and presentation. The facts come from me.
+
+## What I've Built So Far
+
+- Portfolio site with 4 case studies, 3 blog posts, full design system
+- Variant engine supporting 5 targeted variants
+- Claims evaluation pipeline with source matching
+- Red team scanner with 8+ automated checks
+- Interactive CLI dashboard (`npm run ucv-cli`) for managing the whole flow
+
+## What's Next
+
+Still working on the evaluation flow. The harness is built, but I want to run proper experiments:
+- How well does variant targeting match JD requirements?
+- What's the false negative rate on the red team checks?
+- Can I automate more of the claim verification?
+
+Goal is to open-source this once the capstone is complete. Job searching sucks. Maybe this helps someone else.
+
+## The Real Outcome
+
+At the end of this, I'll have:
+
+1. **A professional-grade portfolio** — Not a template, a system
+2. **Universal CV engine** — AI-powered variant generation with quality gates
+3. **Deep understanding of AI evaluation** — Not just theory, hands-on implementation
+
+Getting laid off wasn't the plan. But it created space to build something I wouldn't have built otherwise.
+
+---
+
+*The portfolio is live. The capstone is in progress. If you're building in the AI evaluation space or just want to see the CLI in action, [reach out](https://calendly.com/dmitrii-f).*
