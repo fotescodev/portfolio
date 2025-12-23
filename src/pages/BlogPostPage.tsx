@@ -7,7 +7,15 @@ import { oneDark, oneLight } from 'react-syntax-highlighter/dist/esm/styles/pris
 import { Helmet } from 'react-helmet-async';
 import { useTheme } from '../context/ThemeContext';
 import { likePost, unlikePost, getLikeCount, hasUserLikedPost } from '../lib/likes';
-import { profile } from '../lib/content';
+import { profile, parseFrontmatter } from '../lib/content';
+import {
+    BREAKPOINTS,
+    TOAST_DURATION,
+    ANIMATION_DURATION,
+    SCROLL_THRESHOLD,
+    SHARE_WINDOW,
+    WORDS_PER_MINUTE
+} from '../lib/constants';
 import ThemeToggle from '../components/ThemeToggle';
 import type { BlogPost } from '../types/blog';
 
@@ -20,35 +28,8 @@ interface TableOfContentsItem {
     level: number;
 }
 
-function parseFrontmatter(raw: string): { frontmatter: Record<string, unknown>; content: string } {
-    const match = raw.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
-    if (!match) return { frontmatter: {}, content: raw };
-
-    const frontmatterStr = match[1];
-    const content = match[2];
-    const frontmatter: Record<string, unknown> = {};
-
-    for (const line of frontmatterStr.split('\n')) {
-        const colonIndex = line.indexOf(':');
-        if (colonIndex === -1) continue;
-        const key = line.slice(0, colonIndex).trim();
-        let value = line.slice(colonIndex + 1).trim();
-
-        if (value.startsWith('[') && value.endsWith(']')) {
-            frontmatter[key] = value.slice(1, -1).split(',').map(item => item.trim().replace(/^["']|["']$/g, ''));
-        } else if (value.startsWith('"') && value.endsWith('"')) {
-            frontmatter[key] = value.slice(1, -1);
-        } else if (value === 'null') {
-            frontmatter[key] = null;
-        } else {
-            frontmatter[key] = value;
-        }
-    }
-    return { frontmatter, content };
-}
-
 function calculateReadingTime(content: string): number {
-    return Math.ceil(content.split(/\s+/).length / 200);
+    return Math.ceil(content.split(/\s+/).length / WORDS_PER_MINUTE);
 }
 
 function extractSlugFromFilename(path: string): string {
@@ -100,9 +81,10 @@ export default function BlogPostPage() {
     const [activeHeading, setActiveHeading] = useState<string>('');
     const [tocItems, setTocItems] = useState<TableOfContentsItem[]>([]);
     const [showCopyToast, setShowCopyToast] = useState(false);
-    const [clapCount, setClapCount] = useState(0);
-    const [hasClapped, setHasClapped] = useState(false);
-    const [isClapping, setIsClapping] = useState(false);
+    // Like state - consistent with likePost/unlikePost API
+    const [likeCount, setLikeCount] = useState(0);
+    const [hasLiked, setHasLiked] = useState(false);
+    const [isLiking, setIsLiking] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
     const [copiedCode, setCopiedCode] = useState<string | null>(null);
     const [emailCopied, setEmailCopied] = useState(false);
@@ -115,7 +97,7 @@ export default function BlogPostPage() {
     const readingTimeRemaining = post ? Math.max(0, Math.ceil(post.readingTime * (1 - scrollProgress / 100))) : 0;
 
     useEffect(() => {
-        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        const checkMobile = () => setIsMobile(window.innerWidth < BREAKPOINTS.mobile);
         checkMobile();
         window.addEventListener('resize', checkMobile);
         return () => window.removeEventListener('resize', checkMobile);
@@ -137,13 +119,13 @@ export default function BlogPostPage() {
             const scrollTop = window.scrollY;
             const docHeight = document.documentElement.scrollHeight - window.innerHeight;
             setScrollProgress(Math.min((scrollTop / docHeight) * 100, 100));
-            setShowBackToTop(scrollTop > 400);
+            setShowBackToTop(scrollTop > SCROLL_THRESHOLD.backToTop);
 
             if (contentRef.current) {
                 const headings = contentRef.current.querySelectorAll('h1, h2, h3');
                 let currentActiveId = '';
                 headings.forEach((heading) => {
-                    if (heading.getBoundingClientRect().top <= 150) {
+                    if (heading.getBoundingClientRect().top <= SCROLL_THRESHOLD.headingOffset) {
                         currentActiveId = heading.id;
                     }
                 });
@@ -164,8 +146,8 @@ export default function BlogPostPage() {
 
     useEffect(() => {
         if (!post) return;
-        setClapCount(getLikeCount(post.slug));
-        setHasClapped(hasUserLikedPost(post.slug));
+        setLikeCount(getLikeCount(post.slug));
+        setHasLiked(hasUserLikedPost(post.slug));
     }, [post?.slug]);
 
     useEffect(() => {
@@ -218,7 +200,7 @@ export default function BlogPostPage() {
         try {
             await navigator.clipboard.writeText(code);
             setCopiedCode(code);
-            setTimeout(() => setCopiedCode(null), 2000);
+            setTimeout(() => setCopiedCode(null), TOAST_DURATION.copy);
         } catch (err) {
             console.error('Failed to copy code:', err);
         }
@@ -228,7 +210,7 @@ export default function BlogPostPage() {
         try {
             await navigator.clipboard.writeText(profile.email);
             setEmailCopied(true);
-            setTimeout(() => setEmailCopied(false), 2000);
+            setTimeout(() => setEmailCopied(false), TOAST_DURATION.copy);
         } catch (err) {
             console.error('Failed to copy email:', err);
         }
@@ -237,34 +219,34 @@ export default function BlogPostPage() {
     const getPostUrl = () => `${window.location.origin}/blog/${post.slug}`;
 
     const shareOnTwitter = () => {
-        window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(`${post.title} by @kolob0kk`)}&url=${encodeURIComponent(getPostUrl())}`, '_blank', 'width=550,height=420');
+        window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(`${post.title} by @kolob0kk`)}&url=${encodeURIComponent(getPostUrl())}`, '_blank', `width=${SHARE_WINDOW.width},height=${SHARE_WINDOW.height}`);
     };
 
     const shareOnLinkedIn = () => {
-        window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(getPostUrl())}`, '_blank', 'width=550,height=420');
+        window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(getPostUrl())}`, '_blank', `width=${SHARE_WINDOW.width},height=${SHARE_WINDOW.height}`);
     };
 
     const copyLink = async () => {
         try {
             await navigator.clipboard.writeText(getPostUrl());
             setShowCopyToast(true);
-            setTimeout(() => setShowCopyToast(false), 2000);
+            setTimeout(() => setShowCopyToast(false), TOAST_DURATION.copy);
         } catch (err) {
             console.error('Failed to copy link:', err);
         }
     };
 
-    const handleClap = () => {
-        if (hasClapped) {
+    const handleLike = () => {
+        if (hasLiked) {
             const result = unlikePost(post.slug);
-            if (result.success) { setClapCount(result.count); setHasClapped(false); }
+            if (result.success) { setLikeCount(result.count); setHasLiked(false); }
         } else {
             const result = likePost(post.slug);
             if (result.success) {
-                setClapCount(result.count);
-                setHasClapped(true);
-                setIsClapping(true);
-                setTimeout(() => setIsClapping(false), 600);
+                setLikeCount(result.count);
+                setHasLiked(true);
+                setIsLiking(true);
+                setTimeout(() => setIsLiking(false), ANIMATION_DURATION.likeButton);
             }
         }
     };
@@ -395,12 +377,12 @@ export default function BlogPostPage() {
                 .copy-toast { position: fixed; bottom: 90px; right: 24px; background: var(--color-background-secondary); border: 1px solid var(--color-accent); color: var(--color-text-primary); padding: 12px 20px; font-size: 13px; font-weight: 500; z-index: 1002; opacity: 0; transform: translateY(10px); transition: all var(--transition-fast); pointer-events: none; border-radius: 0; font-family: var(--font-sans); }
                 .copy-toast.visible { opacity: 1; transform: translateY(0); }
 
-                /* Clap */
-                .clap-btn { display: flex; align-items: center; gap: 6px; background: none; border: none; color: var(--color-text-muted); cursor: pointer; padding: 8px; transition: all var(--transition-fast); font-family: var(--font-sans); }
-                .clap-btn:hover, .clap-btn.clapped { color: var(--color-accent); }
-                .clap-btn svg { width: 20px; height: 20px; }
-                .clap-btn.animating svg { animation: clapBounce 0.6s var(--ease-smooth); }
-                @keyframes clapBounce { 0% { transform: scale(1); } 25% { transform: scale(1.3); } 50% { transform: scale(1.1); } 75% { transform: scale(1.25); } 100% { transform: scale(1); } }
+                /* Like button */
+                .like-btn { display: flex; align-items: center; gap: 6px; background: none; border: none; color: var(--color-text-muted); cursor: pointer; padding: 8px; transition: all var(--transition-fast); font-family: var(--font-sans); }
+                .like-btn:hover, .like-btn.liked { color: var(--color-accent); }
+                .like-btn svg { width: 20px; height: 20px; }
+                .like-btn.animating svg { animation: likeBounce 0.6s var(--ease-smooth); }
+                @keyframes likeBounce { 0% { transform: scale(1); } 25% { transform: scale(1.3); } 50% { transform: scale(1.1); } 75% { transform: scale(1.25); } 100% { transform: scale(1); } }
 
                 /* Drop cap */
                 .blog-prose > p:first-of-type::first-letter { float: left; font-family: var(--font-serif); font-size: 3.5em; line-height: 0.8; padding-right: 12px; padding-top: 4px; color: var(--color-text-primary); font-weight: 400; }
@@ -452,7 +434,7 @@ export default function BlogPostPage() {
 
                 /* Print styles */
                 @media print {
-                    .progress-bar, .blog-nav, .back-to-top, .copy-toast, .toc-sidebar, .toc-mobile, .post-nav, .more-thoughts, .author-card-actions, .action-btn, .clap-btn, .mobile-menu { display: none !important; }
+                    .progress-bar, .blog-nav, .back-to-top, .copy-toast, .toc-sidebar, .toc-mobile, .post-nav, .more-thoughts, .author-card-actions, .action-btn, .like-btn, .mobile-menu { display: none !important; }
                     .blog-prose { max-width: 100% !important; }
                     .blog-prose a { color: inherit; text-decoration: underline; }
                     .blog-prose a::after { content: " (" attr(href) ")"; font-size: 0.8em; color: #666; }
@@ -773,11 +755,11 @@ export default function BlogPostPage() {
                             </div>
                         </div>
                         <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                            <button className={`clap-btn ${hasClapped ? 'clapped' : ''} ${isClapping ? 'animating' : ''}`} onClick={handleClap} title={hasClapped ? 'Unlike' : 'Like'}>
-                                <svg viewBox="0 0 24 24" fill={hasClapped ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2">
+                            <button className={`like-btn ${hasLiked ? 'liked' : ''} ${isLiking ? 'animating' : ''}`} onClick={handleLike} title={hasLiked ? 'Unlike' : 'Like'}>
+                                <svg viewBox="0 0 24 24" fill={hasLiked ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2">
                                     <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" strokeLinecap="round" strokeLinejoin="round"/>
                                 </svg>
-                                {clapCount > 0 && <span style={{ fontSize: '13px', fontWeight: 500 }}>{clapCount}</span>}
+                                {likeCount > 0 && <span style={{ fontSize: '13px', fontWeight: 500 }}>{likeCount}</span>}
                             </button>
                             <div style={{ width: '1px', height: '20px', background: 'var(--color-border-light)' }} />
                             <button className="action-btn" onClick={shareOnTwitter} title="Share on X">

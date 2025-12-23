@@ -416,4 +416,88 @@ const result = data && data.items && data.items[0] && data.items[0].value || 'de
 
 ---
 
+## Learnings from the Field (Updated 2024-12)
+
+**Patterns that bit us in production:**
+
+### 1. The Naming Schizophrenia Pattern
+Variables called `clap*` that call functions named `like*`. Or `handleSubmit` that calls `processForm`. Naming inconsistency confuses everyone.
+
+**Fix:** Audit naming chains. If `clapCount` calls `getLikeCount()`, either rename the variable or the function. Pick one truth and stick with it.
+
+### 2. The Frontmatter Copy-Paste
+Same parsing logic implemented 3 different ways in 3 files. One uses proper YAML.parse, two use brittle manual string parsing.
+
+**Fix:** Create a single `parseFrontmatter()` utility in a shared location. Export it. Import it everywhere. DRY isn't just a suggestion.
+
+### 3. The useState Explosion
+15+ useState calls at the top of a component. Each one triggers a re-render. Each one is another thing to track.
+
+**Fix:** Group related state into objects. Consider useReducer for complex state. Add comments grouping state by concern.
+
+### 4. The Nested Ternary Monster
+```typescript
+row.eval.kind === 'missing' ? 'pending' : row.eval.kind === 'error' ? 'fail' : 'ok'
+```
+
+**Fix:** Lookup objects. They're readable, they're maintainable, they don't make your eyes bleed:
+```typescript
+const STATUS_MAP = { missing: 'pending', error: 'fail', ok: 'ok' };
+const status = STATUS_MAP[row.eval.kind] ?? 'pending';
+```
+
+### 5. The Magic Number Epidemic
+`setTimeout(fn, 2000)` — Two seconds of... what? Why? For whom?
+
+**Fix:** Create a constants file. `TOAST_DURATION.copy`, `ANIMATION_DURATION.likeButton`, `BREAKPOINTS.mobile`. Future you will thank present you.
+
+### 6. The Regex State Footgun
+Using a global regex in a loop without realizing `.lastIndex` persists between `.exec()` calls.
+
+**Fix:** Use `.matchAll()` pattern — it's stateless and returns an iterator:
+```typescript
+const matches = [...content.matchAll(/pattern/gm)];
+```
+
+### 7. The structuredClone Ignorance
+Still using `JSON.parse(JSON.stringify(obj))` in 2024 for deep cloning.
+
+**Fix:** `structuredClone(obj)` exists. It handles circular refs. It handles more types. Use it.
+
+---
+
+## Proven Fix Priority Order
+
+When fixing issues, this order minimizes breakage:
+
+1. **Type fixes** — Extend interfaces instead of type casting
+2. **Extract shared utilities** — Consolidate duplicate code
+3. **Rename inconsistencies** — Fix naming across the codebase
+4. **Replace patterns** — Nested ternaries → lookup objects, JSON clone → structuredClone
+5. **Extract constants** — Magic numbers last (least likely to break things)
+6. **Run type checker** — `npx tsc --noEmit` after each batch
+
+---
+
+## Additional Search Patterns
+
+```bash
+# Find useState explosions (many useState in one component)
+grep -A 30 "export default function\|export function" --include="*.tsx" | grep -c "useState"
+
+# Find naming mismatches (clap calling like, etc.)
+grep -rn "clap\|Clap" --include="*.ts" --include="*.tsx" | grep -i "like"
+
+# Find nested ternaries (3+ ? operators on one line)
+grep -rn "?.*?.*?" --include="*.ts" --include="*.tsx"
+
+# Find duplicate function names (same function in multiple files)
+grep -rn "^function \|^const.*=.*=>" --include="*.ts" --include="*.tsx" | cut -d: -f3 | sort | uniq -d
+
+# Find hardcoded timeouts
+grep -rn "setTimeout.*[0-9]\{3,\}" --include="*.ts" --include="*.tsx"
+```
+
+---
+
 *Remember: The goal is to leave the codebase better than you found it, and maybe leave a few developers chuckling at their past sins along the way.*

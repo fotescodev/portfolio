@@ -782,17 +782,37 @@ function stageStyle(status: 'pending' | 'ok' | 'warn' | 'fail', label: string): 
   return theme.muted(label);
 }
 
+// Status lookup tables - clearer than nested ternaries
+const EVAL_STATUS_MAP: Record<string, 'pending' | 'ok' | 'warn' | 'fail'> = {
+  missing: 'pending',
+  error: 'fail',
+  ok: 'ok',
+  unverified: 'ok'
+};
+
+const VERIFY_STATUS_MAP: Record<string, 'pending' | 'ok' | 'warn' | 'fail'> = {
+  unverified: 'warn',
+  ok: 'ok',
+  error: 'fail',
+  missing: 'pending'
+};
+
+const REDTEAM_STATUS_MAP: Record<string, 'pending' | 'ok' | 'warn' | 'fail'> = {
+  pass: 'ok',
+  warn: 'warn',
+  fail: 'fail',
+  error: 'fail',
+  pending: 'pending'
+};
+
 function renderTimelineBar(row: VariantRow, runner: RunnerState | null, width: number): string {
   const current = getCurrentStage(row, runner);
 
   const createStatus = row.sync.kind === 'ok' ? 'ok' : 'fail';
-  const evalStatus: 'pending' | 'ok' | 'warn' | 'fail' =
-    row.eval.kind === 'missing' ? 'pending' : row.eval.kind === 'error' ? 'fail' : 'ok';
-  const verifyStatus: 'pending' | 'ok' | 'warn' | 'fail' =
-    row.eval.kind === 'unverified' ? 'warn' : row.eval.kind === 'ok' ? 'ok' : row.eval.kind === 'error' ? 'fail' : 'pending';
-  const redStatus: 'pending' | 'ok' | 'warn' | 'fail' =
-    row.redteam.kind === 'pass' ? 'ok' : row.redteam.kind === 'warn' ? 'warn' : row.redteam.kind === 'fail' || row.redteam.kind === 'error' ? 'fail' : 'pending';
-  const pubStatus: 'pending' | 'ok' | 'warn' | 'fail' = row.meta.publishStatus === 'published' ? 'ok' : 'pending';
+  const evalStatus = EVAL_STATUS_MAP[row.eval.kind] ?? 'pending';
+  const verifyStatus = VERIFY_STATUS_MAP[row.eval.kind] ?? 'pending';
+  const redStatus = REDTEAM_STATUS_MAP[row.redteam.kind] ?? 'pending';
+  const pubStatus: 'pending' | 'ok' = row.meta.publishStatus === 'published' ? 'ok' : 'pending';
 
   const stages: Array<{ key: TimelineStageKey; label: string; status: 'pending' | 'ok' | 'warn' | 'fail' }> = [
     { key: 'CreateSync', label: 'Create/Sync', status: createStatus },
