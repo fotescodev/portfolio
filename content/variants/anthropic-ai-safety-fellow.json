@@ -1,0 +1,107 @@
+{
+  "metadata": {
+    "company": "Anthropic",
+    "role": "AI Safety Fellow",
+    "generatedAt": "2025-12-23T00:00:00Z",
+    "jobDescription": "AI Safety Fellowship - 4 month research program (May or July 2026 cohorts)\n\nFellowship accelerates AI safety research by providing funding and mentorship.\nFellows work on empirical projects producing public research outputs (papers).\nOver 80% of fellows produced papers in previous cohorts.\n\nResearch Areas:\n- Scalable Oversight: Maintaining helpful, honest models at superhuman intelligence\n- Adversarial Robustness & AI Control: Safety methods for unfamiliar scenarios\n- Model Organisms: Empirical misalignment research\n- Mechanistic Interpretability: Understanding LLM internals\n- AI Welfare: Developing evaluations and mitigations\n\nRequired:\n- Python fluency\n- Full-time availability (4 months)\n- Work authorization in US/UK/Canada\n- Strong technical background (CS, math, physics, cybersecurity)\n- Rapid implementation + clear communication\n\nNice to have:\n- Empirical ML research experience\n- LLM experience\n- Deep learning frameworks\n- Experiment management\n- Open-source contributions\n",
+    "generationModel": "claude-opus-4-5-20251101",
+    "slug": "anthropic-ai-safety-fellow"
+  },
+  "overrides": {
+    "hero": {
+      "status": "Open to AI Safety Research",
+      "headline": [
+        {
+          "text": "Building",
+          "style": "italic"
+        },
+        {
+          "text": "at the edge of",
+          "style": "muted"
+        },
+        {
+          "text": "trust",
+          "style": "accent"
+        }
+      ],
+      "subheadline": "Technical builder with deep experience in AI systems, cryptographic safety, and adversarial robustness. From LLM-powered developer tools to MPC custody infrastructure—I've spent years at the intersection of AI and trust.\n",
+      "companyAccent": [
+        {
+          "text": "with",
+          "style": "muted"
+        },
+        {
+          "text": "Anthropic",
+          "style": "accent"
+        }
+      ]
+    },
+    "about": {
+      "tagline": "Eight years building systems where trust is non-negotiable—now ready to apply that rigor to AI safety research.\n",
+      "bio": [
+        "My work has always centered on safety-critical systems. At Anchorage Digital, I built ETF-grade staking infrastructure with zero tolerance for failure—the same adversarial thinking that AI safety research demands. At Forte, I led MPC cryptography implementations for secure key management, working directly with the math underlying multi-party computation. I've deployed LLM systems in production at Dapper Labs, achieving 98% accuracy on developer questions.\n",
+        "I'm drawn to Anthropic because {{accent}}AI safety is the most important problem of our time{{/accent}}. My background gives me a unique lens: I've seen what happens when systems fail at scale, and I understand the engineering discipline required to prevent it. I want to contribute to interpretability research and help ensure AI systems remain aligned with human values.\n"
+      ],
+      "stats": [
+        {
+          "value": "8+",
+          "label": "Years in Tech"
+        },
+        {
+          "value": "98%",
+          "label": "LLM Accuracy Achieved"
+        },
+        {
+          "value": "Zero",
+          "label": "Critical Failures"
+        }
+      ]
+    },
+    "sections": {
+      "beyondWork": false,
+      "blog": false,
+      "onchainIdentity": false,
+      "skills": true,
+      "passionProjects": false
+    }
+  },
+  "relevance": {
+    "caseStudies": [
+      {
+        "slug": "eth-staking",
+        "relevanceScore": 0.4,
+        "reasoning": "Zero-tolerance safety culture translates to AI safety mindset, but no direct AI/ML work"
+      },
+      {
+        "slug": "xbox-royalties",
+        "relevanceScore": 0.3,
+        "reasoning": "Technical implementation skills, but enterprise blockchain ≠ AI safety research"
+      },
+      {
+        "slug": "ankr-rpc",
+        "relevanceScore": 0.2,
+        "reasoning": "Infrastructure scaling experience, minimal relevance to AI safety"
+      },
+      {
+        "slug": "protocol-integration",
+        "relevanceScore": 0.2,
+        "reasoning": "Cross-functional coordination, but no research component"
+      }
+    ],
+    "skills": [
+      {
+        "category": "Technical Implementation",
+        "relevanceScore": 0.5
+      },
+      {
+        "category": "Blockchain & Cryptography",
+        "relevanceScore": 0.3
+      },
+      {
+        "category": "Product Management",
+        "relevanceScore": 0.1
+      }
+    ],
+    "projects": []
+  }
+}
