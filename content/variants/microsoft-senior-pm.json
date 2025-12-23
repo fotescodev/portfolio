@@ -1,0 +1,107 @@
+{
+  "metadata": {
+    "company": "Microsoft",
+    "role": "Senior Product Manager",
+    "generatedAt": "2025-12-22T23:45:00Z",
+    "jobDescription": "Senior Product Manager (IC4) at Microsoft.\n\nKey Responsibilities:\n- Define feature sets and collaborate with Design teams to integrate UX, APIs, hardware design toward product vision\n- Anticipate interoperability challenges across different system layers\n- Build golden configurations and conduct scenario walkthroughs with partner teams\n- Work with Data Science and Software Engineering to establish performance metrics\n- Leverage data and AI tools to analyze user behavior and implement improvements\n- Incorporate security principles including logging posture, permissions minimization\n- Own roadmaps for multiple feature areas and manage backlog prioritization\n\nRequirements:\n- Bachelor's degree AND 5+ years in product/service/program management or software development\n- Strong technical background with system design understanding\n- Cross-functional dependency management\n- Agile/Scrum methodology familiarity\n\nPreferred:\n- 8+ years relevant experience\n- 2+ years bringing products/features to market with measurable improvements\n- 2+ years managing cross-functional hardware programs with KPI tracking\n\nLocation: United States\nSalary: $119,800 - $258,000 USD\n",
+    "generationModel": "claude-opus-4-5-20251101",
+    "slug": "microsoft-senior-pm"
+  },
+  "overrides": {
+    "hero": {
+      "status": "Open to Product Roles",
+      "headline": [
+        {
+          "text": "Building",
+          "style": "italic"
+        },
+        {
+          "text": "at the edge of",
+          "style": "muted"
+        },
+        {
+          "text": "trust",
+          "style": "accent"
+        }
+      ],
+      "subheadline": "Senior PM with 8+ years shipping cross-functional products. I built Microsoft's first production smart contract for Xbox royalties—and I'm ready to come back and do it again at scale.\n",
+      "companyAccent": [
+        {
+          "text": "with",
+          "style": "muted"
+        },
+        {
+          "text": "Microsoft",
+          "style": "accent"
+        }
+      ]
+    },
+    "about": {
+      "tagline": "Eight years shipping infrastructure products, from enterprise blockchain to institutional custody.\n",
+      "bio": [
+        "At Anchorage Digital, I lead cross-functional initiatives spanning custody, staking, and protocol integrations. I've shipped 7+ protocol integrations using a RICE evaluation framework I built, coordinating across 4+ teams and reducing cycle time by 40%. Before that, I drove 15× revenue growth at Ankr by pivoting RPC infrastructure from developers to protocols—data-driven product decisions with measurable outcomes.\n",
+        "My Microsoft chapter started in 2017, when I shipped one of Microsoft's first production smart contracts—the Xbox royalty tracking system on Ethereum. Zero disputed payments post-launch. The pattern became a reference implementation for Azure blockchain services. Eight years later, I'm still shipping infrastructure that has to work every time—and I'd love to bring that back to Microsoft.\n"
+      ],
+      "stats": [
+        {
+          "value": "8+",
+          "label": "Years in Product"
+        },
+        {
+          "value": "7+",
+          "label": "Protocols Shipped"
+        },
+        {
+          "value": "Zero",
+          "label": "Disputed Payments"
+        }
+      ]
+    },
+    "sections": {
+      "beyondWork": false,
+      "blog": true,
+      "onchainIdentity": false,
+      "skills": true,
+      "passionProjects": false
+    }
+  },
+  "relevance": {
+    "caseStudies": [
+      {
+        "slug": "xbox-royalties",
+        "relevanceScore": 1,
+        "reasoning": "Direct Microsoft experience—shipped first production smart contract for Xbox. Cross-functional leadership, enterprise scale."
+      },
+      {
+        "slug": "protocol-integration",
+        "relevanceScore": 0.9,
+        "reasoning": "RICE framework, 4+ team coordination, 40% efficiency gain—maps directly to cross-functional PM responsibilities."
+      },
+      {
+        "slug": "ankr-rpc",
+        "relevanceScore": 0.85,
+        "reasoning": "Data-driven product decisions, 15× measurable improvement, API design expertise."
+      },
+      {
+        "slug": "forte-wallet-sdk",
+        "relevanceScore": 0.8,
+        "reasoning": "Hardware/software convergence (MPC), SDK development, gaming industry connection."
+      }
+    ],
+    "skills": [
+      {
+        "category": "Technical Leadership",
+        "relevanceScore": 1
+      },
+      {
+        "category": "Product Strategy",
+        "relevanceScore": 0.95
+      },
+      {
+        "category": "Cross-Functional Coordination",
+        "relevanceScore": 0.9
+      }
+    ],
+    "projects": []
+  }
+}
