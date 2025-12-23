@@ -22,10 +22,22 @@ export type VariantOverrides = Variant['overrides'];
 export type VariantRelevance = Variant['relevance'];
 
 /**
- * Merged profile - base profile + variant overrides applied
+ * Styled text segment for headlines
  */
-export interface MergedProfile extends Profile {
+export interface StyledTextSegment {
+  text: string;
+  style?: 'italic' | 'muted' | 'accent' | 'normal';
+}
+
+/**
+ * Merged profile - base profile + variant overrides applied
+ * Extends base Profile with optional variant-specific fields
+ */
+export interface MergedProfile extends Omit<Profile, 'hero'> {
   _variant?: VariantMetadata; // Track which variant is active
+  hero: Profile['hero'] & {
+    companyAccent?: StyledTextSegment[]; // Optional company accent for variants
+  };
 }
 
 /**

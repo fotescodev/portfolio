@@ -32,17 +32,9 @@ import YAML from 'yaml';
 import ora from 'ora';
 import { VariantSchema } from '../src/lib/schemas.js';
 import { theme, HEADER_COMPACT } from './cli/theme.js';
+import { parseEvalArgs, type VerifyArg } from './cli/parse-args.js';
 
-type VerifyArg = { id: string; sourcePath: string };
-
-type Args = {
-  slug?: string;
-  all: boolean;
-  check: boolean;
-  noWrite: boolean;
-  json: boolean;
-  verify: VerifyArg[];
-};
+type Args = ReturnType<typeof parseEvalArgs>;
 
 type CandidateSource = {
   path: string;
@@ -90,46 +82,7 @@ type EvalResult = {
 };
 
 function parseArgs(): Args {
-  const argv = process.argv.slice(2);
-  const out: Args = { all: false, check: false, noWrite: false, json: false, verify: [] };
-
-  for (let i = 0; i < argv.length; i++) {
-    const a = argv[i];
-    const n = argv[i + 1];
-    if (a === '--slug') {
-      out.slug = n;
-      i++;
-    } else if (a === '--all') {
-      out.all = true;
-    } else if (a === '--check') {
-      out.check = true;
-    } else if (a === '--no-write') {
-      out.noWrite = true;
-    } else if (a === '--json') {
-      out.json = true;
-    } else if (a === '--verify') {
-      const v = n || '';
-      const [id, sourcePath] = v.split('=');
-      if (!id || !sourcePath) {
-        throw new Error(`Invalid --verify value '${v}'. Expected: <claimId>=<sourcePath>`);
-      }
-      out.verify.push({ id, sourcePath });
-      i++;
-    }
-  }
-
-  // Default behavior:
-  // - eval:check (when called without slug) should check all variants.
-  if (out.check && !out.slug) out.all = true;
-
-  if (!out.slug && !out.all) {
-    throw new Error('Provide --slug <slug> or --all');
-  }
-  if (out.slug && out.all) {
-    throw new Error('Choose either --slug or --all, not both.');
-  }
-
-  return out;
+  return parseEvalArgs(process.argv.slice(2));
 }
 
 function listVariantSlugs(): string[] {

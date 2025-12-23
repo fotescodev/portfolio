@@ -23,13 +23,9 @@ import YAML from 'yaml';
 import ora from 'ora';
 import { VariantSchema } from '../src/lib/schemas.js';
 import { theme, HEADER_COMPACT, kv, box } from './cli/theme.js';
+import { parseSyncArgs } from './cli/parse-args.js';
 
-type Args = {
-  slug?: string;
-  check: boolean;
-  quiet: boolean;
-  json: boolean;
-};
+type Args = ReturnType<typeof parseSyncArgs>;
 
 type SyncResult = {
   slug: string;
@@ -38,23 +34,7 @@ type SyncResult = {
 };
 
 function parseArgs(): Args {
-  const argv = process.argv.slice(2);
-  const out: Args = { check: false, quiet: false, json: false };
-  for (let i = 0; i < argv.length; i++) {
-    const a = argv[i];
-    const n = argv[i + 1];
-    if (a === '--slug') {
-      out.slug = n;
-      i++;
-    } else if (a === '--check') {
-      out.check = true;
-    } else if (a === '--quiet') {
-      out.quiet = true;
-    } else if (a === '--json') {
-      out.json = true;
-    }
-  }
-  return out;
+  return parseSyncArgs(process.argv.slice(2));
 }
 
 function stableJson(obj: unknown): string {

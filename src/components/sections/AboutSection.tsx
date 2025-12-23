@@ -7,13 +7,12 @@ import type { Profile } from '../../types/variant';
 // Parse {{accent}}...{{/accent}} markers in text
 function parseStyledText(text: string): ReactNode[] {
   const parts: ReactNode[] = [];
-  const regex = /\{\{accent\}\}(.*?)\{\{\/accent\}\}/g;
   let lastIndex = 0;
-  let match;
 
-  while ((match = regex.exec(text)) !== null) {
+  // Use matchAll to avoid global regex state issues
+  for (const match of text.matchAll(/\{\{accent\}\}(.*?)\{\{\/accent\}\}/g)) {
     // Add text before the match
-    if (match.index > lastIndex) {
+    if (match.index! > lastIndex) {
       parts.push(text.slice(lastIndex, match.index));
     }
     // Add styled text
@@ -28,7 +27,7 @@ function parseStyledText(text: string): ReactNode[] {
         {match[1]}
       </span>
     );
-    lastIndex = regex.lastIndex;
+    lastIndex = match.index! + match[0].length;
   }
 
   // Add remaining text
