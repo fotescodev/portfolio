@@ -25,6 +25,7 @@ import { readFileSync, writeFileSync, readdirSync } from 'fs';
 import { join } from 'path';
 import YAML from 'yaml';
 import { VariantSchema } from '../src/lib/schemas.js';
+import type { Profile, Experience, CaseStudy, Skills, PassionProjects } from '../src/types/portfolio.js';
 
 // ANSI color codes
 const colors = {
@@ -50,17 +51,17 @@ interface CLIArgs {
 }
 
 interface PortfolioData {
-  profile: any;
-  experience: any;
-  caseStudies: any[];
-  skills: any;
-  projects: any;
+  profile: Profile;
+  experience: Experience;
+  caseStudies: CaseStudy[];
+  skills: Skills;
+  projects: PassionProjects;
 }
 
 // Parse command line arguments
 function parseArgs(): CLIArgs {
   const args = process.argv.slice(2);
-  const parsed: any = {
+  const parsed: Partial<CLIArgs> = {
     provider: 'claude'
   };
 

@@ -69,16 +69,12 @@ export default function BlogPostModal({
 
     // Extract table of contents from markdown
     useEffect(() => {
-        const headings: TableOfContentsItem[] = [];
-        const headingRegex = /^(#{1,3})\s+(.+)$/gm;
-        let match;
-
-        while ((match = headingRegex.exec(post.content)) !== null) {
-            const level = match[1].length;
-            const text = match[2].trim();
-            const id = text.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-');
-            headings.push({ id, text, level });
-        }
+        // Use matchAll to avoid global regex state issues
+        const headings = [...post.content.matchAll(/^(#{1,3})\s+(.+)$/gm)].map(match => ({
+            level: match[1].length,
+            text: match[2].trim(),
+            id: match[2].trim().toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-')
+        }));
 
         setTocItems(headings);
         setShowToc(headings.length > 0);

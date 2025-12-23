@@ -4,14 +4,13 @@ import { getExperienceWithOverrides } from '../../lib/variants';
 
 // Parse markdown links [text](url) into clickable anchors
 function parseLinks(text: string): React.ReactNode {
-  const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
   const parts: React.ReactNode[] = [];
   let lastIndex = 0;
-  let match;
 
-  while ((match = linkRegex.exec(text)) !== null) {
+  // Use matchAll to avoid global regex state issues
+  for (const match of text.matchAll(/\[([^\]]+)\]\(([^)]+)\)/g)) {
     // Add text before the link
-    if (match.index > lastIndex) {
+    if (match.index! > lastIndex) {
       parts.push(text.slice(lastIndex, match.index));
     }
     // Add the link
@@ -33,7 +32,7 @@ function parseLinks(text: string): React.ReactNode {
         {match[1]}
       </a>
     );
-    lastIndex = match.index + match[0].length;
+    lastIndex = match.index! + match[0].length;
   }
 
   // Add remaining text

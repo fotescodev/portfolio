@@ -24,16 +24,9 @@ import YAML from 'yaml';
 import ora from 'ora';
 import { VariantSchema } from '../src/lib/schemas.js';
 import { theme, HEADER_COMPACT, kv } from './cli/theme.js';
+import { parseRedteamArgs } from './cli/parse-args.js';
 
-type Args = {
-  slug?: string;
-  all: boolean;
-  check: boolean;
-  strict: boolean;
-  noWrite: boolean;
-  quiet: boolean;
-  json: boolean;
-};
+type Args = ReturnType<typeof parseRedteamArgs>;
 
 type RedteamResult = {
   slug: string;
@@ -53,41 +46,7 @@ type Finding = {
 };
 
 function parseArgs(): Args {
-  const argv = process.argv.slice(2);
-  const out: Args = { all: false, check: false, strict: false, noWrite: false, quiet: false, json: false };
-
-  for (let i = 0; i < argv.length; i++) {
-    const a = argv[i];
-    const n = argv[i + 1];
-    if (a === '--slug') {
-      out.slug = n;
-      i++;
-    } else if (a === '--all') {
-      out.all = true;
-    } else if (a === '--check') {
-      out.check = true;
-    } else if (a === '--strict') {
-      out.strict = true;
-    } else if (a === '--no-write') {
-      out.noWrite = true;
-    } else if (a === '--quiet') {
-      out.quiet = true;
-    } else if (a === '--json') {
-      out.json = true;
-    }
-  }
-
-  // Default: redteam:check checks all variants.
-  if (out.check && !out.slug) out.all = true;
-
-  if (!out.slug && !out.all) {
-    throw new Error('Provide --slug <slug> or --all');
-  }
-  if (out.slug && out.all) {
-    throw new Error('Choose either --slug or --all, not both.');
-  }
-
-  return out;
+  return parseRedteamArgs(process.argv.slice(2));
 }
 
 function listVariantSlugs(): string[] {

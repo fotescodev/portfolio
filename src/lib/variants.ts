@@ -60,7 +60,7 @@ export function getVariantSlugs(): string[] {
  * @returns Merged profile with variant overrides applied
  */
 export function mergeProfile(variant: Variant): MergedProfile {
-  const merged: MergedProfile = JSON.parse(JSON.stringify(baseProfile));
+  const merged: MergedProfile = structuredClone(baseProfile);
 
   // Apply variant metadata
   merged._variant = variant.metadata;
@@ -78,9 +78,9 @@ export function mergeProfile(variant: Variant): MergedProfile {
     if (variant.overrides.hero.subheadline) {
       merged.hero.subheadline = variant.overrides.hero.subheadline;
     }
-    // NEW: Company accent for recruiter visualization
+    // Company accent for recruiter visualization (e.g., "— with Galaxy")
     if (variant.overrides.hero.companyAccent) {
-      (merged.hero as typeof merged.hero & { companyAccent?: typeof variant.overrides.hero.companyAccent }).companyAccent = variant.overrides.hero.companyAccent;
+      merged.hero.companyAccent = variant.overrides.hero.companyAccent;
     }
   }
 
@@ -119,7 +119,7 @@ export function getExperienceWithOverrides(variant: Variant | null) {
   }
 
   // Create a deep copy to avoid mutating original
-  const mergedExperience = JSON.parse(JSON.stringify(baseExperience));
+  const mergedExperience = structuredClone(baseExperience);
 
   // Apply experience overrides by matching company name
   for (const override of variant.overrides.experience) {

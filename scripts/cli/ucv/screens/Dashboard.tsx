@@ -61,13 +61,14 @@ export function Dashboard({ onSelectVariant, onCreate }: DashboardProps) {
     );
   }
 
-  // Count statuses
-  const counts = {
-    ready: variants.filter(v => v.overallStatus === 'ready').length,
-    review: variants.filter(v => v.overallStatus === 'review').length,
-    blocked: variants.filter(v => v.overallStatus === 'blocked').length,
-    pending: variants.filter(v => v.overallStatus === 'pending').length,
-  };
+  // Count statuses in a single pass (O(n) instead of O(4n))
+  const counts = variants.reduce(
+    (acc, v) => {
+      acc[v.overallStatus]++;
+      return acc;
+    },
+    { ready: 0, review: 0, blocked: 0, pending: 0 }
+  );
 
   return (
     <Box flexDirection="column">
