@@ -219,31 +219,47 @@ npm run dev       # Dev server at :5173
 
 ### Current Status
 
-**Date**: 2025-12-22
-**Objective**: Capstone Quality Pipeline complete, evaluate CLI vs UI direction
-**Bundle**: ~197KB gzip initial (target <200KB ✅)
-**Tests**: 211 passing (10 suites)
-**Variants**: 5 active
-**CSS Variables**: 122
+**Date**: 2025-12-23
+**Objective**: Fix test regressions, apply to roles with 7 ready variants
+**Bundle**: ~143KB gzip initial (target <200KB ✅)
+**Tests**: 197 passing, 14 failing (2 suites)
+**Variants**: 7 active
+**CSS Variables**: 364 lines
+**Inline Styles**: 372 occurrences (debt)
 **Premium Score**: 8.5/10
 
-**Blockers**: None
+**Blockers**:
+1. 14 test failures in components.test.tsx blocking CI
 
 **Recent Wins**:
-- UCV-CLI TUI dashboard shipped (PR #60) — templates, pipeline flow, error handling
-- Code splitting shipped (59% bundle reduction, PR #58)
-- Light mode polish shipped
-- Context docs consolidated (87% size reduction)
-
-**Current Question**:
-- Evaluate CLI vs UI approach for variant management
-- CLI: ~1,400 lines, Ink/React TUI, functional but terminal-bound
-- UI alternative: Web-based backoffice for broader accessibility?
+- Microsoft Senior PM variant shipped
+- Galaxy TPM Director variant shipped
+- generate-variant Claude Code skill created
+- UCV-CLI TUI improvements (clickable links, job extraction)
+- Bio condensed to two paragraphs
+- Experience highlights updated
 
 **Next Priority**:
-1. Strategic decision: Continue CLI or pivot to web UI
-2. Trust Battery Testimonials (deferred)
-3. Featured Case Study (deferred)
+1. Fix 14 failing tests (unblock CI)
+2. Apply to roles with 7 ready variants
+3. Trust Battery Testimonials (deferred)
+
+---
+
+### Session: December 23, 2025 — Variant Expansion & Tooling
+
+**Summary**: Added 2 new target company variants (Microsoft, Galaxy). Created generate-variant skill for automated variant creation. Enhanced UCV-CLI with clickable links and job extraction.
+
+**Changes**:
+- `content/variants/microsoft-senior-pm.yaml` — New variant
+- `content/variants/galaxy-pm.yaml` — New variant + status fix
+- `.claude/skills/generate-variant/` — Automation skill
+- `scripts/cli/ucv/` — TUI improvements
+- `content/experience/index.yaml` — Bio condensed, dates updated
+
+**Merged PRs**: #68 (UCV-CLI TUI improvements)
+
+**Next**: Fix 14 failing tests, then apply to open roles
 
 ---
 
@@ -284,64 +300,6 @@ npm run dev       # Dev server at :5173
 **PRs Merged**: #55 (context cleanup), #58 (code splitting)
 
 **Next**: Trust Battery Testimonials or Light Mode Polish
-
----
-
-### Session: December 21, 2025 — UCV-CLI Dashboard
-
-**Summary**: Shipped interactive TUI dashboard for variant management. Discovered test regression.
-
-**Changes**:
-- `scripts/cli/ucv/` — New Ink/React TUI dashboard (+1,334 lines)
-- `docs/guides/universal-cv-cli.md` — Comprehensive CLI guide
-- `docs/guides/capstone-workflow.md` — Step-by-step workflow
-
-**New Commands**:
-```bash
-npm run ucv-cli  # Interactive dashboard
-```
-
-**Issues Found**:
-- 7 test suites failing with React DOM TypeError
-- Likely React 19 + @testing-library/react incompatibility
-
-**Next**: Fix test regression, then code splitting
-
----
-
-### Session: December 20, 2025 — Capstone Pipeline & Sprint-Sync
-
-**Summary**: Integrated capstone quality pipeline. Created sprint-sync skill. Fixed OG images.
-
-**Changes**:
-- `scripts/sync-variants.ts` — YAML→JSON sync
-- `scripts/evaluate-variants.ts` — Claims ledger generator
-- `scripts/redteam.ts` — Adversarial scanner
-- `.claude/skills/sprint-sync/` — Multi-perspective onboarding skill
-- OG images aligned with design system
-
-**New Commands**:
-```bash
-npm run variants:sync
-npm run eval:variant -- --slug <slug>
-npm run redteam:variant -- --slug <slug>
-```
-
----
-
-### Session: December 19, 2025 — Experience Optimization
-
-**Summary**: Optimized experience section with SMART bullets and product links.
-
-**Changes**:
-- Reduced highlights from 42 to 24 (43% reduction)
-- Added 12 inline product links
-- Added `parseLinks()` to ExperienceSection.tsx
-
-**Learnings**:
-- 3-4 bullets max per role
-- Metrics in first 10 words
-- Link to proof (npm, docs, case studies)
 
 ---
 
