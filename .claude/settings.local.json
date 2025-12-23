@@ -35,9 +35,18 @@
       "Bash(grep:*)",
       "Bash(xargs -I {} sh -c 'echo \"\"=== {} ===\"\" && head -15 {}')",
       "Skill(dmitrii-writing-style)",
+      "Skill(generate-variant)",
       "Bash(head:*)",
       "WebFetch(domain:framerusercontent.com)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "Bash(npm run eval:variant:*)",
+      "Bash(npm run variants:sync:*)",
+      "Bash(npm run redteam:variant:*)",
+      "Bash(npm run eval:check:*)",
+      "Bash(open http://localhost:5173/?variant=galaxy-pm)",
+      "Bash(open \"http://localhost:5173/?variant=mysten-walrus-senior-pm\")",
+      "Bash(cat:*)",
+      "Bash(open \"http://localhost:5173/galaxy/pm\")"
     ],
     "deny": [],
     "ask": []
