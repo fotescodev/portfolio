@@ -1,0 +1,111 @@
+{
+  "metadata": {
+    "company": "Anaconda",
+    "role": "Principal Product Manager, Gen AI Developer Tools",
+    "generatedAt": "2025-12-23T00:00:00Z",
+    "jobDescription": "Anaconda is seeking a Principal Product Manager, GenAI Developer Tools to join\ntheir rapidly-growing company. 95% of Fortune 500 companies rely on Anaconda.\n\nKey Responsibilities:\n- Lead product strategy for Agentic Environment & Package Management initiatives\n- MCP (Model Context Protocol) server development and AI tool integrations\n- Drive development of tools and agents that improve Python vibe-coding quality\n- Support strategic partnerships with AI-enabled IDEs (Cursor, VS Code, Windsurf)\n- Define integration strategies making Anaconda indispensable to AI coding workflows\n- Collaborate with engineering on APIs, SDKs, and developer tools\n- Work with enterprise customers in regulated industries (finance, healthcare, gov)\n- Partner with marketing and developer relations for 50M+ Python developers\n\nRequirements:\n- 7+ years PM experience, 3+ years in developer tools/infrastructure/platform\n- Deep hands-on experience with AI coding tools (Cursor, GitHub Copilot, Claude)\n- Proven expertise in MCP, A2A protocol, agentic systems\n- API design, system architecture, implementation trade-offs\n- Experience building strategic technology partnerships\n- Track record driving product adoption in developer communities\n",
+    "generationModel": "claude-opus-4-5-20251101",
+    "slug": "anaconda-genai-pm"
+  },
+  "overrides": {
+    "hero": {
+      "status": "Open to Product Roles",
+      "headline": [
+        {
+          "text": "Building",
+          "style": "italic"
+        },
+        {
+          "text": "at the edge of",
+          "style": "muted"
+        },
+        {
+          "text": "trust",
+          "style": "accent"
+        }
+      ],
+      "subheadline": "Developer tools PM with 8+ years shipping SDKs, CLIs, and infrastructure that developers actually want to use. From Flow's 60% faster onboarding to Ankr.JS powering 1M+ daily API calls—I build the tools that make complex systems feel simple.\n",
+      "companyAccent": [
+        {
+          "text": "with",
+          "style": "muted"
+        },
+        {
+          "text": "Anaconda",
+          "style": "accent"
+        }
+      ]
+    },
+    "about": {
+      "tagline": "Eight years shipping developer tools that bridge the gap between powerful infrastructure and delightful DX.\n",
+      "bio": [
+        "I've spent my career making complex infrastructure accessible to developers. At Dapper Labs, I led the Flow CLI and Cadence Playground redesign that cut developer onboarding time by 60%—turning a churning funnel into a growth engine. At Ankr, I built the Ankr.JS SDK and Advanced APIs that powered 1M+ daily requests, driving 15× revenue growth by making RPC infrastructure feel invisible. At Forte, I designed Wallet-as-a-Service SDKs that let AAA gaming studios add Web3 features without learning blockchain.\n",
+        "What excites me about Anaconda is the {{accent}}MCP and agentic systems work{{/accent}}. I've been deep in AI-assisted development—using Cursor and Claude daily, building my own MCP servers, and thinking hard about what developer tools look like when agents are first-class users. The opportunity to shape how 50M+ Python developers interact with AI tools is exactly where I want to be.\n"
+      ],
+      "stats": [
+        {
+          "value": "8+",
+          "label": "Years in Dev Tools"
+        },
+        {
+          "value": "3",
+          "label": "SDKs Shipped"
+        },
+        {
+          "value": "60%",
+          "label": "Faster Onboarding"
+        }
+      ]
+    },
+    "sections": {
+      "beyondWork": false,
+      "blog": true,
+      "onchainIdentity": false,
+      "skills": true,
+      "passionProjects": true
+    }
+  },
+  "relevance": {
+    "caseStudies": [
+      {
+        "slug": "ankr-rpc",
+        "relevanceScore": 0.95,
+        "reasoning": "SDK development (Ankr.JS), API design, driving developer adoption, 15× growth—directly maps to building developer tools and driving adoption"
+      },
+      {
+        "slug": "protocol-integration",
+        "relevanceScore": 0.85,
+        "reasoning": "Platform PM experience, framework design, cross-functional coordination with engineering teams"
+      },
+      {
+        "slug": "xbox-royalties",
+        "relevanceScore": 0.8,
+        "reasoning": "Enterprise-scale technical PM, API design, pioneering new technology paradigm at large org"
+      },
+      {
+        "slug": "eth-staking",
+        "relevanceScore": 0.7,
+        "reasoning": "Enterprise customers in regulated industries, infrastructure platform, working with finance clients"
+      }
+    ],
+    "skills": [
+      {
+        "category": "Developer Tools & SDKs",
+        "relevanceScore": 1
+      },
+      {
+        "category": "Technical Leadership",
+        "relevanceScore": 0.95
+      },
+      {
+        "category": "API & Platform Design",
+        "relevanceScore": 0.9
+      },
+      {
+        "category": "Blockchain & Web3",
+        "relevanceScore": 0.75
+      }
+    ],
+    "projects": []
+  }
+}
