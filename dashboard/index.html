@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>CV Variants Dashboard</title>
+  <style>
+    :root {
+      --bg: #0a0a0b;
+      --bg-card: #141416;
+      --border: #2a2a2e;
+      --text: #fafafa;
+      --text-muted: #71717a;
+      --accent: #3b82f6;
+      --accent-hover: #2563eb;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.5;
+    }
+
+    /* Password Gate */
+    #gate {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 1rem;
+    }
+
+    .gate-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+      max-width: 320px;
+      width: 100%;
+    }
+
+    .gate-box h2 {
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+      font-weight: 500;
+    }
+
+    .gate-box input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .gate-box input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .gate-box button {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      background: var(--accent);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .gate-box button:hover {
+      background: var(--accent-hover);
+    }
+
+    .error {
+      color: #ef4444;
+      font-size: 0.875rem;
+      margin-top: 0.5rem;
+      display: none;
+    }
+
+    /* Dashboard */
+    #dashboard {
+      display: none;
+      padding: 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    header {
+      margin-bottom: 2rem;
+    }
+
+    header h1 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    header p {
+      color: var(--text-muted);
+    }
+
+    .search-bar {
+      margin-bottom: 1.5rem;
+    }
+
+    .search-bar input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 1rem;
+    }
+
+    .search-bar input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .search-bar input::placeholder {
+      color: var(--text-muted);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th {
+      text-align: left;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-muted);
+      font-weight: 500;
+      font-size: 0.875rem;
+    }
+
+    td {
+      padding: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .company {
+      font-weight: 500;
+    }
+
+    .role {
+      color: var(--text-muted);
+      font-size: 0.875rem;
+    }
+
+    .date {
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      white-space: nowrap;
+    }
+
+    .actions {
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 0.875rem;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-hover);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      margin-left: 0.5rem;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--text-muted);
+      color: var(--text);
+    }
+
+    .variant-row.hidden {
+      display: none;
+    }
+
+    .stats {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+      padding: 1rem;
+      background: var(--bg-card);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    @media (max-width: 640px) {
+      #dashboard {
+        padding: 1rem;
+      }
+
+      .actions {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .btn-secondary {
+        margin-left: 0;
+      }
+
+      th:nth-child(2),
+      td.date {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Password Gate -->
+  <div id="gate">
+    <div class="gate-box">
+      <h2>🔐 Dashboard Access</h2>
+      <input type="password" id="password" placeholder="Enter access code" autofocus>
+      <button onclick="checkPassword()">Enter</button>
+      <p class="error" id="error">Incorrect code</p>
+    </div>
+  </div>
+
+  <!-- Dashboard (hidden until authenticated) -->
+  <div id="dashboard">
+    <header>
+      <h1>CV Variants Dashboard</h1>
+      <p>Quick access to all portfolio variants</p>
+    </header>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-value">10</div>
+        <div class="stat-label">Total Variants</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">10</div>
+        <div class="stat-label">Companies</div>
+      </div>
+    </div>
+
+    <div class="search-bar">
+      <input type="text" id="search" placeholder="Search by company or role..." oninput="filterVariants()">
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Variant</th>
+          <th>Created</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        
+      <tr class="variant-row" data-company="anaconda" data-role="principal product manager, gen ai developer tools">
+        <td>
+          <div class="company">Anaconda</div>
+          <div class="role">Principal Product Manager, Gen AI Developer Tools</div>
+        </td>
+        <td class="date">Dec 23, 2025</td>
+        <td class="actions">
+          <a href="https://fotescodev.github.io/portfolio/anaconda/genai-pm" target="_blank" class="btn btn-primary">View</a>
+          <a href="https://ats.rippling.com/anaconda/jobs/f37e2651-58a7-4198-94cf-6ec8bb2cca30" target="_blank" class="btn btn-secondary">Job Post</a>
+        </td>
+      </tr>
+    
+
+      <tr class="variant-row" data-company="anthropic" data-role="ai safety fellow">
+        <td>
+          <div class="company">Anthropic</div>
+          <div class="role">AI Safety Fellow</div>
+        </td>
+        <td class="date">Dec 23, 2025</td>
+        <td class="actions">
+          <a href="https://fotescodev.github.io/portfolio/anthropic/ai-safety-fellow" target="_blank" class="btn btn-primary">View</a>
+          <a href="https://job-boards.greenhouse.io/anthropic/jobs/5023394008" target="_blank" class="btn btn-secondary">Job Post</a>
+        </td>
+      </tr>
+    
+
+      <tr class="variant-row" data-company="figma" data-role="product manager, developer tools">
+        <td>
+          <div class="company">Figma</div>
+          <div class="role">Product Manager, Developer Tools</div>
+        </td>
+        <td class="date">Dec 23, 2025</td>
+        <td class="actions">
+          <a href="https://fotescodev.github.io/portfolio/figma/pm-dev-tools" target="_blank" class="btn btn-primary">View</a>
+          <a href="https://job-boards.greenhouse.io/figma/jobs/5740760004" target="_blank" class="btn btn-secondary">Job Post</a>
+        </td>
+      </tr>
+    
+
+      <tr class="variant-row" data-company="microsoft" data-role="senior product manager">
+        <td>
+          <div class="company">Microsoft</div>
+          <div class="role">Senior Product Manager</div>
+        </td>
+        <td class="date">Dec 22, 2025</td>
+        <td class="actions">
+          <a href="https://fotescodev.github.io/portfolio/microsoft/senior-pm" target="_blank" class="btn btn-primary">View</a>
+          <a href="https://apply.careers.microsoft.com/careers?query=product&start=0&pid=1970393556619182&sort_by=match" target="_blank" class="btn btn-secondary">Job Post</a>
+        </td>
+      </tr>
+    
+
+      <tr class="variant-row" data-company="galaxy" data-role="director, technical program manager">
+        <td>
+          <div class="company">Galaxy</div>
+          <div class="role">Director, Technical Program Manager</div>
+        </td>
+        <td class="date">Dec 22, 2025</td>
+        <td class="actions">
+          <a href="https://fotescodev.github.io/portfolio/galaxy/pm" target="_blank" class="btn btn-primary">View</a>
+          <a href="https://job-boards.greenhouse.io/galaxydigitalservices/jobs/5591908004" target="_blank" class="btn btn-secondary">Job Post</a>
+        </td>
+      </tr>
+    
+
+      <tr class="variant-row" data-company="meta" data-role="product manager, business ai">
+        <td>
+          <div class="company">Meta</div>
+          <div class="role">Product Manager, Business AI</div>
+        </td>
+        <td class="date">Dec 22, 2025</td>
+        <td class="actions">
+          <a href="https://fotescodev.github.io/portfolio/meta/business-ai-pm" target="_blank" class="btn btn-primary">View</a>
+          <a href="https://www.metacareers.com/profile/job_details/1851836246209831" target="_blank" class="btn btn-secondary">Job Post</a>
+        </td>
+      </tr>
+    
+
+      <tr class="variant-row" data-company="mysten labs" data-role="sr. product manager, walrus (distributed storage)">
+        <td>
+          <div class="company">Mysten Labs</div>
+          <div class="role">Sr. Product Manager, Walrus (Distributed Storage)</div>
+        </td>
+        <td class="date">Dec 19, 2025</td>
+        <td class="actions">
+          <a href="https://fotescodev.github.io/portfolio/mysten/walrus-senior-pm" target="_blank" class="btn btn-primary">View</a>
+          <a href="https://jobs.ashbyhq.com/mystenlabs/5d434241-ef7f-44e8-ad3a-6f17376866d7" target="_blank" class="btn btn-secondary">Job Post</a>
+        </td>
+      </tr>
+    
+
+      <tr class="variant-row" data-company="stripe" data-role="crypto product manager">
+        <td>
+          <div class="company">Stripe</div>
+          <div class="role">Crypto Product Manager</div>
+        </td>
+        <td class="date">Dec 19, 2025</td>
+        <td class="actions">
+          <a href="https://fotescodev.github.io/portfolio/stripe/crypto" target="_blank" class="btn btn-primary">View</a>
+          
+        </td>
+      </tr>
+    
+
+      <tr class="variant-row" data-company="gensyn" data-role="technical product manager">
+        <td>
+          <div class="company">Gensyn</div>
+          <div class="role">Technical Product Manager</div>
+        </td>
+        <td class="date">Dec 16, 2025</td>
+        <td class="actions">
+          <a href="https://fotescodev.github.io/portfolio/gensyn/technical-product-manager" target="_blank" class="btn btn-primary">View</a>
+          
+        </td>
+      </tr>
+    
+
+      <tr class="variant-row" data-company="bloomberg" data-role="technical product manager">
+        <td>
+          <div class="company">Bloomberg</div>
+          <div class="role">Technical Product Manager</div>
+        </td>
+        <td class="date">Dec 16, 2025</td>
+        <td class="actions">
+          <a href="https://fotescodev.github.io/portfolio/bloomberg/technical-product-manager" target="_blank" class="btn btn-primary">View</a>
+          
+        </td>
+      </tr>
+    
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    // Simple hash function for password (not cryptographically secure, just obscurity)
+    const HASH = 'nxt2ji';
+
+    function simpleHash(str) {
+      let hash = 0;
+      for (let i = 0; i < str.length; i++) {
+        const char = str.charCodeAt(i);
+        hash = ((hash << 5) - hash) + char;
+        hash = hash & hash;
+      }
+      return hash.toString(36);
+    }
+
+    function checkPassword() {
+      const input = document.getElementById('password').value;
+      if (simpleHash(input) === HASH) {
+        localStorage.setItem('dashboard_auth', 'true');
+        showDashboard();
+      } else {
+        document.getElementById('error').style.display = 'block';
+      }
+    }
+
+    function showDashboard() {
+      document.getElementById('gate').style.display = 'none';
+      document.getElementById('dashboard').style.display = 'block';
+    }
+
+    function filterVariants() {
+      const query = document.getElementById('search').value.toLowerCase();
+      document.querySelectorAll('.variant-row').forEach(row => {
+        const company = row.dataset.company;
+        const role = row.dataset.role;
+        const matches = company.includes(query) || role.includes(query);
+        row.classList.toggle('hidden', !matches);
+      });
+    }
+
+    // Check if already authenticated
+    document.getElementById('password').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') checkPassword();
+    });
+
+    if (localStorage.getItem('dashboard_auth') === 'true') {
+      showDashboard();
+    }
+  </script>
+</body>
+</html>

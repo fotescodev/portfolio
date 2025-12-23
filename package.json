@@ -28,7 +28,8 @@
     "redteam:variant": "tsx scripts/redteam.ts",
     "redteam:all": "tsx scripts/redteam.ts --all",
     "redteam:check": "tsx scripts/redteam.ts --check --all",
-    "ucv-cli": "tsx scripts/cli/ucv/index.ts"
+    "ucv-cli": "tsx scripts/cli/ucv/index.ts",
+    "generate:dashboard": "tsx scripts/generate-dashboard.ts"
   },
   "dependencies": {
     "@types/react-syntax-highlighter": "^15.5.13",
