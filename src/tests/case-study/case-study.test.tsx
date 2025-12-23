@@ -21,13 +21,13 @@ const TestWrapper = ({ children }: { children: React.ReactNode }) => (
 );
 
 describe('Case Study Content Loading', () => {
-    it('should load all 4 case studies', () => {
-        expect(caseStudies).toHaveLength(4);
+    it('should load all 3 case studies', () => {
+        expect(caseStudies).toHaveLength(3);
     });
 
     it('should sort case studies by id', () => {
         const ids = caseStudies.map(cs => cs.id);
-        expect(ids).toEqual([1, 2, 3, 4]);
+        expect(ids).toEqual([1, 2, 3]);
     });
 
     it('should have required fields in each case study', () => {
@@ -74,9 +74,9 @@ describe('Case Study Content Loading', () => {
 
 describe('Case Study Helper Functions', () => {
     it('getCaseStudyBySlug should return correct case study', () => {
-        const cs = getCaseStudyBySlug('institutional-eth-staking');
+        const cs = getCaseStudyBySlug('mempools-alerting-platform');
         expect(cs).toBeDefined();
-        expect(cs?.title).toBe('Institutional ETH Staking');
+        expect(cs?.title).toBe('On-Chain Alerting Platform');
     });
 
     it('getCaseStudyBySlug should return undefined for non-existent slug', () => {
@@ -87,7 +87,7 @@ describe('Case Study Helper Functions', () => {
     it('getCaseStudyById should return correct case study', () => {
         const cs = getCaseStudyById(2);
         expect(cs).toBeDefined();
-        expect(cs?.title).toBe('On-Chain Alerting Platform');
+        expect(cs?.title).toBe('RPC Infrastructure & APIs');
     });
 
     it('getCaseStudyById should return undefined for non-existent id', () => {
@@ -380,30 +380,23 @@ describe('CaseStudyFooter Component', () => {
 });
 
 describe('Case Study Content Specific Tests', () => {
-    it('ETH Staking case study should have correct data', () => {
-        const cs = getCaseStudyById(1);
-        expect(cs?.title).toBe('Institutional ETH Staking');
-        expect(cs?.company).toBe('Anchorage Digital');
-        expect(cs?.hook.impactMetric.value).toBe('Zero');
-        expect(cs?.hook.impactMetric.label).toBe('slashing events');
-    });
-
     it('Mempools case study should have correct data', () => {
-        const cs = getCaseStudyById(2);
+        const cs = getCaseStudyById(1);
         expect(cs?.title).toBe('On-Chain Alerting Platform');
         expect(cs?.company).toBe('Mempools (Founder)');
         expect(cs?.hook.impactMetric.value).toBe('200+');
+        expect(cs?.hook.impactMetric.label).toBe('daily active users');
     });
 
     it('Ankr RPC case study should have correct data', () => {
-        const cs = getCaseStudyById(3);
+        const cs = getCaseStudyById(2);
         expect(cs?.title).toBe('RPC Infrastructure & APIs');
         expect(cs?.company).toBe('Ankr');
         expect(cs?.hook.impactMetric.value).toBe('15×');
     });
 
     it('Xbox Royalties case study should have correct data', () => {
-        const cs = getCaseStudyById(4);
+        const cs = getCaseStudyById(3);
         expect(cs?.title).toBe('Royalties on Ethereum');
         expect(cs?.company).toBe('Microsoft / Xbox');
         expect(cs?.hook.impactMetric.value).toBe('99%');
@@ -413,22 +406,22 @@ describe('Case Study Content Specific Tests', () => {
 describe('Case Study Links Schema', () => {
     it('should support optional demoUrl, githubUrl, docsUrl fields', () => {
         // Ankr case study has all three
-        const ankr = getCaseStudyById(3);
+        const ankr = getCaseStudyById(2);
         expect(ankr?.demoUrl).toBeDefined();
         expect(ankr?.githubUrl).toBeDefined();
         expect(ankr?.docsUrl).toBeDefined();
     });
 
     it('should allow case studies without links', () => {
-        // ETH Staking doesn't have external links (confidential)
-        const ethStaking = getCaseStudyById(1);
-        expect(ethStaking?.demoUrl).toBeUndefined();
-        expect(ethStaking?.githubUrl).toBeUndefined();
-        expect(ethStaking?.docsUrl).toBeUndefined();
+        // Mempools doesn't have external links
+        const mempools = getCaseStudyById(1);
+        expect(mempools?.demoUrl).toBeUndefined();
+        expect(mempools?.githubUrl).toBeUndefined();
+        expect(mempools?.docsUrl).toBeUndefined();
     });
 
     it('should support media array with type and url', () => {
-        const ankr = getCaseStudyById(3);
+        const ankr = getCaseStudyById(2);
         expect(ankr?.media).toBeDefined();
         expect(Array.isArray(ankr?.media)).toBe(true);
         expect(ankr?.media?.length).toBeGreaterThan(0);
@@ -449,7 +442,7 @@ describe('Case Study Links Schema', () => {
     });
 
     it('media items can have optional labels', () => {
-        const ankr = getCaseStudyById(3);
+        const ankr = getCaseStudyById(2);
         // At least some media items should have labels
         const hasLabels = ankr?.media?.some(item => item.label !== undefined);
         expect(hasLabels).toBe(true);
@@ -469,18 +462,18 @@ describe('CaseStudyLinks Component', () => {
     });
 
     it('should render Live button when demoUrl exists', () => {
-        const ankr = getCaseStudyById(3)!;
+        const ankr = getCaseStudyById(2)!;
         render(
             <TestWrapper>
                 <CaseStudyLinks caseStudy={ankr} />
             </TestWrapper>
         );
-        
+
         expect(screen.getByText('Live')).toBeInTheDocument();
     });
 
     it('should render Code button when githubUrl exists', () => {
-        const ankr = getCaseStudyById(3)!;
+        const ankr = getCaseStudyById(2)!;
         render(
             <TestWrapper>
                 <CaseStudyLinks caseStudy={ankr} />
@@ -491,7 +484,7 @@ describe('CaseStudyLinks Component', () => {
     });
 
     it('should render Docs button when docsUrl exists', () => {
-        const ankr = getCaseStudyById(3)!;
+        const ankr = getCaseStudyById(2)!;
         render(
             <TestWrapper>
                 <CaseStudyLinks caseStudy={ankr} />
@@ -502,7 +495,7 @@ describe('CaseStudyLinks Component', () => {
     });
 
     it('should render media icon buttons with tooltips', () => {
-        const ankr = getCaseStudyById(3)!;
+        const ankr = getCaseStudyById(2)!;
         render(
             <TestWrapper>
                 <CaseStudyLinks caseStudy={ankr} />
@@ -519,7 +512,7 @@ describe('CaseStudyLinks Component', () => {
     });
 
     it('should render links in hero section', () => {
-        const ankr = getCaseStudyById(3)!;
+        const ankr = getCaseStudyById(2)!;
         render(
             <TestWrapper>
                 <CaseStudyHero caseStudy={ankr} isMobile={false} />
@@ -532,19 +525,19 @@ describe('CaseStudyLinks Component', () => {
     });
 
     it('should render links only in hero (not footer for consistency)', () => {
-        const ankr = getCaseStudyById(3)!;
+        const ankr = getCaseStudyById(2)!;
         render(
             <TestWrapper>
-                <CaseStudyFooter 
+                <CaseStudyFooter
                     caseStudy={ankr}
-                    prevStudy={caseStudies[2]}
+                    prevStudy={caseStudies[0]}
                     nextStudy={null}
                     onNavigate={() => {}}
                     isMobile={false}
                 />
             </TestWrapper>
         );
-        
+
         // Footer should NOT have "Explore" section (links are in hero only)
         expect(screen.queryByText('Explore')).not.toBeInTheDocument();
         // CTA buttons should still be present
