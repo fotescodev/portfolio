@@ -1,0 +1,191 @@
+version: 1
+variant:
+  slug: anaconda-genai-pm
+  variantFile: content/variants/anaconda-genai-pm.yaml
+  contentHash: b225406f6adc7be9d26f8eca503ad260f2988735e180d556683997ce25ee7b5a
+  evaluatedAt: 2025-12-23T18:14:28.382Z
+claims:
+  - id: metric-829079d6dd
+    location: overrides.hero.subheadline
+    text: Developer tools PM with 8+ years shipping SDKs, CLIs, and infrastructure that developers actually want to use
+    anchors:
+      - 8+
+    candidateSources:
+      - path: content/knowledge/achievements/ankr-15x-revenue.yaml
+        score: 0.06
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 40%
+      - path: content/knowledge/achievements/flow-cli-dx.yaml
+        score: 0.06
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 40%
+      - path: content/knowledge/achievements/forte-wallet-sdk.yaml
+        score: 0.045
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 30%
+      - path: content/knowledge/achievements/l2-protocol-integrations.yaml
+        score: 0.045
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 30%
+      - path: content/experience/index.yaml
+        score: 0.045
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 30%
+    verified:
+      status: verified
+      sources:
+        - path: content/experience/index.yaml
+          anchors:
+            - 8+
+      notes: ""
+  - id: metric-924482d28f
+    location: overrides.hero.subheadline
+    text: From Flow's 60% faster onboarding to Ankr.JS powering 1M+ daily API calls—I build the tools that make complex
+      systems feel simple.
+    anchors:
+      - 60%
+      - 1M
+    candidateSources:
+      - path: content/experience/index.yaml
+        score: 1
+        matchedAnchors:
+          - 60%
+          - 1M
+        note: anchors 2/2 • overlap 43%
+      - path: content/knowledge/achievements/flow-cli-dx.yaml
+        score: 0.532
+        matchedAnchors:
+          - 60%
+        note: anchors 1/2 • overlap 21%
+      - path: content/knowledge/achievements/ankr-15x-revenue.yaml
+        score: 0.521
+        matchedAnchors:
+          - 1M
+        note: anchors 1/2 • overlap 14%
+      - path: content/knowledge/achievements/l2-protocol-integrations.yaml
+        score: 0.511
+        matchedAnchors:
+          - 60%
+        note: anchors 1/2 • overlap 7%
+      - path: content/knowledge/stories/galaxy-compliance-win.yaml
+        score: 0.043
+        matchedAnchors: []
+        note: anchors 0/2 • overlap 29%
+    verified:
+      status: verified
+      sources:
+        - path: content/experience/index.yaml
+          anchors:
+            - 60%
+            - 1M
+      notes: ""
+  - id: metric-bb20833f1c
+    location: overrides.about.bio[0]
+    text: At Dapper Labs, I led the Flow CLI and Cadence Playground redesign that cut developer onboarding time by
+      60%—turning a churning funnel into a growth engine
+    anchors:
+      - 60%
+    candidateSources:
+      - path: content/knowledge/achievements/flow-cli-dx.yaml
+        score: 1
+        matchedAnchors:
+          - 60%
+        note: anchors 1/1 • overlap 71%
+      - path: content/knowledge/achievements/l2-protocol-integrations.yaml
+        score: 1
+        matchedAnchors:
+          - 60%
+        note: anchors 1/1 • overlap 14%
+      - path: content/experience/index.yaml
+        score: 1
+        matchedAnchors:
+          - 60%
+        note: anchors 1/1 • overlap 64%
+    verified:
+      status: verified
+      sources:
+        - path: content/knowledge/achievements/flow-cli-dx.yaml
+          anchors:
+            - 60%
+      notes: ""
+  - id: metric-34038d44da
+    location: overrides.about.bio[0]
+    text: At Ankr, I built the Ankr.JS SDK and Advanced APIs that powered 1M+ daily requests, driving 15× revenue growth by
+      making RPC infrastructure feel invisible
+    anchors:
+      - 1M
+    candidateSources:
+      - path: content/knowledge/achievements/ankr-15x-revenue.yaml
+        score: 1
+        matchedAnchors:
+          - 1M
+        note: anchors 1/1 • overlap 64%
+      - path: content/experience/index.yaml
+        score: 1
+        matchedAnchors:
+          - 1M
+        note: anchors 1/1 • overlap 64%
+      - path: content/knowledge/achievements/l2-protocol-integrations.yaml
+        score: 0.054
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 36%
+    verified:
+      status: verified
+      sources:
+        - path: content/knowledge/achievements/ankr-15x-revenue.yaml
+          anchors:
+            - 1M
+      notes: ""
+  - id: metric-6ec04f25ab
+    location: overrides.about.bio[1]
+    text: The opportunity to shape how 50M+ Python developers interact with AI tools is exactly where I want to be.
+    anchors:
+      - 50M
+    candidateSources: []
+    verified:
+      status: verified
+      sources:
+        - path: metadata.jobDescription
+          anchors:
+            - 50M
+      notes: "External data from Anaconda JD: 'Partner with marketing and developer relations to drive adoption among the 50+ million Python developers globally'"
+  - id: metric-d07b4c9bd6
+    location: overrides.about.stats[0].value
+    text: 8+
+    anchors:
+      - 8+
+    candidateSources: []
+    verified:
+      status: verified
+      sources:
+        - path: content/experience/index.yaml
+          anchors:
+            - 8+
+      notes: ""
+  - id: metric-532a741f7c
+    location: overrides.about.stats[2].value
+    text: 60%
+    anchors: &a1
+      - 60%
+    candidateSources:
+      - path: content/knowledge/achievements/flow-cli-dx.yaml
+        score: 1
+        matchedAnchors:
+          - 60%
+        note: anchors 1/1 • overlap 0%
+      - path: content/knowledge/achievements/l2-protocol-integrations.yaml
+        score: 1
+        matchedAnchors:
+          - 60%
+        note: anchors 1/1 • overlap 0%
+      - path: content/experience/index.yaml
+        score: 1
+        matchedAnchors:
+          - 60%
+        note: anchors 1/1 • overlap 0%
+    verified:
+      status: verified
+      sources:
+        - path: content/knowledge/achievements/flow-cli-dx.yaml
+          anchors: *a1
+      notes: ""
