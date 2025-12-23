@@ -97,7 +97,7 @@ Recruiters make fit/no-fit decisions in **6-7.4 seconds** during initial screeni
 
 ### 2.3 Sycophantic & Desperate Language
 
-**The Pattern**: Excessive flattery triggers "manipulativeness" attribution.
+**The Pattern**: Excessive flattery triggers "manipulativeness" attribution. Research confirms curvilinear effects — some self-promotion helps, but "too much" backfires sharply.
 
 | Signal | Perception |
 |--------|------------|
@@ -105,12 +105,23 @@ Recruiters make fit/no-fit decisions in **6-7.4 seconds** during initial screeni
 | "I am a passionate admirer of your mission" | Sycophantic, inauthentic |
 | "Dream job," "dream company" | Lack of alternatives, desperation |
 
-**Evidence**:
-> "If recruiters get a hint that you are desperate, it is sure to have a negative impression... Desperation is very unattractive." — [Welcome to the Jungle](https://www.welcometothejungle.com/en/articles/apply-for-job-without-seeming-desperate)
+**Evidence (Substantial Foundation)**:
 
-**Confidence**: ⚠️ **MODERATE** (recruiter consensus + social psychology)
+| Study | Finding | Source |
+|-------|---------|--------|
+| Gordon (1996) meta-analysis | 69 studies: ingratiation has small positive effect (d=0.20) but **moderate transparency maximizes positive evaluations** while high transparency diminishes effectiveness | Journal of Applied Psychology |
+| Baron (1986) | Combining multiple positive self-presentation tactics triggered *negative* reactions — establishing that thresholds exist | Journal of Applied Social Psychology |
+| Vonk (2002) | When ulterior motives are detected, effects reverse sharply | Social Psychology |
+| Fragale & Grant | Self-promotion only succeeds when audiences are cognitively distracted — **25 seconds** is threshold where reviewers "see right through it" | |
+| ScienceDirect (~2021, n=254) | Candidate flattery during preliminary recruitment showed **strong negative effects** on perceptions of fit and interview likelihood | |
 
-**→ Rule CG-TONE-001**: WARN on "honor," "privilege," "dream job," "thrilled to apply," "long admired"
+**Critical gap**: Almost all research examines **interviews**, not written applications. The one study on pre-interview screening (n=254) suggests written applications may be *more* vulnerable to sycophancy backlash than interviews, where candidates can adjust based on real-time feedback.
+
+**No quantified thresholds exist**: Research establishes curvilinear effect but not "how many self-promotional statements per 500 words triggers backlash."
+
+**Confidence**: ⚠️ **MODERATE** (strong theoretical foundation, interview-focused research, limited written application data)
+
+**→ Rule CG-TONE-001**: WARN on "honor," "privilege," "dream job," "thrilled to apply," "long admired" — conservative detection given interview research transfers
 
 ---
 
@@ -129,9 +140,18 @@ Recruiters make fit/no-fit decisions in **6-7.4 seconds** during initial screeni
 | "Helped improve satisfaction" | "Increased satisfaction 20%" |
 | "Duties included managing team" | "Managed team of 12" |
 
-**Confidence**: ✅ **STRONG** (industry consensus, Harvard/Indeed guidelines)
+**⚠️ CRITICAL META-RESEARCH NOTE**:
+No RCTs or field experiments exist testing active vs passive voice. The advice conflates two distinct concepts:
+- **Action verbs** (achieved, launched, managed) — word choice
+- **Active voice** (grammatical subject-verb construction)
 
-**→ Rule CG-LNG-002**: WARN on "responsible for," "helped with," "assisted," "duties included"
+A resume could use action verbs in passive voice ("A 20% increase was achieved") or weak verbs in active voice ("I was responsible for…"). No research separates these variables.
+
+One source cited "a study in Journal of Professional Communication 2021" but the same source disclaims some citations are **"fictional and used for illustrative purposes."**
+
+**Confidence**: ❓ **CONVENTION** (industry consensus, zero empirical validation)
+
+**→ Rule CG-LNG-002**: WARN on "responsible for," "helped with," "assisted," "duties included" — but flag as convention-based, not evidence-based
 
 ---
 
@@ -266,17 +286,23 @@ Sample: n=24,570 resumes
 
 ### WARN Severity (Strong to Moderate Evidence)
 
-| Rule ID | Name | What It Catches | Evidence Base |
-|---------|------|-----------------|---------------|
-| CG-LNG-001 | BUZZWORD_CRITICAL | "synergy," "best of breed," "leverage" | 73% fatigue (CareerBuilder) |
-| CG-LNG-002 | WEAK_VERB | "responsible for," "helped with" | Dilutes impact (TopResume) |
-| CG-LNG-003 | PASSIVE_VOICE | >10% passive constructions | Obscures agency (Harvard) |
-| CG-QNT-001 | LOW_QUANTIFICATION | <50% bullets with metrics | 40% fewer interviews (LinkedIn) |
-| CG-QNT-002 | VAGUE_QUANTITY | "several," "many," "various" | Replace with numbers |
-| CG-TONE-001 | SYCOPHANCY | "dream job," "honored," "thrilled" | Desperation signal |
-| CG-TONE-002 | ARROGANCE | "best," "guru," "ninja" unsupported | 72% turnoff (TopInterview) |
-| CG-FMT-003 | MULTI_COLUMN | Two or more columns | 7% lower parse rate |
-| CG-XVAR-001 | CONTAMINATION | Mentions other target companies | Wrong variant shipped |
+| Rule ID | Name | What It Catches | Evidence Base | Confidence |
+|---------|------|-----------------|---------------|------------|
+| CG-LNG-001 | BUZZWORD_CRITICAL | "synergy," "best of breed," "leverage" | 73% fatigue (CareerBuilder) | ✅ STRONG |
+| CG-LNG-002 | WEAK_VERB | "responsible for," "helped with" | Industry consensus | ❓ CONVENTION |
+| CG-QNT-001 | LOW_QUANTIFICATION | <50% bullets with metrics | 40% fewer interviews (LinkedIn) | ✅ STRONG |
+| CG-QNT-002 | VAGUE_QUANTITY | "several," "many," "various" | Replace with numbers | ⚠️ MODERATE |
+| CG-TONE-001 | SYCOPHANCY | "dream job," "honored," "thrilled" | Gordon meta-analysis, Baron 1986, n=254 study | ⚠️ MODERATE |
+| CG-TONE-002 | ARROGANCE | "best," "guru," "ninja" unsupported | 72% turnoff (TopInterview) | ⚠️ MODERATE |
+| CG-FMT-003 | MULTI_COLUMN | Two or more columns | 7% lower parse rate (Enhancv) | ✅ STRONG |
+| CG-XVAR-001 | CONTAMINATION | Mentions other target companies | Wrong variant shipped | N/A (logic) |
+
+### CONVENTION Severity (Downgraded — Industry Advice Without Evidence)
+
+| Rule ID | Name | What It Catches | Why Downgraded |
+|---------|------|-----------------|----------------|
+| CG-LNG-003 | PASSIVE_VOICE | >10% passive constructions | ❌ NO RCTs exist; advice conflates "action verbs" with "active voice" |
+| CG-BLT-001 | BULLET_COUNT | >5 or <2 bullets per role | ❌ "3-5 bullets" is pure convention; zero empirical support |
 
 ### INFO Severity (Context-Dependent)
 
@@ -288,25 +314,134 @@ Sample: n=24,570 resumes
 
 ---
 
-## Section 7: Key Evidence Gaps
+## Section 7: Evidence Gaps — Meta-Research Findings
 
-| Topic | Gap | Implication |
-|-------|-----|-------------|
-| Optimal bullets per role | No controlled study | Use heuristic (3-5 bullets) |
-| Industry-specific language | Most studies don't segment | Generic rules apply |
-| Active vs passive voice | Consensus but no RCT | Treat as strong heuristic |
-| Sycophancy thresholds | No quantified study | Conservative detection |
-| Cross-cultural norms | Limited non-US data | Region flags needed |
+**Key insight**: Widespread professional advice rests on remarkably thin empirical foundations. The "3-5 bullets per role" benchmark and "use active voice" recommendations appear to be evidence-free conventions.
+
+### Gap 1: Optimal Bullet Points Per Role
+
+**Status**: ❌ **GENUINE VOID**
+
+No controlled studies, A/B testing data, or peer-reviewed research exists specifically examining how bullet point counts affect hiring outcomes. The ubiquitous "3-5 bullets per job" recommendation is **pure professional convention**.
+
+| Source | Sample | Tests Bullets? | Finding |
+|--------|--------|----------------|---------|
+| TheLadders (2018) | n=30 | No | Eye-tracking only, not bullet density |
+| ResumeGo (2018-19) | n=24,570+ | No | Tested page length, gaps — never bullets |
+| Cole et al. (2007) | n=244 | No | Education/experience focus |
+| Kickresume (2024) | n=394 | Indirect | 28 total bullets avg, 4 per section — **correlational only, selection bias** |
+
+**What could fill this gap**: Field experiment following ResumeGo methodology with 5,000+ resumes varying only in bullets per role (2, 4, 6, 8).
+
+**→ Implication for CG rules**: No bullet count rules. Flag as "convention" if implemented.
+
+---
+
+### Gap 2: Active vs Passive Voice
+
+**Status**: ❌ **GENUINE VOID**
+
+No RCTs, field experiments, or peer-reviewed studies specifically test whether active versus passive voice affects hiring outcomes. **Complete separation between conventional wisdom and empirical research.**
+
+**Critical distinction research fails to make**:
+- **Action verbs** (achieved, launched, managed) = word choice
+- **Active voice** (grammatical subject-verb construction) = sentence structure
+
+Most advice conflates these. A resume could use action verbs in passive voice ("A 20% increase was achieved") or weak verbs in active voice ("I was responsible for…"). No research separates these variables.
+
+| Claimed Research | Reality | Confidence |
+|------------------|---------|------------|
+| "Studies show active voice improves callbacks" | No such studies exist | Very weak |
+| "Action verbs preferred" (surveys) | Self-reported preferences only | Moderate |
+| "ATS prefers active voice" | Unsubstantiated | Very weak |
+| "Journal of Professional Communication 2021 study" | Source disclaims some citations are **fictional** | Invalid |
+
+**→ Implication for CG rules**: CG-LNG-003 (PASSIVE_VOICE) downgraded to CONVENTION, not WARN.
+
+---
+
+### Gap 3: Cross-Cultural Norms
+
+**Status**: ⚠️ **PARTIAL COVERAGE** — Practitioner-documented but academically under-researched
+
+Strong practitioner consensus exists on regional formats, but rigorous academic research is sparse. Evidence exists for discrimination effects but **not for format effectiveness**.
+
+#### Well-Documented Regions (Strong Practitioner Consensus)
+
+| Region | Key Norms | Evidence Quality |
+|--------|-----------|------------------|
+| **Japan** | Dual-document system (rirekisho + shokumukeirekisho), photos required, personal details expected | Practitioner only |
+| **Germany** | Photos expected, Lebenslauf format, certificates (Zeugnisse), gaps must be explained | Practitioner + some discrimination research |
+| **Australia/NZ** | 2-3 pages accepted, photos prohibited by law, references with full contact | Practitioner only |
+| **Middle East (UAE, Saudi)** | Nationality disclosure required (visa purposes), photos common, English preferred | Practitioner only |
+
+#### Significant Regional Gaps
+
+| Region | Documentation Level |
+|--------|---------------------|
+| Latin America | Moderate, varies by country |
+| Eastern Europe | Weak |
+| Africa (excl. South Africa) | Very weak |
+| Southeast Asia | Weak |
+| Central Asia | None |
+
+#### Academic Research That Does Exist
+
+- **GEMM cross-national study** (Thijssen et al., 2019-2021): Field experiments across 5 EU countries — discrimination focus, not format effectiveness
+- **Quillian et al. (2023)**: Meta-analysis of 90 field experiments, 170,000+ applications, 6 countries — discrimination unchanged or increasing
+- **Europass data**: 133M visits, 65M+ CVs created — but experts consider it outdated for private sector
+
+**→ Implication for CG rules**: Add region detection (CG-REG-*) but flag as practitioner-based, not academic.
+
+---
+
+### Gap 4: Sycophancy Thresholds
+
+**Status**: ⚠️ **SUBSTANTIAL FOUNDATION, SPECIFIC GAP**
+
+Strong research establishes that excessive impression management backfires, but virtually all studies focus on **interviews rather than written applications**, and no research provides **quantified thresholds**.
+
+| Finding | Evidence Level | Applies to Written Apps? |
+|---------|----------------|--------------------------|
+| Ingratiation has positive interview effects | Strong (meta-analyses) | Untested |
+| "Too much" backfires (curvilinear) | Moderate (Baron 1986) | Untested |
+| Flattery negative in pre-interview screening | Moderate (n=254, one study) | **Yes** |
+| Quantified phrase-level thresholds | None | Gap |
+
+**What remains unknown**:
+- How many self-promotional statements per 500 words triggers backlash?
+- What ratio of accomplishment claims to humility markers is optimal?
+- Are there specific phrases that universally signal "trying too hard"?
+
+**→ Implication for CG rules**: CG-TONE-001 remains WARN but conservative; document as "threshold unknown."
+
+---
+
+### Evidence Classification Update
+
+| Rating | Meaning | Criteria |
+|--------|---------|----------|
+| ✅ STRONG | Replicated, high-quality evidence | Peer-reviewed study OR multiple large surveys (n>500) agreeing |
+| ⚠️ MODERATE | Single study or industry consensus | Single large study OR consistent expert opinion |
+| ❓ CONVENTION | Industry consensus, zero empirical validation | Professional advice with no supporting research |
+| ❌ VOID | No research exists | Topic never studied |
 
 ---
 
 ## Section 8: Primary Sources
 
-### Academic Research
-- Sterkens et al. 2023, PLOS One (Ghent University) — Spelling error penalty study
-- Bertrand & Mullainathan 2004, American Economic Review — Name discrimination study
-- Texas A&M/MDPI 2023 — Eye-tracking + ML prediction study
-- SAGE Journals 2023 — Bias blind spot in HR employees
+### Academic Research — Peer-Reviewed
+- Sterkens et al. 2023, PLOS One (Ghent University) — Spelling error penalty study (n=445)
+- Bertrand & Mullainathan 2004, American Economic Review — Name discrimination study (~5,000 resumes)
+- Texas A&M/MDPI 2023 — Eye-tracking + ML prediction study (n=221 recruiters, 2,043 resumes)
+- SAGE Journals 2023 — Bias blind spot in HR employees (n=234)
+- Cole et al. 2007 — Recruiter evaluation study (n=244)
+- Risavy 2017 — Literature review of resume research (confirms gaps)
+- Gordon 1996 — Ingratiation meta-analysis (69 studies)
+- Baron 1986 — "Too much of a good thing" effect (Journal of Applied Social Psychology)
+- Vonk 2002 — Flattery detection and backlash
+- Quillian et al. 2023 — Meta-analysis of 90 discrimination field experiments (170,000+ applications)
+- Thijssen et al. 2019-2021 — GEMM cross-national discrimination study (5 EU countries)
 
 ### Eye-Tracking Studies
 - [TheLadders 2018 Eye-Tracking Study (PDF)](https://www.theladders.com/static/images/basicSite/pdfs/TheLadders-EyeTracking-StudyC2.pdf)
