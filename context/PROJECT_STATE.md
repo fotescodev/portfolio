@@ -224,18 +224,18 @@ npm run dev       # Dev server at :5173
 **Bundle**: 143KB gzip initial (target <200KB)
 **Tests**: 210 passing (ALL GREEN)
 **Variants**: 9 active
-**CSS Variables**: 364 lines
-**Inline Styles**: 356 occurrences (debt)
+**CSS Variables**: 124 defined
+**Inline Styles**: 348 occurrences (debt)
 **Premium Score**: 8.5/10
 
 **Blockers**: None
 
 **Recent Wins**:
+- Fixed mobile omnibar visibility bug (observer now checks both desktop/mobile CTAs)
 - REAL testimonials from Anchorage colleagues (social proof)
-- All 14 test regressions fixed
+- Mobile UX improvements (CTA relocation, testimonial carousel)
+- All 210 tests passing
 - Anthropic AI Safety Fellow variant (negative example)
-- Social media launch content created
-- serghei-qa skill for code audits
 - generate-variant skill operational
 
 **Next Priority**:

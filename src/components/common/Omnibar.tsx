@@ -20,8 +20,10 @@ export default function Omnibar() {
 
     // Observe Hero CTA section
     useEffect(() => {
-        // Find the hero CTA container (parent of .hero-primary-btn)
-        const heroCta = document.querySelector('.hero-primary-btn')?.parentElement;
+        // Find the hero CTA container - check for desktop (.hero-primary-btn) or mobile (.mobile-hero-primary-btn)
+        const desktopBtn = document.querySelector('.hero-primary-btn');
+        const mobileBtn = document.querySelector('.mobile-hero-primary-btn');
+        const heroCta = desktopBtn?.parentElement || mobileBtn?.parentElement;
 
         if (!heroCta) return;
 
