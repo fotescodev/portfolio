@@ -170,7 +170,6 @@ describe('Component Integration Tests', () => {
                 { name: 'Forte', url: 'https://forte.io' },
                 { name: 'Dapper Labs', url: 'https://flow.com' },
                 { name: 'Ankr', url: 'https://ankr.com' },
-                { name: 'Bloom Protocol', url: 'https://bloom.co' },
                 { name: 'Microsoft', url: 'https://microsoft.com' },
             ];
 
