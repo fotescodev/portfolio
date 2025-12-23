@@ -1,0 +1,20 @@
+run = "npm run dev"
+entrypoint = "src/App.tsx"
+
+[nix]
+channel = "stable-24_05"
+
+[deployment]
+run = ["sh", "-c", "npm run build && npm run preview"]
+deploymentTarget = "static"
+publicDir = "dist"
+
+[[ports]]
+localPort = 5173
+externalPort = 80
+
+[languages]
+[languages.typescript]
+pattern = "**/*.{ts,tsx}"
+[languages.typescript.languageServer]
+start = "typescript-language-server --stdio"

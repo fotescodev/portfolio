@@ -86,6 +86,23 @@ Contains:
 
 ---
 
+### 05-replit-starter.zip (22KB)
+**Purpose**: Ready-to-run starter kit for Replit
+
+Contains:
+- `replit/.replit` - Replit configuration
+- `replit/package.json` - Minimal dependencies
+- `replit/REPLIT_README.md` - Setup instructions & architecture
+- `replit/src/lib/types.ts` - TypeScript interfaces + evidence database
+- `replit/src/lib/scanner.ts` - **Working scanner with 6 rules implemented!**
+- `replit/reference/redteam.ts` - Pattern detection source code
+- `replit/reference/schemas.ts` - Zod validation schemas
+- `replit/reference/evaluate-variants.ts` - Claims verification logic
+
+**Key insight**: This zip includes working code! The `scanner.ts` has 6 rules already implemented (credentials, sycophancy, buzzwords, weak verbs, quantification, LinkedIn). Just add the React UI.
+
+---
+
 ## Build Priorities for Lovable
 
 ### MVP (Week 1-2)
