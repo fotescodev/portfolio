@@ -1,0 +1,105 @@
+version: 1
+variant:
+  slug: anthropic-ai-safety-fellow
+  variantFile: content/variants/anthropic-ai-safety-fellow.yaml
+  contentHash: 033ad43b12f911e29a3a49a450008991df99e07e01e01eb0e36cc9280902c190
+  evaluatedAt: 2025-12-23T12:08:15.045Z
+claims:
+  - id: metric-1de3c221e8
+    location: overrides.about.bio[0]
+    text: At Anchorage Digital, I built ETF-grade staking infrastructure with zero tolerance for failure—the same
+      adversarial thinking that AI safety research demands
+    anchors:
+      - zero
+    candidateSources:
+      - path: content/knowledge/achievements/eth-staking-zero-slashing.yaml
+        score: 1
+        matchedAnchors:
+          - zero
+        note: anchors 1/1 • overlap 53%
+      - path: content/knowledge/stories/galaxy-compliance-win.yaml
+        score: 1
+        matchedAnchors:
+          - zero
+        note: anchors 1/1 • overlap 40%
+      - path: content/experience/index.yaml
+        score: 0.06
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 40%
+    verified:
+      status: unverified
+      sources: []
+      notes: ""
+  - id: metric-dabf656aa7
+    location: overrides.about.bio[0]
+    text: I've deployed LLM systems in production at Dapper Labs, achieving 98% accuracy on developer questions.
+    anchors:
+      - 98%
+    candidateSources:
+      - path: content/experience/index.yaml
+        score: 1
+        matchedAnchors:
+          - 98%
+        note: anchors 1/1 • overlap 78%
+      - path: content/knowledge/achievements/flow-cli-dx.yaml
+        score: 0.05
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 33%
+      - path: content/knowledge/achievements/xbox-royalties-ethereum.yaml
+        score: 0.05
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 33%
+    verified:
+      status: unverified
+      sources: []
+      notes: ""
+  - id: metric-d07b4c9bd6
+    location: overrides.about.stats[0].value
+    text: 8+
+    anchors:
+      - 8+
+    candidateSources: []
+    verified:
+      status: unverified
+      sources: []
+      notes: ""
+  - id: metric-4db1be37dc
+    location: overrides.about.stats[1].value
+    text: 98%
+    anchors:
+      - 98%
+    candidateSources:
+      - path: content/experience/index.yaml
+        score: 1
+        matchedAnchors:
+          - 98%
+        note: anchors 1/1 • overlap 0%
+    verified:
+      status: unverified
+      sources: []
+      notes: ""
+  - id: metric-bcd44c9028
+    location: overrides.about.stats[2].value
+    text: Zero
+    anchors:
+      - Zero
+    candidateSources:
+      - path: content/knowledge/achievements/eth-staking-zero-slashing.yaml
+        score: 1
+        matchedAnchors:
+          - Zero
+        note: anchors 1/1 • overlap 100%
+      - path: content/knowledge/achievements/xbox-royalties-ethereum.yaml
+        score: 1
+        matchedAnchors:
+          - Zero
+        note: anchors 1/1 • overlap 100%
+      - path: content/knowledge/stories/galaxy-compliance-win.yaml
+        score: 1
+        matchedAnchors:
+          - Zero
+        note: anchors 1/1 • overlap 100%
+    verified:
+      status: unverified
+      sources: []
+      notes: ""
