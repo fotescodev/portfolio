@@ -220,29 +220,45 @@ npm run dev       # Dev server at :5173
 ### Current Status
 
 **Date**: 2025-12-23
-**Objective**: Fix test regressions, apply to roles with 7 ready variants
-**Bundle**: ~143KB gzip initial (target <200KB ✅)
-**Tests**: 197 passing, 14 failing (2 suites)
-**Variants**: 7 active
+**Objective**: Apply to roles — 9 variants ready, pipeline clear
+**Bundle**: 143KB gzip initial (target <200KB)
+**Tests**: 210 passing (ALL GREEN)
+**Variants**: 9 active
 **CSS Variables**: 364 lines
-**Inline Styles**: 372 occurrences (debt)
+**Inline Styles**: 356 occurrences (debt)
 **Premium Score**: 8.5/10
 
-**Blockers**:
-1. 14 test failures in components.test.tsx blocking CI
+**Blockers**: None
 
 **Recent Wins**:
-- Microsoft Senior PM variant shipped
-- Galaxy TPM Director variant shipped
-- generate-variant Claude Code skill created
-- UCV-CLI TUI improvements (clickable links, job extraction)
-- Bio condensed to two paragraphs
-- Experience highlights updated
+- REAL testimonials from Anchorage colleagues (social proof)
+- All 14 test regressions fixed
+- Anthropic AI Safety Fellow variant (negative example)
+- Social media launch content created
+- serghei-qa skill for code audits
+- generate-variant skill operational
 
 **Next Priority**:
-1. Fix 14 failing tests (unblock CI)
-2. Apply to roles with 7 ready variants
+1. APPLY to roles with 9 ready variants
+2. Generate new variants for target companies
 3. Trust Battery Testimonials (deferred)
+
+---
+
+### Session: December 23, 2025 — Tests Fixed, Real Testimonials, Pipeline Clear
+
+**Summary**: Fixed all 14 test regressions. Updated testimonials with REAL quotes from former colleagues at Anchorage Digital. Added serghei-qa skill for code audits. Social media launch content shipped.
+
+**Changes**:
+- `content/testimonials/index.yaml` — Real testimonials from HS and PB (Anchorage)
+- `src/tests/components.test.tsx` — Fixed test expectations
+- `.claude/skills/serghei-qa/` — Code quality audit skill
+- `content/variants/anthropic-ai-safety-fellow.yaml` — Negative example
+- Social media launch content added
+
+**Merged PRs**: #70, #71, #72
+
+**Next**: APPLY to roles with 9 ready variants
 
 ---
 

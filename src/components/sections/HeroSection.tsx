@@ -151,70 +151,73 @@ export default function HeroSection({ profile, isMobile, isTablet, isLoaded }: H
               {hero.subheadline}
             </p>
 
-            <div style={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 'var(--space-md)',
-              marginLeft: 'auto'
-            }}>
-              <button
-                onClick={() => {
-                  const target = hero.cta.primary.href.replace('#', '');
-                  const el = document.getElementById(target);
-                  if (el) el.scrollIntoView({ behavior: 'smooth' });
-                }}
-                className="hero-primary-btn hero-cta-btn"
-                style={{
-                  padding: isMobile ? '16px 28px' : '18px 32px',
-                  textDecoration: 'none',
-                  fontSize: '14px',
-                  fontWeight: 600,
-                  letterSpacing: '0.02em',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  border: 'none',
-                  cursor: 'pointer'
-                }}
-              >
-                <span>{hero.cta.primary.label}</span>
-                <span style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic' }}>↓</span>
-              </button>
-              <a
-                href={hero.cta.secondary.href}
-                download="Dmitrii-Fotesco-Resume.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hero-secondary-btn hero-cta-btn"
-                style={{
-                  padding: isMobile ? '16px 28px' : '18px 32px',
-                  textDecoration: 'none',
-                  fontSize: '14px',
-                  fontWeight: 600,
-                  letterSpacing: '0.02em',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between'
-                }}
-              >
-                <span>{hero.cta.secondary.label}</span>
-                <svg
-                  width="14"
-                  height="14"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  style={{ opacity: 0.7 }}
+            {/* Hide buttons on mobile - they appear next to photo in About section */}
+            {!isMobile && (
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 'var(--space-md)',
+                marginLeft: 'auto'
+              }}>
+                <button
+                  onClick={() => {
+                    const target = hero.cta.primary.href.replace('#', '');
+                    const el = document.getElementById(target);
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  className="hero-primary-btn hero-cta-btn"
+                  style={{
+                    padding: '18px 32px',
+                    textDecoration: 'none',
+                    fontSize: '14px',
+                    fontWeight: 600,
+                    letterSpacing: '0.02em',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    border: 'none',
+                    cursor: 'pointer'
+                  }}
                 >
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                  <polyline points="7 10 12 15 17 10" />
-                  <line x1="12" y1="15" x2="12" y2="3" />
-                </svg>
-              </a>
-            </div>
+                  <span>{hero.cta.primary.label}</span>
+                  <span style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic' }}>↓</span>
+                </button>
+                <a
+                  href={hero.cta.secondary.href}
+                  download="Dmitrii-Fotesco-Resume.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hero-secondary-btn hero-cta-btn"
+                  style={{
+                    padding: '18px 32px',
+                    textDecoration: 'none',
+                    fontSize: '14px',
+                    fontWeight: 600,
+                    letterSpacing: '0.02em',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between'
+                  }}
+                >
+                  <span>{hero.cta.secondary.label}</span>
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    style={{ opacity: 0.7 }}
+                  >
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="7 10 12 15 17 10" />
+                    <line x1="12" y1="15" x2="12" y2="3" />
+                  </svg>
+                </a>
+              </div>
+            )}
           </div>
         </div>
       </section>

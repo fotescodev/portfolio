@@ -3,23 +3,19 @@
 # ═══════════════════════════════════════════════════════════════
 testimonials:
   - quote: >
-      Dmitrii has a rare ability to bridge complex technical systems with business value.
-      His work on our staking infrastructure was exceptional—he understood the compliance
-      constraints while pushing for the best possible product.
-    author: "Engineering Lead"
-    initials: "JD"
+      I had the chance to work alongside Dimitri on blockchain protocol and staking initiatives. He brings meaningful protocol and blockchain depth and a thoughtful, low-ego approach to collaboration. Dimitri communicates clearly, shows up reliably, and is always willing to jump in and support his team when needed. He’d be a strong addition to any technical product organization.
+    author: "Product Lead"
+    initials: "HS"
     role: "Former Colleague"
     company: "Anchorage Digital"
     avatar: null
     featured: true
 
   - quote: >
-      Working with Dmitrii on the Flow CLI was a masterclass in developer experience.
-      He has an intuition for what developers need and the technical depth to
-      make those improvements happen.
-    author: "Senior Developer Advocate"
-    initials: "SR"
+      Dmitrii has a unique ability to bring a product ownership mindset to extremely technical challenges, almost like a technical project manager that was equal parts product owner. I can always rely on Dmitrii to break down a complex protocol and the product implications of one approach vs another. Crypto, SSI, Identity, Protocols - building with Dmitrii is always collaborative and always enlightening. 
+    author: "Product Lead"
+    initials: "PB"
     role: "Former Colleague"
-    company: "Dapper Labs"
+    company: "Anchorage Digital"
     avatar: null
     featured: true

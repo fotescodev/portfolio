@@ -376,6 +376,7 @@ export default function Portfolio() {
             isMobile={isMobile}
             isTablet={isTablet}
             sectionPadding={sectionPadding}
+            heroCta={profile.hero.cta}
           />
 
           {/* Experience Section */}

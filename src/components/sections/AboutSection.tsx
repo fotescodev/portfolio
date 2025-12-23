@@ -43,9 +43,13 @@ interface AboutSectionProps {
   isMobile: boolean;
   isTablet: boolean;
   sectionPadding: string;
+  heroCta?: {
+    primary: { label: string; href: string };
+    secondary: { label: string; href: string };
+  };
 }
 
-export default function AboutSection({ profile, isMobile, isTablet, sectionPadding }: AboutSectionProps) {
+export default function AboutSection({ profile, isMobile, isTablet, sectionPadding, heroCta }: AboutSectionProps) {
   const { about, photo, name } = profile;
   const [photoError, setPhotoError] = useState(false);
   const [emailCopied, setEmailCopied] = useState(false);
@@ -108,68 +112,169 @@ export default function AboutSection({ profile, isMobile, isTablet, sectionPaddi
         gap: isMobile ? '40px' : isTablet ? 'var(--space-2xl)' : '80px',
         alignItems: 'start'
       }}>
-        {/* Photo + Social Icons */}
-        <div style={{ maxWidth: isMobile ? '180px' : '100%' }}>
-          {/* Photo */}
-          <div style={{
-            aspectRatio: '3/4',
-            background: 'linear-gradient(135deg, var(--color-background-secondary) 0%, var(--color-background-tertiary) 100%)',
-            border: '1px solid var(--color-photo-border)',
-            position: 'relative',
-            overflow: 'hidden'
-          }}>
-            {!photoError ? (
-              <img
-                src={photo}
-                alt={name}
-                loading="lazy"
-                decoding="async"
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover'
-                }}
-                onError={() => setPhotoError(true)}
-              />
-            ) : (
-              <div
-                aria-label={`${name} photo unavailable`}
-                style={{
-                  position: 'absolute',
-                  inset: 0,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: 'var(--space-xs)',
-                  color: 'var(--color-text-muted)'
-                }}
-              >
-                <div
+        {/* Photo + Social Icons (+ CTA buttons on mobile) */}
+        <div style={{
+          display: isMobile ? 'flex' : 'block',
+          gap: isMobile ? 'var(--space-lg)' : 0,
+          alignItems: 'flex-start'
+        }}>
+          {/* Photo column */}
+          <div style={{ width: isMobile ? '140px' : '100%', flexShrink: 0 }}>
+            {/* Photo */}
+            <div style={{
+              aspectRatio: '3/4',
+              background: 'linear-gradient(135deg, var(--color-background-secondary) 0%, var(--color-background-tertiary) 100%)',
+              border: '1px solid var(--color-photo-border)',
+              position: 'relative',
+              overflow: 'hidden'
+            }}>
+              {!photoError ? (
+                <img
+                  src={photo}
+                  alt={name}
+                  loading="lazy"
+                  decoding="async"
                   style={{
-                    fontFamily: 'var(--font-serif)',
-                    fontStyle: 'italic',
-                    fontSize: '32px',
-                    color: 'var(--color-text-tertiary)'
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover'
+                  }}
+                  onError={() => setPhotoError(true)}
+                />
+              ) : (
+                <div
+                  aria-label={`${name} photo unavailable`}
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: 'var(--space-xs)',
+                    color: 'var(--color-text-muted)'
                   }}
                 >
-                  {initials}
+                  <div
+                    style={{
+                      fontFamily: 'var(--font-serif)',
+                      fontStyle: 'italic',
+                      fontSize: '32px',
+                      color: 'var(--color-text-tertiary)'
+                    }}
+                  >
+                    {initials}
+                  </div>
+                  <div
+                    style={{
+                      fontSize: '12px',
+                      fontWeight: 600,
+                      letterSpacing: '0.1em',
+                      textTransform: 'uppercase'
+                    }}
+                  >
+                    Photo
+                  </div>
                 </div>
-                <div
-                  style={{
-                    fontSize: '12px',
-                    fontWeight: 600,
-                    letterSpacing: '0.1em',
-                    textTransform: 'uppercase'
-                  }}
-                >
-                  Photo
-                </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
 
-          {/* Social Icons Bar */}
+          {/* Mobile CTA buttons - next to photo */}
+          {isMobile && heroCta && (
+            <>
+              <style>{`
+                .mobile-hero-primary-btn {
+                  background: var(--color-accent);
+                  color: var(--color-background);
+                  transition: all 0.2s ease;
+                }
+                .mobile-hero-primary-btn:active {
+                  background: var(--color-accent-hover);
+                }
+                .mobile-hero-secondary-btn {
+                  background: transparent;
+                  border: 1px solid var(--color-border);
+                  color: var(--color-text-secondary);
+                  transition: all 0.2s ease;
+                }
+                .mobile-hero-secondary-btn:active {
+                  border-color: var(--color-text-tertiary);
+                  color: var(--color-text-primary);
+                }
+              `}</style>
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 'var(--space-sm)',
+                flex: 1
+              }}>
+                <button
+                  onClick={() => {
+                    const target = heroCta.primary.href.replace('#', '');
+                    const el = document.getElementById(target);
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  className="mobile-hero-primary-btn"
+                  style={{
+                    padding: '14px 20px',
+                    textDecoration: 'none',
+                    fontSize: '13px',
+                    fontWeight: 600,
+                    letterSpacing: '0.02em',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    border: 'none',
+                    cursor: 'pointer',
+                    width: '100%'
+                  }}
+                >
+                  <span>{heroCta.primary.label}</span>
+                  <span style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic' }}>↓</span>
+                </button>
+                <a
+                  href={heroCta.secondary.href}
+                  download="Dmitrii-Fotesco-Resume.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mobile-hero-secondary-btn"
+                  style={{
+                    padding: '14px 20px',
+                    textDecoration: 'none',
+                    fontSize: '13px',
+                    fontWeight: 600,
+                    letterSpacing: '0.02em',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    width: '100%'
+                  }}
+                >
+                  <span>{heroCta.secondary.label}</span>
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    style={{ opacity: 0.7 }}
+                  >
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="7 10 12 15 17 10" />
+                    <line x1="12" y1="15" x2="12" y2="3" />
+                  </svg>
+                </a>
+              </div>
+            </>
+          )}
+
+          {/* Social Icons Bar - below photo on desktop only */}
+          {!isMobile && (
+            /* Social Icons Bar */
           <div style={{
             display: 'flex',
             justifyContent: 'space-between',
@@ -321,6 +426,7 @@ export default function AboutSection({ profile, isMobile, isTablet, sectionPaddi
             </motion.a>
 
           </div>
+          )}
         </div>
 
         <div>
