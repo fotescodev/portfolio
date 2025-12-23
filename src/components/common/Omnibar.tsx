@@ -181,7 +181,7 @@ export default function Omnibar() {
                                     </motion.svg>
                                 )}
                             </AnimatePresence>
-                            {!isMobile && <span>{copied ? 'Copied!' : 'Copy Email'}</span>}
+                            <span>{copied ? 'Copied!' : (isMobile ? 'Email' : 'Copy Email')}</span>
                         </motion.button>
 
                         <div style={{ width: '1px', height: '16px', background: 'var(--color-border-light)' }} />
@@ -209,7 +209,7 @@ export default function Omnibar() {
                                 <polyline points="7 10 12 15 17 10" />
                                 <line x1="12" y1="15" x2="12" y2="3" />
                             </svg>
-                            {!isMobile && <span>Resume</span>}
+                            <span>{isMobile ? 'CV' : 'Resume'}</span>
                         </motion.a>
 
                         <div style={{ width: '1px', height: '16px', background: 'var(--color-border-light)' }} />
@@ -237,7 +237,7 @@ export default function Omnibar() {
                                 <line x1="8" y1="2" x2="8" y2="6" />
                                 <line x1="3" y1="10" x2="21" y2="10" />
                             </svg>
-                            {!isMobile && <span>Book Time</span>}
+                            <span>{isMobile ? 'Book' : 'Book Time'}</span>
                         </motion.a>
                     </motion.div>
                 )}
