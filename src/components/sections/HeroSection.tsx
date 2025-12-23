@@ -98,47 +98,46 @@ export default function HeroSection({ profile, isMobile, isTablet, isLoaded }: H
               } else if (segment.style === 'accent') {
                 style.color = 'var(--color-accent)';
               }
+              const isLast = index === hero.headline.length - 1;
               return (
                 <span key={index}>
                   {index > 0 && <br />}
                   <span style={style}>{segment.text}</span>
+                  {/* Company accent inline after last headline segment */}
+                  {isLast && hero.companyAccent && hero.companyAccent.length > 0 && (
+                    <span style={{
+                      fontSize: '0.28em',
+                      fontStyle: 'normal',
+                      fontWeight: 400,
+                      marginLeft: '0.5em',
+                      letterSpacing: '0.01em',
+                      verticalAlign: 'baseline',
+                      position: 'relative',
+                      top: '-0.15em'
+                    }}>
+                      <span style={{ color: 'var(--color-text-tertiary)', opacity: 0.4 }}>—</span>
+                      {hero.companyAccent.map((accentSegment, accentIndex) => {
+                        const accentStyle: React.CSSProperties = { marginLeft: '0.35em' };
+                        if (accentSegment.style === 'muted') {
+                          accentStyle.color = 'var(--color-text-tertiary)';
+                          accentStyle.opacity = 0.6;
+                        } else if (accentSegment.style === 'accent') {
+                          accentStyle.color = 'var(--color-accent)';
+                          accentStyle.opacity = 0.75;
+                        } else {
+                          accentStyle.color = 'var(--color-text-secondary)';
+                          accentStyle.opacity = 0.6;
+                        }
+                        return (
+                          <span key={accentIndex} style={accentStyle}>{accentSegment.text}</span>
+                        );
+                      })}
+                    </span>
+                  )}
                 </span>
               );
             })}
           </h1>
-
-          {/* Company Accent - Shows company-specific context for variants */}
-          {hero.companyAccent && hero.companyAccent.length > 0 && (
-            <div style={{
-              marginTop: isMobile ? 'var(--space-md)' : 'var(--space-lg)',
-              fontSize: isMobile ? '4vw' : isTablet ? '3vw' : '2.5vw',
-              fontFamily: 'var(--font-serif)',
-              fontWeight: 400,
-              fontStyle: 'italic',
-              lineHeight: 1.2,
-              letterSpacing: '-0.02em',
-              opacity: 0.7
-            }}>
-              {hero.companyAccent.map((segment, index) => {
-                const style: React.CSSProperties = {};
-                if (segment.style === 'muted') {
-                  style.fontStyle = 'normal';
-                  style.color = 'var(--color-text-tertiary)';
-                } else if (segment.style === 'accent') {
-                  style.color = 'var(--color-accent)';
-                  style.opacity = 1;
-                } else {
-                  style.color = 'var(--color-text-secondary)';
-                }
-                return (
-                  <span key={index}>
-                    {index > 0 && ' '}
-                    <span style={style}>{segment.text}</span>
-                  </span>
-                );
-              })}
-            </div>
-          )}
 
           {/* Subheadline */}
           <div className="hero-grid">
@@ -155,7 +154,8 @@ export default function HeroSection({ profile, isMobile, isTablet, isLoaded }: H
             <div style={{
               display: 'flex',
               flexDirection: 'column',
-              gap: 'var(--space-md)'
+              gap: 'var(--space-md)',
+              marginLeft: 'auto'
             }}>
               <button
                 onClick={() => {

@@ -1,0 +1,107 @@
+{
+  "metadata": {
+    "company": "Galaxy",
+    "role": "Director, Technical Program Manager",
+    "generatedAt": "2025-12-22T23:30:00Z",
+    "jobDescription": "Galaxy is looking for an experienced Technical Program Manager (TPM) to join their team.\nYou will lead a team of global TPMs to achieve business and engineering objectives.\n\nRole partners directly with CTO and Head of Change/Transformation to drive strategic\nalignment, execution, and visibility on high-priority projects. Seeking strategic,\nhighly organized, execution-oriented Senior TPM to lead complex, cross-functional\ntechnology initiatives. Deep experience in agile and traditional project methodologies,\nstrong technical acumen, excellent stakeholder management.\n\nKey Responsibilities:\n- Lead global group of TPMs—sometimes managing initiatives directly, sometimes through them\n- Partner with business leaders and technology leads to prioritize diverse initiatives\n- Ensure alignment of team and project deliveries with business goals\n- Collaborate with global engineering teams across multiple time zones\n- Maintain JIRA boards, manage epics, tasks, workflows\n- Facilitate team agile ceremonies (stand-ups, grooming, retrospectives, planning)\n- Monitor project timelines, milestones, deliverables; proactively identify risks\n\nRequirements:\n- 10+ years as Project/Technical Program Manager\n- 5+ years managing engineering teams\n- Strong technical background with system design understanding\n- Executive leadership experience\n- JIRA, Confluence, project management tools proficiency\n- Cross-functional dependency management\n- Agile/Scrum methodology familiarity\n\nNice to have:\n- Crypto or traditional finance exposure\n- Regulatory or compliance-driven environment experience\n\nLocation: New York, NY\nSalary: $225,000 - $275,000 USD\n",
+    "generationModel": "claude-opus-4-5-20251101",
+    "slug": "galaxy-pm"
+  },
+  "overrides": {
+    "hero": {
+      "status": "Open to Product Roles at Galaxy",
+      "headline": [
+        {
+          "text": "Building",
+          "style": "italic"
+        },
+        {
+          "text": "at the edge of",
+          "style": "muted"
+        },
+        {
+          "text": "trust",
+          "style": "accent"
+        }
+      ],
+      "subheadline": "Technical Program Manager with 8+ years shipping Web3 infrastructure. From Microsoft's first blockchain project to institutional custody at Anchorage— where Galaxy chose us for staking. I turn cross-functional complexity into shipped products.\n",
+      "companyAccent": [
+        {
+          "text": "with",
+          "style": "muted"
+        },
+        {
+          "text": "Galaxy",
+          "style": "accent"
+        }
+      ]
+    },
+    "about": {
+      "tagline": "Eight years shipping Web3 infrastructure, from dev tools to institutional custody.\n",
+      "bio": [
+        "At Anchorage Digital, I lead cross-functional initiatives spanning custody, staking, and protocol integrations. I've shipped 7+ L2 integrations (Optimism, Base, Arbitrum) using a RICE evaluation framework I built, coordinating across 4+ teams and reducing integration time by 40%. Galaxy chose Anchorage for ETH staking specifically because of the institutional-grade infrastructure my team built—zero slashing events, billions in AUM, full key ownership.\n",
+        "I've been in Web3 since 2017, when I shipped one of Microsoft's first blockchain projects—Xbox royalty tracking on Ethereum. Eight years later, I'm still here because {{accent}}this is Web3's moment{{/accent}}—and Galaxy is positioned to define how institutions participate. I understand what it takes to lead global teams through complex, compliance-driven initiatives while maintaining velocity.\n"
+      ],
+      "stats": [
+        {
+          "value": "8+",
+          "label": "Years in Web3"
+        },
+        {
+          "value": "7+",
+          "label": "L2 Integrations"
+        },
+        {
+          "value": "Zero",
+          "label": "Slashing Events"
+        }
+      ]
+    },
+    "sections": {
+      "beyondWork": false,
+      "blog": true,
+      "onchainIdentity": true,
+      "skills": true,
+      "passionProjects": false
+    }
+  },
+  "relevance": {
+    "caseStudies": [
+      {
+        "slug": "protocol-integration",
+        "relevanceScore": 1,
+        "reasoning": "RICE framework, cross-functional coordination, 40% efficiency gain—directly maps to TPM Director responsibilities for complex initiatives"
+      },
+      {
+        "slug": "eth-staking",
+        "relevanceScore": 0.95,
+        "reasoning": "Galaxy is already a client. Institutional infrastructure, compliance-driven environment, zero tolerance for failure"
+      },
+      {
+        "slug": "ankr-rpc",
+        "relevanceScore": 0.85,
+        "reasoning": "Infrastructure platform scaling, managing technical complexity, business outcomes"
+      },
+      {
+        "slug": "xbox-royalties",
+        "relevanceScore": 0.8,
+        "reasoning": "Enterprise-scale project management, pioneering blockchain in large org, cross-functional leadership"
+      }
+    ],
+    "skills": [
+      {
+        "category": "Technical Leadership",
+        "relevanceScore": 1
+      },
+      {
+        "category": "Blockchain & Web3",
+        "relevanceScore": 0.95
+      },
+      {
+        "category": "Product Strategy",
+        "relevanceScore": 0.85
+      }
+    ],
+    "projects": []
+  }
+}
