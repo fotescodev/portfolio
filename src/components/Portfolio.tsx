@@ -1,4 +1,4 @@
-import { useState, useEffect, lazy, Suspense } from 'react';
+import { useState, useEffect, lazy, Suspense, useRef } from 'react';
 import Blog from './Blog';
 import ThemeToggle from './ThemeToggle';
 import HeroSection from './sections/HeroSection';
@@ -27,6 +27,8 @@ export default function Portfolio() {
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
   const [modalCase, setModalCase] = useState<CaseStudy | null>(null);
   const [hoveredCase, setHoveredCase] = useState<number | null>(null);
+  const [navHidden, setNavHidden] = useState(false);
+  const lastScrollY = useRef(0);
 
   useEffect(() => {
     setIsLoaded(true);
@@ -34,6 +36,26 @@ export default function Portfolio() {
     const handleResize = () => setWindowWidth(window.innerWidth);
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Hide nav on scroll down, show on scroll up (mobile only)
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      const scrollingDown = currentScrollY > lastScrollY.current;
+      const pastThreshold = currentScrollY > 100; // Only hide after scrolling past hero
+
+      if (scrollingDown && pastThreshold) {
+        setNavHidden(true);
+      } else {
+        setNavHidden(false);
+      }
+
+      lastScrollY.current = currentScrollY;
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   // Handle modal scroll lock and ESC key
@@ -176,7 +198,7 @@ export default function Portfolio() {
         <div className="wide-screen-vignette" />
         <AmbientBackground />
 
-        {/* Navigation - hidden when drawer is open on mobile */}
+        {/* Navigation - hidden when drawer is open on mobile, slides up on scroll down */}
         <nav
           aria-label="Primary"
           style={{
@@ -190,8 +212,12 @@ export default function Portfolio() {
             WebkitBackdropFilter: 'blur(12px)',
             borderBottom: '1px solid var(--color-border-light)',
             opacity: isLoaded ? 1 : 0,
-            transform: isLoaded ? 'translateY(0)' : 'translateY(-20px)',
-            transition: 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
+            transform: !isLoaded
+              ? 'translateY(-20px)'
+              : (isMobile && navHidden && !mobileMenuOpen)
+                ? 'translateY(-100%)'
+                : 'translateY(0)',
+            transition: 'transform 0.3s ease, opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
             display: (isMobile && modalCase) ? 'none' : 'block'
           }}
         >
