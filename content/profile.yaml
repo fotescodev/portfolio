@@ -39,14 +39,12 @@ about:
     Eight years shipping Web3 infrastructure, from dev tools to institutional custody.
   bio:
     - >
-      At Anchorage Digital, I shipped integrations for protocols like Aztec, Plume,
-      and Succinct—bringing cutting-edge tech into institutional custody and staking.
-      Before that, I built developer tools at Dapper Labs—Flow Playground, Flow CLI—and
-      Web3 infrastructure at Ankr: Advanced APIs, SDKs, the picks and shovels builders
-      actually need.
+      I've spent the last few years bringing cutting-edge protocols into institutional
+      custody at Anchorage Digital, building developer tools like Flow Playground at
+      Dapper Labs, and shipping the Web3 infrastructure that builders actually use at Ankr.
     - >
-      I've been in Web3 since 2017, when I shipped one of Microsoft's first blockchain
-      projects. Eight years later, I'm still here because {{accent}}this is Web3's moment{{/accent}}—blockchain
+      I started in 2017 with one of Microsoft's first blockchain projects. Eight years
+      later, I'm still here because {{accent}}this is Web3's moment{{/accent}}—blockchain
       as the transaction layer for the agentic economy. Stablecoin rails, identity
       attestation, agent-to-agent value transfer. Building in this space? Let's talk.
   stats:
