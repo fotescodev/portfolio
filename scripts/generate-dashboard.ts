@@ -122,12 +122,13 @@ function generateHTML(variants: Variant[], baseUrl: string): string {
     }
 
     .gate-box {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
+      background: #1a1a1f;
+      border: 1px solid #3b82f6;
       border-radius: 12px;
       padding: 2rem;
       max-width: 320px;
       width: 100%;
+      box-shadow: 0 0 40px rgba(59, 130, 246, 0.15);
     }
 
     .gate-box h2 {
