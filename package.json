@@ -20,7 +20,7 @@
     "generate:cv": "tsx scripts/generate-cv.ts",
     "generate:og": "node scripts/generate-og-images.js",
     "generate:favicon": "node scripts/generate-favicon.js",
-    "variants:sync": "tsx scripts/sync-variants.ts",
+    "variants:sync": "tsx scripts/sync-variants.ts && tsx scripts/generate-dashboard.ts",
     "variants:check": "tsx scripts/sync-variants.ts --check",
     "eval:variant": "tsx scripts/evaluate-variants.ts",
     "eval:all": "tsx scripts/evaluate-variants.ts --all",
