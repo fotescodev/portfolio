@@ -281,11 +281,11 @@
 
     <div class="stats">
       <div class="stat">
-        <div class="stat-value">10</div>
+        <div class="stat-value">11</div>
         <div class="stat-label">Total Variants</div>
       </div>
       <div class="stat">
-        <div class="stat-value">10</div>
+        <div class="stat-value">11</div>
         <div class="stat-label">Companies</div>
       </div>
     </div>
@@ -304,6 +304,19 @@
       </thead>
       <tbody>
         
+      <tr class="variant-row" data-company="plaid" data-role="senior staff product manager, api & developer experience">
+        <td>
+          <div class="company">Plaid</div>
+          <div class="role">Senior Staff Product Manager, API & Developer Experience</div>
+        </td>
+        <td class="date">Dec 24, 2025</td>
+        <td class="actions">
+          <a href="https://fotescodev.github.io/portfolio/plaid/api-devex-pm" target="_blank" class="btn btn-primary">View</a>
+          <a href="https://plaid.com/careers/openings/product/san-francisco/senior-staff-product-manager-api-developer-experience/" target="_blank" class="btn btn-secondary">Job Post</a>
+        </td>
+      </tr>
+    
+
       <tr class="variant-row" data-company="anaconda" data-role="principal product manager, gen ai developer tools">
         <td>
           <div class="company">Anaconda</div>
@@ -481,8 +494,9 @@
       if (e.key === 'Enter') checkPassword();
     });
 
-    // Show dashboard directly (remove password gate for now)
-    showDashboard();
+    if (localStorage.getItem('dashboard_auth') === 'true') {
+      showDashboard();
+    }
   </script>
 </body>
 </html>
