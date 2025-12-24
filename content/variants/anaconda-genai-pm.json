@@ -5,7 +5,9 @@
     "generatedAt": "2025-12-23T00:00:00Z",
     "jobDescription": "Anaconda is seeking a Principal Product Manager, GenAI Developer Tools to join\ntheir rapidly-growing company. 95% of Fortune 500 companies rely on Anaconda.\n\nKey Responsibilities:\n- Lead product strategy for Agentic Environment & Package Management initiatives\n- MCP (Model Context Protocol) server development and AI tool integrations\n- Drive development of tools and agents that improve Python vibe-coding quality\n- Support strategic partnerships with AI-enabled IDEs (Cursor, VS Code, Windsurf)\n- Define integration strategies making Anaconda indispensable to AI coding workflows\n- Collaborate with engineering on APIs, SDKs, and developer tools\n- Work with enterprise customers in regulated industries (finance, healthcare, gov)\n- Partner with marketing and developer relations for 50M+ Python developers\n\nRequirements:\n- 7+ years PM experience, 3+ years in developer tools/infrastructure/platform\n- Deep hands-on experience with AI coding tools (Cursor, GitHub Copilot, Claude)\n- Proven expertise in MCP, A2A protocol, agentic systems\n- API design, system architecture, implementation trade-offs\n- Experience building strategic technology partnerships\n- Track record driving product adoption in developer communities\n",
     "generationModel": "claude-opus-4-5-20251101",
-    "slug": "anaconda-genai-pm"
+    "slug": "anaconda-genai-pm",
+    "publishStatus": "draft",
+    "applicationStatus": "not_applied"
   },
   "overrides": {
     "hero": {

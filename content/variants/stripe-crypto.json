@@ -5,7 +5,9 @@
     "generatedAt": "2025-12-19T00:00:00Z",
     "jobDescription": "Stripe Crypto - Product Manager\n\nStripe is building the financial infrastructure for the internet, and crypto\nis becoming an increasingly important part of that infrastructure. We're looking\nfor a PM to help define and execute our crypto strategy—from stablecoin payments\nto on-chain settlement to crypto on-ramps.\n\nYou'll work at the intersection of traditional payments and blockchain,\nbuilding products that bring crypto to Stripe's millions of merchants.\n\nRequirements:\n- 5+ years product management experience\n- Deep understanding of crypto/blockchain ecosystems\n- Experience with payments, fintech, or financial infrastructure\n- Track record shipping developer-facing APIs\n- Comfort with regulatory complexity\n",
     "generationModel": "claude-opus-4",
-    "slug": "stripe-crypto"
+    "slug": "stripe-crypto",
+    "publishStatus": "draft",
+    "applicationStatus": "not_applied"
   },
   "overrides": {
     "hero": {

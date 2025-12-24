@@ -5,7 +5,9 @@
     "generatedAt": "2025-12-19T12:00:00Z",
     "jobDescription": "Sr. Product Manager for Walrus, owning the core data platform and key product\nsurfaces including Walrus Sites. Role sits at intersection of storage, data delivery,\nand developer experience. Responsible for developer-facing abstractions (APIs, SDKs,\ntooling, documentation), working with engineering on performance/scalability/reliability,\nand supporting internal teams + external partners adopting Walrus in production.\n\nKey requirements: 5+ years PM experience on technical platform/infrastructure products,\nproven ownership of ambiguous problems end-to-end, strong technical fluency with APIs/\ndata flows/system design, experience leading multi-quarter initiatives. Nice to have:\necosystem shaping experience, content/media/AI/data monetization exposure, security/\nprivacy/governance familiarity, open-source involvement.\n",
     "generationModel": "manual-v1",
-    "slug": "mysten-walrus-senior-pm"
+    "slug": "mysten-walrus-senior-pm",
+    "publishStatus": "draft",
+    "applicationStatus": "not_applied"
   },
   "overrides": {
     "hero": {

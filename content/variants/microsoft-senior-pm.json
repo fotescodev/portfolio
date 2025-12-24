@@ -5,7 +5,9 @@
     "generatedAt": "2025-12-22T23:45:00Z",
     "jobDescription": "Senior Product Manager (IC4) at Microsoft.\n\nKey Responsibilities:\n- Define feature sets and collaborate with Design teams to integrate UX, APIs, hardware design toward product vision\n- Anticipate interoperability challenges across different system layers\n- Build golden configurations and conduct scenario walkthroughs with partner teams\n- Work with Data Science and Software Engineering to establish performance metrics\n- Leverage data and AI tools to analyze user behavior and implement improvements\n- Incorporate security principles including logging posture, permissions minimization\n- Own roadmaps for multiple feature areas and manage backlog prioritization\n\nRequirements:\n- Bachelor's degree AND 5+ years in product/service/program management or software development\n- Strong technical background with system design understanding\n- Cross-functional dependency management\n- Agile/Scrum methodology familiarity\n\nPreferred:\n- 8+ years relevant experience\n- 2+ years bringing products/features to market with measurable improvements\n- 2+ years managing cross-functional hardware programs with KPI tracking\n\nLocation: United States\nSalary: $119,800 - $258,000 USD\n",
     "generationModel": "claude-opus-4-5-20251101",
-    "slug": "microsoft-senior-pm"
+    "slug": "microsoft-senior-pm",
+    "publishStatus": "draft",
+    "applicationStatus": "not_applied"
   },
   "overrides": {
     "hero": {

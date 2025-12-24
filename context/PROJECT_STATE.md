@@ -219,29 +219,53 @@ npm run dev       # Dev server at :5173
 
 ### Current Status
 
-**Date**: 2025-12-23
-**Objective**: Apply to roles — 9 variants ready, pipeline clear
-**Bundle**: 143KB gzip initial (target <200KB)
+**Date**: 2025-12-24
+**Objective**: Deployment architecture decision — migrate from PR-based workflow
+**Bundle**: 144KB gzip initial (target <200KB)
 **Tests**: 210 passing (ALL GREEN)
-**Variants**: 9 active
-**CSS Variables**: 124 defined
-**Inline Styles**: 348 occurrences (debt)
+**Variants**: 11 active (Plaid, Anaconda, Figma, Microsoft, Galaxy, Meta, Mysten, Stripe, Gensyn, Bloomberg, Anthropic)
+**CSS Variables**: 364 lines in globals.css
+**Inline Styles**: 376 occurrences (debt)
 **Premium Score**: 8.5/10
+**Production Readiness**: 92%
 
-**Blockers**: None
+**Blockers**: None — deciding architecture direction
 
 **Recent Wins**:
-- Fixed mobile omnibar visibility bug (observer now checks both desktop/mobile CTAs)
-- REAL testimonials from Anchorage colleagues (social proof)
-- Mobile UX improvements (CTA relocation, testimonial carousel)
-- All 210 tests passing
-- Anthropic AI Safety Fellow variant (negative example)
-- generate-variant skill operational
+- Private variant dashboard at /cv-dashboard with status tracking
+- Plaid API & DevEx PM variant added
+- Auto-regenerate dashboard on variants:sync
+- Figma PM Developer Tools variant
+- Anaconda GenAI PM variant
+- Graceful scroll-aware navbar on mobile
+
+**Architecture Decision Pending**:
+User wants to migrate from GitHub Pages + PR workflow to dynamic variant creation.
+Options under consideration:
+1. Cloudflare Pages + KV (recommended — minimal change)
+2. Next.js + Turso (best long-term)
+3. Replit/Railway (full control)
 
 **Next Priority**:
-1. APPLY to roles with 9 ready variants
-2. Generate new variants for target companies
-3. Trust Battery Testimonials (deferred)
+1. DECIDE deployment architecture direction
+2. Prototype chosen solution
+3. APPLY to roles with 11 ready variants
+
+---
+
+### Session: December 24, 2025 — Architecture Brainstorm & Sprint Sync
+
+**Summary**: Explored deployment architecture options to eliminate PR-based variant workflow. Analyzed migration paths from static GitHub Pages to dynamic variant creation. Full hardcore sprint sync completed.
+
+**Changes**:
+- Architectural analysis: 5 deployment options documented
+- Explored codebase to understand variant system (YAML→JSON→Vite→static)
+- Identified Cloudflare Pages + KV as recommended quick-win migration
+- Next.js + Turso identified as best long-term solution
+
+**Decision Pending**: Choose deployment architecture direction
+
+**Next**: Prototype chosen solution OR apply to roles with 11 ready variants
 
 ---
 
