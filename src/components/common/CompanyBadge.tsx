@@ -4,6 +4,8 @@ import type { CompanyBadge as CompanyBadgeType } from '../../types/variant';
 interface CompanyBadgeProps {
   badge: CompanyBadgeType;
   className?: string;
+  /** Scale factor - 1 = 24px logo, adjusts proportionally */
+  scale?: number;
 }
 
 /**
@@ -44,9 +46,8 @@ function deriveDomain(companyName: string): string {
 
 /**
  * Generates Logo.dev API URL for a company
- * Uses dark mode format for better visibility on dark backgrounds
  */
-function getLogoUrl(badge: CompanyBadgeType, theme: 'light' | 'dark'): string {
+function getLogoUrl(badge: CompanyBadgeType): string {
   // If custom logoUrl provided, use it
   if (badge.logoUrl) {
     return badge.logoUrl;
@@ -54,9 +55,8 @@ function getLogoUrl(badge: CompanyBadgeType, theme: 'light' | 'dark'): string {
 
   const domain = badge.domain || deriveDomain(badge.name);
 
-  // Logo.dev API with format parameter
-  // Using higher size for retina displays
-  return `https://img.logo.dev/${domain}?token=pk_X-1ZO13GSgeOoUrIuJ6GMQ&size=64&format=png`;
+  // Logo.dev API - using larger size for retina/scaling
+  return `https://img.logo.dev/${domain}?token=pk_X-1ZO13GSgeOoUrIuJ6GMQ&size=128&format=png`;
 }
 
 /**
@@ -65,31 +65,37 @@ function getLogoUrl(badge: CompanyBadgeType, theme: 'light' | 'dark'): string {
  * Two styles:
  * - pill: Glass container with logo + name (default)
  * - inline: Just logo + name without container
+ *
+ * Supports scaling via the `scale` prop (default 1 = 24px logo)
  */
-export default function CompanyBadge({ badge, className = '' }: CompanyBadgeProps) {
+export default function CompanyBadge({ badge, className = '', scale = 1 }: CompanyBadgeProps) {
   const [logoError, setLogoError] = useState(false);
   const [logoLoaded, setLogoLoaded] = useState(false);
 
-  // Detect current theme from data attribute
-  const theme = typeof document !== 'undefined'
-    ? (document.documentElement.getAttribute('data-theme') as 'light' | 'dark') || 'dark'
-    : 'dark';
+  const logoUrl = getLogoUrl(badge);
+  const badgeStyle = badge.style || 'pill';
 
-  const logoUrl = getLogoUrl(badge, theme);
-  const style = badge.style || 'pill';
+  // Base sizes that scale
+  const logoSize = 24 * scale;
+  const fontSize = 15 * scale;
+  const paddingV = 8 * scale;
+  const paddingH = 16 * scale;
+  const paddingLogo = 12 * scale;
+  const gap = 8 * scale;
+  const borderRadius = 8 * scale;
 
   // Pill style: glass container
-  if (style === 'pill') {
+  if (badgeStyle === 'pill') {
     return (
       <span
         className={`company-badge company-badge-pill ${className}`}
         style={{
           display: 'inline-flex',
           alignItems: 'center',
-          gap: '8px',
-          padding: '8px 16px 8px 12px',
+          gap: `${gap}px`,
+          padding: `${paddingV}px ${paddingH}px ${paddingV}px ${paddingLogo}px`,
           background: 'var(--color-badge-bg, rgba(255, 255, 255, 0.95))',
-          borderRadius: '8px',
+          borderRadius: `${borderRadius}px`,
           boxShadow: '0 2px 8px rgba(0, 0, 0, 0.08)',
           verticalAlign: 'middle',
           transition: 'all 0.2s ease',
@@ -113,8 +119,8 @@ export default function CompanyBadge({ badge, className = '' }: CompanyBadgeProp
             onError={() => setLogoError(true)}
             onLoad={() => setLogoLoaded(true)}
             style={{
-              width: '24px',
-              height: '24px',
+              width: `${logoSize}px`,
+              height: `${logoSize}px`,
               objectFit: 'contain',
               opacity: logoLoaded ? 1 : 0,
               transition: 'opacity 0.2s ease',
@@ -123,7 +129,7 @@ export default function CompanyBadge({ badge, className = '' }: CompanyBadgeProp
         )}
         <span
           style={{
-            fontSize: '15px',
+            fontSize: `${fontSize}px`,
             fontWeight: 600,
             color: 'var(--color-badge-text, #1a1a1a)',
             letterSpacing: '0.01em',
@@ -137,13 +143,17 @@ export default function CompanyBadge({ badge, className = '' }: CompanyBadgeProp
   }
 
   // Inline style: no container
+  const inlineLogoSize = 20 * scale;
+  const inlineFontSize = 14 * scale;
+  const inlineGap = 6 * scale;
+
   return (
     <span
       className={`company-badge company-badge-inline ${className}`}
       style={{
         display: 'inline-flex',
         alignItems: 'center',
-        gap: '6px',
+        gap: `${inlineGap}px`,
         verticalAlign: 'middle',
       }}
     >
@@ -154,8 +164,8 @@ export default function CompanyBadge({ badge, className = '' }: CompanyBadgeProp
           onError={() => setLogoError(true)}
           onLoad={() => setLogoLoaded(true)}
           style={{
-            width: '20px',
-            height: '20px',
+            width: `${inlineLogoSize}px`,
+            height: `${inlineLogoSize}px`,
             objectFit: 'contain',
             opacity: logoLoaded ? 1 : 0,
             transition: 'opacity 0.2s ease',
@@ -164,6 +174,7 @@ export default function CompanyBadge({ badge, className = '' }: CompanyBadgeProp
       )}
       <span
         style={{
+          fontSize: `${inlineFontSize}px`,
           color: 'var(--color-accent)',
           fontWeight: 500,
         }}

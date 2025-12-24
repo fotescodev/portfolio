@@ -57,11 +57,9 @@ overrides:
         style: "muted"
       - text: "trust"
         style: "accent"
-    companyAccent:
-      - text: "with"
-        style: "muted"
-      - text: "Plaid"
-        style: "accent"
+    companyBadge:
+      name: "Plaid"
+      domain: "plaid.com"
     subheadline: >
       API & Developer Experience PM with 8+ years shipping SDKs, APIs, and
       developer tools. From Flow CLI to Ankr's Advanced API serving 1M+ daily

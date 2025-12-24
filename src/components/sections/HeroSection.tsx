@@ -1,8 +1,11 @@
 import type { Profile } from '../../types/variant';
+import type { CompanyBadge as CompanyBadgeType } from '../../types/variant';
+import CompanyBadge from '../common/CompanyBadge';
 
-// Extended hero type to include variant-specific companyAccent
-type HeroWithAccent = Profile['hero'] & {
+// Extended hero type to include variant-specific fields
+type HeroWithVariant = Profile['hero'] & {
   companyAccent?: Array<{ text: string; style?: 'italic' | 'muted' | 'accent' | 'normal' }>;
+  companyBadge?: CompanyBadgeType;
 };
 
 interface HeroSectionProps {
@@ -13,7 +16,12 @@ interface HeroSectionProps {
 }
 
 export default function HeroSection({ profile, isMobile, isTablet, isLoaded }: HeroSectionProps) {
-  const hero = profile.hero as HeroWithAccent;
+  const hero = profile.hero as HeroWithVariant;
+
+  // Calculate badge scale based on viewport (matches headline scaling)
+  // Headline: mobile 11vw, tablet 9vw, desktop 8vw
+  // Badge target: ~1.5-2x base size at desktop, scaling proportionally
+  const badgeScale = isMobile ? 1.2 : isTablet ? 1.5 : 1.8;
 
   return (
     <>
@@ -103,8 +111,28 @@ export default function HeroSection({ profile, isMobile, isTablet, isLoaded }: H
                 <span key={index}>
                   {index > 0 && <br />}
                   <span style={style}>{segment.text}</span>
-                  {/* Company accent inline after last headline segment */}
-                  {isLast && hero.companyAccent && hero.companyAccent.length > 0 && (
+                  {/* Company badge with logo (preferred) */}
+                  {isLast && hero.companyBadge && (
+                    <span style={{
+                      fontSize: '0.28em',
+                      fontStyle: 'normal',
+                      fontWeight: 400,
+                      marginLeft: '0.5em',
+                      letterSpacing: '0.01em',
+                      verticalAlign: 'baseline',
+                      position: 'relative',
+                      top: '-0.15em',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '0.35em'
+                    }}>
+                      <span style={{ color: 'var(--color-text-tertiary)', opacity: 0.4 }}>—</span>
+                      <span style={{ color: 'var(--color-text-tertiary)', opacity: 0.6 }}>with</span>
+                      <CompanyBadge badge={hero.companyBadge} scale={badgeScale} />
+                    </span>
+                  )}
+                  {/* Fallback: text-only company accent (if no badge) */}
+                  {isLast && !hero.companyBadge && hero.companyAccent && hero.companyAccent.length > 0 && (
                     <span style={{
                       fontSize: '0.28em',
                       fontStyle: 'normal',
