@@ -269,7 +269,11 @@ const VariantMetadataSchema = z.object({
   generatedAt: z.string(),
   jobDescription: z.string(),
   generationModel: z.string().optional(), // e.g., "claude-3-5-sonnet-20241022"
-  slug: z.string() // e.g., "bloomberg-senior-engineer"
+  slug: z.string(), // e.g., "bloomberg-senior-engineer"
+  publishStatus: z.enum(['draft', 'published']).optional().default('draft'),
+  publishedAt: z.string().optional(),
+  applicationStatus: z.enum(['not_applied', 'applied']).optional().default('not_applied'),
+  appliedAt: z.string().optional()
 });
 
 /**

@@ -30,6 +30,7 @@ import {
 } from '../../../scripts/lib/issues.js';
 
 type PublishStatus = 'draft' | 'published';
+type ApplicationStatus = 'not_applied' | 'applied';
 
 // Readline keypress event key object
 type KeypressKey = {
@@ -67,6 +68,8 @@ type VariantMeta = {
   jobDescription: string; // excerpt
   publishStatus: PublishStatus;
   publishedAt?: string;
+  applicationStatus: ApplicationStatus;
+  appliedAt?: string;
 };
 
 type VariantRow = {
@@ -424,7 +427,9 @@ function readVariantMeta(slug: string): VariantMeta {
     generatedAt: validated.metadata.generatedAt,
     jobDescription: validated.metadata.jobDescription,
     publishStatus: validated.metadata.publishStatus,
-    publishedAt: validated.metadata.publishedAt
+    publishedAt: validated.metadata.publishedAt,
+    applicationStatus: validated.metadata.applicationStatus,
+    appliedAt: validated.metadata.appliedAt
   };
 }
 
@@ -442,7 +447,8 @@ async function loadStatuses(): Promise<VariantRow[]> {
         role: 'Invalid variant YAML',
         generatedAt: '',
         jobDescription: '',
-        publishStatus: 'draft'
+        publishStatus: 'draft',
+        applicationStatus: 'not_applied'
       });
     }
   }
@@ -841,6 +847,7 @@ function getActionsFor(row: VariantRow | undefined): ActionItem[] {
   const ev = getEvalLedgerSummary(row.meta.slug);
   const canPublish = row.meta.publishStatus === 'draft' && row.next === 'Publish';
   const canClaims = ev.exists && ev.unverified > 0;
+  const isApplied = row.meta.applicationStatus === 'applied';
 
   return [
     { id: 'run-next', label: 'Run guided next step', help: 'fast path', enabled: true },
@@ -850,6 +857,7 @@ function getActionsFor(row: VariantRow | undefined): ActionItem[] {
     { id: 'claims', label: 'Verify claims', help: 'Pick sources for metric claims', enabled: canClaims },
     { id: 'redteam', label: 'Red Team', help: 'Quality/security scan', enabled: true },
     { id: 'publish', label: 'Publish', help: 'Flip draft → live, commit & push', enabled: canPublish },
+    { id: 'toggle-applied', label: isApplied ? 'Mark Not Applied' : 'Mark Applied', help: isApplied ? 'Reset application status' : 'Mark as applied to this role', enabled: true },
     { id: 'close', label: 'Close', enabled: true }
   ];
 }
@@ -1051,16 +1059,18 @@ function renderVariantsTable(rows: VariantRow[], selected: number, width: number
 
   const inner = width;
   const colPub = 6;
+  const colApp = 5;
   const colSync = 4;
   const colEval = 9;
   const colRT = 7;
   const colNext = 10;
-  const colSlug = Math.max(12, inner - (colPub + colSync + colEval + colRT + colNext + 6));
+  const colSlug = Math.max(12, inner - (colPub + colApp + colSync + colEval + colRT + colNext + 6));
 
   const header =
     padRight(theme.bold('Slug'), colSlug) +
     '  ' +
     padRight(theme.dim('Pub'), colPub) +
+    padRight(theme.dim('App'), colApp) +
     padRight(theme.dim('S'), colSync) +
     padRight(theme.dim('Eval'), colEval) +
     padRight(theme.dim('RT'), colRT) +
@@ -1081,12 +1091,13 @@ function renderVariantsTable(rows: VariantRow[], selected: number, width: number
     const pointer = isSel ? theme.brand('▶') : ' ';
     const slug = padRight(truncate(r.meta.slug, colSlug - 1), colSlug);
     const pub = padRight(r.meta.publishStatus === 'published' ? theme.success('LIVE') : theme.warning('DRAFT'), colPub);
+    const app = padRight(r.meta.applicationStatus === 'applied' ? theme.success('✓') : theme.muted('—'), colApp);
     const sync = padRight(r.sync.kind === 'ok' ? theme.success('✓') : theme.error('✗'), colSync);
     const ev = padRight(fmtEval(r.eval), colEval);
     const rt = padRight(fmtRedteam(r.redteam), colRT);
     const next = padRight(truncate(r.next, colNext - 1), colNext);
 
-    const rowLine = `${pointer} ${slug}  ${pub}${sync}${ev}${rt}${next}`;
+    const rowLine = `${pointer} ${slug}  ${pub}${app}${sync}${ev}${rt}${next}`;
     lines.push(isSel ? theme.inverse(truncate(rowLine, inner)) : truncate(rowLine, inner));
   }
 
@@ -1846,6 +1857,8 @@ function renderVariantYaml(meta: VariantMeta): string {
   lines.push(`  generationModel: ${JSON.stringify('ucv-cli-scaffold-v1')}`);
   lines.push(`  publishStatus: ${JSON.stringify(meta.publishStatus)}`);
   if (meta.publishedAt) lines.push(`  publishedAt: ${JSON.stringify(meta.publishedAt)}`);
+  lines.push(`  applicationStatus: ${JSON.stringify(meta.applicationStatus)}`);
+  if (meta.appliedAt) lines.push(`  appliedAt: ${JSON.stringify(meta.appliedAt)}`);
   lines.push('');
 
   lines.push('# ═══════════════════════════════════════════════════════════════');
@@ -1946,7 +1959,8 @@ async function createVariantFlow(): Promise<{ slug: string; jdPath: string } | n
     sourceUrl,
     generatedAt: nowIso(),
     jobDescription: makeExcerpt(fullJd, 900),
-    publishStatus: 'draft'
+    publishStatus: 'draft',
+    applicationStatus: 'not_applied'
   };
 
   ensureDir(PATHS.variantsDir);
@@ -2382,6 +2396,37 @@ async function main() {
     render();
   }
 
+  async function toggleAppliedStatus(slug: string): Promise<void> {
+    const row = rows.find((r) => r.meta.slug === slug);
+    if (!row) {
+      setNotice('error', 'Variant not found');
+      return;
+    }
+
+    const currentStatus = row.meta.applicationStatus;
+    const newStatus: ApplicationStatus = currentStatus === 'applied' ? 'not_applied' : 'applied';
+
+    // Update YAML file
+    const yamlPath = join(PATHS.variantsDir, `${slug}.yaml`);
+    const raw = readFileSync(yamlPath, 'utf-8');
+    const parsed = YAML.parse(raw);
+    parsed.metadata = parsed.metadata || {};
+    parsed.metadata.applicationStatus = newStatus;
+    if (newStatus === 'applied') {
+      parsed.metadata.appliedAt = nowIso();
+    } else {
+      delete parsed.metadata.appliedAt;
+    }
+    writeFileSync(yamlPath, YAML.stringify(parsed, { lineWidth: 0 }), 'utf-8');
+
+    // Sync to JSON
+    await runPhase('Sync', slug, 'scripts/sync-variants.ts', ['--slug', slug]);
+
+    setNotice('success', newStatus === 'applied' ? `Marked as applied` : `Marked as not applied`);
+    await refresh();
+    render();
+  }
+
   async function runGuidedNext(): Promise<void> {
     const row = rows[selected];
     if (!row) return;
@@ -2516,6 +2561,11 @@ async function main() {
     if (actionId === 'publish') {
       overlay = null;
       await publishVariant(slug);
+      return;
+    }
+    if (actionId === 'toggle-applied') {
+      overlay = null;
+      await toggleAppliedStatus(slug);
       return;
     }
   }
