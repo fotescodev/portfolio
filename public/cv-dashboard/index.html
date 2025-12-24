@@ -1,86 +1,4 @@
-#!/usr/bin/env tsx
-/**
- * Generates a private variant links dashboard for GitHub Pages
- *
- * Usage: npm run generate:dashboard
- * Output: dashboard/index.html
- */
-
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import yaml from 'yaml';
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const rootDir = path.join(__dirname, '..');
-const variantsDir = path.join(rootDir, 'content', 'variants');
-const outputDir = path.join(rootDir, 'public', 'cv-dashboard');
-
-interface VariantMetadata {
-  company: string;
-  role: string;
-  slug: string;
-  generatedAt: string;
-  sourceUrl?: string;
-  applicationStatus?: 'not_applied' | 'applied';
-  appliedAt?: string;
-}
-
-interface Variant {
-  metadata: VariantMetadata;
-}
-
-function loadVariants(): Variant[] {
-  const files = fs.readdirSync(variantsDir)
-    .filter(f => f.endsWith('.yaml') && !f.startsWith('_'));
-
-  return files.map(file => {
-    const content = fs.readFileSync(path.join(variantsDir, file), 'utf-8');
-    return yaml.parse(content) as Variant;
-  }).sort((a, b) =>
-    new Date(b.metadata.generatedAt).getTime() - new Date(a.metadata.generatedAt).getTime()
-  );
-}
-
-function generateHTML(variants: Variant[], baseUrl: string): string {
-  const appliedCount = variants.filter(v => v.metadata.applicationStatus === 'applied').length;
-
-  const variantRows = variants.map(v => {
-    const date = new Date(v.metadata.generatedAt).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric'
-    });
-    const isApplied = v.metadata.applicationStatus === 'applied';
-    const appliedDate = v.metadata.appliedAt
-      ? new Date(v.metadata.appliedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
-      : '';
-
-    // Convert slug to URL path: "galaxy-pm" -> "galaxy/pm"
-    const slugParts = v.metadata.slug.split('-');
-    const urlPath = `${slugParts[0]}/${slugParts.slice(1).join('-')}`;
-
-    return `
-      <tr class="variant-row" data-company="${v.metadata.company.toLowerCase()}" data-role="${v.metadata.role.toLowerCase()}" data-applied="${isApplied}">
-        <td>
-          <div class="company">${v.metadata.company}</div>
-          <div class="role">${v.metadata.role}</div>
-        </td>
-        <td class="status-cell">
-          ${isApplied
-            ? `<span class="status status-applied" title="Applied ${appliedDate}">✓ Applied</span>`
-            : `<span class="status status-pending">—</span>`}
-        </td>
-        <td class="date">${date}</td>
-        <td class="actions">
-          <a href="${baseUrl}/${urlPath}" target="_blank" class="btn btn-primary">View</a>
-          ${v.metadata.sourceUrl ? `<a href="${v.metadata.sourceUrl}" target="_blank" class="btn btn-secondary">Job Post</a>` : ''}
-        </td>
-      </tr>
-    `;
-  }).join('\n');
-
-  return `<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -415,15 +333,15 @@ function generateHTML(variants: Variant[], baseUrl: string): string {
 
     <div class="stats">
       <div class="stat">
-        <div class="stat-value">${variants.length}</div>
+        <div class="stat-value">11</div>
         <div class="stat-label">Total Variants</div>
       </div>
       <div class="stat">
-        <div class="stat-value applied">${appliedCount}</div>
+        <div class="stat-value applied">0</div>
         <div class="stat-label">Applied</div>
       </div>
       <div class="stat">
-        <div class="stat-value">${variants.length - appliedCount}</div>
+        <div class="stat-value">11</div>
         <div class="stat-label">Pending</div>
       </div>
     </div>
@@ -448,14 +366,189 @@ function generateHTML(variants: Variant[], baseUrl: string): string {
         </tr>
       </thead>
       <tbody>
-        ${variantRows}
+        
+      <tr class="variant-row" data-company="anaconda" data-role="principal product manager, gen ai developer tools" data-applied="false">
+        <td>
+          <div class="company">Anaconda</div>
+          <div class="role">Principal Product Manager, Gen AI Developer Tools</div>
+        </td>
+        <td class="status-cell">
+          <span class="status status-pending">—</span>
+        </td>
+        <td class="date">Dec 22, 2025</td>
+        <td class="actions">
+          <a href="https://fotescodev.github.io/portfolio/anaconda/genai-pm" target="_blank" class="btn btn-primary">View</a>
+          <a href="https://ats.rippling.com/anaconda/jobs/f37e2651-58a7-4198-94cf-6ec8bb2cca30" target="_blank" class="btn btn-secondary">Job Post</a>
+        </td>
+      </tr>
+    
+
+      <tr class="variant-row" data-company="anthropic" data-role="ai safety fellow" data-applied="false">
+        <td>
+          <div class="company">Anthropic</div>
+          <div class="role">AI Safety Fellow</div>
+        </td>
+        <td class="status-cell">
+          <span class="status status-pending">—</span>
+        </td>
+        <td class="date">Dec 22, 2025</td>
+        <td class="actions">
+          <a href="https://fotescodev.github.io/portfolio/anthropic/ai-safety-fellow" target="_blank" class="btn btn-primary">View</a>
+          <a href="https://job-boards.greenhouse.io/anthropic/jobs/5023394008" target="_blank" class="btn btn-secondary">Job Post</a>
+        </td>
+      </tr>
+    
+
+      <tr class="variant-row" data-company="figma" data-role="product manager, developer tools" data-applied="false">
+        <td>
+          <div class="company">Figma</div>
+          <div class="role">Product Manager, Developer Tools</div>
+        </td>
+        <td class="status-cell">
+          <span class="status status-pending">—</span>
+        </td>
+        <td class="date">Dec 22, 2025</td>
+        <td class="actions">
+          <a href="https://fotescodev.github.io/portfolio/figma/pm-dev-tools" target="_blank" class="btn btn-primary">View</a>
+          <a href="https://job-boards.greenhouse.io/figma/jobs/5740760004" target="_blank" class="btn btn-secondary">Job Post</a>
+        </td>
+      </tr>
+    
+
+      <tr class="variant-row" data-company="microsoft" data-role="senior product manager" data-applied="false">
+        <td>
+          <div class="company">Microsoft</div>
+          <div class="role">Senior Product Manager</div>
+        </td>
+        <td class="status-cell">
+          <span class="status status-pending">—</span>
+        </td>
+        <td class="date">Dec 22, 2025</td>
+        <td class="actions">
+          <a href="https://fotescodev.github.io/portfolio/microsoft/senior-pm" target="_blank" class="btn btn-primary">View</a>
+          <a href="https://apply.careers.microsoft.com/careers?query=product&start=0&pid=1970393556619182&sort_by=match" target="_blank" class="btn btn-secondary">Job Post</a>
+        </td>
+      </tr>
+    
+
+      <tr class="variant-row" data-company="galaxy" data-role="director, technical program manager" data-applied="false">
+        <td>
+          <div class="company">Galaxy</div>
+          <div class="role">Director, Technical Program Manager</div>
+        </td>
+        <td class="status-cell">
+          <span class="status status-pending">—</span>
+        </td>
+        <td class="date">Dec 22, 2025</td>
+        <td class="actions">
+          <a href="https://fotescodev.github.io/portfolio/galaxy/pm" target="_blank" class="btn btn-primary">View</a>
+          <a href="https://job-boards.greenhouse.io/galaxydigitalservices/jobs/5591908004" target="_blank" class="btn btn-secondary">Job Post</a>
+        </td>
+      </tr>
+    
+
+      <tr class="variant-row" data-company="meta" data-role="product manager, business ai" data-applied="false">
+        <td>
+          <div class="company">Meta</div>
+          <div class="role">Product Manager, Business AI</div>
+        </td>
+        <td class="status-cell">
+          <span class="status status-pending">—</span>
+        </td>
+        <td class="date">Dec 22, 2025</td>
+        <td class="actions">
+          <a href="https://fotescodev.github.io/portfolio/meta/business-ai-pm" target="_blank" class="btn btn-primary">View</a>
+          <a href="https://www.metacareers.com/profile/job_details/1851836246209831" target="_blank" class="btn btn-secondary">Job Post</a>
+        </td>
+      </tr>
+    
+
+      <tr class="variant-row" data-company="coinbase" data-role="product manager ii - ai automation" data-applied="false">
+        <td>
+          <div class="company">Coinbase</div>
+          <div class="role">Product Manager II - AI Automation</div>
+        </td>
+        <td class="status-cell">
+          <span class="status status-pending">—</span>
+        </td>
+        <td class="date">Dec 21, 2025</td>
+        <td class="actions">
+          <a href="https://fotescodev.github.io/portfolio/coinbase/product-manager-ii-ai-automation" target="_blank" class="btn btn-primary">View</a>
+          
+        </td>
+      </tr>
+    
+
+      <tr class="variant-row" data-company="mysten labs" data-role="sr. product manager, walrus (distributed storage)" data-applied="false">
+        <td>
+          <div class="company">Mysten Labs</div>
+          <div class="role">Sr. Product Manager, Walrus (Distributed Storage)</div>
+        </td>
+        <td class="status-cell">
+          <span class="status status-pending">—</span>
+        </td>
+        <td class="date">Dec 19, 2025</td>
+        <td class="actions">
+          <a href="https://fotescodev.github.io/portfolio/mysten/walrus-senior-pm" target="_blank" class="btn btn-primary">View</a>
+          <a href="https://jobs.ashbyhq.com/mystenlabs/5d434241-ef7f-44e8-ad3a-6f17376866d7" target="_blank" class="btn btn-secondary">Job Post</a>
+        </td>
+      </tr>
+    
+
+      <tr class="variant-row" data-company="stripe" data-role="crypto product manager" data-applied="false">
+        <td>
+          <div class="company">Stripe</div>
+          <div class="role">Crypto Product Manager</div>
+        </td>
+        <td class="status-cell">
+          <span class="status status-pending">—</span>
+        </td>
+        <td class="date">Dec 18, 2025</td>
+        <td class="actions">
+          <a href="https://fotescodev.github.io/portfolio/stripe/crypto" target="_blank" class="btn btn-primary">View</a>
+          
+        </td>
+      </tr>
+    
+
+      <tr class="variant-row" data-company="gensyn" data-role="technical product manager" data-applied="false">
+        <td>
+          <div class="company">Gensyn</div>
+          <div class="role">Technical Product Manager</div>
+        </td>
+        <td class="status-cell">
+          <span class="status status-pending">—</span>
+        </td>
+        <td class="date">Dec 16, 2025</td>
+        <td class="actions">
+          <a href="https://fotescodev.github.io/portfolio/gensyn/technical-product-manager" target="_blank" class="btn btn-primary">View</a>
+          
+        </td>
+      </tr>
+    
+
+      <tr class="variant-row" data-company="bloomberg" data-role="technical product manager" data-applied="false">
+        <td>
+          <div class="company">Bloomberg</div>
+          <div class="role">Technical Product Manager</div>
+        </td>
+        <td class="status-cell">
+          <span class="status status-pending">—</span>
+        </td>
+        <td class="date">Dec 16, 2025</td>
+        <td class="actions">
+          <a href="https://fotescodev.github.io/portfolio/bloomberg/technical-product-manager" target="_blank" class="btn btn-primary">View</a>
+          
+        </td>
+      </tr>
+    
       </tbody>
     </table>
   </div>
 
   <script>
     // Simple hash function for password (not cryptographically secure, just obscurity)
-    const HASH = '${generateHash('dmitrii2024')}';
+    const HASH = 'nxt2ji';
 
     function simpleHash(str) {
       let hash = 0;
@@ -518,40 +611,4 @@ function generateHTML(variants: Variant[], baseUrl: string): string {
     }
   </script>
 </body>
-</html>`;
-}
-
-function generateHash(str: string): string {
-  let hash = 0;
-  for (let i = 0; i < str.length; i++) {
-    const char = str.charCodeAt(i);
-    hash = ((hash << 5) - hash) + char;
-    hash = hash & hash;
-  }
-  return hash.toString(36);
-}
-
-// Main
-const baseUrl = process.argv[2] || 'https://fotescodev.github.io/portfolio';
-
-console.log('📊 Generating variant dashboard...\n');
-
-const variants = loadVariants();
-console.log(`Found ${variants.length} variants:`);
-variants.forEach(v => console.log(`  • ${v.metadata.company} - ${v.metadata.role}`));
-
-// Ensure output directory exists
-if (!fs.existsSync(outputDir)) {
-  fs.mkdirSync(outputDir, { recursive: true });
-}
-
-// Generate and write HTML
-const html = generateHTML(variants, baseUrl);
-const outputPath = path.join(outputDir, 'index.html');
-fs.writeFileSync(outputPath, html);
-
-console.log(`\n✅ Dashboard generated: ${outputPath}`);
-console.log(`\n🔐 Default access code: dmitrii2024`);
-console.log(`   (Change in scripts/generate-dashboard.ts)`);
-console.log(`\n📦 Dashboard will be available at: ${baseUrl}/cv-dashboard`);
-console.log(`   (Included in build via public/ folder)`);
+</html>
