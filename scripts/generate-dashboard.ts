@@ -2,14 +2,28 @@
 /**
  * Generates a private variant links dashboard for GitHub Pages
  *
- * Usage: npm run generate:dashboard
- * Output: dashboard/index.html
+ * Usage: DASHBOARD_PASSWORD=yourpassword npm run generate:dashboard
+ * Output: public/cv-dashboard/index.html
+ *
+ * Password is read from DASHBOARD_PASSWORD env var or .env.local file
  */
 
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import yaml from 'yaml';
+
+// Load .env.local if it exists
+const envLocalPath = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', '.env.local');
+if (fs.existsSync(envLocalPath)) {
+  const envContent = fs.readFileSync(envLocalPath, 'utf-8');
+  for (const line of envContent.split('\n')) {
+    const [key, ...valueParts] = line.split('=');
+    if (key && valueParts.length > 0) {
+      process.env[key.trim()] = valueParts.join('=').trim();
+    }
+  }
+}
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.join(__dirname, '..');
@@ -42,7 +56,7 @@ function loadVariants(): Variant[] {
   );
 }
 
-function generateHTML(variants: Variant[], baseUrl: string): string {
+function generateHTML(variants: Variant[], baseUrl: string, passwordHash: string): string {
   const appliedCount = variants.filter(v => v.metadata.applicationStatus === 'applied').length;
 
   const variantRows = variants.map(v => {
@@ -456,7 +470,7 @@ function generateHTML(variants: Variant[], baseUrl: string): string {
 
   <script>
     // Simple hash function for password (not cryptographically secure, just obscurity)
-    const HASH = '${generateHash('dmitrii2024')}';
+    const HASH = '${passwordHash}';
 
     function simpleHash(str) {
       let hash = 0;
@@ -535,6 +549,14 @@ function generateHash(str: string): string {
 // Main
 const baseUrl = process.argv[2] || 'https://fotescodev.github.io/portfolio';
 
+// Get password from environment variable (required)
+const password = process.env.DASHBOARD_PASSWORD;
+if (!password) {
+  console.error('❌ Error: DASHBOARD_PASSWORD environment variable is required');
+  console.error('   Set it in your shell or .env.local file');
+  process.exit(1);
+}
+
 console.log('📊 Generating variant dashboard...\n');
 
 const variants = loadVariants();
@@ -546,13 +568,13 @@ if (!fs.existsSync(outputDir)) {
   fs.mkdirSync(outputDir, { recursive: true });
 }
 
-// Generate and write HTML
-const html = generateHTML(variants, baseUrl);
+// Generate and write HTML with hashed password
+const passwordHash = generateHash(password);
+const html = generateHTML(variants, baseUrl, passwordHash);
 const outputPath = path.join(outputDir, 'index.html');
 fs.writeFileSync(outputPath, html);
 
 console.log(`\n✅ Dashboard generated: ${outputPath}`);
-console.log(`\n🔐 Default access code: dmitrii2024`);
-console.log(`   (Change in scripts/generate-dashboard.ts)`);
+console.log(`\n🔐 Password hash embedded (password not stored in code)`);
 console.log(`\n📦 Dashboard will be available at: ${baseUrl}/cv-dashboard`);
 console.log(`   (Included in build via public/ folder)`);
