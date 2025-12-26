@@ -213,6 +213,42 @@ When ultrathinking, structure your response:
 
 ---
 
+## Skill Compositions
+
+Ultrathink amplifies other skills. These aren't just pairings—they're recipes for specific outcomes.
+
+### ultrathink + dmitrii-writing-style
+**Creates**: Content that's both *architecturally sound* and *authentically voiced*
+
+Use when writing case studies, proposals, or any content that needs to be strategically structured AND sound like a human wrote it. The craft applies to prose, not just code.
+
+### ultrathink + serghei-qa
+**Creates**: The *design-then-destroy* pattern
+
+First, ultrathink the architecture—question assumptions, plan deliberately, craft the solution. Then, unleash Serghei to find what you missed. Ego dies, quality lives.
+
+### ultrathink + generate-variant
+**Creates**: Job applications that feel *inevitable*
+
+Don't just customize a CV. Reimagine how your experience maps to this specific role. What's the *only* story that makes sense for this position?
+
+### ultrathink + cv-knowledge-query
+**Creates**: *Archaeological insight* before creation
+
+Before building anything, mine the knowledge base like you're studying a masterpiece. What patterns exist? What stories haven't been told? What's the soul of this career?
+
+### ultrathink + reorient
+**Creates**: The *productive tension* loop
+
+Ultrathink can drift into over-engineering. Reorient snaps you back. Use them as counterweights: dream big, then reality-check. Iterate between vision and pragmatism.
+
+### ultrathink + run-tests
+**Creates**: *Verified elegance*
+
+Craft isn't craft if it doesn't work. After ultrathinking a solution, prove it. Tests aren't bureaucracy—they're the moment truth meets aspiration.
+
+---
+
 ## The Meta-Rule
 
 Don't just tell how you'll solve it. *Show* why this solution is the only one that makes sense.
