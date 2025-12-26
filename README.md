@@ -29,12 +29,28 @@ Operational details for managing the engine.
 
 ### 🤖 [Claude Code Skills](./.claude/skills/)
 AI-powered automation skills for content management.
+*   **[ultrathink](./.claude/skills/ultrathink/SKILL.md)**: Elevated problem-solving. Craftsman mindset for architectural decisions.
 *   **[sprint-sync](./.claude/skills/sprint-sync/SKILL.md)**: Multi-perspective project onboarding (PM, Designer, Architect, Engineer views).
 *   **[run-tests](./.claude/skills/run-tests/SKILL.md)**: Run test suite and identify gaps.
+*   **[serghei-qa](./.claude/skills/serghei-qa/SKILL.md)**: Brutally honest code audits with best-practice fixes.
+*   **[reorient](./.claude/skills/reorient/SKILL.md)**: ADHD-aware reality checks when drifting.
+*   **[dmitrii-writing-style](./.claude/skills/dmitrii-writing-style/SKILL.md)**: Authentic voice for all written content.
 *   **[cv-data-ingestion](./.claude/skills/cv-data-ingestion/SKILL.md)**: Import career data from Obsidian, CSV, zip archives.
 *   **[cv-content-generator](./.claude/skills/cv-content-generator/SKILL.md)**: Generate case studies, blog posts, variants.
 *   **[cv-content-editor](./.claude/skills/cv-content-editor/SKILL.md)**: Edit existing CV content.
 *   **[cv-knowledge-query](./.claude/skills/cv-knowledge-query/SKILL.md)**: Query achievements and stories.
+*   **[generate-variant](./.claude/skills/generate-variant/SKILL.md)**: Job-targeted CV variants with quality gates.
+
+#### Skill Recipes
+Skills compose automatically. These combinations create outcomes greater than their parts:
+
+| Recipe | What Emerges |
+|--------|--------------|
+| `ultrathink + dmitrii-writing-style` | Architecturally sound + authentically voiced content |
+| `ultrathink + serghei-qa` | Design-then-destroy: craft first, roast second |
+| `ultrathink + generate-variant` | Job applications that feel *inevitable* |
+| `ultrathink + reorient` | Productive tension: dream ↔ pragmatism |
+| `serghei-qa + run-tests` | Quality sweep: find issues, verify fixes |
 
 ### 🔬 [Capstone Quality Pipeline](./capstone/)
 AI product evaluation framework for variant quality assurance.
