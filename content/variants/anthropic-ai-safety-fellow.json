@@ -5,7 +5,9 @@
     "generatedAt": "2025-12-23T00:00:00Z",
     "jobDescription": "AI Safety Fellowship - 4 month research program (May or July 2026 cohorts)\n\nFellowship accelerates AI safety research by providing funding and mentorship.\nFellows work on empirical projects producing public research outputs (papers).\nOver 80% of fellows produced papers in previous cohorts.\n\nResearch Areas:\n- Scalable Oversight: Maintaining helpful, honest models at superhuman intelligence\n- Adversarial Robustness & AI Control: Safety methods for unfamiliar scenarios\n- Model Organisms: Empirical misalignment research\n- Mechanistic Interpretability: Understanding LLM internals\n- AI Welfare: Developing evaluations and mitigations\n\nRequired:\n- Python fluency\n- Full-time availability (4 months)\n- Work authorization in US/UK/Canada\n- Strong technical background (CS, math, physics, cybersecurity)\n- Rapid implementation + clear communication\n\nNice to have:\n- Empirical ML research experience\n- LLM experience\n- Deep learning frameworks\n- Experiment management\n- Open-source contributions\n",
     "generationModel": "claude-opus-4-5-20251101",
-    "slug": "anthropic-ai-safety-fellow"
+    "slug": "anthropic-ai-safety-fellow",
+    "publishStatus": "draft",
+    "applicationStatus": "not_applied"
   },
   "overrides": {
     "hero": {

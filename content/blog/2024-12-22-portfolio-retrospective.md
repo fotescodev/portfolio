@@ -1,8 +1,8 @@
 ---
-title: "Building a Universal CV Engine"
+title: "Building a Portfolio That Proves Itself"
 date: "2024-12-22"
-excerpt: "How a career transition led to building an AI-powered portfolio system—combining Web3 experience, an AI PM certification capstone, and a lot of late nights."
-tags: ["Career", "AI", "Portfolio", "Capstone"]
+excerpt: "The best portfolio isn't one that looks good—it's one where every claim traces to proof. Here's what I learned building a system that verifies itself."
+tags: ["Career", "AI", "Portfolio", "Capstone", "Web3"]
 thumbnail: null
 ---
 
@@ -10,94 +10,138 @@ Found myself between roles. Sat with the question everyone asks: *what's next?*
 
 I knew two things: I wanted to stay at the intersection of Web3 and AI, and I needed a better way to present my work. The standard resume wasn't cutting it. LinkedIn felt like shouting into the void.
 
-So I started building.
+So I started building. Three months later, I had something unexpected: not just a portfolio, but a system that proves its own claims.
 
-## From Resume to Portfolio
+## The Problem
 
-First version was just a static page. More resume than portfolio—bullet points, job titles, the usual. It worked, but it didn't *differentiate*.
+Generic portfolios don't convert. Every product manager has "drove growth" and "led cross-functional teams" on their resume. Metrics help, but metrics without sources feel hollow. How do you know those numbers are real?
 
-I needed a brand. Something that captured what I actually do: build trust infrastructure at the edge of new technology. "Edge of Trust" stuck.
+And here's the real problem: when you're applying for multiple roles, you need different emphasis. The infrastructure PM variant isn't the Web3 PM variant isn't the developer tools PM variant. Maintaining multiple versions by hand is a nightmare.
 
-The portfolio evolved. Case studies instead of bullet points. Real metrics instead of vague impact claims. A design system that didn't look like every other developer portfolio.
+I wanted something that could generate targeted variants while ensuring every claim was defensible.
 
-But I wanted more.
+## What I Built
 
-## The Capstone Connection
+The system has four layers:
 
-While building the portfolio, I was taking the [AI Product Management Certification](https://maven.com/product-faculty/ai-product-management-certification) from Product Faculty. The course teaches a 4D approach to building AI features: Discover, Define, Develop, Deliver.
+**Knowledge Base**: Every achievement lives in structured YAML, using STAR format (Situation, Task, Action, Result). Each metric traces to a source. No hallucination possible—the AI can only surface what's already documented.
 
-The certification requires a capstone project. Most people build something separate. I thought: why not combine them?
+**Variant Engine**: Takes a job description, matches it against my knowledge base, scores relevance, and generates a customized portfolio. Different stats, different case study ordering, same underlying facts.
 
-What if the portfolio itself was the capstone? What if I built an AI-powered system that could generate targeted portfolio variants for specific job applications?
+**Quality Pipeline**: This is where it gets interesting. Every variant runs through:
+- **Eval**: Extracts claims, finds candidate sources, verifies each metric
+- **Red Team**: Scans for sycophantic language, unverified metrics, cross-variant contamination, confidential leaks
 
-That's how Universal CV was born.
+**Skills Ecosystem**: Nine Claude Code skills that codify the workflow. The AI doesn't freelance—it follows documented patterns with human approval gates.
 
-## What Universal CV Actually Is
+## The Numbers
 
-The core idea is simple: create targeted portfolio pages that are accurate without embellishment, tailored to specific roles based on my actual experience data and the job description I'm applying for.
+What three months of building produced:
 
-The system has three parts:
+| Metric | Value |
+|--------|-------|
+| CSS Variables | 124 (full design system) |
+| Initial Bundle | 195KB gzip (59% reduction from 480KB) |
+| Claude Code Skills | 9 (knowledge → content → variants) |
+| Job-Specific Variants | 9 active |
+| Claims Per Variant | ~6 (100% traceable) |
+| Red Team Checks | 8 automated gates |
+| Tests | 211 passing |
 
-**1. Knowledge Base**
-All my achievements, metrics, and stories stored in structured YAML. Every claim traceable to a source. No hallucination possible because the AI can only surface what's already documented.
+## What I Learned
 
-**2. Variant Engine**
-Takes a job description, matches it against my knowledge base, and generates a customized portfolio variant. Different emphasis for different roles—infrastructure PM vs. developer tools PM vs. Web3 PM.
+### Tier 1: Fundamental Shifts
 
-**3. Quality Pipeline**
-This is where it gets interesting. I built an eval and red-teaming harness:
+**Schema is law.** Zod validates everything. A typo in a YAML field doesn't silently fail—it blocks the build. Content quality compounds when you enforce it at the source.
 
+**Voice is brand.** I created a separate skill just for writing style. Not embedded in generators—explicit and mandatory. Same facts rendered in consistent voice across every variant, email, and document.
+
+**Verification beats trust.** Every metric in a variant traces to a knowledge base file. If the source changes, the variant fails eval. You can't accidentally ship unverified claims.
+
+### Tier 2: Architectural Decisions
+
+**YAML for humans, JSON for machines.** Variants live in YAML (human-reviewable), sync to JSON (runtime artifact). One canonical source, derived outputs. No drift.
+
+**Code splitting saved 59%.** The bundle hit 480KB and I stopped everything to fix it. Lazy-loaded routes, vendor chunking, component-level splitting. Target was under 200KB—hit 195KB.
+
+**CSS variables over CSS-in-JS.** Theme switching is instant—no React re-render needed. 124 variables covering color, spacing, layout, effects. Dark and light mode parity without JavaScript overhead.
+
+### Tier 3: Process Insights
+
+**Pause between phases.** The variant skill has explicit approval gates: show content → user approves → run eval → user reviews → red team → user approves → ship. No autonomous hallucination.
+
+**Existing connections are gold.** When generating the Galaxy variant, I discovered they were already an Anchorage client (from ETH staking work). Lead with what you've already proven.
+
+**Stats should be punchy.** "8+" beats "approximately eight." "Zero" beats "no instances of." "40%" beats "significant improvement." Every stat verifiable, every stat memorable.
+
+### Tier 4: Meta Learnings
+
+**ADHD patterns are predictable.** I built a skill that diagnoses drift: tooling rabbit holes, perfect setup syndrome, research loops, scope creep. The system catches me when I'm avoiding the real work.
+
+**Multi-perspective briefings work.** Sprint sync outputs from four angles: PM (priorities), Designer (system health), Architect (dependencies), Engineer (recent changes). Different lenses, same project.
+
+**The last 8% is applying.** The portfolio is 92% done. The remaining 8% isn't code—it's hitting submit on applications. Portfolio perfection is a form of procrastination.
+
+## The Pipeline in Practice
+
+Here's what generating a variant actually looks like:
+
+```bash
+# Phase 1: Job analysis
+# Extract requirements, generate slug, check for existing variants
+
+# Phase 2: Knowledge base query
+npm run cv-knowledge-query -- --theme "institutional-crypto"
+
+# Phase 3: Content generation (with writing style skill)
+# Generate hero, about, stats—all from verified sources
+
+# Phase 4: Sync and validate
+npm run variants:sync -- --slug microsoft-senior-pm
+
+# Phase 5: Evaluate claims
+npm run eval:variant -- --slug microsoft-senior-pm
+# Output: 6/6 claims verified
+
+# Phase 6: Red team
+npm run redteam:variant -- --slug microsoft-senior-pm
+# Output: 0 FAIL, 0 WARN
+
+# Phase 7: Visual review
+open "http://localhost:5173/microsoft/senior-pm"
 ```
-Knowledge Base → Variant YAML → Sync → Eval → Red Team → Deploy
-```
 
-The eval step extracts every claim and finds candidate sources. The red team step scans for:
-- Sycophantic language ("thrilled to apply")
-- Unverified metrics
-- Cross-variant contamination (mentioning wrong company)
-- Confidential information leaks
-
-If a variant doesn't pass the gates, it doesn't ship.
+The whole flow takes about 15 minutes. Most of that is human review, not generation.
 
 ## Why This Matters
 
 Most AI-generated content has a trust problem. It sounds plausible but might be fabricated. For a portfolio—where your professional reputation is on the line—that's unacceptable.
 
-Universal CV inverts the approach. Instead of generating content and hoping it's accurate, it:
-1. Starts with verified source data
-2. Constrains generation to that data
-3. Evaluates every claim against sources
-4. Red-teams for tone and accuracy issues
+This system inverts the approach:
+1. Start with verified source data
+2. Constrain generation to that data
+3. Evaluate every claim against sources
+4. Red-team for tone and accuracy issues
+5. Require human approval at each gate
 
-The AI assists with targeting and presentation. The facts come from me.
-
-## What I've Built So Far
-
-- Portfolio site with 4 case studies, 3 blog posts, full design system
-- Variant engine supporting 5 targeted variants
-- Claims evaluation pipeline with source matching
-- Red team scanner with 8+ automated checks
-- Interactive CLI dashboard (`npm run ucv-cli`) for managing the whole flow
+The AI assists with targeting and presentation. The facts come from documented achievements.
 
 ## What's Next
 
-Still working on the evaluation flow. The harness is built, but I want to run proper experiments:
-- How well does variant targeting match JD requirements?
-- What's the false negative rate on the red team checks?
-- Can I automate more of the claim verification?
+The portfolio is live. The capstone is submitted. But the work continues:
 
-Goal is to open-source this once the capstone is complete. Job searching sucks. Maybe this helps someone else.
+- **More variants**: Galaxy, Microsoft, Coinbase, Gensyn all in active rotation
+- **Case studies**: Documenting the portfolio build itself, the Universal CV pipeline, the AI-assisted job search
+- **Open source**: Planning to release the variant generation system once it's battle-tested
 
-## The Real Outcome
+## The Real Lesson
 
-At the end of this, I'll have:
+Career transitions create space. This one let me build something I wouldn't have built otherwise—a portfolio that doesn't just show my work, but demonstrates the rigor I bring to shipping.
 
-1. **A professional-grade portfolio** — Not a template, a system
-2. **Universal CV engine** — AI-powered variant generation with quality gates
-3. **Deep understanding of AI evaluation** — Not just theory, hands-on implementation
+Every claim traceable. Every variant verified. Every stat defensible in an interview.
 
-Career transitions create space. This one let me build something I wouldn't have built otherwise.
+That's the portfolio I wanted. That's the portfolio I built.
 
 ---
 
-*The portfolio is live. The capstone is in progress. If you're building in the AI evaluation space or just want to see the CLI in action, [reach out](https://calendly.com/dmitrii-f).*
+*The capstone is complete. If you're building in the AI evaluation space or thinking about similar problems, I'd love to hear from you.*

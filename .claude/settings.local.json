@@ -46,7 +46,17 @@
       "Bash(open http://localhost:5173/?variant=galaxy-pm)",
       "Bash(open \"http://localhost:5173/?variant=mysten-walrus-senior-pm\")",
       "Bash(cat:*)",
-      "Bash(open \"http://localhost:5173/galaxy/pm\")"
+      "Bash(open \"http://localhost:5173/galaxy/pm\")",
+      "Bash(lsof:*)",
+      "Bash(open \"http://localhost:5173/microsoft/senior-pm\")",
+      "Skill(sprint-sync)",
+      "Bash(xargs -I {} sh -c 'echo \"\"=== {} ===\"\" && head -30 {}')",
+      "Bash(git pull:*)",
+      "Bash(npm run ucv-cli:*)",
+      "Bash(npm run generate:dashboard:*)",
+      "Bash(source .env.local)",
+      "Bash(DASHBOARD_PASSWORD=dmitrii2024 npm run generate:dashboard:*)",
+      "Bash(git stash:*)"
     ],
     "deny": [],
     "ask": []

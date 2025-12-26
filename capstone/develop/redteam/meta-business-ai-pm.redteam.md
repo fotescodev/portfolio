@@ -1,17 +1,18 @@
 # Red Team Report
 
 - Variant: `meta-business-ai-pm`
-- Generated: 2025-12-22T16:51:23.095Z
+- Generated: 2025-12-24T19:10:44.056Z
 
 ## Summary
 
 - FAIL: **0**
-- WARN: **0**
+- WARN: **1**
 
 ## Checks
 
 | ID | Result | Check |
 |---|---|---|
+| `RT-XVAR-CONTAM` | ⚠️ WARN | Cross-variant contamination (mentions other target companies) |
 | `RT-ACC-CLAIMS` | ✅ PASS | Claims ledger exists and is verified |
 | `RT-SEC-SECRETS` | ✅ PASS | Secrets / tokens accidentally committed |
 | `RT-SEC-CONFIDENTIAL` | ✅ PASS | Confidential / NDA language present |
@@ -19,7 +20,11 @@
 | `RT-ACC-INFLATION` | ✅ PASS | Approximation language near metrics (inflation risk) |
 | `RT-INPUT-INJECTION` | ✅ PASS | Prompt injection patterns in job description |
 | `RT-PRIV-JD` | ✅ PASS | Job description exposure risk (public JSON) |
-| `RT-XVAR-CONTAM` | ✅ PASS | Cross-variant contamination (mentions other target companies) |
 
 ## Details
+
+### RT-XVAR-CONTAM — Cross-variant contamination (mentions other target companies)
+
+- Galaxy
+- Microsoft
 

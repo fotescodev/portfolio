@@ -5,7 +5,9 @@
     "generatedAt": "2025-12-23T00:00:00Z",
     "jobDescription": "Product Manager, Developer Tools - Figma\n\nLocation: San Francisco, CA • New York, NY • United States (Remote option available)\nSalary: $164,000 - $294,000 USD\n\nKey Responsibilities:\n- Collaborating across functions to build developer-focused features that streamline design-to-code workflow\n- Establishing product direction, strategy, and roadmaps aligned with organizational and user objectives\n- Managing the complete product development cycle from research through launch\n- Working alongside Design, Engineering, and leadership teams on both strategy and delivery\n- Making prioritization decisions based on user research, metrics, and business goals\n- Incorporating emerging AI technologies where they enhance user value\n- Coordinating with other Figma teams to maximize developer-facing benefits\n\nRequired Qualifications:\n- 5+ years as a full-time Product Manager\n- 2+ years in the developer tools sector\n- Track record leading complex, high-stakes product initiatives\n- Demonstrated success shipping quality software with measurable user and business outcomes\n- Strong communication and analytical abilities\n\nNice-to-Have:\n- Frontend development experience\n- Production experience with large language models\n",
     "generationModel": "claude-opus-4-5-20251101",
-    "slug": "figma-pm-dev-tools"
+    "slug": "figma-pm-dev-tools",
+    "publishStatus": "draft",
+    "applicationStatus": "not_applied"
   },
   "overrides": {
     "hero": {

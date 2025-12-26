@@ -1,7 +1,7 @@
 # Red Team Report
 
 - Variant: `figma-pm-dev-tools`
-- Generated: 2025-12-23T18:25:25.420Z
+- Generated: 2025-12-24T19:10:44.034Z
 
 ## Summary
 

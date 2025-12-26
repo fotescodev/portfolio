@@ -5,7 +5,9 @@
     "generatedAt": "2025-12-22T16:30:00Z",
     "jobDescription": "Product Manager, Business AI — advancing Business AI Agents across WhatsApp,\nMessenger, and Facebook/Instagram ads. Serving 200M+ businesses globally.\nRequires 8+ years PM experience, AI/agents production experience, B2B focus.\n",
     "generationModel": "claude-opus-4-5",
-    "slug": "meta-business-ai-pm"
+    "slug": "meta-business-ai-pm",
+    "publishStatus": "draft",
+    "applicationStatus": "not_applied"
   },
   "overrides": {
     "hero": {

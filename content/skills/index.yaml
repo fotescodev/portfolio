@@ -41,6 +41,9 @@ categories:
       - "System Architecture"
       - "Technical Documentation"
       - "Smart Contract Integration"
+      - "Data Analytics & Monitoring"
+      - "Cloud Infrastructure (Azure, GCP)"
+      - "CI/CD Pipelines"
 
   - name: "Domain Expertise"
     skills:
@@ -56,6 +59,12 @@ categories:
       - "Linear / Jira"
       - "Notion / Confluence"
       - "GitHub"
-      - "Dune Analytics / Etherscan"
+      - "Mixpanel / Amplitude"
+      - "Postman"
+      - "Swagger / OpenAPI"
+      - "AWS / GCP / Azure"
+      - "Docker / Kubernetes"
+      - "Slack / Teams"
+      - "Hotjar"
       - "Figma"
       - "Datadog"
