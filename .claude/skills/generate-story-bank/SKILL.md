@@ -100,7 +100,26 @@ You need **10-15 stories** that cover different behavioral question types:
 
 ### Step 1: Select Achievement
 
-Read the knowledge base:
+**First, check competency coverage** to understand what stories you need:
+```bash
+npm run check:coverage
+```
+
+This shows which of the 7 PM bundles are covered vs gaps. Target stories that fill gaps.
+
+**Search for achievements by theme:**
+```bash
+# Find leadership stories
+npm run search:evidence -- --terms "led,managed,cross-functional,team"
+
+# Find technical stories
+npm run search:evidence -- --terms "architecture,api,system,infrastructure"
+
+# Find impact/growth stories
+npm run search:evidence -- --terms "revenue,growth,launched,shipped"
+```
+
+**Or list all achievements:**
 ```bash
 ls content/knowledge/achievements/
 ```
@@ -110,6 +129,7 @@ Choose achievements that:
 - Demonstrate judgment (decisions, trade-offs)
 - Show your personal contribution
 - Cover different story categories
+- **Fill gaps identified by check:coverage**
 
 ### Step 2: Transform to HPARL
 
@@ -306,12 +326,22 @@ Before marking a story complete:
 ## Commands
 
 ```bash
-# List source achievements
+# ═══════════════════════════════════════════════════════════════
+# STEP 1: Check what competencies need stories
+# ═══════════════════════════════════════════════════════════════
+npm run check:coverage           # Show gaps in 7 PM bundles
+npm run check:coverage -- --json # JSON output for processing
+
+# ═══════════════════════════════════════════════════════════════
+# STEP 2: Search for relevant achievements
+# ═══════════════════════════════════════════════════════════════
+npm run search:evidence -- --terms "leadership,cross-functional"
+npm run search:evidence -- --terms "technical,architecture,api"
+npm run search:evidence -- --terms "revenue,growth,impact"
+
+# ═══════════════════════════════════════════════════════════════
+# STEP 3: List source files
+# ═══════════════════════════════════════════════════════════════
 ls content/knowledge/achievements/
-
-# List existing HPARL stories
 ls content/knowledge/stories/*.hparl.yaml
-
-# Check story bank coverage
-# (manual review of goodFor and categories fields)
 ```

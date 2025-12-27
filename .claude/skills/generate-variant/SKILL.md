@@ -28,62 +28,51 @@ Activate when the user:
 
 ## Phase 1: JD Analysis & Must-Have Extraction
 
-**Goal:** Extract NON-GENERIC requirements that reveal what the hiring manager actually cares about.
+**Goal:** Extract NON-GENERIC requirements using the deterministic `analyze:jd` script.
 
-### Step 1.1: Basic Identification
+### Step 1.1: Save JD to File
 
-| Field | Extract |
-|-------|---------|
-| Company | Name + what they do |
-| Role | Title + level |
-| Team | Who you'd report to, team size |
-| Slug | `{company}-{role}` (kebab-case) |
-
-### Step 1.2: Must-Have Extraction (Critical)
-
-**Extract 3-5 non-generic must-haves** — the unique requirements that filter out most candidates.
-
-**IGNORE these generic phrases:**
-- "Team player", "excellent communicator", "fast-paced environment"
-- "Passionate about [X]", "self-starter", "attention to detail"
-- Standard PM responsibilities (roadmaps, stakeholder management, Agile)
-
-**FOCUS on specific signals:**
-- Named technologies: "Experience with Kubernetes", "Rust or Go"
-- Domain expertise: "Fintech background", "Healthcare regulatory experience"
-- Scale indicators: "Products with 1M+ users", "Enterprise sales cycles"
-- Specific achievements: "0→1 product launches", "Platform migrations"
-
-**Output format:**
-```yaml
-jdAnalysis:
-  company: "Company Name"
-  role: "Role Title"
-  slug: "company-role"
-
-  mustHaves:  # 3-5 non-generic requirements
-    - requirement: "API platform experience"
-      specificity: "high"  # high/medium/low
-    - requirement: "Developer tools background"
-      specificity: "high"
-    - requirement: "B2B SaaS experience"
-      specificity: "medium"
-
-  niceToHaves:
-    - "Startup experience"
-    - "Technical degree"
-
-  ignoredGeneric:  # What you filtered out
-    - "Strong communication skills"
-    - "Collaborative mindset"
-
-  domainKeywords:
-    - "payments"
-    - "API"
-    - "developer experience"
+If user provides JD text, save it first:
+```bash
+# Save JD to source-data/jd-{company}.txt
+echo "[JD TEXT]" > source-data/jd-{company}.txt
 ```
 
-### Step 1.3: Check for Existing Variants
+### Step 1.2: Run Deterministic JD Analysis
+
+**USE THE SCRIPT** — it automatically filters 47+ generic phrases and extracts specific requirements:
+
+```bash
+npm run analyze:jd -- --file source-data/jd-{company}.txt --save
+```
+
+This outputs to `capstone/develop/jd-analysis/{slug}.yaml` with:
+- `extracted.company`, `extracted.role`, `extracted.yearsRequired`
+- `mustHaves[]` with category and specificity (high/medium/low)
+- `niceToHaves[]`
+- `ignoredGeneric[]` — what was filtered out
+- `domainKeywords[]` — crypto, fintech, developer_tools, etc.
+- `searchTerms[]` — ready for knowledge base search
+
+**What the script filters automatically:**
+- "Team player", "excellent communicator", "fast-paced environment"
+- "Passionate about [X]", "self-starter", "attention to detail"
+- "Proven track record", "data-driven", "results-oriented"
+- 40+ more generic phrases (see `scripts/analyze-jd.ts:GENERIC_PHRASES`)
+
+### Step 1.3: Review Analysis Output
+
+```bash
+# Read the generated analysis
+cat capstone/develop/jd-analysis/{slug}.yaml
+```
+
+Check for:
+- Correct company/role extraction
+- Meaningful must-haves (not generic)
+- Appropriate domain keywords
+
+### Step 1.4: Check for Existing Variants
 
 ```bash
 ls content/variants/ | grep -i {company}
@@ -95,55 +84,53 @@ ls content/variants/ | grep -i {company}
 
 ## Phase 1.5: Alignment Gate (GO/NO-GO)
 
-**Goal:** Score alignment BEFORE investing time in content generation.
+**Goal:** Score alignment BEFORE investing time in content generation using the `search:evidence` script.
 
-### Scoring Process
+### Run Evidence Search
 
-For each must-have, check against knowledge base:
+**USE THE SCRIPT** — it searches the knowledge base and generates an alignment report:
 
 ```bash
-# Search achievements for evidence
-grep -r "{keyword}" content/knowledge/achievements/
-grep -r "{keyword}" content/experience/index.yaml
+npm run search:evidence -- --jd-analysis capstone/develop/jd-analysis/{slug}.yaml --save
 ```
 
-### Alignment Calculation
+This outputs to `capstone/develop/alignment/{slug}.yaml` with:
+- `summary.alignmentScore` — 0.0 to 1.0
+- `summary.recommendation` — PROCEED | REVIEW | SKIP
+- `summary.strongMatches` — count of high-relevance matches (≥70%)
+- `summary.moderateMatches` — count of medium-relevance matches (40-70%)
+- `matches[]` — sorted by relevance with evidence snippets
+- `gaps[]` — search terms with no matches
 
-```yaml
-alignment:
-  mustHaves:
-    - requirement: "API platform experience"
-      match: true
-      evidence: "Ankr Advanced APIs (1M+ daily requests), Flow CLI"
-      confidence: 0.9
-    - requirement: "Developer tools background"
-      match: true
-      evidence: "Dapper Playground V2, Microsoft Xbox dev tools"
-      confidence: 0.85
-    - requirement: "Payments experience"
-      match: false
-      evidence: null
-      confidence: 0.0
+### Alternative: Manual Search Terms
 
-  score: 0.67  # (0.9 + 0.85 + 0.0) / 3
-  matchedCount: 2
-  totalCount: 3
+If you have specific terms not from JD analysis:
 
-  threshold: 0.50
-  recommendation: "PROCEED"  # PROCEED (≥0.5) | REVIEW (0.3-0.5) | SKIP (<0.3)
+```bash
+npm run search:evidence -- --terms "crypto,staking,infrastructure,api" --threshold 0.5 --save
+```
+
+### Review Alignment Report
+
+```bash
+cat capstone/develop/alignment/{slug}.yaml
 ```
 
 ### Decision Framework
 
 | Score | Recommendation | Action |
 |-------|----------------|--------|
-| ≥ 0.50 | **PROCEED** | Generate variant |
-| 0.30 - 0.49 | **REVIEW** | Show gaps, ask user if worth pursuing |
-| < 0.30 | **SKIP** | Recommend not applying, show why |
+| ≥ 0.50 + 2 strong | **PROCEED** | Generate variant |
+| ≥ 0.30 or 1 strong | **REVIEW** | Show gaps, ask user if worth pursuing |
+| < 0.30 and 0 strong | **SKIP** | Recommend not applying, show why |
 
 ### Honesty Check
 
-For REVIEW/SKIP cases, surface:
+For REVIEW/SKIP cases, the script surfaces:
+- `gaps[]` — terms with no matching evidence
+- Low relevance matches that may be stretches
+
+Surface honestly:
 - Which must-haves have no evidence
 - Whether gaps are addressable (transferable skills) or hard blockers
 - Honest assessment: "This role requires X, which isn't in your background"
@@ -178,65 +165,48 @@ For REVIEW/SKIP cases, surface:
 
 ## Phase 2.5: Bullet Coverage Check
 
-**Goal:** Ensure experience highlights cover all 7 PM competency bundles (PCA framework).
+**Goal:** Ensure experience highlights cover all 7 PM competency bundles (PCA framework) using the `check:coverage` script.
 
-### The 7 Competency Bundles
+### Run Coverage Check
 
-| Bundle | Keywords to Look For |
-|--------|---------------------|
-| **1. Product Design & Development** | shipped, launched, built, designed, UX, user research, prototyped, improved, ideation |
-| **2. Leadership & Execution** | led, managed, coordinated, E2E, cross-functional, stakeholders, team of X |
-| **3. Strategy & Planning** | strategy, vision, roadmap, prioritized, market analysis, decision, goal setting |
-| **4. Business & Marketing** | revenue, ARR, GTM, partnerships, growth, B2B, pricing, negotiated |
-| **5. Project Management** | delivered, timeline, Agile, risk, on-time, coordinated, milestones |
-| **6. Technical & Analytical** | architecture, API, SDK, data, metrics, experimentation, trade-offs, system design |
-| **7. Communication** | presented, documented, collaborated, aligned, storytelling, stakeholder |
+**USE THE SCRIPT** — it automatically categorizes bullets into the 7 PM competency bundles:
 
-### Coverage Check Process
+```bash
+npm run check:coverage
+```
 
-1. Read experience highlights:
-   ```bash
-   grep -A 10 "highlights:" content/experience/index.yaml
-   ```
+For JSON output (easier to process):
+```bash
+npm run check:coverage -- --json
+```
 
-2. Categorize each bullet by primary competency
+To save report:
+```bash
+npm run check:coverage -- --save
+```
 
-3. Output coverage matrix:
-   ```yaml
-   bulletCoverage:
-     productDesign:
-       count: 3
-       examples:
-         - "Shipped Cadence Playground V2..."
-         - "Built ERC20 Xpress platform..."
-     leadershipExecution:
-       count: 4
-       examples:
-         - "Led 8 protocol integrations..."
-     strategyPlanning:
-       count: 1
-       examples:
-         - "Drove 15× revenue growth through B2B pivot..."
-     businessMarketing:
-       count: 2
-       examples:
-         - "Drove 15× revenue growth to $2M ARR..."
-     projectManagement:
-       count: 2
-       examples:
-         - "Led 8 protocol integrations averaging <2 weeks per chain..."
-     technicalAnalytical:
-       count: 5
-       examples:
-         - "Architected Docker/Kubernetes infrastructure..."
-     communication:
-       count: 1
-       examples:
-         - "Consolidated docs, saving 1 engineering resource..."
+### The 7 Competency Bundles (Automated)
 
-     gaps: ["communication"]  # Bundles with <2 bullets
-     overweight: ["technicalAnalytical"]  # Bundles with 5+ bullets
-   ```
+The script categorizes based on keywords (see `scripts/check-coverage.ts:BUNDLES`):
+
+| Bundle | Keywords Detected |
+|--------|-------------------|
+| **1. Product Design** | shipped, launched, built, designed, UX, prototyped, improved |
+| **2. Leadership** | led, managed, coordinated, E2E, cross-functional, stakeholders |
+| **3. Strategy** | strategy, vision, roadmap, prioritized, market analysis |
+| **4. Business** | revenue, ARR, GTM, partnerships, growth, B2B, pricing |
+| **5. Project Mgmt** | delivered, timeline, Agile, risk, milestones, on-time |
+| **6. Technical** | architecture, API, SDK, data, metrics, trade-offs, system |
+| **7. Communication** | presented, documented, collaborated, aligned, storytelling |
+
+### Review Coverage Output
+
+The script outputs:
+- Count per bundle
+- Examples of bullets in each bundle
+- `gaps[]` — bundles with <2 bullets
+- `overweight[]` — bundles with 5+ bullets
+- Overall balance assessment
 
 ### Interpretation
 
@@ -248,10 +218,10 @@ For REVIEW/SKIP cases, surface:
 
 ### Using Coverage for This Variant
 
-For identified gaps, consider:
-1. Can the bio/tagline emphasize this competency?
-2. Are there achievements in knowledge base that weren't surfaced?
-3. Does this role even care about this competency? (Check JD must-haves)
+Cross-reference gaps with JD must-haves:
+1. Does this role care about the gap? (Check Phase 1 analysis)
+2. Can the bio/tagline emphasize this competency?
+3. Are there achievements in knowledge base that weren't surfaced?
 
 **Note:** Not all variants need all 7 bundles. A technical PM role may not care about "Business & Marketing." Use the JD must-haves to determine which gaps matter.
 
@@ -438,22 +408,37 @@ Before marking variant complete:
 ## Commands Reference
 
 ```bash
-# Sync variant YAML → JSON
+# ═══════════════════════════════════════════════════════════════
+# PHASE 1: JD Analysis (deterministic)
+# ═══════════════════════════════════════════════════════════════
+npm run analyze:jd -- --file source-data/jd-{company}.txt --save
+npm run analyze:jd -- --file jd.txt --json  # JSON output
+
+# ═══════════════════════════════════════════════════════════════
+# PHASE 1.5: Evidence Search (deterministic)
+# ═══════════════════════════════════════════════════════════════
+npm run search:evidence -- --jd-analysis capstone/develop/jd-analysis/{slug}.yaml --save
+npm run search:evidence -- --terms "crypto,staking,api" --threshold 0.5
+
+# ═══════════════════════════════════════════════════════════════
+# PHASE 2.5: Coverage Check (deterministic)
+# ═══════════════════════════════════════════════════════════════
+npm run check:coverage
+npm run check:coverage -- --json
+npm run check:coverage -- --save
+
+# ═══════════════════════════════════════════════════════════════
+# PHASE 4-6: Variant Pipeline
+# ═══════════════════════════════════════════════════════════════
 npm run variants:sync -- --slug {slug}
-
-# Run evaluation (extract claims)
 npm run eval:variant -- --slug {slug}
-
-# Verify a specific claim
 npm run eval:variant -- --slug {slug} --verify {id}={path}
-
-# Run red team scan
 npm run redteam:variant -- --slug {slug}
 
-# Start dev server
+# ═══════════════════════════════════════════════════════════════
+# PREVIEW
+# ═══════════════════════════════════════════════════════════════
 npm run dev
-
-# Preview variant
 open "http://localhost:5173/{company}/{role}"
 ```
 
