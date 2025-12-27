@@ -56,7 +56,13 @@
       "Bash(npm run generate:dashboard:*)",
       "Bash(source .env.local)",
       "Bash(DASHBOARD_PASSWORD=dmitrii2024 npm run generate:dashboard:*)",
-      "Bash(git stash:*)"
+      "Bash(git stash:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npm run generate:resume:*)",
+      "Skill(serghei-qa)",
+      "Skill(generate-resume)",
+      "Bash(open:*)",
+      "Bash(git rebase:*)"
     ],
     "deny": [],
     "ask": []
