@@ -2,7 +2,7 @@
 /**
  * Bullet Coverage Check CLI
  *
- * Analyzes experience highlights against 7 PM competency bundles (PCA framework).
+ * Analyzes experience highlights against 7 PM competency bundles.
  * Deterministic keyword matching - no AI required.
  *
  * Usage:
@@ -16,7 +16,7 @@ import { join } from 'path';
 import YAML from 'yaml';
 
 // ═══════════════════════════════════════════════════════════════
-// COMPETENCY BUNDLES (PCA Framework)
+// 7 PM COMPETENCY BUNDLES
 // ═══════════════════════════════════════════════════════════════
 
 const BUNDLES: Record<string, { name: string; keywords: string[] }> = {

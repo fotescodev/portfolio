@@ -93,7 +93,7 @@ Artifacts:
 
 #### 3) Coverage Check
 **File:** `scripts/check-coverage.ts`
-**Purpose:** Categorize experience bullets into 7 PM competency bundles (PCA framework)
+**Purpose:** Categorize experience bullets into 7 PM competency bundles (Product Design, Leadership, Strategy, Business, Project Mgmt, Technical, Communication)
 
 Commands:
 - `npm run check:coverage`

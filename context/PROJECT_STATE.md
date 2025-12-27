@@ -190,6 +190,15 @@ npm run check:coverage -- --json
 | `search:evidence` | Searches achievements/stories, scores alignment | Alignment report |
 | `check:coverage` | Categorizes bullets into 7 PM competency bundles | Coverage matrix |
 
+**The 7 PM Competency Bundles:**
+1. Product Design & Development
+2. Leadership & Execution
+3. Strategy & Planning
+4. Business & Marketing
+5. Project Management
+6. Technical & Analytical
+7. Communication
+
 ### Post-Generation Commands
 
 ```bash

@@ -40,9 +40,11 @@ npm run analyze:jd -- --file source-data/jd-stripe.txt --save
 # 2. Search knowledge base - find alignment evidence
 npm run search:evidence -- --jd-analysis capstone/develop/jd-analysis/stripe.yaml --save
 
-# 3. Check coverage - categorize bullets by PM competency
+# 3. Check coverage - categorize bullets by 7 PM competency bundles
 npm run check:coverage
 ```
+
+See [develop/README.md](./develop/README.md#7-pm-competency-bundles) for the full bundle reference (Product Design, Leadership, Strategy, Business, Project Mgmt, Technical, Communication).
 
 **Output:** GO/NO-GO recommendation with alignment score before any AI generation.
 
