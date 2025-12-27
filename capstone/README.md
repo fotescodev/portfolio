@@ -1,134 +1,161 @@
-# AI Product Management Capstone
-## Universal CV: AI-Powered Career Content System
-
-**Author:** Dmitrii Fotesco
-**Certification:** AI Product Management
-**Framework:** 4D Method (Discover → Define → Develop → Deliver)
-
----
-
-## Executive Summary
-
-Universal CV is an AI-powered system that generates personalized portfolio variants for job applications without fabricating content. It solves the "one resume fits nobody" problem by dynamically re-ordering and re-emphasizing achievements based on target role requirements.
+# Universal CV: AI-Powered Career Content System
 
 **Live Product:** https://edgeoftrust.com
 
-**Key Innovation:** Personalization without fabrication—AI queries a structured knowledge base of real achievements, ensuring every generated claim is traceable and defensible.
+An AI system that generates personalized portfolio variants from a structured knowledge base. Solves the "one resume fits nobody" problem through **personalization without fabrication**.
 
 ---
 
-## Project Overview
+## The Problem
 
-### The Problem
-Job seekers face a dilemma: generic resumes get ignored, but creating custom versions for each application is time-consuming and error-prone. Worse, the pressure to stand out can lead to embellishment.
+Job seekers face a dilemma:
+- Generic resumes get 2-3% response rates
+- Custom tailoring takes 30-60 min per application
+- Pressure to stand out leads to embellishment
+- No single source of truth for career achievements
 
-### The Solution
-An AI system that:
-1. Stores achievements in a structured knowledge base (STAR format)
-2. Generates role-specific portfolio variants via Claude Code skills
-3. Produces unique URLs per application (e.g., `/#/stripe/platform-pm`)
-4. Ensures every claim traces back to source truth
+## The Solution
 
-### Why This Matters for AI PM
-This project demonstrates the full AI product lifecycle:
-- **Data Architecture:** Knowledge graph design for AI consumption
-- **Prompt Engineering:** Skills that query and generate contextually
-- **Evaluation:** Measuring content quality and accuracy
-- **Red Teaming:** Identifying failure modes before deployment
-- **Guardrails:** Preventing hallucination through architecture
-- **Deployment:** Live product with real users (recruiters)
+```
+Knowledge Base  →  Claude Skills  →  Portfolio Variants
+(Source Truth)     (AI Processing)   (Personalized Output)
+```
+
+Every generated claim traces back to verified achievements. No hallucination by design.
 
 ---
 
-## 4D Framework Navigation
+## Quality Pipeline
 
-| Phase | Status | Key Deliverables |
-|-------|--------|------------------|
-| [Discover](./discover/README.md) | 🟡 In Progress | Problem validation, user research, opportunity sizing |
-| [Define](./define/README.md) | 🟡 In Progress | Solution requirements, success metrics, risk assessment |
-| [Develop](./develop/README.md) | 🟡 In Progress | Architecture, implementation, evaluation framework |
-| [Deliver](./deliver/README.md) | ⚪ Not Started | Deployment, monitoring, iteration |
+The heart of this system is a **quality pipeline** that ensures generated content is accurate, relevant, and defensible.
+
+### Pre-Generation (Deterministic)
+
+Before spending time on variant generation, run deterministic analysis:
+
+```bash
+# 1. Analyze job description - filter noise, extract requirements
+npm run analyze:jd -- --file source-data/jd-stripe.txt --save
+
+# 2. Search knowledge base - find alignment evidence
+npm run search:evidence -- --jd-analysis capstone/develop/jd-analysis/stripe.yaml --save
+
+# 3. Check coverage - categorize bullets by PM competency
+npm run check:coverage
+```
+
+**Output:** GO/NO-GO recommendation with alignment score before any AI generation.
+
+### Generation
+
+```bash
+# Generate variant using Claude Code skill
+npm run generate:cv -- --company "Stripe" --role "Platform PM" --jd "./jd.txt"
+```
+
+### Post-Generation (Quality Gates)
+
+```bash
+# 4. Evaluate claims - verify every bullet traces to knowledge base
+npm run eval:variant -- --slug stripe-platform-pm
+
+# 5. Red team - adversarial checks for risks
+npm run redteam:variant -- --slug stripe-platform-pm
+
+# 6. Sync and deploy
+npm run variants:sync
+```
 
 ---
 
-## AI-Specific Documentation
+## Key Documents
 
 | Document | Purpose |
 |----------|---------|
-| [Evaluation Framework](./develop/evaluation.md) | How we measure AI output quality |
-| [Red Teaming Report](./develop/red-teaming.md) | Failure modes and mitigations |
-| [Guardrails Design](./develop/guardrails.md) | Preventing harmful outputs |
-| [Human-in-the-Loop](./develop/hitl.md) | Where humans review AI decisions |
+| [Evaluation Framework](./develop/evaluation.md) | Claims verification rubric |
+| [Red Teaming](./develop/red-teaming.md) | Threat model and adversarial checks |
+| [Claims Ledgers](./develop/evals/) | Per-variant verification results |
+| [Red Team Reports](./develop/redteam/) | Per-variant adversarial scans |
+
+---
+
+## Architecture
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                        KNOWLEDGE BASE                           │
+│                      content/knowledge/                         │
+│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐ │
+│  │  achievements/  │  │    stories/     │  │   index.yaml    │ │
+│  │   STAR format   │  │   narratives    │  │  relationships  │ │
+│  └─────────────────┘  └─────────────────┘  └─────────────────┘ │
+└────────────────────────────┬────────────────────────────────────┘
+                             │
+                             ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                      CLAUDE CODE SKILLS                          │
+│  cv-knowledge-query → cv-content-generator → generate-variant   │
+└────────────────────────────┬────────────────────────────────────┘
+                             │
+                             ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                      QUALITY PIPELINE                            │
+│  analyze:jd → search:evidence → eval:variant → redteam:variant  │
+└────────────────────────────┬────────────────────────────────────┘
+                             │
+                             ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                       PORTFOLIO VARIANTS                         │
+│       edgeoftrust.com/#/stripe/platform-pm (personalized)       │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Current Status
+
+| Metric | Count |
+|--------|-------|
+| Active Variants | 12 |
+| Claims Ledgers | 8 |
+| Red Team Reports | 11 |
+| Knowledge Base Achievements | 15+ |
+
+---
+
+## Why This Demonstrates AI PM Skills
+
+| Skill | How Demonstrated |
+|-------|------------------|
+| **Data Architecture** | Knowledge graph design for AI consumption |
+| **Prompt Engineering** | Claude Code skills that query contextually |
+| **Evaluation** | Claims ledger methodology for accuracy |
+| **Red Teaming** | Adversarial threat model and checks |
+| **Guardrails** | Architecture prevents hallucination |
+| **Deployment** | Live product with real users |
+
+---
+
+## Directory Structure
+
+```
+capstone/
+├── README.md                 # This file
+├── discover/                 # Problem validation (complete)
+├── define/                   # Solution requirements (complete)
+├── develop/                  # Implementation + quality framework
+│   ├── evaluation.md         # Claims verification methodology
+│   ├── red-teaming.md        # Threat model
+│   ├── evals/                # Claims ledgers per variant
+│   └── redteam/              # Red team reports per variant
+└── deliver/                  # Deployment + results tracking
+```
 
 ---
 
 ## Quick Links
 
 - **Product:** https://edgeoftrust.com
-- **Variant Example:** https://edgeoftrust.com/#/bloomberg/technical-product-manager
 - **Knowledge Base:** [/content/knowledge/](../content/knowledge/)
 - **Claude Skills:** [/.claude/skills/](../.claude/skills/)
-
----
-
-## Project Timeline
-
-```
-Week 1-2: Discover
-├── Problem validation
-├── User interviews (self + recruiters)
-└── Competitive analysis
-
-Week 3-4: Define
-├── Solution requirements
-├── Success metrics
-├── Risk assessment
-└── Ethical considerations
-
-Week 5-8: Develop
-├── Knowledge base architecture
-├── Claude skills implementation
-├── Evaluation framework
-├── Red teaming exercises
-
-Week 9-10: Deliver
-├── Production deployment
-├── Monitoring setup
-├── Initial results
-└── Iteration plan
-```
-
----
-
-## Key Metrics
-
-### Product Metrics
-- Variant generation time
-- Application-to-interview conversion rate (variants vs. base)
-- Recruiter engagement (time on page, scroll depth)
-
-### AI Quality Metrics
-- Factual accuracy (claims traceable to knowledge base)
-- Relevance score (variant matches target role)
-- Tone appropriateness (professional, not sycophantic)
-
-### Safety Metrics
-- Hallucination rate (invented achievements)
-- Metric inflation rate (exaggerated numbers)
-- Privacy leak rate (cross-variant contamination)
-
----
-
-## Certification Requirements Mapping
-
-| Requirement | Where Addressed |
-|-------------|-----------------|
-| Problem identification | [Discover](./discover/README.md) |
-| User research | [Discover: User Research](./discover/user-research.md) |
-| AI use case justification | [Define: Why AI](./define/why-ai.md) |
-| Technical architecture | [Develop: Architecture](./develop/architecture.md) |
-| Evaluation methodology | [Develop: Evaluation](./develop/evaluation.md) |
-| Red teaming | [Develop: Red Teaming](./develop/red-teaming.md) |
-| Ethical considerations | [Define: Ethics](./define/ethics.md) |
-| Deployment plan | [Deliver: Deployment](./deliver/deployment.md) |
-| Results & learnings | [Deliver: Results](./deliver/results.md) |
+- **Variant Example:** https://edgeoftrust.com/#/bloomberg/technical-product-manager
