@@ -19,10 +19,10 @@ const RESUME_CONFIG = {
   SKILLS_PER_CATEGORY: 3,
   /** Number of companies to list in impact summary */
   SUMMARY_COMPANIES: 4,
-  /** Maximum jobs to show - include ALL experience (6 jobs) */
+  /** Maximum jobs to show - include ALL experience */
   MAX_JOBS: 6,
-  /** Maximum highlights per job - reduced to 2 to fit all jobs on one page */
-  MAX_HIGHLIGHTS_PER_JOB: 2,
+  /** Maximum highlights per job */
+  MAX_HIGHLIGHTS_PER_JOB: 3,
 } as const;
 
 export default function ResumePage() {
@@ -89,9 +89,14 @@ export default function ResumePage() {
       {/* Skills */}
       <section className="resume-skills">
         <h2 className="resume-section-title">Skills</h2>
-        <p className="resume-skills-list">
-          {skills.categories.map(cat => cat.skills.join(', ')).join(' | ')}
-        </p>
+        <div className="resume-skills-grid">
+          {skills.categories.map((cat) => (
+            <div key={cat.name} className="resume-skill-category">
+              <span className="resume-skill-category-name">{cat.name}:</span>{' '}
+              <span className="resume-skill-category-items">{cat.skills.join(', ')}</span>
+            </div>
+          ))}
+        </div>
       </section>
     </div>
   );

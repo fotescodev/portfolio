@@ -139,12 +139,26 @@
   background: white;
 }
 
-.resume-skills-list {
-  margin: 0;
-  font-size: 8.5pt;
-  text-align: center;
+.resume-skills-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2pt 12pt;
+  font-size: 8pt;
   background: white;
   color: var(--resume-text-primary);
+}
+
+.resume-skill-category {
+  line-height: 1.3;
+}
+
+.resume-skill-category-name {
+  font-weight: bold;
+  color: var(--resume-text-primary);
+}
+
+.resume-skill-category-items {
+  color: var(--resume-text-secondary);
 }
 
 /* Print-specific styles */

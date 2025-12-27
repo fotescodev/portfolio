@@ -36,11 +36,20 @@ const RESUME_CONFIG = {
   SKILLS_PER_CATEGORY: 3,        // Skills per category in summary
   SUMMARY_COMPANIES: 4,          // Companies to list in summary
   MAX_JOBS: 6,                   // Include ALL jobs (critical: don't cut off experience)
-  MAX_HIGHLIGHTS_PER_JOB: 2,     // Bullets per job (reduced to fit all jobs on one page)
+  MAX_HIGHLIGHTS_PER_JOB: 3,     // Bullets per job (action → outcome format)
 };
 ```
 
 **Important:** Always include ALL jobs. Missing experience (especially major companies like Microsoft) is worse than a slightly longer resume. Reduce highlights per job rather than cutting jobs.
+
+### Skills Section Layout
+
+Skills are displayed in a **2-column grid** with category names in bold:
+
+```
+Blockchain & Web3: Ethereum, Staking, L2s...    | Product Leadership: 0→1, B2B Strategy...
+Technical Execution: API Design, SDK Dev...     | Domain Expertise: Custody, Gaming...
+```
 
 ### Typography (ResumePage.css)
 
