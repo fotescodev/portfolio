@@ -58,9 +58,57 @@ interface PortfolioData {
   projects: PassionProjects;
 }
 
+// Show help message
+function showHelp(): void {
+  console.log(`${colors.bold}${colors.blue}Universal CV Generator${colors.reset}
+
+${colors.bold}Usage:${colors.reset}
+  npm run generate:cv -- --company <name> --role <title> --jd <file>
+  npm run generate:cv -- --company <name> --role <title> --jd-text "..."
+
+${colors.bold}Required:${colors.reset}
+  --company <name>     Company name (e.g., "Stripe")
+  --role <title>       Role title (e.g., "Senior PM")
+  --jd <file>          Path to job description file
+  --jd-text <text>     OR: Job description as inline text
+
+${colors.bold}Optional:${colors.reset}
+  --provider <name>    AI provider: claude | openai | gemini (default: claude)
+  --api-key <key>      API key (or set via environment variable)
+  --values <text>      Company values/culture info
+  --context <text>     Additional context for generation
+  --output <file>      Output file path (auto-generated if not specified)
+
+${colors.bold}Environment Variables:${colors.reset}
+  ANTHROPIC_API_KEY    For Claude provider
+  OPENAI_API_KEY       For OpenAI provider
+  GEMINI_API_KEY       For Gemini provider
+
+${colors.bold}Examples:${colors.reset}
+  npm run generate:cv -- --company "Stripe" --role "Senior PM" --jd ./stripe-jd.txt
+  npm run generate:cv -- --company "Acme" --role "PM" --jd-text "Looking for PM..."
+  npm run generate:cv -- --company "X" --role "Y" --jd ./jd.txt --provider openai
+
+${colors.bold}Need an API key?${colors.reset}
+  Claude:  https://console.anthropic.com
+  OpenAI:  https://platform.openai.com/api-keys
+  Gemini:  https://makersuite.google.com/app/apikey
+
+${colors.bold}No API key?${colors.reset}
+  Use manual creation: cp content/variants/_template.yaml content/variants/your-variant.yaml
+`);
+  process.exit(0);
+}
+
 // Parse command line arguments
 function parseArgs(): CLIArgs {
   const args = process.argv.slice(2);
+
+  // Check for help flag
+  if (args.includes('--help') || args.includes('-h')) {
+    showHelp();
+  }
+
   const parsed: Partial<CLIArgs> = {
     provider: 'claude'
   };
@@ -133,8 +181,21 @@ function parseArgs(): CLIArgs {
     parsed.apiKey = process.env[envVars[parsed.provider]];
 
     if (!parsed.apiKey) {
+      const providerUrls = {
+        claude: 'https://console.anthropic.com',
+        openai: 'https://platform.openai.com/api-keys',
+        gemini: 'https://makersuite.google.com/app/apikey'
+      };
       throw new Error(
-        `No API key found. Set ${envVars[parsed.provider]} environment variable or use --api-key`
+        `No API key found.\n\n` +
+        `To fix:\n` +
+        `  1. Get a key at: ${providerUrls[parsed.provider]}\n` +
+        `  2. Run: export ${envVars[parsed.provider]}="your-key"\n` +
+        `\n` +
+        `Or use: npm run generate:cv -- --api-key "your-key" --company ... --role ...\n` +
+        `\n` +
+        `No API key? Use manual creation:\n` +
+        `  cp content/variants/_template.yaml content/variants/your-variant.yaml`
       );
     }
   }
@@ -377,11 +438,12 @@ async function callAI(provider: string, apiKey: string, prompt: string): Promise
 
 // Main execution
 async function main() {
-  console.log(`${colors.bold}${colors.blue}Universal CV Generator${colors.reset}\n`);
-
   try {
-    // Parse arguments
+    // Parse arguments (handles --help internally)
     const args = parseArgs();
+
+    // Only show header if we're actually running
+    console.log(`${colors.bold}${colors.blue}Universal CV Generator${colors.reset}\n`);
     console.log(`${colors.gray}Generating variant for: ${colors.reset}${colors.bold}${args.company} - ${args.role}${colors.reset}\n`);
 
     // Load portfolio data
@@ -419,13 +481,14 @@ async function main() {
 
     console.log(`${colors.green}${colors.bold}✓ Variant generated successfully!${colors.reset}`);
     console.log(`${colors.gray}Saved to:${colors.reset} ${yamlFile}`);
-    console.log(`${colors.gray}URL:${colors.reset} /${validated.metadata.company.toLowerCase()}/${validated.metadata.slug.split('-').slice(1).join('-')}`);
+    const variantPath = `/#/${validated.metadata.company.toLowerCase()}/${validated.metadata.slug.split('-').slice(1).join('-')}`;
+    console.log(`${colors.gray}URL:${colors.reset} ${variantPath}`);
 
     console.log(`\n${colors.cyan}Next steps:${colors.reset}`);
     console.log(`  1. Review and edit: ${yamlFile}`);
     console.log(`  2. Run validation: npm run validate`);
     console.log(`  3. Test locally: npm run dev`);
-    console.log(`  4. Visit: http://localhost:5173/${validated.metadata.company.toLowerCase()}/${validated.metadata.slug.split('-').slice(1).join('-')}`);
+    console.log(`  4. Visit: http://localhost:5173${variantPath}`);
 
   } catch (error) {
     console.error(`${colors.red}${colors.bold}Error:${colors.reset} ${error instanceof Error ? error.message : error}`);

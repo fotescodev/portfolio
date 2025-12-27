@@ -387,6 +387,44 @@ sections:
 
 ---
 
+## 8.5 Prerequisites: API Key Setup
+
+**Outcome:** Environment configured for AI-powered variant generation
+
+Before generating variants with AI, you need an API key from one of these providers:
+
+### Option A: Anthropic Claude (Recommended)
+
+1. Create an account at https://console.anthropic.com
+2. Navigate to API Keys and create a new key
+3. Copy the key (starts with `sk-ant-`)
+
+### Option B: OpenAI
+
+1. Create an account at https://platform.openai.com
+2. Navigate to API Keys and create a new key
+3. Copy the key (starts with `sk-`)
+
+### Option C: Google Gemini
+
+1. Go to https://makersuite.google.com/app/apikey
+2. Create a new API key
+3. Copy the key
+
+### Setup
+
+```bash
+# Copy the example file
+cp .env.example .env.local
+
+# Edit and add your API key
+# ANTHROPIC_API_KEY=sk-ant-your-key-here
+```
+
+> **No API Key?** You can still use manual variant creation by copying `content/variants/_template.yaml` and editing it directly.
+
+---
+
 ## 9. Generate Job Variants
 
 **Outcome:** Personalized portfolio tailored to specific job applications
@@ -432,7 +470,7 @@ The skill runs automatically through:
 npm run dev
 
 # Open variant URL
-open http://localhost:5173/company/role
+open "http://localhost:5173/#/company/role"
 ```
 
 ### Quality Gates

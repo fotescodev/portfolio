@@ -362,7 +362,7 @@ relevance:
 
 2. Open variant in browser:
    ```
-   http://localhost:5173/{company}/{role}
+   http://localhost:5173/#/{company}/{role}
    ```
 
 3. Visual checklist:

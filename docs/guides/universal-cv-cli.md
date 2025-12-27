@@ -24,6 +24,18 @@ A complete guide to using the Universal CV quality pipeline CLI — from creatin
 
 ---
 
+## Which Method Should I Use?
+
+| Situation | Recommended Method |
+|-----------|-------------------|
+| Have Claude Code? | Use `/generate-variant` skill |
+| No Claude Code but have API key? | Use `npm run generate:cv` CLI |
+| No API key? | Manual creation: copy `content/variants/_template.yaml` |
+| Day-to-day variant management? | Use `npm run ucv-cli` interactive dashboard |
+| CI/CD pipelines? | Use individual commands with `--json` flag |
+
+---
+
 ## Interactive Mode (Recommended)
 
 The easiest way to use the pipeline is through the interactive CLI:
@@ -33,6 +45,13 @@ npm run ucv-cli
 ```
 
 This launches a terminal dashboard where you can see all variants, their status, and perform actions without remembering individual commands.
+
+> **Note:** The interactive CLI requires a terminal with TTY support. It won't work in:
+> - CI/CD pipelines (use individual commands instead)
+> - Non-interactive shells
+> - Some IDE integrated terminals
+>
+> If you see "Non-interactive mode: printing variant status as JSON is not implemented yet", run the command directly in your terminal application.
 
 ### Dashboard View
 
