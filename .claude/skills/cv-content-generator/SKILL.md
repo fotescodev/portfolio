@@ -39,6 +39,19 @@ Determine output type:
 - `experience-update` → YAML additions for `content/experience/`
 
 ### Step 2: Query Knowledge Base
+
+**Use deterministic scripts first** — faster and more consistent:
+
+```bash
+# Search by topic
+npm run search:evidence -- --terms "revenue,growth,api"
+
+# For variant generation with JD analysis
+npm run analyze:jd -- --file source-data/jd-{company}.txt --save
+npm run search:evidence -- --jd-analysis capstone/develop/jd-analysis/{slug}.yaml
+```
+
+**For deeper exploration:**
 1. Read `content/knowledge/index.yaml` for entity definitions and relationships
 2. Find relevant achievements in `content/knowledge/achievements/`
 3. Find related stories in `content/knowledge/stories/`
@@ -155,7 +168,21 @@ relevance:
 ### Example 2: Generate Variant
 **User**: "Create a variant for a Technical PM role at Stripe"
 
-**Action**:
+**⚠️ For full variant workflow, use the `generate-variant` skill instead.**
+
+Quick variant with scripts:
+```bash
+# 1. Analyze the JD
+npm run analyze:jd -- --file source-data/jd-stripe.txt --save
+
+# 2. Search for matching evidence
+npm run search:evidence -- --jd-analysis capstone/develop/jd-analysis/stripe.yaml
+
+# 3. Check bullet coverage
+npm run check:coverage
+```
+
+**Action** (manual):
 1. Query achievements with themes: `[infrastructure, revenue-growth]`
 2. Find skills: `[api-design, compliance]`
 3. Customize hero/about with payments/fintech angle

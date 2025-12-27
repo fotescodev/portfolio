@@ -15,6 +15,29 @@ metadata:
   generationModel: "claude-3-5-sonnet-20241022"
 
 # ═══════════════════════════════════════════════════════════════
+# ALIGNMENT ANALYSIS (Generated in Phase 1.5)
+# ═══════════════════════════════════════════════════════════════
+alignment:
+  score: 0.00  # 0.0-1.0, calculated from must-have matches
+  threshold: 0.50
+  recommendation: "PROCEED"  # PROCEED | REVIEW | SKIP
+
+  mustHaves:
+    - requirement: "[Specific non-generic requirement from JD]"
+      match: true
+      evidence: "[Achievement or experience that proves this]"
+      confidence: 0.9
+
+  gaps:  # Requirements with no evidence
+    - requirement: "[Unmatched requirement]"
+      addressable: false  # true if transferable skills exist
+      notes: "[Why this is/isn't a blocker]"
+
+  ignoredGeneric:  # Filtered out during JD analysis
+    - "Team player"
+    - "Strong communication"
+
+# ═══════════════════════════════════════════════════════════════
 # OVERRIDES (Optional - only override what's relevant)
 # ═══════════════════════════════════════════════════════════════
 overrides:

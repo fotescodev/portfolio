@@ -155,10 +155,42 @@ At **end of every session**, update Part VI (Session Log) with:
 YAML is canonical. JSON is derived. Every claim must be traceable.
 
 ```
-Knowledge Base → Variant YAML → sync → JSON → eval → redteam → Deploy
+JD Analysis → Alignment Gate → Knowledge Base → Variant YAML → sync → JSON → eval → redteam → Deploy
 ```
 
-### Commands
+### Pre-Generation Scripts (Deterministic)
+
+These scripts run BEFORE generating variants, reducing AI judgment overhead:
+
+```bash
+# ═══════════════════════════════════════════════════════════════
+# JD ANALYSIS — Extract requirements, filter generic phrases
+# ═══════════════════════════════════════════════════════════════
+npm run analyze:jd -- --file source-data/jd-{company}.txt --save
+# Output: capstone/develop/jd-analysis/{slug}.yaml
+
+# ═══════════════════════════════════════════════════════════════
+# EVIDENCE SEARCH — Search knowledge base for alignment
+# ═══════════════════════════════════════════════════════════════
+npm run search:evidence -- --jd-analysis capstone/develop/jd-analysis/{slug}.yaml --save
+npm run search:evidence -- --terms "crypto,staking,api" --threshold 0.5
+# Output: capstone/develop/alignment/{slug}.yaml
+
+# ═══════════════════════════════════════════════════════════════
+# COVERAGE CHECK — Categorize bullets into 7 PM competency bundles
+# ═══════════════════════════════════════════════════════════════
+npm run check:coverage
+npm run check:coverage -- --json
+```
+
+**What they do:**
+| Script | Purpose | Output |
+|--------|---------|--------|
+| `analyze:jd` | Filters 47+ generic phrases, extracts must-haves | JD analysis YAML |
+| `search:evidence` | Searches achievements/stories, scores alignment | Alignment report |
+| `check:coverage` | Categorizes bullets into 7 PM competency bundles | Coverage matrix |
+
+### Post-Generation Commands
 
 ```bash
 npm run variants:sync              # YAML→JSON
@@ -180,6 +212,8 @@ npm run ucv-cli                    # Interactive dashboard
 
 | Purpose | Path |
 |---------|------|
+| JD Analysis | `capstone/develop/jd-analysis/*.yaml` |
+| Alignment Reports | `capstone/develop/alignment/*.yaml` |
 | Workflow Guide | `docs/guides/capstone-workflow.md` |
 | CLI Guide | `docs/guides/universal-cv-cli.md` |
 | Knowledge Base | `content/knowledge/` |

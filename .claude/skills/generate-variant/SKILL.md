@@ -26,26 +26,116 @@ Activate when the user:
 
 ---
 
-## Phase 1: Job Analysis
+## Phase 1: JD Analysis & Must-Have Extraction
 
-**Goal:** Extract key requirements from the job description.
+**Goal:** Extract NON-GENERIC requirements using the deterministic `analyze:jd` script.
 
-1. Identify:
-   - Company name
-   - Role title
-   - Must-have qualifications
-   - Nice-to-have qualifications
-   - Specific technologies/domains mentioned
-   - Team structure and reporting
+### Step 1.1: Save JD to File
 
-2. Generate slug: `{company}-{role}` (kebab-case, e.g., `galaxy-pm`)
+If user provides JD text, save it first:
+```bash
+# Save JD to source-data/jd-{company}.txt
+echo "[JD TEXT]" > source-data/jd-{company}.txt
+```
 
-3. Check for existing variants:
-   ```bash
-   ls content/variants/ | grep -i {company}
-   ```
+### Step 1.2: Run Deterministic JD Analysis
 
-**Output:** Summary of requirements to user for confirmation.
+**USE THE SCRIPT** — it automatically filters 47+ generic phrases and extracts specific requirements:
+
+```bash
+npm run analyze:jd -- --file source-data/jd-{company}.txt --save
+```
+
+This outputs to `capstone/develop/jd-analysis/{slug}.yaml` with:
+- `extracted.company`, `extracted.role`, `extracted.yearsRequired`
+- `mustHaves[]` with category and specificity (high/medium/low)
+- `niceToHaves[]`
+- `ignoredGeneric[]` — what was filtered out
+- `domainKeywords[]` — crypto, fintech, developer_tools, etc.
+- `searchTerms[]` — ready for knowledge base search
+
+**What the script filters automatically:**
+- "Team player", "excellent communicator", "fast-paced environment"
+- "Passionate about [X]", "self-starter", "attention to detail"
+- "Proven track record", "data-driven", "results-oriented"
+- 40+ more generic phrases (see `scripts/analyze-jd.ts:GENERIC_PHRASES`)
+
+### Step 1.3: Review Analysis Output
+
+```bash
+# Read the generated analysis
+cat capstone/develop/jd-analysis/{slug}.yaml
+```
+
+Check for:
+- Correct company/role extraction
+- Meaningful must-haves (not generic)
+- Appropriate domain keywords
+
+### Step 1.4: Check for Existing Variants
+
+```bash
+ls content/variants/ | grep -i {company}
+```
+
+**Output:** JD analysis summary to user for confirmation before proceeding.
+
+---
+
+## Phase 1.5: Alignment Gate (GO/NO-GO)
+
+**Goal:** Score alignment BEFORE investing time in content generation using the `search:evidence` script.
+
+### Run Evidence Search
+
+**USE THE SCRIPT** — it searches the knowledge base and generates an alignment report:
+
+```bash
+npm run search:evidence -- --jd-analysis capstone/develop/jd-analysis/{slug}.yaml --save
+```
+
+This outputs to `capstone/develop/alignment/{slug}.yaml` with:
+- `summary.alignmentScore` — 0.0 to 1.0
+- `summary.recommendation` — PROCEED | REVIEW | SKIP
+- `summary.strongMatches` — count of high-relevance matches (≥70%)
+- `summary.moderateMatches` — count of medium-relevance matches (40-70%)
+- `matches[]` — sorted by relevance with evidence snippets
+- `gaps[]` — search terms with no matches
+
+### Alternative: Manual Search Terms
+
+If you have specific terms not from JD analysis:
+
+```bash
+npm run search:evidence -- --terms "crypto,staking,infrastructure,api" --threshold 0.5 --save
+```
+
+### Review Alignment Report
+
+```bash
+cat capstone/develop/alignment/{slug}.yaml
+```
+
+### Decision Framework
+
+| Score | Recommendation | Action |
+|-------|----------------|--------|
+| ≥ 0.50 + 2 strong | **PROCEED** | Generate variant |
+| ≥ 0.30 or 1 strong | **REVIEW** | Show gaps, ask user if worth pursuing |
+| < 0.30 and 0 strong | **SKIP** | Recommend not applying, show why |
+
+### Honesty Check
+
+For REVIEW/SKIP cases, the script surfaces:
+- `gaps[]` — terms with no matching evidence
+- Low relevance matches that may be stretches
+
+Surface honestly:
+- Which must-haves have no evidence
+- Whether gaps are addressable (transferable skills) or hard blockers
+- Honest assessment: "This role requires X, which isn't in your background"
+
+**PAUSE:** Show alignment score and recommendation. Get explicit GO/NO-GO from user.
 
 ---
 
@@ -70,6 +160,70 @@ Activate when the user:
    - Transferable skills: 0.5-0.7
 
 **Output:** List of relevant achievements with relevance scores.
+
+---
+
+## Phase 2.5: Bullet Coverage Check
+
+**Goal:** Ensure experience highlights cover all 7 PM competency bundles (PCA framework) using the `check:coverage` script.
+
+### Run Coverage Check
+
+**USE THE SCRIPT** — it automatically categorizes bullets into the 7 PM competency bundles:
+
+```bash
+npm run check:coverage
+```
+
+For JSON output (easier to process):
+```bash
+npm run check:coverage -- --json
+```
+
+To save report:
+```bash
+npm run check:coverage -- --save
+```
+
+### The 7 Competency Bundles (Automated)
+
+The script categorizes based on keywords (see `scripts/check-coverage.ts:BUNDLES`):
+
+| Bundle | Keywords Detected |
+|--------|-------------------|
+| **1. Product Design** | shipped, launched, built, designed, UX, prototyped, improved |
+| **2. Leadership** | led, managed, coordinated, E2E, cross-functional, stakeholders |
+| **3. Strategy** | strategy, vision, roadmap, prioritized, market analysis |
+| **4. Business** | revenue, ARR, GTM, partnerships, growth, B2B, pricing |
+| **5. Project Mgmt** | delivered, timeline, Agile, risk, milestones, on-time |
+| **6. Technical** | architecture, API, SDK, data, metrics, trade-offs, system |
+| **7. Communication** | presented, documented, collaborated, aligned, storytelling |
+
+### Review Coverage Output
+
+The script outputs:
+- Count per bundle
+- Examples of bullets in each bundle
+- `gaps[]` — bundles with <2 bullets
+- `overweight[]` — bundles with 5+ bullets
+- Overall balance assessment
+
+### Interpretation
+
+| Gap Level | Action |
+|-----------|--------|
+| 0 gaps | Proceed — well-rounded |
+| 1-2 gaps | Surface gaps to user — may want to emphasize in bio/tagline |
+| 3+ gaps | Warning — resume may appear unbalanced |
+
+### Using Coverage for This Variant
+
+Cross-reference gaps with JD must-haves:
+1. Does this role care about the gap? (Check Phase 1 analysis)
+2. Can the bio/tagline emphasize this competency?
+3. Are there achievements in knowledge base that weren't surfaced?
+
+**Note:** Not all variants need all 7 bundles. A technical PM role may not care about "Business & Marketing." Use the JD must-haves to determine which gaps matter.
 
 ---
 
@@ -254,22 +408,37 @@ Before marking variant complete:
 ## Commands Reference
 
 ```bash
-# Sync variant YAML → JSON
+# ═══════════════════════════════════════════════════════════════
+# PHASE 1: JD Analysis (deterministic)
+# ═══════════════════════════════════════════════════════════════
+npm run analyze:jd -- --file source-data/jd-{company}.txt --save
+npm run analyze:jd -- --file jd.txt --json  # JSON output
+
+# ═══════════════════════════════════════════════════════════════
+# PHASE 1.5: Evidence Search (deterministic)
+# ═══════════════════════════════════════════════════════════════
+npm run search:evidence -- --jd-analysis capstone/develop/jd-analysis/{slug}.yaml --save
+npm run search:evidence -- --terms "crypto,staking,api" --threshold 0.5
+
+# ═══════════════════════════════════════════════════════════════
+# PHASE 2.5: Coverage Check (deterministic)
+# ═══════════════════════════════════════════════════════════════
+npm run check:coverage
+npm run check:coverage -- --json
+npm run check:coverage -- --save
+
+# ═══════════════════════════════════════════════════════════════
+# PHASE 4-6: Variant Pipeline
+# ═══════════════════════════════════════════════════════════════
 npm run variants:sync -- --slug {slug}
-
-# Run evaluation (extract claims)
 npm run eval:variant -- --slug {slug}
-
-# Verify a specific claim
 npm run eval:variant -- --slug {slug} --verify {id}={path}
-
-# Run red team scan
 npm run redteam:variant -- --slug {slug}
 
-# Start dev server
+# ═══════════════════════════════════════════════════════════════
+# PREVIEW
+# ═══════════════════════════════════════════════════════════════
 npm run dev
-
-# Preview variant
 open "http://localhost:5173/{company}/{role}"
 ```
 
