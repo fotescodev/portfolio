@@ -18,6 +18,7 @@
     "test:cli:watch": "vitest --config vitest.cli.config.ts",
     "validate": "tsx scripts/validate-content.ts",
     "generate:cv": "tsx scripts/generate-cv.ts",
+    "generate:resume": "tsx scripts/generate-resume.ts",
     "generate:og": "node scripts/generate-og-images.js",
     "generate:favicon": "node scripts/generate-favicon.js",
     "variants:sync": "tsx scripts/sync-variants.ts && tsx scripts/generate-dashboard.ts",

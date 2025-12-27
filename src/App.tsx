@@ -7,6 +7,7 @@ import BasePortfolio from './pages/BasePortfolio';
 // Lazy load routes that aren't needed on initial page load
 const VariantPortfolio = lazy(() => import('./pages/VariantPortfolio'));
 const BlogPostPage = lazy(() => import('./pages/BlogPostPage'));
+const ResumePage = lazy(() => import('./pages/ResumePage'));
 
 // Simple loading fallback
 const PageLoader = () => (
@@ -30,6 +31,9 @@ function App() {
             <Routes>
               {/* Base portfolio route */}
               <Route path="/" element={<BasePortfolio />} />
+
+              {/* Resume page for PDF export - lazy loaded */}
+              <Route path="/resume" element={<ResumePage />} />
 
               {/* Blog post route - lazy loaded */}
               <Route path="/blog/:slug" element={<BlogPostPage />} />
