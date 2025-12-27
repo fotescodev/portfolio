@@ -63,7 +63,10 @@
       "Skill(generate-resume)",
       "Bash(open:*)",
       "Bash(git rebase:*)",
-      "Bash(git merge:*)"
+      "Bash(git merge:*)",
+      "Bash(gh run list:*)",
+      "Bash(gh run view:*)",
+      "Bash(gh run watch:*)"
     ],
     "deny": [],
     "ask": []

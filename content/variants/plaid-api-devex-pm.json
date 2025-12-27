@@ -26,13 +26,7 @@
           "style": "accent"
         }
       ],
-      "subheadline": "API & Developer Experience PM with 8+ years shipping SDKs, APIs, and developer tools. From Flow CLI to Ankr's Advanced API serving 1M+ daily requests—I make complex infrastructure feel simple.\n",
-      "companyBadge": {
-        "name": "Plaid",
-        "domain": "plaid.com",
-        "logoUrl": "/images/logos/plaid.svg",
-        "style": "pill"
-      }
+      "subheadline": "API & Developer Experience PM with 8+ years shipping SDKs, APIs, and developer tools. From Flow CLI to Ankr's Advanced API serving 1M+ daily requests—I make complex infrastructure feel simple.\n"
     },
     "about": {
       "tagline": "Eight years building developer platforms where technical depth meets developer empathy—from blockchain SDKs to API architectures powering millions of requests.\n",
