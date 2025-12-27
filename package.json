@@ -30,6 +30,8 @@
     "redteam:all": "tsx scripts/redteam.ts --all",
     "redteam:check": "tsx scripts/redteam.ts --check --all",
     "check:coverage": "tsx scripts/check-coverage.ts",
+    "analyze:jd": "tsx scripts/analyze-jd.ts",
+    "search:evidence": "tsx scripts/search-evidence.ts",
     "ucv-cli": "tsx scripts/cli/ucv/index.ts",
     "generate:dashboard": "tsx scripts/generate-dashboard.ts"
   },
