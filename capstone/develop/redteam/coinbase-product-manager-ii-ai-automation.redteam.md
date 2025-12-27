@@ -1,7 +1,7 @@
 # Red Team Report
 
 - Variant: `coinbase-product-manager-ii-ai-automation`
-- Generated: 2025-12-24T19:10:44.024Z
+- Generated: 2025-12-27T18:10:24.514Z
 
 ## Summary
 

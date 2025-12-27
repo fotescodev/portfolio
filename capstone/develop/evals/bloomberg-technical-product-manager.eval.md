@@ -2,7 +2,7 @@
 
 - Variant: `bloomberg-technical-product-manager`
 - Ledger: `capstone/develop/evals/bloomberg-technical-product-manager.claims.yaml`
-- Evaluated At: 2025-12-20T23:53:48.921Z
+- Evaluated At: 2025-12-27T18:10:22.230Z
 - Content Hash: `57912f096acd…`
 
 ## Automated Summary

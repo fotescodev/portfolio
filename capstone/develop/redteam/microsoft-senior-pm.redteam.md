@@ -1,7 +1,7 @@
 # Red Team Report
 
 - Variant: `microsoft-senior-pm`
-- Generated: 2025-12-24T19:10:44.064Z
+- Generated: 2025-12-27T18:10:24.563Z
 
 ## Summary
 

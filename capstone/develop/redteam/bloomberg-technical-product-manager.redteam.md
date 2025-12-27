@@ -1,7 +1,7 @@
 # Red Team Report
 
 - Variant: `bloomberg-technical-product-manager`
-- Generated: 2025-12-24T19:10:44.017Z
+- Generated: 2025-12-27T18:10:24.502Z
 
 ## Summary
 

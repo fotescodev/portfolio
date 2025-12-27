@@ -3,7 +3,7 @@ variant:
   slug: bloomberg-technical-product-manager
   variantFile: content/variants/bloomberg-technical-product-manager.yaml
   contentHash: 57912f096acd845f9135abe2b6a914140de9995782fa41471e60d61345474b06
-  evaluatedAt: 2025-12-20T23:53:48.921Z
+  evaluatedAt: 2025-12-27T18:10:22.230Z
 claims:
   - id: metric-1080fe1903
     location: overrides.hero.subheadline
