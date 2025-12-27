@@ -117,6 +117,7 @@ The coverage check categorizes experience bullets into 7 competency areas:
 
 | Document | Purpose | Status |
 |----------|---------|--------|
+| [executable-quality-pipeline.md](./executable-quality-pipeline.md) | Pipeline philosophy and workflow | ✅ Complete |
 | [evaluation.md](./evaluation.md) | Claims verification methodology | ✅ Complete |
 | [red-teaming.md](./red-teaming.md) | Threat model and attack vectors | ✅ Complete |
 | [evals/](./evals/) | Claims ledgers per variant | 8 of 12 |
