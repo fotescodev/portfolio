@@ -8,6 +8,8 @@ This guide walks you through the complete quality pipeline for a variant, using 
 
 | What | Where | Purpose |
 |------|-------|---------|
+| **JD Analysis** | `capstone/develop/jd-analysis/<slug>.yaml` | Extracted requirements (pre-generation) |
+| **Alignment Report** | `capstone/develop/alignment/<slug>.yaml` | GO/NO-GO alignment (pre-generation) |
 | **Variant YAML** | `content/variants/<slug>.yaml` | Source of truth (edit this) |
 | **Variant JSON** | `content/variants/<slug>.json` | Runtime artifact (auto-generated) |
 | **Knowledge Base** | `content/knowledge/achievements/*.yaml` | Facts & metrics source |
@@ -22,14 +24,74 @@ This guide walks you through the complete quality pipeline for a variant, using 
 ## The Pipeline Flow
 
 ```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│  1. SYNC          2. EVALUATE         3. RED TEAM         4. SHIP          │
-│                                                                             │
-│  YAML → JSON      Extract claims      Adversarial         Deploy if        │
-│  (deterministic)  Find sources        scans               gates pass       │
-│                   Mark verified                                             │
-└─────────────────────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────────────────────────────────────┐
+│  0. PRE-GEN        1. SYNC          2. EVALUATE         3. RED TEAM         4. SHIP            │
+│                                                                                                  │
+│  JD Analysis       YAML → JSON      Extract claims      Adversarial         Deploy if          │
+│  Evidence Search   (deterministic)  Find sources        scans               gates pass         │
+│  Coverage Check                     Mark verified                                               │
+│  (deterministic)                                                                                │
+└─────────────────────────────────────────────────────────────────────────────────────────────────┘
 ```
+
+---
+
+## Step 0: Pre-Generation Analysis (Deterministic)
+
+**Purpose**: Analyze JD and check alignment BEFORE spending time on variant generation.
+
+### Step 0.1: Analyze Job Description
+
+Save the JD to a file and run analysis:
+
+```bash
+# Save JD text to file (if not already saved)
+echo "[JD TEXT]" > source-data/jd-stripe-pm.txt
+
+# Run deterministic JD analysis
+npm run analyze:jd -- --file source-data/jd-stripe-pm.txt --save
+```
+
+**What happens**:
+- Filters 47+ generic phrases ("team player", "excellent communication", etc.)
+- Extracts years required, technologies, domain expertise
+- Generates search terms for knowledge base
+- Saves analysis to `capstone/develop/jd-analysis/<slug>.yaml`
+
+**Output**: `capstone/develop/jd-analysis/<slug>.yaml`
+
+### Step 0.2: Search for Alignment Evidence
+
+```bash
+npm run search:evidence -- --jd-analysis capstone/develop/jd-analysis/<slug>.yaml --save
+```
+
+**What happens**:
+- Searches knowledge base (achievements, stories) for matching evidence
+- Calculates alignment score (0.0-1.0)
+- Generates GO/NO-GO recommendation
+- Identifies gaps (search terms with no matching evidence)
+
+**Output**: `capstone/develop/alignment/<slug>.yaml`
+
+**Decision Framework**:
+
+| Score | Recommendation | Action |
+|-------|----------------|--------|
+| ≥ 0.50 + 2 strong matches | **PROCEED** | Generate variant |
+| ≥ 0.30 or 1 strong match | **REVIEW** | Review gaps, decide if worth pursuing |
+| < 0.30 and 0 strong | **SKIP** | Not enough alignment — don't apply |
+
+### Step 0.3: Check Bullet Coverage (Optional)
+
+```bash
+npm run check:coverage
+```
+
+**What happens**:
+- Categorizes experience bullets into 7 PM competency bundles
+- Identifies gaps and overweight areas
+- Helps balance resume presentation
 
 ---
 
@@ -341,6 +403,17 @@ This means claims exist but aren't verified. Open the `.claims.yaml` and update 
 ## Quick Commands Reference
 
 ```bash
+# ═══════════════════════════════════════════════════════════════
+# PRE-GENERATION (Deterministic)
+# ═══════════════════════════════════════════════════════════════
+npm run analyze:jd -- --file source-data/jd-stripe.txt --save
+npm run search:evidence -- --jd-analysis capstone/develop/jd-analysis/stripe.yaml --save
+npm run search:evidence -- --terms "crypto,staking,api" --threshold 0.5
+npm run check:coverage
+
+# ═══════════════════════════════════════════════════════════════
+# POST-GENERATION
+# ═══════════════════════════════════════════════════════════════
 # Sync all variants
 npm run variants:sync
 

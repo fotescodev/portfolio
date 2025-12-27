@@ -40,6 +40,8 @@ AI-powered automation skills for content management.
 *   **[cv-content-editor](./.claude/skills/cv-content-editor/SKILL.md)**: Edit existing CV content.
 *   **[cv-knowledge-query](./.claude/skills/cv-knowledge-query/SKILL.md)**: Query achievements and stories.
 *   **[generate-variant](./.claude/skills/generate-variant/SKILL.md)**: Job-targeted CV variants with quality gates.
+*   **[generate-story-bank](./.claude/skills/generate-story-bank/SKILL.md)**: HPARL interview stories from achievements.
+*   **[generate-resume](./.claude/skills/generate-resume/SKILL.md)**: Print-optimized, ATS-friendly PDF resumes.
 
 #### Skill Recipes
 Skills compose automatically. These combinations create outcomes greater than their parts:
@@ -89,16 +91,17 @@ npm run variants:sync
 
 ### 🔍 Quality Pipeline (Capstone)
 ```bash
-# Generate claims ledger for a variant
-npm run eval:variant -- --slug bloomberg-technical-product-manager
+# PRE-GENERATION: Analyze JD and check alignment (deterministic)
+npm run analyze:jd -- --file source-data/jd-stripe.txt --save
+npm run search:evidence -- --jd-analysis capstone/develop/jd-analysis/stripe.yaml --save
+npm run check:coverage
 
-# Run adversarial red team scan
+# POST-GENERATION: Verify claims and red team
+npm run eval:variant -- --slug bloomberg-technical-product-manager
 npm run redteam:variant -- --slug bloomberg-technical-product-manager
 
-# Check all variants pass evaluation
+# CI gate checks
 npm run eval:check
-
-# Check all variants pass red team (strict mode)
 npm run redteam:check --strict
 ```
 

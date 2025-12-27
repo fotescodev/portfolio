@@ -40,6 +40,12 @@ So JSON must exist and must match YAML.
 ### Quality pipeline (capstone)
 
 ```
+Job Description
+   ↓  analyze:jd (deterministic)
+JD Analysis (capstone/develop/jd-analysis/*.yaml)
+   ↓  search:evidence (deterministic)
+Alignment Report (capstone/develop/alignment/*.yaml)
+   ↓  GO/NO-GO decision
 Truth (content/knowledge/**)
    ↓
 Variant (content/variants/*.yaml)
@@ -57,16 +63,55 @@ Ship (deploy)
 
 ## Code added (scripts)
 
-### 1) Variant sync
-**File:** `scripts/sync-variants.ts`  
+### Pre-Generation Scripts (Deterministic — No AI Required)
+
+These scripts run BEFORE generating variants, reducing Claude judgment overhead by ~60%:
+
+#### 1) JD Analysis
+**File:** `scripts/analyze-jd.ts`
+**Purpose:** Extract requirements from JD, filter 47+ generic phrases, generate search terms
+
+Commands:
+- `npm run analyze:jd -- --file source-data/jd-stripe.txt --save`
+- `npm run analyze:jd -- --file jd.txt --json`
+
+Artifacts:
+- `capstone/develop/jd-analysis/<slug>.yaml`
+
+What it filters: "team player", "excellent communication", "proven track record", etc.
+
+#### 2) Evidence Search
+**File:** `scripts/search-evidence.ts`
+**Purpose:** Search knowledge base for alignment evidence, generate GO/NO-GO recommendation
+
+Commands:
+- `npm run search:evidence -- --jd-analysis capstone/develop/jd-analysis/<slug>.yaml --save`
+- `npm run search:evidence -- --terms "crypto,staking,api" --threshold 0.5`
+
+Artifacts:
+- `capstone/develop/alignment/<slug>.yaml`
+
+#### 3) Coverage Check
+**File:** `scripts/check-coverage.ts`
+**Purpose:** Categorize experience bullets into 7 PM competency bundles (PCA framework)
+
+Commands:
+- `npm run check:coverage`
+- `npm run check:coverage -- --json`
+- `npm run check:coverage -- --save`
+
+### Post-Generation Scripts
+
+#### 4) Variant sync
+**File:** `scripts/sync-variants.ts`
 **Purpose:** generate deterministic JSON from YAML; detect drift
 
 Commands:
 - `npm run variants:sync`
 - `npm run variants:check`
 
-### 2) Executable evaluation
-**File:** `scripts/evaluate-variants.ts`  
+#### 5) Executable evaluation
+**File:** `scripts/evaluate-variants.ts`
 **Purpose:**
 - extract **metric-like claims** from variant overrides
 - suggest candidate sources from `content/knowledge/**`
@@ -85,8 +130,8 @@ Artifacts:
 Write-back helper (optional):
 - `npm run eval:variant -- --slug <slug> --verify <claimId>=<sourcePath>`
 
-### 3) Executable red team
-**File:** `scripts/redteam.ts`  
+#### 6) Executable red team
+**File:** `scripts/redteam.ts`
 **Purpose:** scan variant content for portfolio-relevant risks
 
 Commands:
