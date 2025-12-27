@@ -1,120 +1,111 @@
-# Develop Phase
-## Architecture, Implementation & Evaluation
+# Develop Phase: Quality Pipeline Implementation
+
+The core implementation of Universal CV's quality assurance system.
 
 ---
 
-## Architecture Overview
+## Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                           SYSTEM ARCHITECTURE                                │
-└─────────────────────────────────────────────────────────────────────────────┘
-
-                              ┌─────────────────┐
-                              │   User Input    │
-                              │  (Job Desc/     │
-                              │   Query)        │
-                              └────────┬────────┘
-                                       │
-                                       ▼
+│                              INPUT                                          │
+│                         Job Description                                     │
+└─────────────────────────────────┬───────────────────────────────────────────┘
+                                  │
+                                  ▼
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                            CLAUDE CODE SKILLS                                │
+│                      PRE-GENERATION SCRIPTS                                 │
+│                                                                             │
 │  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐             │
-│  │ cv-knowledge-   │  │ cv-content-     │  │ cv-content-     │             │
-│  │ query           │  │ generator       │  │ editor          │             │
+│  │   analyze:jd    │  │ search:evidence │  │  check:coverage │             │
 │  │                 │  │                 │  │                 │             │
-│  │ "What's my      │  │ "Create variant │  │ "Update the     │             │
-│  │  crypto exp?"   │  │  for Stripe"    │  │  Ankr numbers"  │             │
+│  │ Filter noise,   │  │ Query KB,       │  │ Categorize by   │             │
+│  │ extract reqs    │  │ score alignment │  │ PM competency   │             │
 │  └────────┬────────┘  └────────┬────────┘  └────────┬────────┘             │
 │           │                    │                    │                       │
-└───────────┼────────────────────┼────────────────────┼───────────────────────┘
-            │                    │                    │
-            ▼                    ▼                    ▼
+│           └────────────────────┴────────────────────┘                       │
+│                                │                                            │
+│                       GO/NO-GO GATE                                         │
+└────────────────────────────────┬────────────────────────────────────────────┘
+                                 │
+                                 ▼
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                         KNOWLEDGE BASE (Source of Truth)                     │
-│                            content/knowledge/                                │
-│                                                                              │
-│  ┌──────────────────────────────────────────────────────────────────────┐   │
-│  │                           index.yaml                                  │   │
-│  │  Entities: companies, themes, skills                                  │   │
-│  │  Relationships: achieved_at, demonstrates, belongs_to                 │   │
-│  └──────────────────────────────────────────────────────────────────────┘   │
-│                                                                              │
-│  ┌─────────────────────┐              ┌─────────────────────┐              │
-│  │    achievements/    │              │      stories/       │              │
-│  │  ┌───────────────┐  │              │  ┌───────────────┐  │              │
-│  │  │ STAR Format   │  │              │  │ Narrative     │  │              │
-│  │  │ • Situation   │  │──────────────│  │ • Hook        │  │              │
-│  │  │ • Task        │  │   contains   │  │ • Problem     │  │              │
-│  │  │ • Action      │  │              │  │ • Insight     │  │              │
-│  │  │ • Result      │  │              │  │ • Outcome     │  │              │
-│  │  │ • Metrics     │  │              │  │ • Reflection  │  │              │
-│  │  └───────────────┘  │              │  └───────────────┘  │              │
-│  └─────────────────────┘              └─────────────────────┘              │
-│                                                                              │
-└─────────────────────────────────────────────────────────────────────────────┘
-            │                    │                    │
-            ▼                    ▼                    ▼
+│                         KNOWLEDGE BASE                                      │
+│                       content/knowledge/                                    │
+│                                                                             │
+│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐             │
+│  │  achievements/  │  │    stories/     │  │   index.yaml    │             │
+│  │   15+ entries   │  │   narratives    │  │  relationships  │             │
+│  └─────────────────┘  └─────────────────┘  └─────────────────┘             │
+└────────────────────────────────┬────────────────────────────────────────────┘
+                                 │
+                                 ▼
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                       PRESENTATION LAYER (Output)                            │
-│                                                                              │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐        │
-│  │   content/  │  │   content/  │  │   content/  │  │   content/  │        │
-│  │case-studies/│  │ experience/ │  │  variants/  │  │    blog/    │        │
-│  │    /*.md    │  │ index.yaml  │  │   /*.yaml   │  │    /*.md    │        │
-│  └─────────────┘  └─────────────┘  └─────────────┘  └─────────────┘        │
-│                                                                              │
-└─────────────────────────────────────────────────────────────────────────────┘
-                                       │
-                                       ▼
+│                       CLAUDE CODE SKILLS                                    │
+│                                                                             │
+│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐             │
+│  │ cv-knowledge-   │  │ cv-content-     │  │ generate-       │             │
+│  │ query           │  │ generator       │  │ variant         │             │
+│  └─────────────────┘  └─────────────────┘  └─────────────────┘             │
+└────────────────────────────────┬────────────────────────────────────────────┘
+                                 │
+                                 ▼
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                         PORTFOLIO WEBSITE                                    │
-│                                                                              │
-│     edgeoftrust.com/#/              edgeoftrust.com/#/stripe/platform-pm    │
-│     (Base Portfolio)                (Personalized Variant)                   │
-│                                                                              │
+│                    POST-GENERATION QUALITY GATES                            │
+│                                                                             │
+│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐             │
+│  │  variants:sync  │  │  eval:variant   │  │ redteam:variant │             │
+│  │                 │  │                 │  │                 │             │
+│  │ YAML → JSON     │  │ Claims ledger   │  │ Adversarial     │             │
+│  │ validation      │  │ verification    │  │ threat check    │             │
+│  └─────────────────┘  └─────────────────┘  └─────────────────┘             │
+└────────────────────────────────┬────────────────────────────────────────────┘
+                                 │
+                                 ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                           OUTPUT                                            │
+│               content/variants/{company}-{role}.yaml                        │
+│                                                                             │
+│                    edgeoftrust.com/#/{company}/{role}                       │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## Implementation Status
+## Scripts Reference
 
-### Completed Components
+### Pre-Generation (Deterministic)
 
-| Component | Location | Status |
-|-----------|----------|--------|
-| Knowledge base structure | `content/knowledge/` | ✅ Complete |
-| Entity index with relationships | `content/knowledge/index.yaml` | ✅ Complete |
-| Achievement schema (STAR format) | `content/knowledge/achievements/_template.yaml` | ✅ Complete |
-| Story schema | `content/knowledge/stories/_template.yaml` | ✅ Complete |
-| 6 achievements extracted | `content/knowledge/achievements/*.yaml` | ✅ Complete |
-| 1 story documented | `content/knowledge/stories/galaxy-compliance-win.yaml` | ✅ Complete |
-| cv-knowledge-query skill | `.claude/skills/cv-knowledge-query/` | ✅ Complete |
-| cv-content-generator skill | `.claude/skills/cv-content-generator/` | ✅ Complete |
-| cv-content-editor skill | `.claude/skills/cv-content-editor/` | ✅ Complete |
+| Script | Command | Purpose |
+|--------|---------|---------|
+| `analyze-jd.ts` | `npm run analyze:jd -- --file <jd.txt>` | Filter 47+ generic phrases, extract must-haves, generate search terms |
+| `search-evidence.ts` | `npm run search:evidence -- --jd-analysis <analysis.yaml>` | Query knowledge base, calculate alignment score, GO/NO-GO recommendation |
+| `check-coverage.ts` | `npm run check:coverage` | Categorize bullets into 7 PM competency bundles |
 
-### In Progress
+### Post-Generation (Quality Gates)
 
-| Component | Status | Next Steps |
-|-----------|--------|------------|
-| More achievement extraction | 🟡 6/15+ | Extract from remaining experience |
-| Evaluation framework | 🟡 Designed | Implement rubrics |
-| Red teaming exercises | 🟡 Planned | Execute and document |
+| Script | Command | Purpose |
+|--------|---------|---------|
+| `sync-variants.ts` | `npm run variants:sync` | YAML → JSON conversion with Zod validation |
+| `evaluate-variants.ts` | `npm run eval:variant -- --slug <slug>` | Generate claims ledger, verify traceability |
+| `redteam.ts` | `npm run redteam:variant -- --slug <slug>` | Adversarial threat check, risk assessment |
 
-### Not Started
+---
 
-| Component | Priority |
-|-----------|----------|
-| Analytics integration | Medium |
-| A/B testing framework | Low |
-| Automated validation | Medium |
+## Quality Documents
+
+| Document | Purpose | Status |
+|----------|---------|--------|
+| [evaluation.md](./evaluation.md) | Claims verification methodology | ✅ Complete |
+| [red-teaming.md](./red-teaming.md) | Threat model and attack vectors | ✅ Complete |
+| [evals/](./evals/) | Claims ledgers per variant | 8 of 12 |
+| [redteam/](./redteam/) | Red team reports per variant | 11 of 12 |
 
 ---
 
 ## Data Schemas
 
-### Achievement Schema
+### Achievement (STAR Format)
 ```yaml
 id: string                    # Unique identifier
 headline: string              # One-line resume bullet
@@ -130,116 +121,66 @@ skills: [string]              # Skills demonstrated
 themes: [string]              # Business themes
 companies: [string]           # Company context
 years: [number]               # Applicable years
-good_for: [string]            # Role fit hints
-evidence:
-  case_study: string | null   # Link to case study
-  testimonial: string | null  # Link to testimonial
-  artifacts: [string]         # Supporting evidence
 ```
 
-### Relationship Types
+### Variant
 ```yaml
-achieved_at:    Achievement → Company     # Where it happened
-demonstrates:   Achievement → Skill       # What it proves
-belongs_to:     Achievement → Theme       # Business category
-contains:       Story → Achievement       # Narrative includes
-generated_from: CaseStudy → Story         # Content source
+slug: string                  # URL-safe identifier
+company: string               # Target company
+role: string                  # Target role
+hero:
+  headline: string            # Personalized tagline
+  subheadline: string         # Supporting context
+about:
+  content: string             # Tailored summary
+experience:
+  - company: string
+    role: string
+    bullets: [string]         # Role-specific achievements
+caseStudies: [string]         # Ranked by relevance
 ```
-
----
-
-## AI-Specific Documentation
-
-| Document | Description |
-|----------|-------------|
-| [Evaluation Framework](./evaluation.md) | Rubrics for measuring AI output quality |
-| [Red Teaming Report](./red-teaming.md) | Failure modes, attacks, and mitigations |
-| [Guardrails Design](./guardrails.md) | Architectural safeguards |
-| [Human-in-the-Loop](./hitl.md) | Where humans review AI decisions |
 
 ---
 
 ## Development Decisions
 
-### Decision 1: File-based vs. Database
-**Choice:** File-based (YAML/Markdown)
-**Rationale:**
-- Version controlled with Git
-- No backend infrastructure needed
-- Easy to edit manually
-- Works with static site deployment
-
-### Decision 2: Claude Code Skills vs. External API
-**Choice:** Claude Code Skills
-**Rationale:**
-- Integrated with development workflow
-- No API costs or rate limits
-- Full context awareness
-- Iterative development friendly
-
-### Decision 3: STAR Format for Achievements
-**Choice:** Structured STAR format
-**Rationale:**
-- Industry standard for behavioral interviews
-- Provides complete context for generation
-- Enables consistent quality
-- Doubles as interview prep
-
-### Decision 4: Knowledge Base as Single Source of Truth
-**Choice:** All facts in knowledge base, presentation derived
-**Rationale:**
-- Prevents hallucination (can only use what exists)
-- Ensures consistency across outputs
-- Enables traceability for audits
-- Simplifies updates (change once, sync everywhere)
+| Decision | Choice | Rationale |
+|----------|--------|-----------|
+| File-based vs Database | File-based (YAML/MD) | Version controlled, no backend, easy to edit |
+| Claude Code vs External API | Claude Code Skills | Integrated workflow, no API costs |
+| Achievement Format | STAR | Industry standard, complete context |
+| Single Source of Truth | Knowledge Base | Prevents hallucination, ensures consistency |
 
 ---
 
-## Testing Strategy
+## Current Implementation Status
 
-### Unit Testing
-- Schema validation for all content files
-- Relationship integrity in knowledge graph
-- Skill prompt parsing
-
-### Integration Testing
-- End-to-end variant generation
-- Knowledge base query accuracy
-- Sync between layers
-
-### Quality Testing
-- Manual review of generated content
-- Evaluation rubric scoring
-- Red teaming exercises
+| Component | Status |
+|-----------|--------|
+| Knowledge base structure | ✅ Complete |
+| Achievement schema | ✅ Complete |
+| Pre-generation scripts | ✅ Complete (3 scripts) |
+| Post-generation scripts | ✅ Complete (3 scripts) |
+| Claude Code skills | ✅ Complete (7 skills) |
+| Claims ledger methodology | ✅ Complete |
+| Red teaming methodology | ✅ Complete |
+| Claims ledgers | 8 of 12 variants |
+| Red team reports | 11 of 12 variants |
 
 ---
 
-## Next Steps
+## Files in This Directory
 
-1. Complete evaluation framework implementation
-2. Execute red teaming exercises
-3. Extract remaining achievements
-4. Build automated validation
-
----
-
-## Supporting Documents
-
-- [Architecture Details](./architecture.md)
-- [Evaluation Framework](./evaluation.md)
-- [Red Teaming Report](./red-teaming.md)
-- [Guardrails Design](./guardrails.md)
-- [Human-in-the-Loop](./hitl.md)
-
----
-
-## Transition to Deliver
-
-**Ready for Delivery When:**
-- [ ] Evaluation framework tested
-- [ ] Red teaming complete with mitigations
-- [ ] 10+ achievements in knowledge base
-- [ ] 3+ variants generated and reviewed
-- [ ] Documentation complete
-
-→ Proceed to [Deliver Phase](../deliver/README.md)
+```
+develop/
+├── README.md                 # This file
+├── evaluation.md             # Claims verification rubric
+├── red-teaming.md            # Threat model
+├── executable-quality-pipeline.md  # Pipeline details
+├── evals/                    # Claims ledgers
+│   ├── README.md
+│   ├── {variant}.claims.yaml
+│   └── {variant}.eval.md
+└── redteam/                  # Red team reports
+    └── {variant}.redteam.md
+```
