@@ -1980,8 +1980,37 @@ async function main() {
   const interactive = isInteractive();
 
   if (!interactive) {
-    console.log(theme.muted('Non-interactive mode: printing variant status as JSON is not implemented yet.'));
-    process.exit(1);
+    // Non-interactive mode: output JSON status for all variants
+    const rows = await loadStatuses();
+    const output = {
+      timestamp: new Date().toISOString(),
+      variants: rows.map(row => ({
+        slug: row.meta.slug,
+        company: row.meta.company,
+        role: row.meta.role,
+        generatedAt: row.meta.generatedAt,
+        publishStatus: row.meta.publishStatus,
+        applicationStatus: row.meta.applicationStatus,
+        sync: row.sync,
+        eval: row.eval,
+        redteam: row.redteam,
+        nextAction: row.next
+      })),
+      summary: {
+        total: rows.length,
+        published: rows.filter(r => r.meta.publishStatus === 'published').length,
+        draft: rows.filter(r => r.meta.publishStatus === 'draft').length,
+        applied: rows.filter(r => r.meta.applicationStatus === 'applied').length,
+        syncErrors: rows.filter(r => r.sync.kind === 'error').length,
+        evalPassing: rows.filter(r => r.eval.kind === 'ok').length,
+        evalUnverified: rows.filter(r => r.eval.kind === 'unverified').length,
+        redteamPassing: rows.filter(r => r.redteam.kind === 'pass').length,
+        redteamWarning: rows.filter(r => r.redteam.kind === 'warn').length,
+        redteamFailing: rows.filter(r => r.redteam.kind === 'fail').length
+      }
+    };
+    console.log(JSON.stringify(output, null, 2));
+    process.exit(0);
   }
 
   let rows: VariantRow[] = [];

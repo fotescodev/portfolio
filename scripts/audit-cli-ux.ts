@@ -157,10 +157,19 @@ const CLI_TESTS: CLITest[] = [
     name: 'redteam:variant',
     command: 'npm',
     args: ['run', 'redteam:variant', '--', '--slug', 'bloomberg-technical-product-manager'],
-    expectSuccess: true, // May have warnings but should exit 0
+    expectSuccess: false, // Exit 1 when issues found is correct behavior
     checkHelp: false,
     checkJson: false,
     description: 'Red team scan'
+  },
+  {
+    name: 'ucv-cli (json)',
+    command: 'npm',
+    args: ['run', 'ucv-cli'],
+    expectSuccess: true,
+    checkHelp: false,
+    checkJson: true, // Non-TTY outputs JSON
+    description: 'Interactive CLI JSON mode'
   },
   {
     name: 'variants:sync',
@@ -373,16 +382,18 @@ function calculateScore(results: TestResult[]): number {
     maxScore += 2;
     if (r.success) score += 2;
 
-    // Help quality: 2 points
+    // Help quality: 2 points (only for tests checking help)
     if (r.helpQuality !== 'none') {
       maxScore += 2;
       if (r.helpQuality === 'excellent') score += 2;
       else if (r.helpQuality === 'good') score += 1;
     }
 
-    // JSON output: 1 point
-    maxScore += 1;
-    if (r.hasJson) score += 1;
+    // JSON output: 1 point (only for tests explicitly checking JSON)
+    if (r.name.includes('(json)')) {
+      maxScore += 1;
+      if (r.hasJson) score += 1;
+    }
 
     // Error clarity: 1 point (only if error occurred)
     if (r.exitCode !== 0) {

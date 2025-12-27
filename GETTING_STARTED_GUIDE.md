@@ -399,17 +399,23 @@ Before generating variants with AI, you need an API key from one of these provid
 2. Navigate to API Keys and create a new key
 3. Copy the key (starts with `sk-ant-`)
 
+**Pricing:** ~$0.01-0.05 per variant generation. See https://www.anthropic.com/pricing
+
 ### Option B: OpenAI
 
 1. Create an account at https://platform.openai.com
 2. Navigate to API Keys and create a new key
 3. Copy the key (starts with `sk-`)
 
+**Pricing:** ~$0.01-0.05 per variant generation. See https://openai.com/pricing
+
 ### Option C: Google Gemini
 
 1. Go to https://makersuite.google.com/app/apikey
 2. Create a new API key
 3. Copy the key
+
+**Pricing:** Free tier available! See https://ai.google.dev/pricing
 
 ### Setup
 

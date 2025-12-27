@@ -88,29 +88,125 @@ npm run generate:cv -- \
 - **OpenAI**: `OPENAI_API_KEY`
 - **Gemini** (Google): `GEMINI_API_KEY`
 
-### Method 2: Manual Creation
+### Method 2: Manual Creation (No API Key Required)
 
-1. **Copy template:**
-   ```bash
-   cp content/variants/_template.yaml content/variants/company-role.yaml
-   ```
+Use this method if you don't have an API key or prefer full control over content.
 
-2. **Edit YAML file** with variant overrides
+#### Step 1: Analyze the Job Description First
 
-3. **Generate JSON:**
-   ```bash
-   npx tsx -e "
-   import { readFileSync, writeFileSync } from 'fs';
-   import YAML from 'yaml';
-   const yaml = readFileSync('content/variants/company-role.yaml', 'utf-8');
-   writeFileSync('content/variants/company-role.json', JSON.stringify(YAML.parse(yaml), null, 2));
-   "
-   ```
+Even without AI generation, use the analysis tools to understand what to emphasize:
 
-4. **Validate:**
-   ```bash
-   npm run validate
-   ```
+```bash
+# Analyze the JD to extract requirements
+npm run analyze:jd -- --text "Paste your job description here..."
+
+# Search your knowledge base for matching evidence
+npm run search:evidence -- --terms "keyword1,keyword2,keyword3"
+
+# Check your current experience bullet coverage
+npm run check:coverage
+```
+
+This gives you:
+- **Must-have requirements** to address in your bio
+- **Alignment score** and evidence matches
+- **Competency gaps** to consider filling
+
+#### Step 2: Copy and Rename Template
+
+```bash
+# Use lowercase-hyphenated naming: company-role
+cp content/variants/_template.yaml content/variants/stripe-senior-pm.yaml
+```
+
+#### Step 3: Fill in Metadata
+
+Edit the file and update the metadata section:
+
+```yaml
+metadata:
+  company: "Stripe"
+  role: "Senior PM"
+  slug: "stripe-senior-pm"  # Must match filename!
+  generatedAt: "2025-12-27T00:00:00Z"
+  jobDescription: |
+    Paste job description excerpt (first 500 chars is fine)
+```
+
+#### Step 4: Customize Overrides
+
+Focus on these key areas:
+
+```yaml
+overrides:
+  hero:
+    status: "Open to Platform PM roles at Stripe"
+    # Keep the signature headline, just add companyAccent:
+    companyAccent:
+      - text: "with"
+        style: "muted"
+      - text: "Stripe"
+        style: "accent"
+    subheadline: >
+      Write a 1-2 sentence elevator pitch mentioning
+      relevant experience for this specific role.
+
+  about:
+    tagline: >
+      One-line positioning statement for this role.
+    bio:
+      - >
+        First paragraph: Recent experience that's most relevant.
+        Mention any company connections or industry overlap.
+      - >
+        Second paragraph: Career arc that leads to this opportunity.
+    stats:
+      # Pick 3 metrics most relevant to the JD
+      - value: "8+"
+        label: "Years in [relevant domain]"
+      - value: "7+"
+        label: "[Relevant metric]"
+      - value: "$XXM"
+        label: "[Business impact]"
+```
+
+#### Step 5: Sync to JSON
+
+```bash
+# This validates and converts YAML → JSON
+npm run variants:sync
+```
+
+If there's an error (like slug mismatch), the sync command will tell you exactly what's wrong.
+
+#### Step 6: Run Quality Pipeline
+
+```bash
+# Evaluate claims and extract metrics
+npm run eval:variant -- --slug stripe-senior-pm
+
+# Run red team security/quality checks
+npm run redteam:variant -- --slug stripe-senior-pm
+```
+
+#### Step 7: Preview
+
+```bash
+npm run dev
+# Open http://localhost:5173/#/stripe/senior-pm
+```
+
+#### Quick Reference: What to Customize
+
+| Section | What to Change | Notes |
+|---------|----------------|-------|
+| `hero.status` | Role-specific status | e.g., "Open to Platform PM roles" |
+| `hero.companyAccent` | Company name inline | Appears after "trust" |
+| `hero.subheadline` | Elevator pitch | 1-2 sentences |
+| `about.tagline` | Positioning | One line |
+| `about.bio` | 2 paragraphs | Relevance + career arc |
+| `about.stats` | 3 metrics | Pick most relevant to JD |
+| `relevance.caseStudies` | Reorder case studies | Most relevant first |
 
 ---
 
