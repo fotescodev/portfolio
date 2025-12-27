@@ -29,6 +29,7 @@
     "redteam:variant": "tsx scripts/redteam.ts",
     "redteam:all": "tsx scripts/redteam.ts --all",
     "redteam:check": "tsx scripts/redteam.ts --check --all",
+    "check:coverage": "tsx scripts/check-coverage.ts",
     "ucv-cli": "tsx scripts/cli/ucv/index.ts",
     "generate:dashboard": "tsx scripts/generate-dashboard.ts"
   },
