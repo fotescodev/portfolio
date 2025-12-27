@@ -82,6 +82,10 @@ export function mergeProfile(variant: Variant): MergedProfile {
     if (variant.overrides.hero.companyAccent) {
       merged.hero.companyAccent = variant.overrides.hero.companyAccent;
     }
+    // Company badge with logo (auto-fetched or custom)
+    if (variant.overrides.hero.companyBadge) {
+      merged.hero.companyBadge = variant.overrides.hero.companyBadge;
+    }
   }
 
   // Apply about overrides

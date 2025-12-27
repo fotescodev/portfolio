@@ -1,0 +1,221 @@
+/**
+ * Resume Page Styles
+ *
+ * Optimized for:
+ * - Single-page A4/Letter PDF export
+ * - ATS (Applicant Tracking System) readability
+ * - Clean, professional typography
+ */
+
+.resume-page {
+  /* Color tokens for resume (print-optimized, high contrast) */
+  --resume-text-primary: #1a1a1a;
+  --resume-text-secondary: #333;
+  --resume-text-muted: #444;
+  --resume-text-subtle: #555;
+  --resume-border: #333;
+  --resume-bg: white;
+  --resume-preview-bg: #e5e5e5;
+
+  /* Letter page - compact for single-page fit */
+  max-width: 8.5in;
+  min-height: 11in;
+  margin: 0 auto;
+  padding: 0.3in 0.4in;
+  background: white !important;
+  color: var(--resume-text-primary) !important;
+  font-family: 'Georgia', 'Times New Roman', serif;
+  font-size: 9.5pt;
+  line-height: 1.35;
+}
+
+/* Reset all children to prevent theme inheritance */
+.resume-page * {
+  background: transparent;
+  color: inherit;
+}
+
+/* Header */
+.resume-header {
+  text-align: center;
+  margin-bottom: 8pt;
+  padding-bottom: 6pt;
+  border-bottom: 1px solid var(--resume-border);
+}
+
+.resume-name {
+  font-size: 14pt;
+  font-weight: normal;
+  margin: 0 0 3pt 0;
+  color: var(--resume-text-primary);
+}
+
+.resume-role-highlight {
+  /* No special styling - just plain text for print compatibility */
+  font-style: normal;
+  font-weight: 600;
+}
+
+.resume-contact {
+  font-size: 9pt;
+  color: var(--resume-text-muted);
+  margin: 0;
+}
+
+/* Section titles */
+.resume-section-title {
+  font-size: 10pt;
+  font-weight: bold;
+  text-align: center;
+  margin: 8pt 0 4pt 0;
+  color: var(--resume-text-primary);
+}
+
+/* Impact Summary */
+.resume-summary {
+  margin-bottom: 6pt;
+}
+
+.resume-summary-text {
+  text-align: justify;
+  margin: 0;
+}
+
+/* Professional Experience */
+.resume-experience {
+  margin-bottom: 6pt;
+}
+
+.resume-job {
+  margin-bottom: 6pt;
+  page-break-inside: avoid;
+}
+
+.resume-job-header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: baseline;
+  gap: 4pt;
+  flex-wrap: wrap;
+}
+
+.resume-company {
+  font-weight: bold;
+  font-size: 9.5pt;
+}
+
+.resume-location {
+  font-size: 8.5pt;
+  color: var(--resume-text-subtle);
+}
+
+.resume-period {
+  font-style: italic;
+  font-size: 8.5pt;
+  color: var(--resume-text-subtle);
+  margin-left: auto;
+}
+
+.resume-job-title {
+  font-style: italic;
+  font-size: 9pt;
+  margin: 1pt 0 2pt 0;
+  color: var(--resume-text-secondary);
+}
+
+.resume-highlights {
+  margin: 0;
+  padding-left: 14pt;
+}
+
+.resume-highlight {
+  margin-bottom: 1pt;
+  font-size: 9pt;
+}
+
+/* Skills */
+.resume-skills {
+  margin-top: 6pt;
+  background: white;
+}
+
+.resume-skills-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2pt 12pt;
+  font-size: 8pt;
+  background: white;
+  color: var(--resume-text-primary);
+}
+
+.resume-skill-category {
+  line-height: 1.3;
+}
+
+.resume-skill-category-name {
+  font-weight: bold;
+  color: var(--resume-text-primary);
+}
+
+.resume-skill-category-items {
+  color: var(--resume-text-secondary);
+}
+
+/* Print-specific styles */
+@media print {
+  /* Override parent element dark backgrounds from ThemeProvider */
+  html,
+  body,
+  #root {
+    background: white !important;
+    min-height: auto !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .resume-page {
+    padding: 0;
+    margin: 0;
+    max-width: 100%;
+    min-height: auto;
+    /* Ensure no background issues in print */
+    background: white !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Ensure clean page breaks */
+  .resume-job {
+    page-break-inside: avoid;
+  }
+
+  /* Prevent orphaned headers */
+  .resume-section-title {
+    page-break-after: avoid;
+  }
+
+  /* Hide any browser chrome */
+  @page {
+    margin: 0.3in 0.4in;
+    size: letter;
+  }
+}
+
+/* Screen preview styling */
+@media screen {
+  /* Override parent element backgrounds for preview */
+  html:has(.resume-page),
+  body:has(.resume-page) {
+    background: var(--resume-preview-bg, #e5e5e5) !important;
+    min-height: 100vh;
+  }
+
+  body:has(.resume-page) #root {
+    background: transparent !important;
+    padding: 20px;
+  }
+
+  .resume-page {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+}

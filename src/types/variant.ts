@@ -30,6 +30,16 @@ export interface StyledTextSegment {
 }
 
 /**
+ * Company badge for displaying target company logo + name in hero
+ */
+export interface CompanyBadge {
+  name: string;
+  domain?: string;
+  logoUrl?: string;
+  style?: 'pill' | 'inline';
+}
+
+/**
  * Merged profile - base profile + variant overrides applied
  * Extends base Profile with optional variant-specific fields
  */
@@ -37,6 +47,7 @@ export interface MergedProfile extends Omit<Profile, 'hero'> {
   _variant?: VariantMetadata; // Track which variant is active
   hero: Profile['hero'] & {
     companyAccent?: StyledTextSegment[]; // Optional company accent for variants
+    companyBadge?: CompanyBadge; // Optional company logo badge for variants
   };
 }
 
