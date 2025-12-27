@@ -5,7 +5,9 @@
     "generatedAt": "2025-12-24T00:00:00Z",
     "jobDescription": "Senior Staff Product Manager - API & Developer Experience\n\nLocation: San Francisco\nSalary Range: $226,800–$400,000 per year (Zone 1)\n\nCompany Overview:\nPlaid is a fintech infrastructure company founded in 2013, headquartered in San Francisco.\nThe company connects millions of people to financial applications by enabling secure\nconnections to 12,000+ financial institutions across the US, Canada, UK, and Europe.\n\nTeam & Role:\nThe Developer Experience (DevX) team empowers developers building next-generation\nfinancial services. This leadership position focuses on \"how developers first encounter,\nunderstand and integrate with Plaid,\" spanning APIs, documentation, SDKs, sandbox\nenvironments, and integration tooling.\n\nKey Responsibilities:\n- Define vision and strategy for developer experience across onboarding, documentation,\n  SDKs, error handling, tooling, sandbox, and support flows\n- Engage directly with developers through research and collaboration with Developer Relations\n- Partner with Engineering and Design to ship intuitive experiences reducing time-to-integration\n- Champion consistent, high-quality developer experience standards\n- Balance qualitative feedback with quantitative metrics (activation rates, NPS, adoption)\n\nRequired Qualifications:\n- 8+ years product management experience in developer platforms, APIs, or infrastructure\n- Deep technical fluency with APIs, SDKs, and documentation\n- Demonstrated passion for reducing friction in developer tooling\n- Strong communication skills for both technical and executive audiences\n- Hands-on development experience\n\nNice-to-Have Skills:\n- Fintech, infrastructure, or API-first company background\n- Familiarity with OpenAPI/Swagger, Postman, GitHub, or API client tools\n",
     "generationModel": "manual",
-    "slug": "plaid-api-devex-pm"
+    "slug": "plaid-api-devex-pm",
+    "publishStatus": "draft",
+    "applicationStatus": "not_applied"
   },
   "overrides": {
     "hero": {
@@ -25,16 +27,11 @@
         }
       ],
       "subheadline": "API & Developer Experience PM with 8+ years shipping SDKs, APIs, and developer tools. From Flow CLI to Ankr's Advanced API serving 1M+ daily requests—I make complex infrastructure feel simple.\n",
-      "companyAccent": [
-        {
-          "text": "with",
-          "style": "muted"
-        },
-        {
-          "text": "Plaid",
-          "style": "accent"
-        }
-      ]
+      "companyBadge": {
+        "name": "Plaid",
+        "domain": "plaid.com",
+        "style": "pill"
+      }
     },
     "about": {
       "tagline": "Eight years building developer platforms where technical depth meets developer empathy—from blockchain SDKs to API architectures powering millions of requests.\n",

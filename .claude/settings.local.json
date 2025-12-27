@@ -62,7 +62,8 @@
       "Skill(serghei-qa)",
       "Skill(generate-resume)",
       "Bash(open:*)",
-      "Bash(git rebase:*)"
+      "Bash(git rebase:*)",
+      "Bash(git merge:*)"
     ],
     "deny": [],
     "ask": []
