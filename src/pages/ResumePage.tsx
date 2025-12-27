@@ -11,7 +11,7 @@
 import { profile, experience, skills } from '../lib/content';
 import './ResumePage.css';
 
-/** Resume layout configuration */
+/** Resume layout configuration - tuned for single-page fit */
 const RESUME_CONFIG = {
   /** Number of skill categories to show in impact summary */
   SUMMARY_SKILL_CATEGORIES: 2,
@@ -19,6 +19,10 @@ const RESUME_CONFIG = {
   SKILLS_PER_CATEGORY: 3,
   /** Number of companies to list in impact summary */
   SUMMARY_COMPANIES: 4,
+  /** Maximum jobs to show - include ALL experience (6 jobs) */
+  MAX_JOBS: 6,
+  /** Maximum highlights per job - reduced to 2 to fit all jobs on one page */
+  MAX_HIGHLIGHTS_PER_JOB: 2,
 } as const;
 
 export default function ResumePage() {
@@ -63,7 +67,7 @@ export default function ResumePage() {
       <section className="resume-experience">
         <h2 className="resume-section-title">Professional Experience</h2>
 
-        {experience.jobs.map((job) => (
+        {experience.jobs.slice(0, RESUME_CONFIG.MAX_JOBS).map((job) => (
           <article key={`${job.company}-${job.period}`} className="resume-job">
             <div className="resume-job-header">
               <span className="resume-company">{job.company}</span>
@@ -72,7 +76,7 @@ export default function ResumePage() {
             </div>
             <p className="resume-job-title">{job.role}</p>
             <ul className="resume-highlights">
-              {job.highlights.map((highlight, idx) => (
+              {job.highlights.slice(0, RESUME_CONFIG.MAX_HIGHLIGHTS_PER_JOB).map((highlight, idx) => (
                 <li key={`${job.company}-highlight-${idx}`} className="resume-highlight">
                   {stripMarkdownLinks(highlight)}
                 </li>

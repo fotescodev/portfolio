@@ -35,10 +35,12 @@ const RESUME_CONFIG = {
   SUMMARY_SKILL_CATEGORIES: 2,   // Categories in impact summary
   SKILLS_PER_CATEGORY: 3,        // Skills per category in summary
   SUMMARY_COMPANIES: 4,          // Companies to list in summary
-  MAX_JOBS: 5,                   // Maximum jobs shown (for single-page fit)
-  MAX_HIGHLIGHTS_PER_JOB: 3,     // Bullets per job (action → outcome format)
+  MAX_JOBS: 6,                   // Include ALL jobs (critical: don't cut off experience)
+  MAX_HIGHLIGHTS_PER_JOB: 2,     // Bullets per job (reduced to fit all jobs on one page)
 };
 ```
+
+**Important:** Always include ALL jobs. Missing experience (especially major companies like Microsoft) is worse than a slightly longer resume. Reduce highlights per job rather than cutting jobs.
 
 ### Typography (ResumePage.css)
 
@@ -78,13 +80,19 @@ const RESUME_CONFIG = {
 
 ### 2. PDF Exceeds One Page
 
-**Fix:** Reduce `MAX_JOBS` (default: 5) and `MAX_HIGHLIGHTS_PER_JOB` (default: 3) in ResumePage.tsx.
+**Fix:** Reduce `MAX_HIGHLIGHTS_PER_JOB` (default: 2) in ResumePage.tsx. **Do NOT reduce MAX_JOBS** - missing experience is worse than a slightly longer resume.
 
-### 3. Yellow/Colored Underline on Role Title
+### 3. Missing Experience/Jobs
+
+**Cause:** `MAX_JOBS` was set too low, cutting off important companies (e.g., Microsoft).
+
+**Fix:** Always set `MAX_JOBS` to the total number of jobs in `content/experience/index.yaml`. Reduce `MAX_HIGHLIGHTS_PER_JOB` instead to maintain single-page fit.
+
+### 4. Yellow/Colored Underline on Role Title
 
 **Fix:** Ensure `.resume-role-highlight` has no border-bottom or background-color.
 
-### 4. Theme Colors Bleeding Through
+### 5. Theme Colors Bleeding Through
 
 **Fix:** Reset all children with:
 
@@ -95,7 +103,7 @@ const RESUME_CONFIG = {
 }
 ```
 
-### 5. Fonts Not Loading in PDF
+### 6. Fonts Not Loading in PDF
 
 **Fix:** The script waits for `document.fonts.ready` + 500ms buffer. If fonts still don't load, increase `POST_FONT_BUFFER_MS` in `generate-resume.ts`.
 
