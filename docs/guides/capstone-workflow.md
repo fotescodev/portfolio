@@ -89,9 +89,16 @@ npm run check:coverage
 ```
 
 **What happens**:
-- Categorizes experience bullets into 7 PM competency bundles
-- Identifies gaps and overweight areas
-- Helps balance resume presentation
+- Categorizes experience bullets into 7 PM competency bundles:
+  1. Product Design & Development
+  2. Leadership & Execution
+  3. Strategy & Planning
+  4. Business & Marketing
+  5. Project Management
+  6. Technical & Analytical
+  7. Communication
+- Identifies gaps (bundles with <2 bullets) and overweight areas (5+ bullets)
+- Helps balance resume presentation for target role
 
 ---
 

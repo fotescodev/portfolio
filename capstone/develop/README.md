@@ -82,6 +82,27 @@ The core implementation of Universal CV's quality assurance system.
 | `search-evidence.ts` | `npm run search:evidence -- --jd-analysis <analysis.yaml>` | Query knowledge base, calculate alignment score, GO/NO-GO recommendation |
 | `check-coverage.ts` | `npm run check:coverage` | Categorize bullets into 7 PM competency bundles |
 
+### 7 PM Competency Bundles
+
+The coverage check categorizes experience bullets into 7 competency areas:
+
+| # | Bundle | Keywords Detected |
+|---|--------|-------------------|
+| 1 | **Product Design & Development** | shipped, launched, built, designed, UX, user research, prototyped, MVP |
+| 2 | **Leadership & Execution** | led, managed, coordinated, E2E, cross-functional, stakeholders, owned, drove |
+| 3 | **Strategy & Planning** | strategy, vision, roadmap, prioritized, market analysis, decision, pivot |
+| 4 | **Business & Marketing** | revenue, ARR, GTM, partnerships, growth, B2B, pricing, negotiated, monetization |
+| 5 | **Project Management** | delivered, timeline, Agile, risk, milestone, sprint, on-time, deadline |
+| 6 | **Technical & Analytical** | architecture, API, SDK, data, metrics, trade-offs, system design, integration |
+| 7 | **Communication** | presented, documented, collaborated, aligned, storytelling, consensus |
+
+**Source:** `scripts/check-coverage.ts:BUNDLES`
+
+**Usage:**
+- Balanced variants should cover 5+ bundles
+- Gaps are flagged for review
+- Not all variants need all 7 — depends on target role
+
 ### Post-Generation (Quality Gates)
 
 | Script | Command | Purpose |
@@ -96,6 +117,7 @@ The core implementation of Universal CV's quality assurance system.
 
 | Document | Purpose | Status |
 |----------|---------|--------|
+| [executable-quality-pipeline.md](./executable-quality-pipeline.md) | Pipeline philosophy and workflow | ✅ Complete |
 | [evaluation.md](./evaluation.md) | Claims verification methodology | ✅ Complete |
 | [red-teaming.md](./red-teaming.md) | Threat model and attack vectors | ✅ Complete |
 | [evals/](./evals/) | Claims ledgers per variant | 8 of 12 |

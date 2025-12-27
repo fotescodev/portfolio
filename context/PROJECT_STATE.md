@@ -1,6 +1,6 @@
 # Portfolio Project State
 **Version**: 4.0
-**Last Updated**: 2025-12-21
+**Last Updated**: 2025-12-27
 
 > Single source of truth for AI agents and developers. Combines strategic context with session history.
 
@@ -23,7 +23,7 @@
 
 ### 1.1 Executive Summary
 
-Portfolio at **90% production-ready**. Universal CV engine online with 5 variants. Blog UX complete. **Code splitting shipped** — bundle reduced 59%.
+Portfolio at **production-ready**. Universal CV engine online with 12 variants. Blog UX complete. **Code splitting shipped** — bundle reduced 59%.
 
 **The "Hired-on-Sight" Delta**: Social proof enhancement + light mode polish.
 
@@ -32,7 +32,7 @@ Portfolio at **90% production-ready**. Universal CV engine online with 5 variant
 | Component | Status |
 |-----------|--------|
 | Type Safety | 9/10 — Zod validates all content |
-| Tests | 211 passing |
+| Tests | 210 passing |
 | Bundle | 195KB initial (59% reduction via code splitting) |
 | Build | Clean TypeScript, Vite 7 |
 
@@ -189,6 +189,15 @@ npm run check:coverage -- --json
 | `analyze:jd` | Filters 47+ generic phrases, extracts must-haves | JD analysis YAML |
 | `search:evidence` | Searches achievements/stories, scores alignment | Alignment report |
 | `check:coverage` | Categorizes bullets into 7 PM competency bundles | Coverage matrix |
+
+**The 7 PM Competency Bundles:**
+1. Product Design & Development
+2. Leadership & Execution
+3. Strategy & Planning
+4. Business & Marketing
+5. Project Management
+6. Technical & Analytical
+7. Communication
 
 ### Post-Generation Commands
 

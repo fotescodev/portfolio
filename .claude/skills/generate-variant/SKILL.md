@@ -165,7 +165,7 @@ Surface honestly:
 
 ## Phase 2.5: Bullet Coverage Check
 
-**Goal:** Ensure experience highlights cover all 7 PM competency bundles (PCA framework) using the `check:coverage` script.
+**Goal:** Ensure experience highlights cover all 7 PM competency bundles using the `check:coverage` script.
 
 ### Run Coverage Check
 
