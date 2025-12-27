@@ -26,26 +26,129 @@ Activate when the user:
 
 ---
 
-## Phase 1: Job Analysis
+## Phase 1: JD Analysis & Must-Have Extraction
 
-**Goal:** Extract key requirements from the job description.
+**Goal:** Extract NON-GENERIC requirements that reveal what the hiring manager actually cares about.
 
-1. Identify:
-   - Company name
-   - Role title
-   - Must-have qualifications
-   - Nice-to-have qualifications
-   - Specific technologies/domains mentioned
-   - Team structure and reporting
+### Step 1.1: Basic Identification
 
-2. Generate slug: `{company}-{role}` (kebab-case, e.g., `galaxy-pm`)
+| Field | Extract |
+|-------|---------|
+| Company | Name + what they do |
+| Role | Title + level |
+| Team | Who you'd report to, team size |
+| Slug | `{company}-{role}` (kebab-case) |
 
-3. Check for existing variants:
-   ```bash
-   ls content/variants/ | grep -i {company}
-   ```
+### Step 1.2: Must-Have Extraction (Critical)
 
-**Output:** Summary of requirements to user for confirmation.
+**Extract 3-5 non-generic must-haves** — the unique requirements that filter out most candidates.
+
+**IGNORE these generic phrases:**
+- "Team player", "excellent communicator", "fast-paced environment"
+- "Passionate about [X]", "self-starter", "attention to detail"
+- Standard PM responsibilities (roadmaps, stakeholder management, Agile)
+
+**FOCUS on specific signals:**
+- Named technologies: "Experience with Kubernetes", "Rust or Go"
+- Domain expertise: "Fintech background", "Healthcare regulatory experience"
+- Scale indicators: "Products with 1M+ users", "Enterprise sales cycles"
+- Specific achievements: "0→1 product launches", "Platform migrations"
+
+**Output format:**
+```yaml
+jdAnalysis:
+  company: "Company Name"
+  role: "Role Title"
+  slug: "company-role"
+
+  mustHaves:  # 3-5 non-generic requirements
+    - requirement: "API platform experience"
+      specificity: "high"  # high/medium/low
+    - requirement: "Developer tools background"
+      specificity: "high"
+    - requirement: "B2B SaaS experience"
+      specificity: "medium"
+
+  niceToHaves:
+    - "Startup experience"
+    - "Technical degree"
+
+  ignoredGeneric:  # What you filtered out
+    - "Strong communication skills"
+    - "Collaborative mindset"
+
+  domainKeywords:
+    - "payments"
+    - "API"
+    - "developer experience"
+```
+
+### Step 1.3: Check for Existing Variants
+
+```bash
+ls content/variants/ | grep -i {company}
+```
+
+**Output:** JD analysis summary to user for confirmation before proceeding.
+
+---
+
+## Phase 1.5: Alignment Gate (GO/NO-GO)
+
+**Goal:** Score alignment BEFORE investing time in content generation.
+
+### Scoring Process
+
+For each must-have, check against knowledge base:
+
+```bash
+# Search achievements for evidence
+grep -r "{keyword}" content/knowledge/achievements/
+grep -r "{keyword}" content/experience/index.yaml
+```
+
+### Alignment Calculation
+
+```yaml
+alignment:
+  mustHaves:
+    - requirement: "API platform experience"
+      match: true
+      evidence: "Ankr Advanced APIs (1M+ daily requests), Flow CLI"
+      confidence: 0.9
+    - requirement: "Developer tools background"
+      match: true
+      evidence: "Dapper Playground V2, Microsoft Xbox dev tools"
+      confidence: 0.85
+    - requirement: "Payments experience"
+      match: false
+      evidence: null
+      confidence: 0.0
+
+  score: 0.67  # (0.9 + 0.85 + 0.0) / 3
+  matchedCount: 2
+  totalCount: 3
+
+  threshold: 0.50
+  recommendation: "PROCEED"  # PROCEED (≥0.5) | REVIEW (0.3-0.5) | SKIP (<0.3)
+```
+
+### Decision Framework
+
+| Score | Recommendation | Action |
+|-------|----------------|--------|
+| ≥ 0.50 | **PROCEED** | Generate variant |
+| 0.30 - 0.49 | **REVIEW** | Show gaps, ask user if worth pursuing |
+| < 0.30 | **SKIP** | Recommend not applying, show why |
+
+### Honesty Check
+
+For REVIEW/SKIP cases, surface:
+- Which must-haves have no evidence
+- Whether gaps are addressable (transferable skills) or hard blockers
+- Honest assessment: "This role requires X, which isn't in your background"
+
+**PAUSE:** Show alignment score and recommendation. Get explicit GO/NO-GO from user.
 
 ---
 
@@ -70,6 +173,87 @@ Activate when the user:
    - Transferable skills: 0.5-0.7
 
 **Output:** List of relevant achievements with relevance scores.
+
+---
+
+## Phase 2.5: Bullet Coverage Check
+
+**Goal:** Ensure experience highlights cover all 7 PM competency bundles (PCA framework).
+
+### The 7 Competency Bundles
+
+| Bundle | Keywords to Look For |
+|--------|---------------------|
+| **1. Product Design & Development** | shipped, launched, built, designed, UX, user research, prototyped, improved, ideation |
+| **2. Leadership & Execution** | led, managed, coordinated, E2E, cross-functional, stakeholders, team of X |
+| **3. Strategy & Planning** | strategy, vision, roadmap, prioritized, market analysis, decision, goal setting |
+| **4. Business & Marketing** | revenue, ARR, GTM, partnerships, growth, B2B, pricing, negotiated |
+| **5. Project Management** | delivered, timeline, Agile, risk, on-time, coordinated, milestones |
+| **6. Technical & Analytical** | architecture, API, SDK, data, metrics, experimentation, trade-offs, system design |
+| **7. Communication** | presented, documented, collaborated, aligned, storytelling, stakeholder |
+
+### Coverage Check Process
+
+1. Read experience highlights:
+   ```bash
+   grep -A 10 "highlights:" content/experience/index.yaml
+   ```
+
+2. Categorize each bullet by primary competency
+
+3. Output coverage matrix:
+   ```yaml
+   bulletCoverage:
+     productDesign:
+       count: 3
+       examples:
+         - "Shipped Cadence Playground V2..."
+         - "Built ERC20 Xpress platform..."
+     leadershipExecution:
+       count: 4
+       examples:
+         - "Led 8 protocol integrations..."
+     strategyPlanning:
+       count: 1
+       examples:
+         - "Drove 15× revenue growth through B2B pivot..."
+     businessMarketing:
+       count: 2
+       examples:
+         - "Drove 15× revenue growth to $2M ARR..."
+     projectManagement:
+       count: 2
+       examples:
+         - "Led 8 protocol integrations averaging <2 weeks per chain..."
+     technicalAnalytical:
+       count: 5
+       examples:
+         - "Architected Docker/Kubernetes infrastructure..."
+     communication:
+       count: 1
+       examples:
+         - "Consolidated docs, saving 1 engineering resource..."
+
+     gaps: ["communication"]  # Bundles with <2 bullets
+     overweight: ["technicalAnalytical"]  # Bundles with 5+ bullets
+   ```
+
+### Interpretation
+
+| Gap Level | Action |
+|-----------|--------|
+| 0 gaps | Proceed — well-rounded |
+| 1-2 gaps | Surface gaps to user — may want to emphasize in bio/tagline |
+| 3+ gaps | Warning — resume may appear unbalanced |
+
+### Using Coverage for This Variant
+
+For identified gaps, consider:
+1. Can the bio/tagline emphasize this competency?
+2. Are there achievements in knowledge base that weren't surfaced?
+3. Does this role even care about this competency? (Check JD must-haves)
+
+**Note:** Not all variants need all 7 bundles. A technical PM role may not care about "Business & Marketing." Use the JD must-haves to determine which gaps matter.
 
 ---
 

@@ -1,0 +1,105 @@
+# ═══════════════════════════════════════════════════════════════
+# HPARL STORY TEMPLATE
+# ═══════════════════════════════════════════════════════════════
+# Interview-ready behavioral story using HPARL format.
+# Hook → Principles → Action → Results → Learnings
+#
+# Why HPARL > STAR:
+# - Hook creates curiosity (STAR just states context)
+# - Principles show HOW you think (STAR skips this)
+# - Learnings demonstrate growth mindset (STAR ends at result)
+
+id: "{achievement-id}-hparl"
+sourceAchievement: "{achievement-id}"  # Links to achievements/*.yaml
+format: "HPARL"
+lastUpdated: "YYYY-MM-DD"
+
+# ───────────────────────────────────────────────────────────────
+# HOOK (10-15 seconds)
+# ───────────────────────────────────────────────────────────────
+# Promise you'll answer the question AND make them want to listen.
+# Formula: Stakes + constraint + tease of outcome
+#
+# Bad:  "At Company X, I worked on project Y."
+# Good: "I'll tell you about the time we had [high stakes] and I
+#        had to [constraint] — here's what happened."
+hook: |
+  [Your attention-grabbing opener that sets stakes]
+
+# ───────────────────────────────────────────────────────────────
+# PRINCIPLES (30 seconds)
+# ───────────────────────────────────────────────────────────────
+# Your philosophy/approach that guided this work.
+# This is where you demonstrate judgment and thinking.
+# Formula: "I believe..." or "My approach to X is..." + why
+principles: |
+  [Your principle or philosophy that guided your approach]
+
+# ───────────────────────────────────────────────────────────────
+# ACTION (60-90 seconds)
+# ───────────────────────────────────────────────────────────────
+# What YOU specifically did. Use "I", not "we".
+# Include: concrete actions, key decisions, trade-offs, how you
+# worked with others (but your role clear).
+action:
+  - "[First concrete action you took]"
+  - "[Key decision point — what you decided and why]"
+  - "[How you worked with others — but YOUR contribution clear]"
+  - "[Trade-off you navigated — what you chose and why]"
+
+# ───────────────────────────────────────────────────────────────
+# RESULTS (30 seconds)
+# ───────────────────────────────────────────────────────────────
+# Quantified outcomes. Multiple metrics strengthen the story.
+results:
+  - metric: "[Primary quantified outcome]"
+    context: "[Why this matters / business impact]"
+  - metric: "[Secondary outcome]"
+    context: "[Additional impact]"
+  - metric: "[Tertiary outcome if applicable]"
+    context: "[Downstream effect]"
+
+# ───────────────────────────────────────────────────────────────
+# LEARNINGS (15-30 seconds)
+# ───────────────────────────────────────────────────────────────
+# What you took away. Shows self-awareness and growth mindset.
+# Formula: "The counterintuitive insight was..." or
+#          "What I learned was..." or "If I did it again, I'd..."
+learnings: |
+  [Your key takeaway — ideally counterintuitive or demonstrates growth]
+
+# ═══════════════════════════════════════════════════════════════
+# INTERVIEW MAPPING
+# ═══════════════════════════════════════════════════════════════
+
+# Question types this story answers well
+goodFor:
+  - "[Behavioral question type 1]"
+  - "[Behavioral question type 2]"
+  - "[Behavioral question type 3]"
+
+# Category buckets (aim for 2-3 per category across your bank)
+# Options: leadership, conflict, failure, technical, impact, ambiguity
+categories:
+  - leadership
+  - impact
+
+# ═══════════════════════════════════════════════════════════════
+# PRACTICE NOTES
+# ═══════════════════════════════════════════════════════════════
+
+# Timing guide (should total 2-3 minutes spoken)
+timing:
+  hook: "15s"
+  principles: "30s"
+  action: "90s"
+  results: "30s"
+  learnings: "15s"
+  total: "3 minutes"
+
+# Personal notes for practice
+practiceNotes: |
+  - Emphasize: [what to highlight]
+  - Skip if short on time: [what to abbreviate]
+  - Common follow-ups: [questions they might ask]
+  - Danger zones: [what NOT to say]
