@@ -7,7 +7,7 @@ description: Generate a print-optimized, ATS-friendly single-page resume PDF fro
 
 ## Overview
 
-Generates a single-page PDF resume using Puppeteer to render the `/resume` React page. The resume is optimized for ATS (Applicant Tracking Systems) and print.
+Generates a single-page PDF resume using Puppeteer to render the `/resume` React page. The resume is optimized for ATS (Applicant Tracking Systems) and print, suitable for any technical role (Engineering, Product, Design, etc.).
 
 ## When to Use
 
@@ -24,7 +24,47 @@ Activate this skill when the user:
 | `src/pages/ResumePage.tsx` | React component for print-optimized layout |
 | `src/pages/ResumePage.css` | Print/screen styles with theme isolation |
 | `scripts/generate-resume.ts` | Puppeteer PDF generation script |
+| `content/profile.yaml` | Name, email, location, tagline, stats |
+| `content/experience/index.yaml` | Jobs with highlights |
+| `content/skills/index.yaml` | Categorized skills |
 | `public/resume.pdf` | Default output file |
+
+---
+
+## Design Principles
+
+### 1. Never Cut Experience
+
+**Critical:** Include ALL jobs from `content/experience/index.yaml`. Missing experience (especially major companies) damages credibility more than a slightly longer resume.
+
+- If page is too long → reduce highlights per job, NOT number of jobs
+- Set `MAX_JOBS` to match total jobs in experience file
+- Every role adds signal; cutting roles removes career trajectory
+
+### 2. Metrics Over Descriptions
+
+Highlights should follow **Action → Outcome** format with quantified results:
+
+```
+❌ "Managed product development"
+✅ "Shipped Advanced API from 0→1: 17 methods serving 1M+ daily requests"
+```
+
+### 3. ATS-First Design
+
+- Plain text (no images, icons, or complex layouts)
+- Standard fonts: Georgia, Times New Roman (serif) or Arial, Helvetica (sans)
+- Clear section headers: Header, Summary, Experience, Skills
+- All text must be selectable/copyable
+
+### 4. Single Page Target
+
+One-page resumes get 2x more callbacks. Fit content by:
+1. Reducing highlights per job (2-3 is sufficient)
+2. Tightening typography (9-10pt base)
+3. Never by cutting jobs
+
+---
 
 ## Format Guidelines
 
@@ -35,21 +75,39 @@ const RESUME_CONFIG = {
   SUMMARY_SKILL_CATEGORIES: 2,   // Categories in impact summary
   SKILLS_PER_CATEGORY: 3,        // Skills per category in summary
   SUMMARY_COMPANIES: 4,          // Companies to list in summary
-  MAX_JOBS: 6,                   // Include ALL jobs (critical: don't cut off experience)
+  MAX_JOBS: 6,                   // Include ALL jobs - adjust to match your experience
   MAX_HIGHLIGHTS_PER_JOB: 3,     // Bullets per job (action → outcome format)
 };
 ```
 
-**Important:** Always include ALL jobs. Missing experience (especially major companies like Microsoft) is worse than a slightly longer resume. Reduce highlights per job rather than cutting jobs.
+**Adjust `MAX_JOBS` to match the total number of jobs in your experience file.**
+
+### Resume Structure
+
+1. **Header**: Name / Current Role + contact info (email, location)
+2. **Impact Summary**: One-liner tagline + top skills + notable companies + key stats
+3. **Professional Experience**: Each job with company, role, period, location, and bullets
+4. **Skills**: 2-column grid organized by category
 
 ### Skills Section Layout
 
 Skills are displayed in a **2-column grid** with category names in bold:
 
 ```
-Blockchain & Web3: Ethereum, Staking, L2s...    | Product Leadership: 0→1, B2B Strategy...
-Technical Execution: API Design, SDK Dev...     | Domain Expertise: Custody, Gaming...
+Category A: skill1, skill2, skill3...    | Category B: skill1, skill2...
+Category C: skill1, skill2, skill3...    | Category D: skill1, skill2...
 ```
+
+Categories are pulled from `content/skills/index.yaml`. Common category structures:
+
+**For Engineers:**
+- Languages & Frameworks, Infrastructure, Databases, Tools
+
+**For Product Managers:**
+- Domain Expertise, Product Leadership, Technical Execution, Tools
+
+**For Designers:**
+- Design Tools, Research Methods, Platforms, Collaboration
 
 ### Typography (ResumePage.css)
 
@@ -59,12 +117,7 @@ Technical Execution: API Design, SDK Dev...     | Domain Expertise: Custody, Gam
 - **Page**: Letter size (8.5in × 11in)
 - **Margins**: 0.4in top/bottom, 0.5in left/right
 
-### ATS-Friendly Structure
-
-1. **Header**: Name / Role + contact info (email, location)
-2. **Impact Summary**: Tagline + top skills + company names + stats
-3. **Professional Experience**: Company, location, period, role, bullets
-4. **Skills**: Pipe-separated categories (e.g., "TypeScript, React | Node.js, PostgreSQL")
+---
 
 ## Known Issues & Fixes
 
@@ -89,13 +142,13 @@ Technical Execution: API Design, SDK Dev...     | Domain Expertise: Custody, Gam
 
 ### 2. PDF Exceeds One Page
 
-**Fix:** Reduce `MAX_HIGHLIGHTS_PER_JOB` (default: 2) in ResumePage.tsx. **Do NOT reduce MAX_JOBS** - missing experience is worse than a slightly longer resume.
+**Fix:** Reduce `MAX_HIGHLIGHTS_PER_JOB` in ResumePage.tsx. **Do NOT reduce MAX_JOBS** - missing experience is worse than a slightly longer resume.
 
 ### 3. Missing Experience/Jobs
 
-**Cause:** `MAX_JOBS` was set too low, cutting off important companies (e.g., Microsoft).
+**Cause:** `MAX_JOBS` was set too low, cutting off important companies.
 
-**Fix:** Always set `MAX_JOBS` to the total number of jobs in `content/experience/index.yaml`. Reduce `MAX_HIGHLIGHTS_PER_JOB` instead to maintain single-page fit.
+**Fix:** Always set `MAX_JOBS` to the total number of jobs in `content/experience/index.yaml`. Count your jobs and update the config.
 
 ### 4. Yellow/Colored Underline on Role Title
 
@@ -116,28 +169,31 @@ Technical Execution: API Design, SDK Dev...     | Domain Expertise: Custody, Gam
 
 **Fix:** The script waits for `document.fonts.ready` + 500ms buffer. If fonts still don't load, increase `POST_FONT_BUFFER_MS` in `generate-resume.ts`.
 
+---
+
 ## Generation Workflow
 
 ### Prerequisites
 
 1. **Dev server running**: `npm run dev`
-2. **Content files exist**:
-   - `content/profile.yaml` (name, email, location)
+2. **Content files populated**:
+   - `content/profile.yaml` (name, email, location, tagline, stats)
    - `content/experience/index.yaml` (jobs with highlights)
    - `content/skills/index.yaml` (categorized skills)
 
 ### Steps
 
-1. **Preview first** at http://localhost:5173/resume
-2. **Verify** single-page fit (no vertical scrollbar)
-3. **Check** content is correct and complete
-4. **Generate**:
+1. **Validate content**: `npm run validate`
+2. **Preview** at http://localhost:5173/resume
+3. **Verify** single-page fit (no vertical scrollbar)
+4. **Check** all experience is included
+5. **Generate**:
 
 ```bash
 npm run generate:resume
 ```
 
-5. **Verify** output at `public/resume.pdf`
+6. **Verify** output at `public/resume.pdf`
 
 ### Custom Filename
 
@@ -153,6 +209,8 @@ npm run generate:resume -- --url http://localhost:3000
 # Uses different dev server port
 ```
 
+---
+
 ## Troubleshooting
 
 | Issue | Solution |
@@ -161,8 +219,12 @@ npm run generate:resume -- --url http://localhost:3000
 | PDF is blank | Check browser console at /resume for React errors |
 | Wrong content displayed | Verify YAML files, run `npm run validate` |
 | Fonts look wrong | Increase `POST_FONT_BUFFER_MS` in script |
-| Two pages instead of one | Reduce MAX_JOBS or MAX_HIGHLIGHTS_PER_JOB |
+| Two pages instead of one | Reduce `MAX_HIGHLIGHTS_PER_JOB`, NOT `MAX_JOBS` |
 | Dark background in PDF | Verify print CSS overrides html/body/#root |
+| Jobs missing | Increase `MAX_JOBS` to match total in experience file |
+| Skills look cramped | Reduce number of skills per category or categories |
+
+---
 
 ## After Generation
 
@@ -175,6 +237,8 @@ hero:
       label: "Download Resume"
       href: "/resume.pdf"
 ```
+
+---
 
 ## Technical Details
 
@@ -211,6 +275,8 @@ await page.pdf({
 });
 ```
 
+---
+
 ## Content Sources
 
 The resume pulls data from these content files:
@@ -225,19 +291,23 @@ The resume pulls data from these content files:
 | Jobs | `experience/index.yaml` | `jobs[]` |
 | Skills | `skills/index.yaml` | `categories[].skills[]` |
 
+---
+
 ## Quality Checklist
 
-Before generating:
+### Before Generating
 
 - [ ] Content YAML files pass validation (`npm run validate`)
 - [ ] Preview at /resume shows correct info
+- [ ] ALL jobs are included (count them!)
 - [ ] Resume fits on single page (no scrollbar)
 - [ ] All highlights follow "Action → Outcome" format
 - [ ] Metrics are quantified (%, $, numbers)
 
-After generating:
+### After Generating
 
 - [ ] Open PDF and verify visual appearance
 - [ ] Check all text is selectable (ATS-friendly)
 - [ ] Verify no dark backgrounds or visual artifacts
+- [ ] Confirm all companies/roles are present
 - [ ] Test PDF in an ATS simulator if available
