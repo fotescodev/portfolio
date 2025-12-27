@@ -33,7 +33,8 @@
     "analyze:jd": "tsx scripts/analyze-jd.ts",
     "search:evidence": "tsx scripts/search-evidence.ts",
     "ucv-cli": "tsx scripts/cli/ucv/index.ts",
-    "generate:dashboard": "tsx scripts/generate-dashboard.ts"
+    "generate:dashboard": "tsx scripts/generate-dashboard.ts",
+    "audit:cli": "tsx scripts/audit-cli-ux.ts"
   },
   "dependencies": {
     "@types/react-syntax-highlighter": "^15.5.13",

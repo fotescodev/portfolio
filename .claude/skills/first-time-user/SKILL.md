@@ -135,25 +135,40 @@ blocker:
 
 ## Phase 4: Tool Testing
 
-### Step 4.1: Test Each CLI Command Mentioned
+### Step 4.1: Run Automated CLI Audit
 
-Run every command mentioned in docs:
+Use the automated CLI audit tool:
 
 ```bash
-# Commands to test (from docs):
-npm run dev
-npm run validate
-npm run analyze:jd -- --help
-npm run search:evidence -- --help
-npm run generate:cv -- --help
-npm run eval:variant -- --help
-npm run redteam:variant -- --help
-npm run ucv-cli
+# Run full CLI UX audit
+npm run audit:cli
+
+# Get JSON output for programmatic analysis
+npm run audit:cli -- --json
+
+# Save report to docs/audits/
+npm run audit:cli -- --save
 ```
 
-### Step 4.2: Document CLI UX
+This automatically tests:
+- Help availability and quality
+- JSON output support
+- Error message clarity
+- Command execution time
+- Overall UX score
 
-For each command:
+### Step 4.2: Manual Spot Checks
+
+For commands not covered by automation, test manually:
+
+```bash
+npm run dev
+npm run ucv-cli  # Note: requires TTY
+```
+
+### Step 4.3: Document CLI UX
+
+The audit tool generates structured output:
 
 ```yaml
 command:
