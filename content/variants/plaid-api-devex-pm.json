@@ -30,6 +30,7 @@
       "companyBadge": {
         "name": "Plaid",
         "domain": "plaid.com",
+        "logoUrl": "/images/logos/plaid.svg",
         "style": "pill"
       }
     },

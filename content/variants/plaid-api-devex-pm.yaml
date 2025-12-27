@@ -60,6 +60,7 @@ overrides:
     companyBadge:
       name: "Plaid"
       domain: "plaid.com"
+      logoUrl: "/images/logos/plaid.svg"
     subheadline: >
       API & Developer Experience PM with 8+ years shipping SDKs, APIs, and
       developer tools. From Flow CLI to Ankr's Advanced API serving 1M+ daily
