@@ -130,7 +130,7 @@ cat content/experience/index.yaml
 
 ### Recipe
 
-**Command:** `npm run generate:resume`
+**Command:** Use the Claude Code Skill: `generate-resume` or call the script directly: `npm run generate:resume`
 
 ```
 Input:  content/profile.yaml
