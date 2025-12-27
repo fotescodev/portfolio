@@ -15,17 +15,6 @@ const HeadlineSegmentSchema = z.object({
   style: z.enum(['italic', 'muted', 'accent', 'normal']).optional().default('normal')
 });
 
-/**
- * Company badge schema for displaying target company logo + name in hero
- * Used to personalize variants with the company the user is applying to
- */
-const CompanyBadgeSchema = z.object({
-  name: z.string(), // Company name (required)
-  domain: z.string().optional(), // Domain for Logo.dev API (e.g., "plaid.com") - auto-derived from name if not set
-  logoUrl: z.string().optional(), // Override: use local/custom logo instead of API
-  style: z.enum(['pill', 'inline']).optional().default('pill') // Badge style
-});
-
 const CtaButtonSchema = z.object({
   label: z.string(),
   href: z.string()
@@ -306,9 +295,7 @@ const VariantOverridesSchema = z.object({
     headline: z.array(HeadlineSegmentSchema).optional(),
     subheadline: z.string().optional(),
     // Company accent - shown below signature headline to help recruiters visualize fit
-    companyAccent: z.array(HeadlineSegmentSchema).optional(),
-    // Company badge - displays target company logo + name (auto-fetched or custom)
-    companyBadge: CompanyBadgeSchema.optional()
+    companyAccent: z.array(HeadlineSegmentSchema).optional()
   }).optional(),
   about: z.object({
     tagline: z.string().optional(),
