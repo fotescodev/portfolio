@@ -1,12 +1,14 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import yaml from '@rollup/plugin-yaml'
+import { imagetools } from 'vite-imagetools'
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
     react(),
-    yaml()
+    yaml(),
+    imagetools()
   ],
   base: '/',
   build: {

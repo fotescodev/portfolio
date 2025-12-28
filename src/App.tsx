@@ -8,16 +8,11 @@ import BasePortfolio from './pages/BasePortfolio';
 const VariantPortfolio = lazy(() => import('./pages/VariantPortfolio'));
 const BlogPostPage = lazy(() => import('./pages/BlogPostPage'));
 const ResumePage = lazy(() => import('./pages/ResumePage'));
+const LikeAnalytics = lazy(() => import('./components/LikeAnalytics'));
 
 // Simple loading fallback
 const PageLoader = () => (
-  <div style={{
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '100vh',
-    color: 'var(--color-text-secondary)'
-  }}>
+  <div className="flex justify-center items-center text-secondary" style={{ height: '100vh' }}>
     Loading...
   </div>
 );
@@ -37,6 +32,9 @@ function App() {
 
               {/* Blog post route - lazy loaded */}
               <Route path="/blog/:slug" element={<BlogPostPage />} />
+
+              {/* Admin analytics route - lazy loaded */}
+              <Route path="/admin/analytics" element={<LikeAnalytics />} />
 
               {/* Variant portfolio routes: /company/role - lazy loaded */}
               <Route path="/:company/:role" element={<VariantPortfolio />} />
