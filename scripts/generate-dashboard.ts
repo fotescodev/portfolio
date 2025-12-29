@@ -59,7 +59,7 @@ function loadVariants(): Variant[] {
 
 function generateHTML(variants: Variant[], baseUrl: string, passwordHash: string): string {
   const appliedCount = variants.filter(v => v.metadata.applicationStatus === 'applied').length;
-  const resumeCount = variants.filter(v => v.metadata.resumePath).length;
+  const resumeCount = variants.length; // All variants have resume pages
 
   const variantCards = variants.map(v => {
     const date = new Date(v.metadata.generatedAt).toLocaleDateString('en-US', {
@@ -70,7 +70,6 @@ function generateHTML(variants: Variant[], baseUrl: string, passwordHash: string
     const appliedDate = v.metadata.appliedAt
       ? new Date(v.metadata.appliedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
       : '';
-    const hasResume = !!v.metadata.resumePath;
 
     // Convert slug to URL path: "galaxy-pm" -> "galaxy/pm"
     const slugParts = v.metadata.slug.split('-');
@@ -104,6 +103,15 @@ function generateHTML(variants: Variant[], baseUrl: string, passwordHash: string
             </svg>
             View Portfolio
           </a>
+          <a href="${baseUrl}/${urlPath}/resume" target="_blank" class="btn btn-download">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+            </svg>
+            Resume
+          </a>
           ${v.metadata.sourceUrl ? `
             <a href="${v.metadata.sourceUrl}" target="_blank" class="btn btn-ghost">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -112,16 +120,6 @@ function generateHTML(variants: Variant[], baseUrl: string, passwordHash: string
                 <line x1="12" y1="17" x2="12" y2="21"></line>
               </svg>
               Job Post
-            </a>
-          ` : ''}
-          ${hasResume ? `
-            <a href="${baseUrl}${v.metadata.resumePath}" download class="btn btn-download">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                <polyline points="7 10 12 15 17 10"></polyline>
-                <line x1="12" y1="15" x2="12" y2="3"></line>
-              </svg>
-              Resume
             </a>
           ` : ''}
         </div>

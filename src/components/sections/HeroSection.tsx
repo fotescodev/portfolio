@@ -1,4 +1,5 @@
 import type { Profile } from '../../types/variant';
+import { useVariantSafe } from '../../context/VariantContext';
 
 // Extended hero type to include variant-specific fields
 type HeroWithVariant = Profile['hero'] & {
@@ -14,6 +15,7 @@ interface HeroSectionProps {
 
 export default function HeroSection({ profile, isMobile, isTablet, isLoaded }: HeroSectionProps) {
   const hero = profile.hero as HeroWithVariant;
+  const { getResumeUrl } = useVariantSafe();
 
   return (
     <>
@@ -183,8 +185,7 @@ export default function HeroSection({ profile, isMobile, isTablet, isLoaded }: H
                   <span style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic' }}>↓</span>
                 </button>
                 <a
-                  href={hero.cta.secondary.href}
-                  download="Dmitrii-Fotesco-Resume.pdf"
+                  href={getResumeUrl()}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hero-secondary-btn hero-cta-btn"
