@@ -39,6 +39,12 @@ entities:
       role: "Software Engineer → PM"
       domain: "Enterprise Blockchain"
 
+    - id: edge-of-trust
+      name: "Edge of Trust (Personal Project)"
+      period: "2024–present"
+      role: "Creator"
+      domain: "AI Tooling & Portfolio Engine"
+
   themes:
     - id: institutional-crypto
       label: "Institutional Crypto"
@@ -92,6 +98,22 @@ entities:
     - id: cross-functional
       label: "Cross-functional Leadership"
       category: "Product Management"
+
+    - id: llm-integration
+      label: "LLM Integration"
+      category: "AI & ML"
+
+    - id: prompt-engineering
+      label: "Prompt Engineering"
+      category: "AI & ML"
+
+    - id: ai-safety
+      label: "AI Safety & Evaluation"
+      category: "AI & ML"
+
+    - id: evaluation-frameworks
+      label: "Evaluation Frameworks"
+      category: "AI & ML"
 
 # ───────────────────────────────────────────────────────────────
 # RELATIONSHIPS (The Graph)
@@ -177,3 +199,26 @@ relationships:
   - from: case-study:04-ankr-rpc
     to: story:ankr-pivot-to-protocols
     type: generated_from
+
+  # Edge of Trust (Personal Project) Achievements
+  - from: achievement:ai-evals-pipeline
+    to: company:edge-of-trust
+    type: achieved_at
+  - from: achievement:ai-evals-pipeline
+    to: skill:llm-integration
+    type: demonstrates
+  - from: achievement:ai-evals-pipeline
+    to: skill:prompt-engineering
+    type: demonstrates
+  - from: achievement:ai-evals-pipeline
+    to: skill:ai-safety
+    type: demonstrates
+  - from: achievement:ai-evals-pipeline
+    to: skill:evaluation-frameworks
+    type: demonstrates
+  - from: achievement:ai-evals-pipeline
+    to: theme:ai-agents
+    type: belongs_to
+  - from: achievement:ai-evals-pipeline
+    to: theme:developer-experience
+    type: belongs_to

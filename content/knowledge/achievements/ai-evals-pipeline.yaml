@@ -1,0 +1,94 @@
+# ═══════════════════════════════════════════════════════════════
+# ACHIEVEMENT: AI Evaluation Pipeline
+# ═══════════════════════════════════════════════════════════════
+id: ai-evals-pipeline
+headline: "Built AI evaluation pipeline with claims verification, red-team adversarial testing, and multi-layer quality gates for LLM-generated content"
+
+metric:
+  value: "8"
+  unit: "automated security checks"
+  context: "Red team pipeline catches prompt injection, metric inflation, hallucinations, and cross-contamination before deployment"
+
+situation: |
+  AI-generated content carries significant risk: hallucinated achievements, inflated metrics,
+  and unverifiable claims can destroy credibility. Existing LLM tooling focuses on generation,
+  not verification. Needed a system that could scale personalized content while maintaining
+  interview-defensible accuracy for every claim.
+
+task: |
+  Design and implement an end-to-end evaluation framework that:
+  1. Traces every AI-generated claim to source data
+  2. Catches common LLM failure modes before deployment
+  3. Enables human-in-the-loop verification at scale
+  4. Integrates with CI/CD for automated quality gates
+
+action: |
+  Built a multi-layer evaluation system:
+
+  **Claims Extraction & Verification:**
+  - Automated extraction of quantifiable statements (metrics, percentages, counts)
+  - Token-based source matching against knowledge base
+  - Machine-checkable ledger with content hash tracking for regression detection
+  - CLI tooling: `npm run eval:variant`, `npm run eval:check`
+
+  **Red Team Security Pipeline:**
+  - 8 automated checks: secrets scanning, prompt injection detection, sycophancy,
+    metric inflation warnings, confidentiality leaks, cross-variant contamination
+  - Threat model documentation covering 5 failure categories
+  - Strict mode for CI/CD integration (`--strict` flag promotes warnings to failures)
+
+  **Deterministic Pre-Processing:**
+  - JD analysis filters 47+ generic phrases BEFORE AI processes content
+  - Evidence search scores alignment against knowledge base
+  - Reduces hallucination surface by constraining AI to verified data
+
+  **Multi-Provider LLM Integration:**
+  - Unified interface for Claude, GPT-4, and Gemini
+  - Structured output validation via Zod schemas
+  - Fallback handling and latency optimization
+
+result: |
+  Zero hallucinations in deployed variants—every metric traces to source data.
+  4-dimension evaluation rubric (Accuracy, Relevance, Tone, Safety) with documented
+  scoring criteria. Red team pipeline catches issues that manual review misses.
+  All content is interview-defensible: can explain provenance of any claim.
+  System runs as automated quality gates in development workflow.
+
+skills:
+  - llm-integration
+  - prompt-engineering
+  - ai-safety
+  - evaluation-frameworks
+  - typescript
+  - cli-tooling
+
+themes:
+  - ai-agents
+  - developer-experience
+  - infrastructure
+
+companies:
+  - edge-of-trust
+
+years:
+  - 2024
+
+good_for:
+  - "AI/ML PM roles"
+  - "AI safety and alignment discussions"
+  - "Technical depth demonstrations"
+  - "LLM productionization stories"
+  - "Quality assurance and testing discussions"
+  - "Fintech AI integration roles"
+  - "Demonstrating hands-on technical work"
+
+evidence:
+  case_study: null
+  testimonial: null
+  metrics_source: "Direct implementation in portfolio repository"
+  artifacts:
+    - "scripts/evaluate-variants.ts"
+    - "scripts/redteam.ts"
+    - "scripts/analyze-jd.ts"
+    - "capstone/develop/evaluation.md"
+    - "capstone/develop/red-teaming.md"
