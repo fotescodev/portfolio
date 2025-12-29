@@ -53,6 +53,17 @@ vi.mock('../../lib/content', () => ({
     categories: [
       { name: 'Test Category', skills: ['Skill 1', 'Skill 2'] }
     ]
+  },
+  certifications: {
+    certifications: [
+      {
+        name: 'AI Product Management Certification',
+        issuer: 'Product Faculty',
+        instructor: 'Test Instructor',
+        date: '2025',
+        credentialId: 'test-123'
+      }
+    ]
   }
 }));
 
@@ -186,7 +197,7 @@ describe('VariantResumePage - Content Overrides', () => {
     vi.clearAllMocks();
   });
 
-  it('should render variant tagline instead of base', async () => {
+  it('should render variant bio instead of base in summary', async () => {
     const mockVariant = createMockVariant();
     vi.mocked(loadVariant).mockResolvedValue(mockVariant);
     vi.mocked(mergeProfile).mockReturnValue(createMergedProfile(mockVariant));
@@ -195,8 +206,8 @@ describe('VariantResumePage - Content Overrides', () => {
     renderWithRouter('/test/role/resume');
 
     await waitFor(() => {
-      // Variant tagline should be present
-      expect(screen.getByText(/Variant tagline for Test Company/i)).toBeInTheDocument();
+      // Resume summary uses first bio paragraph, not tagline
+      expect(screen.getByText(/Variant bio paragraph 1/i)).toBeInTheDocument();
     });
   });
 
@@ -345,6 +356,32 @@ describe('VariantResumePage - URL Slug Generation', () => {
 
     await waitFor(() => {
       expect(loadVariant).toHaveBeenCalledWith('microsoft-senior-pm');
+    });
+  });
+
+  it('should handle three-part role slugs (e.g., cryptocom-pm-ai)', async () => {
+    // This test catches the bug where multi-hyphen slugs were being truncated
+    // e.g., "cryptocom-pm-ai" was incorrectly becoming "cryptocom-pm"
+    const mockVariant = createMockVariant({
+      metadata: {
+        company: 'Crypto.com',
+        role: 'Product Manager (AI)',
+        slug: 'cryptocom-pm-ai',
+        generatedAt: '2024-12-29',
+        jobDescription: 'AI PM role',
+        publishStatus: 'draft',
+        applicationStatus: 'not_applied'
+      }
+    });
+    vi.mocked(loadVariant).mockResolvedValue(mockVariant);
+    vi.mocked(mergeProfile).mockReturnValue(createMergedProfile(mockVariant));
+    vi.mocked(getExperienceWithOverrides).mockReturnValue(createMergedExperience());
+
+    renderWithRouter('/cryptocom/pm-ai/resume');
+
+    await waitFor(() => {
+      // URL /cryptocom/pm-ai/resume should generate slug "cryptocom-pm-ai"
+      expect(loadVariant).toHaveBeenCalledWith('cryptocom-pm-ai');
     });
   });
 });
