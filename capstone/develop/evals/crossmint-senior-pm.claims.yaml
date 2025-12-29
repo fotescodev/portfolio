@@ -1,0 +1,178 @@
+version: 1
+variant:
+  slug: crossmint-senior-pm
+  variantFile: content/variants/crossmint-senior-pm.yaml
+  contentHash: d1a6b5c6314339e6d1d8e18bbd468206e1385461bb5e9bdfda8b308d54f405a8
+  evaluatedAt: 2025-12-29T15:40:17.370Z
+claims:
+  - id: metric-e26d1d4c7c
+    location: overrides.hero.subheadline
+    text: Senior PM with 8 years shipping Web3 developer infrastructure—from Wallet-as-a-Service at Forte to API platforms
+      serving 1M+ daily requests at Ankr
+    anchors:
+      - 8 years
+      - 1M
+    candidateSources:
+      - path: content/experience/index.yaml
+        score: 0.618
+        matchedAnchors:
+          - 1M
+        note: anchors 1/2 • overlap 79%
+      - path: content/knowledge/achievements/ankr-15x-revenue.yaml
+        score: 0.564
+        matchedAnchors:
+          - 1M
+        note: anchors 1/2 • overlap 43%
+      - path: content/knowledge/achievements/forte-wallet-sdk.yaml
+        score: 0.075
+        matchedAnchors: []
+        note: anchors 0/2 • overlap 50%
+      - path: content/knowledge/achievements/eth-staking-zero-slashing.yaml
+        score: 0.043
+        matchedAnchors: []
+        note: anchors 0/2 • overlap 29%
+      - path: content/knowledge/achievements/l2-protocol-integrations.yaml
+        score: 0.043
+        matchedAnchors: []
+        note: anchors 0/2 • overlap 29%
+    verified:
+      status: verified
+      sources:
+        - path: content/experience/index.yaml
+          anchors:
+            - 8 years
+            - 1M
+      notes: ""
+  - id: metric-d11307a66a
+    location: overrides.about.bio[0]
+    text: At Ankr, I shipped Advanced APIs (NFT, Token, Query) serving 1M+ daily requests and drove 15× revenue growth by
+      pivoting from commodity RPC to differentiated developer tools
+    anchors:
+      - 1M
+      - NFT, Token, Query
+    candidateSources:
+      - path: content/experience/index.yaml
+        score: 1
+        matchedAnchors:
+          - 1M
+          - NFT, Token, Query
+        note: anchors 2/2 • overlap 82%
+      - path: content/knowledge/achievements/ankr-15x-revenue.yaml
+        score: 0.615
+        matchedAnchors:
+          - 1M
+        note: anchors 1/2 • overlap 76%
+    verified:
+      status: verified
+      sources:
+        - path: content/experience/index.yaml
+          anchors:
+            - 1M
+            - NFT, Token, Query
+      notes: ""
+  - id: metric-e232df3efe
+    location: overrides.about.bio[0]
+    text: At Dapper, I improved developer onboarding by 60% through CLI and tooling improvements
+    anchors:
+      - 60%
+    candidateSources:
+      - path: content/knowledge/achievements/flow-cli-dx.yaml
+        score: 1
+        matchedAnchors:
+          - 60%
+        note: anchors 1/1 • overlap 100%
+      - path: content/knowledge/achievements/l2-protocol-integrations.yaml
+        score: 1
+        matchedAnchors:
+          - 60%
+        note: anchors 1/1 • overlap 0%
+      - path: content/experience/index.yaml
+        score: 1
+        matchedAnchors:
+          - 60%
+        note: anchors 1/1 • overlap 57%
+      - path: content/knowledge/achievements/ankr-15x-revenue.yaml
+        score: 0.043
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 29%
+      - path: content/knowledge/achievements/forte-wallet-sdk.yaml
+        score: 0.043
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 29%
+    verified:
+      status: verified
+      sources:
+        - path: content/knowledge/achievements/flow-cli-dx.yaml
+          anchors:
+            - 60%
+      notes: ""
+  - id: metric-f2d3f45d61
+    location: overrides.about.bio[1]
+    text: Now at Anchorage Digital, I ship institutional-grade crypto infrastructure—ETH staking with zero slashing events,
+      7+ L2 integrations across chains like Base, Optimism, and Arbitrum
+    anchors:
+      - 7+
+      - zero
+    candidateSources:
+      - path: content/knowledge/stories/galaxy-compliance-win.yaml
+        score: 0.592
+        matchedAnchors:
+          - zero
+        note: anchors 1/2 • overlap 61%
+      - path: content/knowledge/achievements/eth-staking-zero-slashing.yaml
+        score: 0.583
+        matchedAnchors:
+          - zero
+        note: anchors 1/2 • overlap 56%
+      - path: content/knowledge/achievements/l2-protocol-integrations.yaml
+        score: 0.583
+        matchedAnchors:
+          - 7+
+        note: anchors 1/2 • overlap 56%
+      - path: content/experience/index.yaml
+        score: 0.1
+        matchedAnchors: []
+        note: anchors 0/2 • overlap 67%
+    verified:
+      status: verified
+      sources:
+        - path: content/knowledge/achievements/l2-protocol-integrations.yaml
+          anchors:
+            - 7+
+            - zero
+      notes: ""
+  - id: metric-d07b4c9bd6
+    location: overrides.about.stats[0].value
+    text: 8+
+    anchors:
+      - 8+
+    candidateSources: []
+    verified:
+      status: verified
+      sources:
+        - path: content/experience/index.yaml
+          anchors:
+            - 8+
+      notes: ""
+  - id: metric-071782b948
+    location: overrides.about.stats[1].value
+    text: 1M+
+    anchors: &a1
+      - 1M
+    candidateSources:
+      - path: content/knowledge/achievements/ankr-15x-revenue.yaml
+        score: 1
+        matchedAnchors:
+          - 1M
+        note: anchors 1/1 • overlap 0%
+      - path: content/experience/index.yaml
+        score: 1
+        matchedAnchors:
+          - 1M
+        note: anchors 1/1 • overlap 0%
+    verified:
+      status: verified
+      sources:
+        - path: content/knowledge/achievements/ankr-15x-revenue.yaml
+          anchors: *a1
+      notes: ""

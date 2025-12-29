@@ -1,0 +1,191 @@
+# ═══════════════════════════════════════════════════════════════
+# VARIANT: Crossmint Senior/Principal Product Manager
+# ═══════════════════════════════════════════════════════════════
+metadata:
+  company: "Crossmint"
+  role: "Senior/Principal Product Manager"
+  slug: "crossmint-senior-pm"
+  generatedAt: "2025-12-29T15:30:00Z"
+  jobDescription: |
+    Senior/Principal Product Manager (US) at Crossmint
+
+    Crossmint is an enterprise-grade stablecoin infrastructure provider serving 40,000+
+    clients including MoneyGram and WireX. Backed by Ribbit Capital and Franklin Templeton.
+
+    Core Responsibilities:
+    - Guide full lifecycle from ideation and requirements gathering to launch and iteration
+    - Establish product vision, analyze performance metrics
+    - Lead payment and tokenization initiatives
+    - Monitor competitive landscape
+    - Collaborate across engineering, design, and marketing teams
+
+    Required Qualifications:
+    - 5+ years product management experience with proven track record
+    - Web3 hands-on expertise and understanding of technical/market dynamics
+    - Background architecting API-driven products or developer platforms
+
+    Bonus Qualifications:
+    - Founder experience
+    - Crypto infrastructure, wallet products, or developer tooling background
+    - Fast-paced innovation environment experience
+
+    Compensation: $190K-$225K depending on level
+    Location: NYC or Miami (hybrid), remote options available
+  generationModel: "claude-opus-4-5-20251101"
+  sourceUrl: "https://crossmint.na.teamtailor.com/jobs/107556-senior-principal-product-manager-us"
+  resumePath: "/resumes/crossmint-senior-pm.pdf"
+
+# ═══════════════════════════════════════════════════════════════
+# ALIGNMENT ANALYSIS
+# ═══════════════════════════════════════════════════════════════
+alignment:
+  score: 0.56
+  threshold: 0.50
+  recommendation: "PROCEED"
+
+  mustHaves:
+    - requirement: "Web3 hands-on expertise"
+      match: true
+      evidence: "8+ years in Web3: Microsoft blockchain (2016), Ankr, Dapper, Forte, Anchorage"
+      confidence: 1.0
+    - requirement: "API-driven products or developer platforms"
+      match: true
+      evidence: "Ankr Advanced APIs (1M+ daily requests), Ankr.js SDK, Flow CLI, Forte Wallet SDK"
+      confidence: 0.95
+    - requirement: "Crypto infrastructure, wallet products"
+      match: true
+      evidence: "Forte Wallet-as-a-Service with MPC custody, Anchorage institutional custody"
+      confidence: 0.95
+    - requirement: "5+ years PM experience"
+      match: true
+      evidence: "8+ years as PM across Microsoft, Ankr, Dapper, Forte, Anchorage"
+      confidence: 1.0
+
+  gaps:
+    - requirement: "Explicit fintech experience"
+      addressable: true
+      notes: "Adjacent: wallet infrastructure, payment systems (Xbox), stablecoin-adjacent custody"
+    - requirement: "AI/ML for agentic commerce"
+      addressable: true
+      notes: "AI Product Certificate (Product Faculty), kapa.ai integration at Dapper, AI-powered portfolio project"
+
+  ignoredGeneric:
+    - "Proven track record"
+    - "Strong communication abilities"
+    - "Fast-paced environment"
+
+# ═══════════════════════════════════════════════════════════════
+# OVERRIDES
+# ═══════════════════════════════════════════════════════════════
+overrides:
+  hero:
+    status: "Open to Product Roles"
+    headline:
+      - text: "Building"
+        style: "italic"
+      - text: "at the edge of"
+        style: "muted"
+      - text: "trust"
+        style: "accent"
+    companyAccent:
+      - text: "with"
+        style: "muted"
+      - text: "Crossmint"
+        style: "accent"
+    subheadline: >
+      Senior PM with 8 years shipping Web3 developer infrastructure—from Wallet-as-a-Service
+      at Forte to API platforms serving 1M+ daily requests at Ankr. I've built the exact
+      stack Crossmint runs: wallets, APIs, SDKs, multi-chain infrastructure.
+
+  about:
+    tagline: >
+      Eight years building the infrastructure layer that lets developers ship Web3 products
+      without becoming blockchain experts.
+    bio:
+      - >
+        I've spent my career at the intersection of developer platforms and crypto infrastructure.
+        At Forte, I led Wallet-as-a-Service using MPC custody—the same architecture powering
+        Crossmint's embedded wallets. At Ankr, I shipped Advanced APIs (NFT, Token, Query)
+        serving 1M+ daily requests and drove 15× revenue growth by pivoting from commodity RPC
+        to differentiated developer tools. At Dapper, I improved developer onboarding by 60%
+        through CLI and tooling improvements. This is exactly what Crossmint does: make
+        blockchain invisible so developers can focus on their products.
+      - >
+        Now at Anchorage Digital, I ship institutional-grade crypto infrastructure—ETH staking
+        with zero slashing events, 7+ L2 integrations across chains like Base, Optimism, and
+        Arbitrum. I understand both the developer experience that drives adoption and the
+        enterprise rigor that wins MoneyGram and Visa as clients. With my AI Product Management
+        Certificate and hands-on experience integrating AI tools, I'm ready to help Crossmint
+        lead in agentic commerce.
+    stats:
+      - value: "8+"
+        label: "Years in Web3"
+      - value: "1M+"
+        label: "Daily API Requests"
+      - value: "15×"
+        label: "Revenue Growth"
+
+  sections:
+    beyondWork: false
+    blog: true
+    onchainIdentity: true
+    skills: true
+    passionProjects: true
+
+# ═══════════════════════════════════════════════════════════════
+# RELEVANCE SCORING
+# ═══════════════════════════════════════════════════════════════
+relevance:
+  caseStudies:
+    - slug: "ankr-rpc"
+      relevanceScore: 1.0
+      reasoning: "API platform, SDK development, 15× revenue growth—direct match for developer platform PM"
+    - slug: "eth-staking"
+      relevanceScore: 0.90
+      reasoning: "Institutional crypto infrastructure, enterprise clients—matches Crossmint's enterprise focus"
+    - slug: "protocol-integration"
+      relevanceScore: 0.88
+      reasoning: "Multi-chain integration (7+ L2s)—Crossmint supports 50+ chains"
+    - slug: "xbox-royalties"
+      relevanceScore: 0.85
+      reasoning: "Blockchain payment system, enterprise scale—maps to payment/tokenization initiatives"
+
+  skills:
+    - category: "Blockchain & Web3"
+      relevanceScore: 1.0
+    - category: "Technical"
+      relevanceScore: 0.95
+    - category: "Product Management"
+      relevanceScore: 0.90
+
+  projects:
+    - slug: "mempools"
+      relevanceScore: 0.85
+      reasoning: "Co-founder experience, Web3 SaaS, SDK development—matches bonus qualifications"
+
+# ═══════════════════════════════════════════════════════════════
+# TALKING POINTS
+# ═══════════════════════════════════════════════════════════════
+talkingPoints:
+  whyThisRole:
+    - "I've built the exact stack Crossmint runs: Wallet-as-a-Service (Forte), APIs/SDKs (Ankr), multi-chain (Anchorage)"
+    - "8+ years in Web3—I was shipping blockchain at Microsoft before 'Web3' was a term"
+    - "I understand both developer experience (Dapper, Ankr) and enterprise requirements (Anchorage)"
+    - "AI Product Certificate + hands-on AI integration experience—ready for agentic commerce"
+
+  relevantStories:
+    - achievement: "forte-wallet-sdk"
+      connection: "Built Wallet-as-a-Service with MPC custody—directly maps to Crossmint's wallet infrastructure"
+    - achievement: "ankr-15x-revenue"
+      connection: "Shipped Advanced APIs, SDK suite, drove 15× revenue through developer platform pivot"
+    - achievement: "flow-cli-dx"
+      connection: "Improved developer onboarding by 60%—core to Crossmint's 'few lines of code' promise"
+    - achievement: "l2-protocol-integrations"
+      connection: "Multi-chain integration experience—relevant to 50+ chain support"
+
+  questionsToAsk:
+    - "What's the current split between wallet infrastructure and stablecoin payments in the product roadmap?"
+    - "How do you think about developer experience vs. enterprise requirements when they conflict?"
+    - "What does 'agentic commerce' look like in practice—what are customers building?"
+    - "How does the PM function work with the 40,000+ developers using the platform?"
+    - "What's the biggest technical or product challenge you're solving right now?"

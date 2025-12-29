@@ -1,0 +1,117 @@
+{
+  "metadata": {
+    "company": "Crossmint",
+    "role": "Senior/Principal Product Manager",
+    "generatedAt": "2025-12-29T15:30:00Z",
+    "jobDescription": "Senior/Principal Product Manager (US) at Crossmint\n\nCrossmint is an enterprise-grade stablecoin infrastructure provider serving 40,000+\nclients including MoneyGram and WireX. Backed by Ribbit Capital and Franklin Templeton.\n\nCore Responsibilities:\n- Guide full lifecycle from ideation and requirements gathering to launch and iteration\n- Establish product vision, analyze performance metrics\n- Lead payment and tokenization initiatives\n- Monitor competitive landscape\n- Collaborate across engineering, design, and marketing teams\n\nRequired Qualifications:\n- 5+ years product management experience with proven track record\n- Web3 hands-on expertise and understanding of technical/market dynamics\n- Background architecting API-driven products or developer platforms\n\nBonus Qualifications:\n- Founder experience\n- Crypto infrastructure, wallet products, or developer tooling background\n- Fast-paced innovation environment experience\n\nCompensation: $190K-$225K depending on level\nLocation: NYC or Miami (hybrid), remote options available\n",
+    "generationModel": "claude-opus-4-5-20251101",
+    "slug": "crossmint-senior-pm",
+    "publishStatus": "draft",
+    "applicationStatus": "not_applied",
+    "sourceUrl": "https://crossmint.na.teamtailor.com/jobs/107556-senior-principal-product-manager-us",
+    "resumePath": "/resumes/crossmint-senior-pm.pdf"
+  },
+  "overrides": {
+    "hero": {
+      "status": "Open to Product Roles",
+      "headline": [
+        {
+          "text": "Building",
+          "style": "italic"
+        },
+        {
+          "text": "at the edge of",
+          "style": "muted"
+        },
+        {
+          "text": "trust",
+          "style": "accent"
+        }
+      ],
+      "subheadline": "Senior PM with 8 years shipping Web3 developer infrastructure—from Wallet-as-a-Service at Forte to API platforms serving 1M+ daily requests at Ankr. I've built the exact stack Crossmint runs: wallets, APIs, SDKs, multi-chain infrastructure.\n",
+      "companyAccent": [
+        {
+          "text": "with",
+          "style": "muted"
+        },
+        {
+          "text": "Crossmint",
+          "style": "accent"
+        }
+      ]
+    },
+    "about": {
+      "tagline": "Eight years building the infrastructure layer that lets developers ship Web3 products without becoming blockchain experts.\n",
+      "bio": [
+        "I've spent my career at the intersection of developer platforms and crypto infrastructure. At Forte, I led Wallet-as-a-Service using MPC custody—the same architecture powering Crossmint's embedded wallets. At Ankr, I shipped Advanced APIs (NFT, Token, Query) serving 1M+ daily requests and drove 15× revenue growth by pivoting from commodity RPC to differentiated developer tools. At Dapper, I improved developer onboarding by 60% through CLI and tooling improvements. This is exactly what Crossmint does: make blockchain invisible so developers can focus on their products.\n",
+        "Now at Anchorage Digital, I ship institutional-grade crypto infrastructure—ETH staking with zero slashing events, 7+ L2 integrations across chains like Base, Optimism, and Arbitrum. I understand both the developer experience that drives adoption and the enterprise rigor that wins MoneyGram and Visa as clients. With my AI Product Management Certificate and hands-on experience integrating AI tools, I'm ready to help Crossmint lead in agentic commerce.\n"
+      ],
+      "stats": [
+        {
+          "value": "8+",
+          "label": "Years in Web3"
+        },
+        {
+          "value": "1M+",
+          "label": "Daily API Requests"
+        },
+        {
+          "value": "15×",
+          "label": "Revenue Growth"
+        }
+      ]
+    },
+    "sections": {
+      "beyondWork": false,
+      "blog": true,
+      "onchainIdentity": true,
+      "skills": true,
+      "passionProjects": true
+    }
+  },
+  "relevance": {
+    "caseStudies": [
+      {
+        "slug": "ankr-rpc",
+        "relevanceScore": 1,
+        "reasoning": "API platform, SDK development, 15× revenue growth—direct match for developer platform PM"
+      },
+      {
+        "slug": "eth-staking",
+        "relevanceScore": 0.9,
+        "reasoning": "Institutional crypto infrastructure, enterprise clients—matches Crossmint's enterprise focus"
+      },
+      {
+        "slug": "protocol-integration",
+        "relevanceScore": 0.88,
+        "reasoning": "Multi-chain integration (7+ L2s)—Crossmint supports 50+ chains"
+      },
+      {
+        "slug": "xbox-royalties",
+        "relevanceScore": 0.85,
+        "reasoning": "Blockchain payment system, enterprise scale—maps to payment/tokenization initiatives"
+      }
+    ],
+    "skills": [
+      {
+        "category": "Blockchain & Web3",
+        "relevanceScore": 1
+      },
+      {
+        "category": "Technical",
+        "relevanceScore": 0.95
+      },
+      {
+        "category": "Product Management",
+        "relevanceScore": 0.9
+      }
+    ],
+    "projects": [
+      {
+        "slug": "mempools",
+        "relevanceScore": 0.85,
+        "reasoning": "Co-founder experience, Web3 SaaS, SDK development—matches bonus qualifications"
+      }
+    ]
+  }
+}
