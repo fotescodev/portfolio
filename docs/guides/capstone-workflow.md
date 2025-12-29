@@ -1,5 +1,7 @@
 # Capstone Quality Pipeline: Step-by-Step Workflow
 
+> **Part of Phase 4 (Quality & Deploy)** in the [Complete Workflow](../COMPLETE_WORKFLOW.md)
+
 This guide walks you through the complete quality pipeline for a variant, using `mysten-walrus-senior-pm` as a working example.
 
 ---
@@ -441,3 +443,11 @@ npm run eval:check
 npm run redteam:check
 npm run redteam:check -- --strict
 ```
+
+---
+
+## What's Next?
+
+- [Universal CV Guide](./universal-cv.md) - Create new variants from job descriptions
+- [Content Management](./content-management.md) - Edit knowledge base and content schemas
+- [Getting Started Guide](../../GETTING_STARTED_GUIDE.md) - Full portfolio setup walkthrough

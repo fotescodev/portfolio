@@ -18,6 +18,40 @@ The result: every application feels hand-crafted, but takes minutes instead of h
 
 > **Want to build your own?** See the **[Getting Started Guide](./GETTING_STARTED_GUIDE.md)** for step-by-step instructions.
 
+### How It Works
+
+```mermaid
+graph LR
+    A[Source Data] --> B[Knowledge Base]
+    B --> C[Variants]
+    C --> D[Portfolio Site]
+    C --> E[Quality Pipeline]
+    E --> F[Eval + Redteam]
+    F --> D
+```
+
+**Data Flow:**
+1. **Source Data** → Raw career materials (reviews, LinkedIn, notes)
+2. **Knowledge Base** → Structured achievements in STAR format
+3. **Variants** → Job-targeted customizations
+4. **Quality Pipeline** → Claims verification + adversarial scans
+5. **Portfolio Site** → Live, personalized pages
+
+---
+
+## Prerequisites
+
+Before you begin, ensure you have:
+
+| Requirement | Notes |
+|-------------|-------|
+| **Node.js 18+** | [Download](https://nodejs.org/) |
+| **npm** | Comes with Node.js |
+| **Claude Code** | For skills automation. [Install](https://claude.ai/code) (optional - manual workflows available) |
+| **API Key** | For AI features. See [`.env.example`](./.env.example) for options |
+
+> **No Claude Code?** The [Getting Started Guide](./GETTING_STARTED_GUIDE.md) includes manual alternatives for each skill.
+
 ---
 
 ## 📍 Where to Start
