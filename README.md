@@ -20,6 +20,19 @@ The result: every application feels hand-crafted, but takes minutes instead of h
 
 ---
 
+## 📍 Where to Start
+
+| If you want to... | Read... |
+|-------------------|---------|
+| Understand what this is | This README |
+| Build your own portfolio from scratch | [Getting Started Guide](./GETTING_STARTED_GUIDE.md) |
+| Generate a job-targeted variant | [Universal CV Guide](./docs/guides/universal-cv.md) |
+| Run the quality pipeline (eval + redteam) | [Capstone Workflow](./docs/guides/capstone-workflow.md) |
+| Use the interactive CLI dashboard | [UCV-CLI Guide](./docs/guides/universal-cv-cli.md) |
+| Contribute code or understand the architecture | [Codebase Context](./context/CODEBASE.md) |
+
+---
+
 ## 🏛️ Project Structure
 
 ### 🧠 [Active Context](./context/) (Read this first)
