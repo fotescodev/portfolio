@@ -1,76 +1,62 @@
-# ═══════════════════════════════════════════════════════════════
-# VARIANT: Crypto.com - Product Manager (AI)
-# ═══════════════════════════════════════════════════════════════
 metadata:
   company: "Crypto.com"
   role: "Product Manager (AI)"
   slug: "cryptocom-pm-ai"
   generatedAt: "2025-12-29T19:00:00Z"
   sourceUrl: "https://jobs.lever.co/crypto/0cd11f7d-dfd3-42a9-9f96-1b9b2f10e903"
-  jobDescription: |
-    Product Manager (AI) at Crypto.com — leading AI integration across the
-    Crypto.com App for 150M+ global users. Strategic bridge between AI capabilities
-    and core UX. Integrate LLMs into features, scale AI-powered support tools,
-    optimize KYC flows. Cross-functional leadership with Engineering, Data
-    Infrastructure, and Design. Requires strong generative AI understanding,
-    data infrastructure knowledge, customer-facing AI product experience.
-    Crypto ecosystem familiarity is a plus.
-  generationModel: "claude-opus-4-5"
-  # resumePath: Generate with: npm run generate:resume -- --variant cryptocom-pm-ai
+  jobDescription: "Product Manager (AI) at Crypto.com — leading AI integration across the
 
-# ═══════════════════════════════════════════════════════════════
-# ALIGNMENT ANALYSIS
-# ═══════════════════════════════════════════════════════════════
+    Crypto.com App for 150M+ global users. Strategic bridge between AI capabilities
+
+    and core UX. Integrate LLMs into features, scale AI-powered support tools,
+
+    optimize KYC flows. Cross-functional leadership with Engineering, Data
+
+    Infrastructure, and Design. Requires strong generative AI understanding,
+
+    data infrastructure knowledge, customer-facing AI product experience.
+
+    Crypto ecosystem familiarity is a plus.\n"
+  generationModel: "claude-opus-4-5"
+  resumePath: "/resumes/cryptocom-pm-ai.pdf"
 alignment:
   score: 0.65
-  threshold: 0.50
+  threshold: 0.5
   recommendation: "PROCEED"
-
   mustHaves:
     - requirement: "Strong understanding of generative AI technologies and LLMs"
       match: true
-      evidence: "AI Product Management Certification from Product Faculty (instructed by OpenAI product leader). Deployed kapa.ai LLM at Dapper Labs handling 1,000+ questions/week with 98% accuracy."
-      confidence: 0.8
-
+      evidence: "AI Product Management Certification from Product Faculty (instructed by OpenAI product leader). Building Claude-powered portfolio variant generation with eval/redteam pipelines."
+      confidence: 0.7
     - requirement: "Experience integrating AI models into core features"
       match: true
-      evidence: "Integrated kapa.ai support bot at Dapper Labs—first production AI deployment. Built Claude-powered variant generation system for this portfolio."
-      confidence: 0.75
-
+      evidence: "Built Claude-powered variant generation system for this portfolio with automated claim verification. Hands-on LLM integration experience."
+      confidence: 0.65
     - requirement: "Lead cross-functional teams (Engineering, Data, Design)"
       match: true
       evidence: "Led 8 protocol integrations at Anchorage across Engineering, Compliance, BD. Shipped Advanced API 0→1 at Ankr with 5-engineer team."
       confidence: 0.9
-
     - requirement: "Define and drive strategy for customer-facing AI products"
       match: true
-      evidence: "Drove product strategy for Advanced API serving 1M+ daily requests. Shipped customer-facing AI bot at Dapper."
-      confidence: 0.7
-
+      evidence: "Drove product strategy for Advanced API serving 1M+ daily requests. AI PM certification covers customer-facing AI product strategy."
+      confidence: 0.6
     - requirement: "Strong understanding of data infrastructure"
       match: true
       evidence: "Built RPC infrastructure serving 1M+ daily requests. Architected ETF-grade staking infrastructure with multi-client validator setup."
       confidence: 0.85
-
     - requirement: "Familiarity with crypto ecosystems"
       match: true
       evidence: "8+ years in crypto: Microsoft blockchain, Ankr RPC, Dapper Flow, Forte gaming, Anchorage institutional custody."
-      confidence: 1.0
-
+      confidence: 1
   gaps:
     - requirement: "Mobile-first product experience"
       addressable: true
       notes: "API/SDK experience is complementary. Consumer crypto background at Mempools (200+ DAU). Can adapt."
-
   ignoredGeneric:
     - "User-first mindset"
     - "Passion for fintech"
     - "Think big"
     - "Fast-paced environment"
-
-# ═══════════════════════════════════════════════════════════════
-# OVERRIDES
-# ═══════════════════════════════════════════════════════════════
 overrides:
   hero:
     status: "Open to AI Product Roles"
@@ -86,35 +72,25 @@ overrides:
         style: "muted"
       - text: "Crypto.com"
         style: "accent"
-    subheadline: |
-      Product Manager with AI deployment experience and deep crypto infrastructure background. Shipped LLM-powered support handling 1,000+ questions weekly at 98% accuracy. Eight years building for scale—from Microsoft blockchain serving 2.7B consumers to institutional crypto infrastructure.
-
+    subheadline: "Product Manager with AI certification and deep crypto infrastructure background. Eight years building for scale—from Microsoft blockchain serving 2.7B consumers to ETF-grade staking at Anchorage. Now exploring AI × crypto intersection.\n"
   about:
-    tagline: |
-      AI-certified PM with eight years building crypto infrastructure—from enterprise blockchain at Microsoft to ETF-grade staking at Anchorage. Shipped my first production AI at Dapper Labs.
+    tagline: "AI-certified PM with eight years building crypto infrastructure—from enterprise blockchain at Microsoft to ETF-grade staking at Anchorage. Building AI-powered tooling for this portfolio.\n"
     bio:
-      - |
-        I recently completed Product Faculty's AI Product Management certification (instructed by Miqdad Jaffer, product leader at OpenAI) and shipped my first production AI at Dapper Labs—a kapa.ai support bot handling 1,000+ developer questions weekly with 98% accuracy. That deployment taught me how to translate LLM capabilities into measurable user outcomes while managing quality, latency, and edge cases at scale.
-      - |
-        Before AI, I spent eight years building crypto infrastructure. At Anchorage I shipped ETF-grade staking for institutional clients including Galaxy and asset managers with billions in AUM. At Ankr I drove 15× revenue growth by pivoting our API platform to serve protocols like Polygon and Arbitrum. I started at Microsoft building Xbox royalties on Ethereum for 2.7B gaming consumers. Crypto.com's mission sits exactly at the intersection of my AI interest and crypto depth.
+      - "I recently completed Product Faculty's AI Product Management certification (instructed by Miqdad Jaffer, product leader at OpenAI). I'm actively building AI-powered tooling—this portfolio runs on Claude-powered variant generation with full claim verification. I understand how to translate LLM capabilities into user outcomes while managing quality and edge cases at scale.\n"
+      - "Before AI, I spent eight years building crypto infrastructure. At Anchorage I shipped ETF-grade staking for institutional clients including Galaxy and asset managers with billions in AUM. At Ankr I drove 15× revenue growth by pivoting our API platform to serve protocols like Polygon and Arbitrum. I started at Microsoft building Xbox royalties on Ethereum for 2.7B gaming consumers. Crypto.com's mission sits exactly at the intersection of my AI interest and crypto depth.\n"
     stats:
-      - value: "98%"
-        label: "AI Accuracy (Dapper)"
       - value: "8+"
         label: "Years in Crypto"
       - value: "1M+"
         label: "Daily API Requests"
-
+      - value: "2.7B"
+        label: "Consumers (Xbox)"
   sections:
     beyondWork: false
     blog: true
     onchainIdentity: true
     skills: true
     passionProjects: true
-
-# ═══════════════════════════════════════════════════════════════
-# RELEVANCE SCORING
-# ═══════════════════════════════════════════════════════════════
 relevance:
   caseStudies:
     - slug: "ankr-rpc"
@@ -129,17 +105,15 @@ relevance:
     - slug: "mempools"
       relevanceScore: 0.75
       reasoning: "Consumer crypto product with 200+ DAU. Founder experience demonstrates 0→1 capability."
-
   skills:
     - category: "Domain Expertise"
-      relevanceScore: 1.0
+      relevanceScore: 1
     - category: "Blockchain & Web3"
       relevanceScore: 0.95
     - category: "Product Management"
       relevanceScore: 0.9
     - category: "Technical"
       relevanceScore: 0.85
-
   projects:
     - slug: "prompt-library"
       relevanceScore: 0.9
