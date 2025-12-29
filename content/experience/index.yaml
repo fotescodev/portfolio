@@ -36,7 +36,6 @@ jobs:
     highlights:
       - "Shipped [Cadence Playground V2](https://play.flow.com/) with multi-project management and enhanced debugging, improving developer onboarding by 60%"
       - "Launched new Developer Portal consolidating docs, saving 1 engineering resource in maintenance"
-      - "Integrated [kapa.ai](https://kapa.ai/) support bot answering 1,000+ questions in 4 weeks with 98% accuracy — equivalent to 2 full-time engineers"
       - "Led Flow CLI upgrades including scaffold feature for quickstart templates"
     tags: ["Developer Tools", "Flow", "Cadence", "DevEx"]
 

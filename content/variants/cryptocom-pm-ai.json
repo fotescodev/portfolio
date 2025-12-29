@@ -8,7 +8,8 @@
     "slug": "cryptocom-pm-ai",
     "publishStatus": "draft",
     "applicationStatus": "not_applied",
-    "sourceUrl": "https://jobs.lever.co/crypto/0cd11f7d-dfd3-42a9-9f96-1b9b2f10e903"
+    "sourceUrl": "https://jobs.lever.co/crypto/0cd11f7d-dfd3-42a9-9f96-1b9b2f10e903",
+    "resumePath": "/resumes/cryptocom-pm-ai.pdf"
   },
   "overrides": {
     "hero": {
@@ -27,7 +28,7 @@
           "style": "accent"
         }
       ],
-      "subheadline": "Product Manager with AI deployment experience and deep crypto infrastructure background. Shipped LLM-powered support handling 1,000+ questions weekly at 98% accuracy. Eight years building for scale—from Microsoft blockchain serving 2.7B consumers to institutional crypto infrastructure.\n",
+      "subheadline": "Product Manager with AI certification and deep crypto infrastructure background. Eight years building for scale—from Microsoft blockchain serving 2.7B consumers to ETF-grade staking at Anchorage. Now exploring AI × crypto intersection.\n",
       "companyAccent": [
         {
           "text": "with",
@@ -40,16 +41,12 @@
       ]
     },
     "about": {
-      "tagline": "AI-certified PM with eight years building crypto infrastructure—from enterprise blockchain at Microsoft to ETF-grade staking at Anchorage. Shipped my first production AI at Dapper Labs.\n",
+      "tagline": "AI-certified PM with eight years building crypto infrastructure—from enterprise blockchain at Microsoft to ETF-grade staking at Anchorage. Building AI-powered tooling for this portfolio.\n",
       "bio": [
-        "I recently completed Product Faculty's AI Product Management certification (instructed by Miqdad Jaffer, product leader at OpenAI) and shipped my first production AI at Dapper Labs—a kapa.ai support bot handling 1,000+ developer questions weekly with 98% accuracy. That deployment taught me how to translate LLM capabilities into measurable user outcomes while managing quality, latency, and edge cases at scale.\n",
+        "I recently completed Product Faculty's AI Product Management certification (instructed by Miqdad Jaffer, product leader at OpenAI). I'm actively building AI-powered tooling—this portfolio runs on Claude-powered variant generation with full claim verification. I understand how to translate LLM capabilities into user outcomes while managing quality and edge cases at scale.\n",
         "Before AI, I spent eight years building crypto infrastructure. At Anchorage I shipped ETF-grade staking for institutional clients including Galaxy and asset managers with billions in AUM. At Ankr I drove 15× revenue growth by pivoting our API platform to serve protocols like Polygon and Arbitrum. I started at Microsoft building Xbox royalties on Ethereum for 2.7B gaming consumers. Crypto.com's mission sits exactly at the intersection of my AI interest and crypto depth.\n"
       ],
       "stats": [
-        {
-          "value": "98%",
-          "label": "AI Accuracy (Dapper)"
-        },
         {
           "value": "8+",
           "label": "Years in Crypto"
@@ -57,6 +54,10 @@
         {
           "value": "1M+",
           "label": "Daily API Requests"
+        },
+        {
+          "value": "2.7B",
+          "label": "Consumers (Xbox)"
         }
       ]
     },

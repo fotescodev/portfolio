@@ -2,38 +2,12 @@ version: 1
 variant:
   slug: cryptocom-pm-ai
   variantFile: content/variants/cryptocom-pm-ai.yaml
-  contentHash: 3d82c96c9ed911981d6246247e506c2aaa341f378142005a1abdbfe72a048db1
-  evaluatedAt: 2025-12-29T18:59:42.687Z
+  contentHash: fd2701827252c94ffecbe9c1163bd90982c5cb4f7c4d9f58128c6874f68b58a0
+  evaluatedAt: 2025-12-29T20:43:46.328Z
 claims:
-  - id: metric-53967bcfb4
+  - id: metric-15fb1e1ef5
     location: overrides.hero.subheadline
-    text: Shipped LLM-powered support handling 1,000+ questions weekly at 98% accuracy
-    anchors:
-      - 98%
-      - 000+
-    candidateSources:
-      - path: content/experience/index.yaml
-        score: 1
-        matchedAnchors:
-          - 98%
-          - 000+
-        note: anchors 2/2 • overlap 71%
-      - path: content/knowledge/achievements/l2-protocol-integrations.yaml
-        score: 0.064
-        matchedAnchors: []
-        note: anchors 0/2 • overlap 43%
-    verified:
-      status: verified
-      sources:
-        - path: content/experience/index.yaml
-          anchors:
-            - 98%
-            - 000+
-      notes: ""
-  - id: metric-5b001c69cc
-    location: overrides.hero.subheadline
-    text: Eight years building for scale—from Microsoft blockchain serving 2.7B consumers to institutional crypto
-      infrastructure.
+    text: Eight years building for scale—from Microsoft blockchain serving 2.7B consumers to ETF-grade staking at Anchorage
     anchors:
       - 2.7B
     candidateSources:
@@ -41,54 +15,25 @@ claims:
         score: 1
         matchedAnchors:
           - 2.7B
-        note: anchors 1/1 • overlap 55%
-      - path: content/knowledge/achievements/xbox-royalties-ethereum.yaml
-        score: 0.082
-        matchedAnchors: []
-        note: anchors 0/1 • overlap 55%
-      - path: content/knowledge/achievements/ankr-15x-revenue.yaml
-        score: 0.055
-        matchedAnchors: []
-        note: anchors 0/1 • overlap 36%
+        note: anchors 1/1 • overlap 64%
       - path: content/knowledge/achievements/eth-staking-zero-slashing.yaml
         score: 0.055
         matchedAnchors: []
         note: anchors 0/1 • overlap 36%
-      - path: content/knowledge/achievements/l2-protocol-integrations.yaml
+      - path: content/knowledge/achievements/xbox-royalties-ethereum.yaml
         score: 0.055
         matchedAnchors: []
         note: anchors 0/1 • overlap 36%
+      - path: content/knowledge/stories/galaxy-compliance-win.yaml
+        score: 0.041
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 27%
     verified:
       status: verified
       sources:
         - path: content/experience/index.yaml
           anchors:
             - 2.7B
-      notes: ""
-  - id: metric-d8533b7282
-    location: overrides.about.bio[0]
-    text: I recently completed Product Faculty's AI Product Management certification (instructed by Miqdad Jaffer, product
-      leader at OpenAI) and shipped my first production AI at Dapper Labs—a kapa.ai support bot handling 1,000+
-      developer questions weekly with 98% accuracy
-    anchors:
-      - 98%
-      - 000+
-      - instructed by Miqdad Jaffer, product leader at OpenAI
-    candidateSources:
-      - path: content/experience/index.yaml
-        score: 0.751
-        matchedAnchors:
-          - 98%
-          - 000+
-        note: anchors 2/3 • overlap 57%
-    verified:
-      status: verified
-      sources:
-        - path: content/certifications/index.yaml
-          anchors:
-            - 98%
-            - 000+
-            - instructed by Miqdad Jaffer, product leader at OpenAI
       notes: ""
   - id: metric-c9869a6d0d
     location: overrides.about.bio[1]
@@ -143,26 +88,8 @@ claims:
           anchors:
             - 2.7B
       notes: ""
-  - id: metric-643c5c0e97
+  - id: metric-d07b4c9bd6
     location: overrides.about.stats[0].value
-    text: 98%
-    anchors:
-      - 98%
-    candidateSources:
-      - path: content/experience/index.yaml
-        score: 1
-        matchedAnchors:
-          - 98%
-        note: anchors 1/1 • overlap 0%
-    verified:
-      status: verified
-      sources:
-        - path: content/experience/index.yaml
-          anchors:
-            - 98%
-      notes: ""
-  - id: metric-e66b0819e2
-    location: overrides.about.stats[1].value
     text: 8+
     anchors:
       - 8+
@@ -174,8 +101,8 @@ claims:
           anchors:
             - 8+
       notes: ""
-  - id: metric-d7de684178
-    location: overrides.about.stats[2].value
+  - id: metric-071782b948
+    location: overrides.about.stats[1].value
     text: 1M+
     anchors:
       - 1M
@@ -196,4 +123,21 @@ claims:
         - path: content/experience/index.yaml
           anchors:
             - 1M
+      notes: ""
+  - id: metric-0abfb0e1ce
+    location: overrides.about.stats[2].value
+    text: 2.7B
+    anchors: &a1
+      - 2.7B
+    candidateSources:
+      - path: content/experience/index.yaml
+        score: 1
+        matchedAnchors:
+          - 2.7B
+        note: anchors 1/1 • overlap 0%
+    verified:
+      status: verified
+      sources:
+        - path: content/experience/index.yaml
+          anchors: *a1
       notes: ""
