@@ -8,7 +8,7 @@
  * The fix: Use onClick with navigate('/') + setTimeout scroll to element
  */
 
-import { render, screen, fireEvent, waitFor, cleanup } from '@testing-library/react';
+import { render, fireEvent, waitFor, cleanup } from '@testing-library/react';
 import { vi, describe, it, expect, beforeEach, afterEach, beforeAll } from 'vitest';
 import { MemoryRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { ThemeProvider } from '../../context/ThemeContext';

@@ -6,6 +6,8 @@ import { oneDark, oneLight } from 'react-syntax-highlighter/dist/esm/styles/pris
 import type { BlogPost } from '../types/blog';
 import { useTheme } from '../context/ThemeContext';
 import { likePost, unlikePost, getLikeCount, hasUserLikedPost } from '../lib/likes';
+import { getPostUrl, openShareWindow, getTwitterShareUrl, getLinkedInShareUrl } from '../lib/blog-utils';
+import { SCROLL, ANIMATION } from '../lib/constants';
 
 interface TableOfContentsItem {
     id: string;
@@ -95,7 +97,7 @@ export default function BlogPostModal({
             const progress = (scrollTop / scrollHeight) * 100;
 
             setScrollProgress(Math.min(progress, 100));
-            setShowBackToTop(scrollTop > 400);
+            setShowBackToTop(scrollTop > SCROLL.BACK_TO_TOP_THRESHOLD);
 
             // Track active heading
             if (contentRef.current) {
@@ -104,7 +106,7 @@ export default function BlogPostModal({
 
                 headings.forEach((heading) => {
                     const rect = heading.getBoundingClientRect();
-                    if (rect.top <= 200) {
+                    if (rect.top <= SCROLL.HEADING_DETECTION_OFFSET) {
                         currentActiveId = heading.id;
                     }
                 });
@@ -166,31 +168,22 @@ export default function BlogPostModal({
         }
     };
 
-    const getPostUrl = () => {
-        // Generate a shareable URL for the post
-        // In a production environment, this would be the actual URL
-        return `${window.location.origin}/#blog?post=${post.slug}`;
-    };
-
     const shareOnTwitter = () => {
-        const url = getPostUrl();
-        const text = `${post.title} by @kolob0kk`;
-        const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
-        window.open(twitterUrl, '_blank', 'width=550,height=420');
+        const url = getPostUrl(post.slug);
+        openShareWindow(getTwitterShareUrl(post.title, url));
     };
 
     const shareOnLinkedIn = () => {
-        const url = getPostUrl();
-        const linkedInUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
-        window.open(linkedInUrl, '_blank', 'width=550,height=420');
+        const url = getPostUrl(post.slug);
+        openShareWindow(getLinkedInShareUrl(url));
     };
 
     const copyLink = async () => {
         try {
-            const url = getPostUrl();
+            const url = getPostUrl(post.slug);
             await navigator.clipboard.writeText(url);
             setShowCopyToast(true);
-            setTimeout(() => setShowCopyToast(false), 2000);
+            setTimeout(() => setShowCopyToast(false), ANIMATION.TOAST_DURATION);
         } catch (err) {
             console.error('Failed to copy link:', err);
         }
@@ -202,7 +195,7 @@ export default function BlogPostModal({
                 await navigator.share({
                     title: post.title,
                     text: post.excerpt,
-                    url: getPostUrl()
+                    url: getPostUrl(post.slug)
                 });
             } catch (err) {
                 // User cancelled or error occurred
@@ -226,7 +219,7 @@ export default function BlogPostModal({
                 setLikeCount(result.count);
                 setHasLiked(true);
                 setIsLikeAnimating(true);
-                setTimeout(() => setIsLikeAnimating(false), 600);
+                setTimeout(() => setIsLikeAnimating(false), ANIMATION.LIKE_ANIMATION);
             }
         }
     };

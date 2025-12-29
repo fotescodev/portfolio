@@ -501,7 +501,7 @@ describe('BlogPostModal - UX Features', () => {
             fireEvent.click(copyLinkBtn);
 
             expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
-                expect.stringContaining('blog?post=test-post')
+                expect.stringContaining('#/blog/test-post')
             );
 
             // Toast should appear

@@ -80,7 +80,7 @@ function parseBlogPosts(): BlogPost[] {
 const author = {
     name: 'Dmitrii Fotesco',
     bio: 'Senior Technical PM shipping institutional crypto infrastructure. Currently exploring the intersection of deterministic systems and probabilistic intelligence.',
-    avatar: '/images/avatar.jpg',
+    avatar: '/images/headshot.jpg',
     twitter: 'https://x.com/kolob0kk'
 };
 
@@ -124,9 +124,12 @@ export default function BlogPostPage() {
     useEffect(() => {
         if (!post) return;
         const headings: TableOfContentsItem[] = [];
+        // Strip fenced code blocks before extracting headings
+        // This prevents bash comments (# comment) from being treated as headings
+        const contentWithoutCodeBlocks = post.content.replace(/```[\s\S]*?```/g, '');
         const headingRegex = /^(#{1,3})\s+(.+)$/gm;
         let match;
-        while ((match = headingRegex.exec(post.content)) !== null) {
+        while ((match = headingRegex.exec(contentWithoutCodeBlocks)) !== null) {
             const level = match[1].length;
             const text = match[2].trim();
             const id = text.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-');
@@ -204,10 +207,6 @@ export default function BlogPostPage() {
         return new Date(dateStr).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
     };
 
-    const formatDateShort = (dateStr: string) => {
-        return new Date(dateStr).toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: '2-digit' }).replace(/\//g, '.');
-    };
-
     const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
     const scrollToHeading = (id: string) => {
@@ -272,10 +271,6 @@ export default function BlogPostPage() {
         }
     };
 
-    const relatedPosts = posts
-        .filter(p => p.slug !== post.slug && p.tags.some(tag => post.tags.includes(tag)))
-        .slice(0, 2);
-
     return (
         <div style={{ minHeight: '100vh', background: 'var(--color-background)', color: 'var(--color-text-primary)' }}>
             <style>{`
@@ -330,6 +325,13 @@ export default function BlogPostPage() {
                 .blog-prose blockquote { border-left: 3px solid var(--color-accent); margin: 32px 0; padding: 16px 24px; background: var(--color-background-secondary); border-radius: 0; }
                 .blog-prose blockquote p { margin: 0; font-size: 18px; color: var(--color-text-secondary); line-height: 1.7; font-family: var(--font-sans); }
 
+                /* Tables */
+                .blog-prose table { width: 100%; border-collapse: collapse; margin: 32px 0; font-size: 15px; }
+                .blog-prose th, .blog-prose td { padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--color-border-light); }
+                .blog-prose th { font-weight: 600; color: var(--color-text-primary); background: var(--color-background-secondary); font-family: var(--font-sans); }
+                .blog-prose td { color: var(--color-text-secondary); font-family: var(--font-sans); }
+                .blog-prose tr:hover td { background: var(--color-card-hover); }
+
                 /* Code block with macOS chrome - using design system colors */
                 .code-block { margin: 32px 0; border-radius: 0; overflow: hidden; border: 1px solid var(--color-border); background: var(--color-code-bg); box-shadow: var(--shadow-drawer); }
                 .code-header { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; background: var(--color-background-tertiary); border-bottom: 1px solid var(--color-border); }
@@ -369,18 +371,6 @@ export default function BlogPostPage() {
                 .tags-label { font-size: 14px; font-weight: 500; color: var(--color-text-muted); margin-right: 8px; font-family: var(--font-sans); }
                 .tag-link { font-size: 14px; color: var(--color-text-tertiary); text-decoration: none; transition: color var(--transition-fast); font-family: var(--font-sans); }
                 .tag-link:hover { color: var(--color-accent); }
-
-                /* More thoughts section */
-                .more-thoughts { background: var(--color-background-secondary); border-top: 1px solid var(--color-border-light); padding: 80px 0; margin-top: 80px; }
-                .more-thoughts-title { font-family: var(--font-serif); font-style: italic; font-size: 24px; color: var(--color-text-primary); margin-bottom: 32px; }
-                .thought-card { display: block; padding: 24px; background: var(--color-background); border: 1px solid var(--color-border-light); border-radius: 0; text-decoration: none; transition: all var(--transition-fast); }
-                .thought-card:hover { border-color: var(--color-accent); background: var(--color-card-hover); }
-                .thought-date { font-size: 12px; font-weight: 600; color: var(--color-text-muted); margin-bottom: 8px; font-family: var(--font-sans); }
-                .thought-title { font-family: var(--font-serif); font-style: italic; font-size: 20px; color: var(--color-text-primary); margin-bottom: 12px; transition: color var(--transition-fast); }
-                .thought-card:hover .thought-title { color: var(--color-accent); }
-                .thought-cta { display: inline-flex; align-items: center; gap: 4px; font-size: 14px; font-weight: 500; color: var(--color-accent); font-family: var(--font-sans); }
-                .thought-cta svg { width: 16px; height: 16px; transition: transform var(--transition-fast); }
-                .thought-card:hover .thought-cta svg { transform: translateX(4px); }
 
                 /* TOC */
                 .toc-container { position: sticky; top: 100px; padding: 20px; background: transparent; border: none; border-radius: 0; }
@@ -455,7 +445,7 @@ export default function BlogPostPage() {
 
                 /* Print styles */
                 @media print {
-                    .progress-bar, .blog-nav, .back-to-top, .copy-toast, .toc-sidebar, .toc-mobile, .post-nav, .more-thoughts, .author-card-actions, .action-btn, .clap-btn, .mobile-menu { display: none !important; }
+                    .progress-bar, .blog-nav, .back-to-top, .copy-toast, .toc-sidebar, .toc-mobile, .post-nav, .author-card-actions, .action-btn, .clap-btn, .mobile-menu { display: none !important; }
                     .blog-prose { max-width: 100% !important; }
                     .blog-prose a { color: inherit; text-decoration: underline; }
                     .blog-prose a::after { content: " (" attr(href) ")"; font-size: 0.8em; color: #666; }
@@ -773,7 +763,7 @@ export default function BlogPostPage() {
                     {/* Author row */}
                     <div className="author-row">
                         <div className="author-info">
-                            <img src={author.avatar} alt={author.name} className="author-avatar" onError={(e) => { e.currentTarget.src = 'https://via.placeholder.com/48'; }} />
+                            <img src={author.avatar} alt={author.name} className="author-avatar" onError={(e) => { e.currentTarget.src = '/images/headshot.jpg'; }} />
                             <div>
                                 <div className="author-name">{author.name}</div>
                                 <div className="author-meta">{formatDate(post.date)} · {post.readingTime} min read</div>
@@ -901,7 +891,7 @@ export default function BlogPostPage() {
 
                     {/* Author bio card */}
                     <div className="author-card">
-                        <img src={author.avatar} alt={author.name} className="author-card-avatar" onError={(e) => { e.currentTarget.src = 'https://via.placeholder.com/80'; }} />
+                        <img src={author.avatar} alt={author.name} className="author-card-avatar" onError={(e) => { e.currentTarget.src = '/images/headshot.jpg'; }} />
                         <div className="author-card-content">
                             <h4 className="author-card-title">About {author.name.split(' ')[0]}</h4>
                             <p className="author-card-bio">{author.bio}</p>
@@ -966,27 +956,6 @@ export default function BlogPostPage() {
                         </nav>
                     )}
                 </article>
-
-                {/* More Thoughts */}
-                {relatedPosts.length > 0 && (
-                    <section className="more-thoughts">
-                        <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '0 24px' }}>
-                            <h3 className="more-thoughts-title">More Thoughts</h3>
-                            <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '24px' }}>
-                                {relatedPosts.map((relatedPost) => (
-                                    <Link key={relatedPost.slug} to={`/blog/${relatedPost.slug}`} className="thought-card">
-                                        <div className="thought-date">{formatDateShort(relatedPost.date)}</div>
-                                        <h4 className="thought-title">{relatedPost.title}</h4>
-                                        <span className="thought-cta">
-                                            Read Article
-                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg>
-                                        </span>
-                                    </Link>
-                                ))}
-                            </div>
-                        </div>
-                    </section>
-                )}
             </main>
 
             {/* Back to top */}
