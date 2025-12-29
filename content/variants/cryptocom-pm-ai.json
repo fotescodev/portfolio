@@ -1,0 +1,125 @@
+{
+  "metadata": {
+    "company": "Crypto.com",
+    "role": "Product Manager (AI)",
+    "generatedAt": "2025-12-29T19:00:00Z",
+    "jobDescription": "Product Manager (AI) at Crypto.com — leading AI integration across the\nCrypto.com App for 150M+ global users. Strategic bridge between AI capabilities\nand core UX. Integrate LLMs into features, scale AI-powered support tools,\noptimize KYC flows. Cross-functional leadership with Engineering, Data\nInfrastructure, and Design. Requires strong generative AI understanding,\ndata infrastructure knowledge, customer-facing AI product experience.\nCrypto ecosystem familiarity is a plus.\n",
+    "generationModel": "claude-opus-4-5",
+    "slug": "cryptocom-pm-ai",
+    "publishStatus": "draft",
+    "applicationStatus": "not_applied",
+    "sourceUrl": "https://jobs.lever.co/crypto/0cd11f7d-dfd3-42a9-9f96-1b9b2f10e903"
+  },
+  "overrides": {
+    "hero": {
+      "status": "Open to AI Product Roles",
+      "headline": [
+        {
+          "text": "Building",
+          "style": "italic"
+        },
+        {
+          "text": "at the edge of",
+          "style": "muted"
+        },
+        {
+          "text": "trust",
+          "style": "accent"
+        }
+      ],
+      "subheadline": "Product Manager with AI deployment experience and deep crypto infrastructure background. Shipped LLM-powered support handling 1,000+ questions weekly at 98% accuracy. Eight years building for scale—from Microsoft blockchain serving 2.7B consumers to institutional crypto infrastructure.\n",
+      "companyAccent": [
+        {
+          "text": "with",
+          "style": "muted"
+        },
+        {
+          "text": "Crypto.com",
+          "style": "accent"
+        }
+      ]
+    },
+    "about": {
+      "tagline": "AI-certified PM with eight years building crypto infrastructure—from enterprise blockchain at Microsoft to ETF-grade staking at Anchorage. Shipped my first production AI at Dapper Labs.\n",
+      "bio": [
+        "I recently completed Product Faculty's AI Product Management certification (instructed by Miqdad Jaffer, product leader at OpenAI) and shipped my first production AI at Dapper Labs—a kapa.ai support bot handling 1,000+ developer questions weekly with 98% accuracy. That deployment taught me how to translate LLM capabilities into measurable user outcomes while managing quality, latency, and edge cases at scale.\n",
+        "Before AI, I spent eight years building crypto infrastructure. At Anchorage I shipped ETF-grade staking for institutional clients including Galaxy and asset managers with billions in AUM. At Ankr I drove 15× revenue growth by pivoting our API platform to serve protocols like Polygon and Arbitrum. I started at Microsoft building Xbox royalties on Ethereum for 2.7B gaming consumers. Crypto.com's mission sits exactly at the intersection of my AI interest and crypto depth.\n"
+      ],
+      "stats": [
+        {
+          "value": "98%",
+          "label": "AI Accuracy (Dapper)"
+        },
+        {
+          "value": "8+",
+          "label": "Years in Crypto"
+        },
+        {
+          "value": "1M+",
+          "label": "Daily API Requests"
+        }
+      ]
+    },
+    "sections": {
+      "beyondWork": false,
+      "blog": true,
+      "onchainIdentity": true,
+      "skills": true,
+      "passionProjects": true
+    }
+  },
+  "relevance": {
+    "caseStudies": [
+      {
+        "slug": "ankr-rpc",
+        "relevanceScore": 0.95,
+        "reasoning": "API/data infrastructure at scale—1M+ daily requests. Directly relevant to data products and AI infrastructure."
+      },
+      {
+        "slug": "eth-staking",
+        "relevanceScore": 0.9,
+        "reasoning": "Crypto custody and staking for institutional clients. Demonstrates crypto depth and compliance navigation."
+      },
+      {
+        "slug": "xbox-royalties",
+        "relevanceScore": 0.8,
+        "reasoning": "Enterprise scale (2.7B consumers) and cross-functional leadership. Shows ability to ship at Crypto.com's scale."
+      },
+      {
+        "slug": "mempools",
+        "relevanceScore": 0.75,
+        "reasoning": "Consumer crypto product with 200+ DAU. Founder experience demonstrates 0→1 capability."
+      }
+    ],
+    "skills": [
+      {
+        "category": "Domain Expertise",
+        "relevanceScore": 1
+      },
+      {
+        "category": "Blockchain & Web3",
+        "relevanceScore": 0.95
+      },
+      {
+        "category": "Product Management",
+        "relevanceScore": 0.9
+      },
+      {
+        "category": "Technical",
+        "relevanceScore": 0.85
+      }
+    ],
+    "projects": [
+      {
+        "slug": "prompt-library",
+        "relevanceScore": 0.9,
+        "reasoning": "LLM prompts with version control—directly relevant to AI product development"
+      },
+      {
+        "slug": "repo-flattener",
+        "relevanceScore": 0.8,
+        "reasoning": "AI tooling for Claude integration—demonstrates hands-on AI tool building"
+      }
+    ]
+  }
+}
