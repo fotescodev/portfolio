@@ -58,14 +58,14 @@ content/variants/
 export GEMINI_API_KEY=your_key_here
 
 # Generate variant
-npm run generate:cv -- \
+npm run generate:variant -- \
   --company "Stripe" \
   --role "Senior PM" \
   --jd "./stripe-jd.txt" \
   --provider gemini
 
 # Or inline job description
-npm run generate:cv -- \
+npm run generate:variant -- \
   --company "Databricks" \
   --role "ML Platform Lead" \
   --jd-text "Job description here..." \
@@ -595,7 +595,7 @@ function MyComponent() {
 - **Schema Definition**: `src/lib/schemas.ts` → `VariantSchema`
 - **Type Definitions**: `src/types/variant.ts`
 - **Loader Logic**: `src/lib/variants.ts`
-- **CLI Tool**: `scripts/generate-cv.ts`
+- **CLI Tool**: `scripts/generate-variant.ts`
 
 ---
 

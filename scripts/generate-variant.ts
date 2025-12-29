@@ -1,13 +1,14 @@
 #!/usr/bin/env tsx
 /**
- * Universal CV Generator CLI
+ * Variant Generator CLI
  *
  * Generates personalized portfolio variants for specific job applications
- * using AI to analyze job descriptions and tailor content.
+ * using AI to analyze job descriptions and tailor content. Also generates
+ * a resume PDF automatically if the dev server is running.
  *
  * Usage:
- *   npm run generate:cv -- --company "Bloomberg" --role "Senior Engineer" --jd "./jd.txt"
- *   npm run generate:cv -- --company "Gensyn" --role "ML Researcher" --jd-text "Job description..."
+ *   npm run generate:variant -- --company "Bloomberg" --role "Senior Engineer" --jd "./jd.txt"
+ *   npm run generate:variant -- --company "Gensyn" --role "ML Researcher" --jd-text "Job description..."
  *
  * Options:
  *   --company <name>         Company name (required)
@@ -64,11 +65,11 @@ interface PortfolioData {
 
 // Show help message
 function showHelp(): void {
-  console.log(`${colors.bold}${colors.blue}Universal CV Generator${colors.reset}
+  console.log(`${colors.bold}${colors.blue}Variant Generator${colors.reset}
 
 ${colors.bold}Usage:${colors.reset}
-  npm run generate:cv -- --company <name> --role <title> --jd <file>
-  npm run generate:cv -- --company <name> --role <title> --jd-text "..."
+  npm run generate:variant -- --company <name> --role <title> --jd <file>
+  npm run generate:variant -- --company <name> --role <title> --jd-text "..."
 
 ${colors.bold}Required:${colors.reset}
   --company <name>     Company name (e.g., "Stripe")
@@ -91,9 +92,9 @@ ${colors.bold}Environment Variables:${colors.reset}
   GEMINI_API_KEY       For Gemini provider
 
 ${colors.bold}Examples:${colors.reset}
-  npm run generate:cv -- --company "Stripe" --role "Senior PM" --jd ./stripe-jd.txt
-  npm run generate:cv -- --company "Acme" --role "PM" --jd-text "Looking for PM..."
-  npm run generate:cv -- --company "X" --role "Y" --jd ./jd.txt --provider openai
+  npm run generate:variant -- --company "Stripe" --role "Senior PM" --jd ./stripe-jd.txt
+  npm run generate:variant -- --company "Acme" --role "PM" --jd-text "Looking for PM..."
+  npm run generate:variant -- --company "X" --role "Y" --jd ./jd.txt --provider openai
 
 ${colors.bold}Need an API key?${colors.reset}
   Claude:  https://console.anthropic.com
@@ -207,7 +208,7 @@ function parseArgs(): CLIArgs {
         `  1. Get a key at: ${providerUrls[parsed.provider]}\n` +
         `  2. Run: export ${envVars[parsed.provider]}="your-key"\n` +
         `\n` +
-        `Or use: npm run generate:cv -- --api-key "your-key" --company ... --role ...\n` +
+        `Or use: npm run generate:variant -- --api-key "your-key" --company ... --role ...\n` +
         `\n` +
         `No API key? Use manual creation:\n` +
         `  cp content/variants/_template.yaml content/variants/your-variant.yaml`
@@ -565,7 +566,7 @@ async function main() {
     const args = parseArgs();
 
     // Only show header if we're actually running
-    console.log(`${colors.bold}${colors.blue}Universal CV Generator${colors.reset}\n`);
+    console.log(`${colors.bold}${colors.blue}Variant Generator${colors.reset}\n`);
     console.log(`${colors.gray}Generating variant for: ${colors.reset}${colors.bold}${args.company} - ${args.role}${colors.reset}\n`);
 
     // Load portfolio data

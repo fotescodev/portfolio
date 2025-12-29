@@ -84,7 +84,7 @@ portfolio/
 │       └── gensyn-technical-product-manager.{yaml,json}
 ├── scripts/
 │   ├── validate-content.ts           # Content validation CLI
-│   ├── generate-cv.ts                # Variant generation CLI
+│   ├── generate-variant.ts            # Variant generation CLI
 │   ├── sync-variants.ts              # 🆕 YAML→JSON sync
 │   ├── evaluate-variants.ts          # 🆕 Claims ledger generator
 │   └── redteam.ts                    # 🆕 Adversarial scanner
@@ -166,7 +166,7 @@ URL (/#/company/role)
 - `src/pages/VariantPortfolio.tsx` - Dynamic variant loader
 - `src/lib/variants.ts` - Loading + merging logic
 - `src/types/variant.ts` - Type definitions
-- `scripts/generate-cv.ts` - CLI generator (243 lines)
+- `scripts/generate-variant.ts` - CLI generator
 - `content/variants/*.{yaml,json}` - Variant data
 
 ### Variant Schema
@@ -212,7 +212,7 @@ interface Variant {
 
 **CLI Generator:**
 ```bash
-npm run generate:cv -- \
+npm run generate:variant -- \
   --company "Company" \
   --role "Role Title" \
   --jd "./job-description.txt" \

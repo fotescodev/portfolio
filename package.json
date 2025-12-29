@@ -17,7 +17,7 @@
     "test:cli": "vitest run --config vitest.cli.config.ts",
     "test:cli:watch": "vitest --config vitest.cli.config.ts",
     "validate": "tsx scripts/validate-content.ts",
-    "generate:cv": "tsx scripts/generate-cv.ts",
+    "generate:variant": "tsx scripts/generate-variant.ts",
     "generate:resume": "tsx scripts/generate-resume.ts",
     "generate:resumes:all": "tsx scripts/generate-all-resumes.ts",
     "generate:og": "node scripts/generate-og-images.js",

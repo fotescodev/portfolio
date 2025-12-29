@@ -154,7 +154,7 @@ Artifact:
 
 ## Small safety upgrade in generator
 
-**File:** `scripts/generate-cv.ts`
+**File:** `scripts/generate-variant.ts`
 
 Changes:
 - job description in the prompt is now labeled **UNTRUSTED INPUT** and wrapped in `<JOB_DESCRIPTION>...</JOB_DESCRIPTION>` (prompt-injection hygiene)

@@ -29,7 +29,7 @@ A complete guide to using the Universal CV quality pipeline CLI — from creatin
 | Situation | Recommended Method |
 |-----------|-------------------|
 | Have Claude Code? | Use `/generate-variant` skill |
-| No Claude Code but have API key? | Use `npm run generate:cv` CLI |
+| No Claude Code but have API key? | Use `npm run generate:variant` CLI |
 | No API key? | Manual creation: copy `content/variants/_template.yaml` |
 | Day-to-day variant management? | Use `npm run ucv-cli` interactive dashboard |
 | CI/CD pipelines? | Use individual commands with `--json` flag |

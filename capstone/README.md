@@ -52,7 +52,7 @@ See [develop/README.md](./develop/README.md#7-pm-competency-bundles) for the ful
 
 ```bash
 # Generate variant using Claude Code skill
-npm run generate:cv -- --company "Stripe" --role "Platform PM" --jd "./jd.txt"
+npm run generate:variant -- --company "Stripe" --role "Platform PM" --jd "./jd.txt"
 ```
 
 ### Post-Generation (Quality Gates)

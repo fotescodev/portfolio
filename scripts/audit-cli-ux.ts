@@ -127,22 +127,22 @@ const CLI_TESTS: CLITest[] = [
     description: 'Coverage JSON output'
   },
   {
-    name: 'generate:cv (help)',
+    name: 'generate:variant (help)',
     command: 'npm',
-    args: ['run', 'generate:cv', '--', '--help'],
+    args: ['run', 'generate:variant', '--', '--help'],
     expectSuccess: true,
     checkHelp: true,
     checkJson: false,
-    description: 'CV generator help'
+    description: 'Variant generator help'
   },
   {
-    name: 'generate:cv (error)',
+    name: 'generate:variant (error)',
     command: 'npm',
-    args: ['run', 'generate:cv', '--', '--company', 'Test', '--role', 'PM', '--jd-text', 'Test JD'],
+    args: ['run', 'generate:variant', '--', '--company', 'Test', '--role', 'PM', '--jd-text', 'Test JD'],
     expectSuccess: false,
     checkHelp: false,
     checkJson: false,
-    description: 'CV generator error handling (no API key)'
+    description: 'Variant generator error handling (no API key)'
   },
   {
     name: 'eval:variant',

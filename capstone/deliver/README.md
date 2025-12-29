@@ -32,7 +32,7 @@ npm run analyze:jd -- --file jd.txt --save
 npm run search:evidence -- --jd-analysis analysis.yaml --save
 
 # 2. Generate variant
-npm run generate:cv -- --company "Company" --role "Role"
+npm run generate:variant -- --company "Company" --role "Role"
 
 # 3. Quality gates
 npm run eval:variant -- --slug company-role

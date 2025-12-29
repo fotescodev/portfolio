@@ -99,7 +99,7 @@ npm run validate
 ### 🎯 Personalization (Universal CV)
 ```bash
 # Generate a tailored variant for a specific role
-npm run generate:cv -- --company "Company" --role "Role" --jd "./jd.txt" --provider gemini
+npm run generate:variant -- --company "Company" --role "Role" --jd "./jd.txt" --provider gemini
 
 # Sync YAML variants to JSON (runs automatically on dev/build)
 npm run variants:sync
