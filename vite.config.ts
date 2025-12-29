@@ -8,7 +8,20 @@ export default defineConfig({
   plugins: [
     react(),
     yaml(),
-    imagetools()
+    imagetools(),
+    // Serve static directories from public/ correctly in dev
+    {
+      name: 'static-directory-middleware',
+      configureServer(server) {
+        server.middlewares.use((req, res, next) => {
+          // Redirect /cv-dashboard or /cv-dashboard/ to /cv-dashboard/index.html
+          if (req.url === '/cv-dashboard' || req.url === '/cv-dashboard/') {
+            req.url = '/cv-dashboard/index.html';
+          }
+          next();
+        });
+      }
+    }
   ],
   base: '/',
   build: {
