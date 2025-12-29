@@ -1,6 +1,22 @@
-# Dmitrii Fotesco | Senior Technical PM Portfolio
+# Universal CV Portfolio Engine
 
-**Mission Control Center** for the edgeoftrust.com portfolio engine.
+A portfolio site that generates **job-targeted variants** using Claude Code. Feed it a job description, and it tailors your resume, case studies, and bio—then runs claims verification and adversarial red-team scans before publishing.
+
+**Live:** [edgeoftrust.com](https://edgeoftrust.com) | **Stack:** React 19, TypeScript, Vite 7, Framer Motion
+
+---
+
+## Why This Exists
+
+Job applications are a cold-start problem. Generic resumes get filtered; hand-tailored ones don't scale. This engine solves it by:
+
+1. **Structuring career data once** — achievements, metrics, and stories in a queryable knowledge base
+2. **Generating variants on demand** — AI matches your experience to job requirements
+3. **Verifying before publishing** — claims are checked against source evidence; red-team scans catch tone/accuracy issues
+
+The result: every application feels hand-crafted, but takes minutes instead of hours.
+
+> **Want to build your own?** See the **[Getting Started Guide](./GETTING_STARTED_GUIDE.md)** for step-by-step instructions.
 
 ---
 
