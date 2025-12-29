@@ -50,8 +50,8 @@ portfolio/
 │   │       ├── AmbientBackground.tsx
 │   │       └── Omnibar.tsx
 │   ├── pages/                        # Route pages
-│   │   ├── BasePortfolio.tsx         # Base portfolio (/#/)
-│   │   └── VariantPortfolio.tsx      # Personalized variants (/#/company/role)
+│   │   ├── BasePortfolio.tsx         # Base portfolio (/)
+│   │   └── VariantPortfolio.tsx      # Personalized variants (/company/role)
 │   ├── context/
 │   │   ├── ThemeContext.tsx          # Theme provider (dark/light)
 │   │   └── VariantContext.tsx        # 🆕 Variant profile injection
@@ -130,7 +130,7 @@ portfolio/
 
 4. **Universal CV - Variant System**: Portfolio personalization for job applications
    - Base profile + variant overrides = personalized experience
-   - Dynamic routes via HashRouter (`/#/:company/:role`)
+   - Dynamic routes via BrowserRouter (`/:company/:role`)
    - VariantContext provides merged profile to components
    - Sections receive `profile` prop from context (not direct imports)
 
@@ -143,15 +143,15 @@ portfolio/
 The Universal CV system creates personalized portfolio variants tailored to specific job applications using AI-generated overrides of the base profile.
 
 **Live Examples:**
-- Base: `https://edgeoftrust.com/#/`
-- Bloomberg TPM: `https://edgeoftrust.com/#/bloomberg/technical-product-manager`
-- Gensyn TPM: `https://edgeoftrust.com/#/gensyn/technical-product-manager`
+- Base: `https://edgeoftrust.com/`
+- Bloomberg TPM: `https://edgeoftrust.com/bloomberg/technical-product-manager`
+- Gensyn TPM: `https://edgeoftrust.com/gensyn/technical-product-manager`
 
 ### Architecture
 
 **Data Flow:**
 ```
-URL (/#/company/role)
+URL (/company/role)
   → React Router captures params
   → VariantPortfolio.tsx loads variant JSON
   → variants.ts: mergeProfile(base + overrides)
@@ -258,22 +258,22 @@ const { profile } = useVariant();  // Get from context
 
 ### Routing
 
-**HashRouter** (GitHub Pages compatible):
+**BrowserRouter** (clean URLs):
 ```tsx
 // src/App.tsx
-<HashRouter>
+<BrowserRouter>
   <Routes>
     <Route path="/" element={<BasePortfolio />} />
     <Route path="/:company/:role" element={<VariantPortfolio />} />
   </Routes>
-</HashRouter>
+</BrowserRouter>
 ```
 
-**Why Hash Routing?**
-- GitHub Pages doesn't support server-side redirects
-- Hash URLs (`/#/company/role`) handled client-side
+**Hosting Requirements:**
+- Vercel/Netlify: Works out of the box (auto-rewrites to index.html)
+- GitHub Pages: Requires 404.html workaround or switch to HashRouter
+- Clean URLs: `/company/role` (no hash)
 - Fully shareable and bookmarkable
-- Can switch to BrowserRouter on Vercel/Netlify with proper config
 
 ### Build Process
 

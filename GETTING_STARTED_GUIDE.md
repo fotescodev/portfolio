@@ -7,6 +7,8 @@ This guide walks you through creating your own portfolio using Claude Code skill
 ## Table of Contents
 
 1. [Quick Start](#1-quick-start)
+   - 1.5 [Understanding Claude Code Skills](#15-understanding-claude-code-skills)
+   - 1.6 [Your First Variant in 5 Minutes](#16-your-first-variant-in-5-minutes)
 2. [The Vault - Dump Your Data](#2-the-vault---dump-your-data)
 3. [Generate Your Portfolio](#3-generate-your-portfolio)
 4. [Generate Your Resume](#4-generate-your-resume)
@@ -16,6 +18,8 @@ This guide walks you through creating your own portfolio using Claude Code skill
 8. [Create Blog Posts](#8-create-blog-posts)
 9. [Generate Job Variants](#9-generate-job-variants)
 10. [Ongoing Maintenance](#10-ongoing-maintenance)
+11. [Troubleshooting](#troubleshooting)
+12. [What's Next?](#whats-next)
 
 ---
 
@@ -34,6 +38,68 @@ npm run dev
 ```
 
 Open http://localhost:5173 to see the portfolio.
+
+---
+
+## 1.5. Understanding Claude Code Skills
+
+**What are skills?** Skills are pre-written prompts that automate complex workflows. This guide uses several skills like `/cv-data-ingestion` and `/generate-variant`.
+
+### How to Use Skills
+
+**With Claude Code** (recommended):
+1. Open Claude Code in your project directory
+2. Type the skill name with a slash: `/cv-data-ingestion`
+3. Claude Code executes the skill's workflow automatically
+
+**Without Claude Code** (manual path):
+If you're not using Claude Code, each skill section below includes manual steps you can follow instead. Look for the "Manual Alternative" subsections.
+
+### Available Skills
+
+| Skill | Purpose |
+|-------|---------|
+| `/cv-data-ingestion` | Import career data from various sources |
+| `/generate-variant` | Create job-targeted portfolio variants |
+| `/generate-resume` | Generate PDF resume |
+| `/cv-content-generator` | Create case studies and blog posts |
+
+> **Note**: Skills are defined in `.claude/skills/`. Each has a `SKILL.md` file with detailed instructions.
+
+---
+
+## 1.6. Your First Variant in 5 Minutes
+
+Validate your setup by creating a minimal variant before diving into the full workflow.
+
+### Quick Steps
+
+```bash
+# 1. Copy the template
+cp content/variants/_template.yaml content/variants/test-company-test-role.yaml
+
+# 2. Edit the file - change these 3 fields:
+#    - metadata.company: "Test Company"
+#    - metadata.role: "Test Role"
+#    - overrides.hero.headline: "Your test headline"
+
+# 3. Sync to JSON
+npm run variants:sync
+
+# 4. Preview locally
+npm run dev
+# Open: http://localhost:5173/test-company/test-role
+```
+
+### Checklist
+
+- [ ] Dependencies installed (`npm install`)
+- [ ] Template copied to `content/variants/`
+- [ ] YAML edited with company/role
+- [ ] Synced to JSON (`npm run variants:sync`)
+- [ ] Previewed at `/company/role`
+
+If the variant loads, your setup is working. Delete the test file and continue to Section 2.
 
 ---
 
@@ -476,7 +542,7 @@ The skill runs automatically through:
 npm run dev
 
 # Open variant URL
-open "http://localhost:5173/#/company/role"
+open "http://localhost:5173/company/role"
 ```
 
 ### Quality Gates
@@ -571,6 +637,59 @@ scripts/
 
 ---
 
+## Troubleshooting
+
+### Variant Not Loading
+
+**Symptom:** URL shows base portfolio instead of variant
+
+**Fixes:**
+1. Check slug matches filename: `/company/role` → `company-role.json`
+2. Verify JSON exists: `ls content/variants/company-role.json`
+3. Run sync: `npm run variants:sync`
+4. Check console for errors in browser DevTools
+
+### API Key Error
+
+**Symptom:** "API key not found" or generation fails
+
+**Fixes:**
+1. Check `.env` or `.env.local` exists in project root
+2. Verify variable name matches provider:
+   - `ANTHROPIC_API_KEY` for Claude
+   - `OPENAI_API_KEY` for OpenAI
+   - `GEMINI_API_KEY` for Gemini
+3. Restart dev server after changing `.env`
+
+### Validation Failed
+
+**Symptom:** `npm run validate` shows errors
+
+**Fixes:**
+1. Check YAML syntax (indentation, colons, quotes)
+2. Verify required fields exist (see schema in `src/lib/schemas.ts`)
+3. Run `npm run validate:variants` for variant-specific checks
+
+### Skill Not Working
+
+**Symptom:** `/skill-name` doesn't execute
+
+**Fixes:**
+1. Ensure Claude Code is active in your terminal
+2. Check skill exists: `ls .claude/skills/skill-name/`
+3. Try manual workflow (see each skill's SKILL.md for alternatives)
+
+### Build Fails
+
+**Symptom:** `npm run build` errors
+
+**Fixes:**
+1. Run `npm install` to ensure dependencies
+2. Check TypeScript errors: `npx tsc --noEmit`
+3. Verify all imports resolve correctly
+
+---
+
 ## Checklist
 
 - [ ] Dumped career data into `source-data/`
@@ -582,6 +701,14 @@ scripts/
 - [ ] Deployed to GitHub Pages
 - [ ] Created first case study
 - [ ] Generated first job variant
+
+---
+
+## What's Next?
+
+- [Universal CV Guide](./docs/guides/universal-cv.md) - Deep dive into variant generation
+- [Capstone Workflow](./docs/guides/capstone-workflow.md) - Quality pipeline for production variants
+- [Content Management](./docs/guides/content-management.md) - Schema reference for all content types
 
 ---
 

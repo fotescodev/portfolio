@@ -1,14 +1,16 @@
 # Universal CV System - Complete Guide
 
+> **Part of Phase 3 (Generate Variants)** in the [Complete Workflow](../COMPLETE_WORKFLOW.md)
+
 ## Overview
 
 The Universal CV system allows you to create personalized portfolio variants tailored to specific job applications. Each variant customizes your hero section, bio, stats, and content emphasis while maintaining factual accuracy.
 
 ## Live Examples
 
-- **Base Portfolio**: `https://edgeoftrust.com/#/`
-- **Bloomberg (TPM)**: `https://edgeoftrust.com/#/bloomberg/technical-product-manager`
-- **Gensyn (TPM)**: `https://edgeoftrust.com/#/gensyn/technical-product-manager`
+- **Base Portfolio**: `https://edgeoftrust.com/`
+- **Bloomberg (TPM)**: `https://edgeoftrust.com/bloomberg/technical-product-manager`
+- **Gensyn (TPM)**: `https://edgeoftrust.com/gensyn/technical-product-manager`
 
 ---
 
@@ -16,18 +18,20 @@ The Universal CV system allows you to create personalized portfolio variants tai
 
 ### URL Structure
 ```
-/#/:company/:role
+/:company/:role
 ```
 
+> **Note:** URLs use clean paths via React Router's BrowserRouter. No hash routing.
+
 Examples:
-- `/#/bloomberg/technical-product-manager`
-- `/#/stripe/senior-pm`
-- `/#/databricks/ml-platform-lead`
+- `/bloomberg/technical-product-manager`
+- `/stripe/senior-pm`
+- `/databricks/ml-platform-lead`
 
 ### Data Flow
 
 ```
-1. User visits /#/bloomberg/technical-product-manager
+1. User visits /bloomberg/technical-product-manager
 2. React Router captures params: { company: "bloomberg", role: "technical-product-manager" }
 3. VariantPortfolio loads variant JSON: bloomberg-technical-product-manager.json
 4. mergeProfile() combines base profile + variant overrides
@@ -193,7 +197,7 @@ npm run redteam:variant -- --slug stripe-senior-pm
 
 ```bash
 npm run dev
-# Open http://localhost:5173/#/stripe/senior-pm
+# Open http://localhost:5173/stripe/senior-pm
 ```
 
 #### Quick Reference: What to Customize
@@ -351,7 +355,7 @@ After generation:
 ```bash
 # Local testing
 npm run dev
-# Visit: http://localhost:5173/#/company/role
+# Visit: http://localhost:5173/company/role
 
 # Validate content
 npm run validate
@@ -412,8 +416,8 @@ git pull origin main
 # GitHub Pages auto-deploys
 
 # Test live URLs
-https://edgeoftrust.com/#/bloomberg/technical-product-manager
-https://edgeoftrust.com/#/gensyn/technical-product-manager
+https://edgeoftrust.com/bloomberg/technical-product-manager
+https://edgeoftrust.com/gensyn/technical-product-manager
 ```
 
 ### Alternative Hosting
@@ -451,7 +455,7 @@ For **Vercel/Netlify** (clean URLs without hash):
 
 **Checks:**
 1. ✅ JSON file exists: `content/variants/{slug}.json`
-2. ✅ Slug matches URL: `/#/company/role` → `company-role.json`
+2. ✅ Slug matches URL: `/company/role` → `company-role.json`
 3. ✅ File validates: `npm run validate`
 4. ✅ Build includes variant: Check `dist/assets/` for variant chunk
 
@@ -468,7 +472,7 @@ npm run build | grep "technical-product-manager"
 
 # Test locally
 npm run dev
-# Open browser console at /#/company/role
+# Open browser console at /company/role
 ```
 
 ### Sections Not Personalizing
@@ -488,9 +492,10 @@ npm run dev
 
 **Issue:** URLs return 404
 
-**Fix:** Using HashRouter for GitHub Pages
-- URLs must include `#`: `/#/company/role`
-- Not: `/company/role` (clean URLs need server config)
+**Fix:** Ensure proper hosting configuration
+- Vercel/Netlify: Add rewrite rules for SPA (redirects all paths to index.html)
+- GitHub Pages: Requires 404.html workaround or use HashRouter
+- Local dev: Works out of the box with Vite
 
 ---
 
@@ -527,7 +532,7 @@ npm run dev
 Allow recruiters to check candidate fit:
 
 ```
-/#/check?jd=base64_encoded_jd
+/check?jd=base64_encoded_jd
 ```
 
 Shows:
@@ -541,7 +546,7 @@ Shows:
 Generate variants on-the-fly without pre-building:
 
 ```
-/#/custom?company=X&role=Y
+/custom?company=X&role=Y
 ```
 
 With serverless function for AI generation.
@@ -596,6 +601,14 @@ function MyComponent() {
 - **Type Definitions**: `src/types/variant.ts`
 - **Loader Logic**: `src/lib/variants.ts`
 - **CLI Tool**: `scripts/generate-cv.ts`
+
+---
+
+## What's Next?
+
+- [Capstone Workflow](./capstone-workflow.md) - Run quality checks (eval + red team) before deploying
+- [Universal CV CLI](./universal-cv-cli.md) - Interactive dashboard for variant management
+- [Content Management](./content-management.md) - Schema reference for all content types
 
 ---
 

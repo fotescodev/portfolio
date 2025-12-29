@@ -7,7 +7,8 @@
     "generationModel": "manual",
     "slug": "plaid-api-devex-pm",
     "publishStatus": "draft",
-    "applicationStatus": "not_applied"
+    "applicationStatus": "not_applied",
+    "sourceUrl": "https://plaid.com/careers/openings/product/san-francisco/senior-staff-product-manager-api-developer-experience/"
   },
   "overrides": {
     "hero": {

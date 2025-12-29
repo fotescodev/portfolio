@@ -1,5 +1,7 @@
 # CV Data Ingestion Guide
 
+> **Part of Phase 2 (Build Knowledge)** in the [Complete Workflow](../COMPLETE_WORKFLOW.md)
+
 ## Overview
 
 The `cv-data-ingestion` skill transforms unstructured career data (Obsidian notes, CSVs, zip archives, resumes) into the portfolio's validated content structure.
@@ -186,3 +188,11 @@ Always extract company URLs for verification:
 
 Or describe your data source:
 > "I have an Obsidian vault at ~/Career-Notes with my work history"
+
+---
+
+## What's Next?
+
+- [Universal CV Guide](./universal-cv.md) - Generate job-targeted variants from your knowledge base
+- [Adding Case Studies](./adding-case-studies.md) - Create detailed project narratives
+- [Content Management](./content-management.md) - Schema reference for all content types

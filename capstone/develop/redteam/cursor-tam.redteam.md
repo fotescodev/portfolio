@@ -1,7 +1,7 @@
 # Red Team Report
 
 - Variant: `cursor-tam`
-- Generated: 2025-12-29T02:02:10.423Z
+- Generated: 2025-12-29T04:47:49.412Z
 
 ## Summary
 

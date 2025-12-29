@@ -32,11 +32,11 @@ All variants are validated against `VariantSchema` (see `/src/lib/schemas.ts`)
 
 ## Usage
 
-Variants are accessible at URLs (hash routing for GitHub Pages):
+Variants are accessible at URLs:
 ```
-/#/{company}/{role}
+/{company}/{role}
 ```
 
-For example: `http://localhost:5173/#/bloomberg/technical-product-manager`
+For example: `http://localhost:5173/bloomberg/technical-product-manager`
 
 The routing system merges the base portfolio with variant overrides to create a personalized experience.

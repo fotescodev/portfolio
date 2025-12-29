@@ -1,0 +1,55 @@
+{
+  "metadata": {
+    "company": "Acme Corp",
+    "role": "Senior PM",
+    "generatedAt": "2025-01-01T00:00:00Z",
+    "jobDescription": "Example job description. Replace with actual JD.\n",
+    "slug": "example-minimal",
+    "publishStatus": "draft",
+    "applicationStatus": "not_applied"
+  },
+  "overrides": {
+    "hero": {
+      "headline": [
+        {
+          "text": "Building",
+          "style": "italic"
+        },
+        {
+          "text": "developer platforms at",
+          "style": "muted"
+        },
+        {
+          "text": "Acme Corp",
+          "style": "accent"
+        }
+      ]
+    },
+    "about": {
+      "tagline": "Platform PM with API and infrastructure focus",
+      "stats": [
+        {
+          "value": "8+",
+          "label": "Years PM"
+        },
+        {
+          "value": "5",
+          "label": "Platform Products"
+        }
+      ]
+    },
+    "sections": {
+      "beyondWork": false,
+      "blog": true
+    }
+  },
+  "relevance": {
+    "caseStudies": [
+      {
+        "slug": "eth-staking",
+        "relevanceScore": 0.95,
+        "reasoning": "Direct platform experience"
+      }
+    ]
+  }
+}

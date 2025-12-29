@@ -7,7 +7,8 @@
     "generationModel": "claude-opus-4-5-20251101",
     "slug": "figma-pm-dev-tools",
     "publishStatus": "draft",
-    "applicationStatus": "not_applied"
+    "applicationStatus": "not_applied",
+    "sourceUrl": "https://job-boards.greenhouse.io/figma/jobs/5740760004"
   },
   "overrides": {
     "hero": {

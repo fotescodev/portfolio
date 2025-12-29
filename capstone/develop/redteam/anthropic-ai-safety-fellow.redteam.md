@@ -1,7 +1,7 @@
 # Red Team Report
 
 - Variant: `anthropic-ai-safety-fellow`
-- Generated: 2025-12-27T18:10:24.491Z
+- Generated: 2025-12-29T04:47:49.371Z
 
 ## Summary
 

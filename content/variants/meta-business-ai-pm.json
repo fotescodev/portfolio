@@ -7,7 +7,8 @@
     "generationModel": "claude-opus-4-5",
     "slug": "meta-business-ai-pm",
     "publishStatus": "draft",
-    "applicationStatus": "not_applied"
+    "applicationStatus": "not_applied",
+    "sourceUrl": "https://www.metacareers.com/profile/job_details/1851836246209831"
   },
   "overrides": {
     "hero": {
