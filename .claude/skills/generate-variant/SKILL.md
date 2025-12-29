@@ -362,7 +362,7 @@ relevance:
 
 2. Open variant in browser:
    ```
-   http://localhost:5173/#/{company}/{role}
+   http://localhost:5173/{company}/{role}
    ```
 
 3. Visual checklist:
@@ -372,6 +372,34 @@ relevance:
    - [ ] Case studies are relevant
 
 4. Offer to commit if approved.
+
+---
+
+## Phase 8: Resume Generation
+
+**Goal:** Generate a variant-specific resume PDF and link it to the variant.
+
+1. Generate variant resume:
+   ```bash
+   npm run generate:resume -- --variant {slug}
+   ```
+
+   This will:
+   - Render the resume at `/{company}/{role}/resume`
+   - Output PDF to `public/resumes/{slug}.pdf`
+   - Auto-update variant YAML with `resumePath: /resumes/{slug}.pdf`
+
+2. Sync the updated variant:
+   ```bash
+   npm run variants:sync -- --slug {slug}
+   ```
+
+3. Verify resume was generated:
+   ```bash
+   ls -la public/resumes/{slug}.pdf
+   ```
+
+**Note:** The variant resume uses the merged profile/experience data, so it reflects the tailored content (bio, stats, tagline) specific to this role.
 
 ---
 
@@ -387,6 +415,7 @@ Before marking variant complete:
 - [ ] Red team passes (0 FAIL, minimal WARN)
 - [ ] Would defend every claim in an interview
 - [ ] Writing style matches dmitrii-writing-style
+- [ ] Resume PDF generated and linked (`resumePath` in variant metadata)
 
 ---
 
@@ -402,6 +431,7 @@ Before marking variant complete:
 | `capstone/develop/redteam/{slug}.redteam.md` | Redteam report |
 | `content/knowledge/achievements/*.yaml` | Achievement sources |
 | `content/knowledge/stories/*.yaml` | Story sources |
+| `public/resumes/{slug}.pdf` | Variant-specific resume PDF |
 
 ---
 
@@ -436,10 +466,17 @@ npm run eval:variant -- --slug {slug} --verify {id}={path}
 npm run redteam:variant -- --slug {slug}
 
 # ═══════════════════════════════════════════════════════════════
+# PHASE 8: Resume Generation
+# ═══════════════════════════════════════════════════════════════
+npm run generate:resume -- --variant {slug}
+npm run variants:sync -- --slug {slug}  # Sync after resume path update
+
+# ═══════════════════════════════════════════════════════════════
 # PREVIEW
 # ═══════════════════════════════════════════════════════════════
 npm run dev
 open "http://localhost:5173/{company}/{role}"
+open "http://localhost:5173/{company}/{role}/resume"  # Preview resume page
 ```
 
 ---

@@ -6,6 +6,7 @@ import BasePortfolio from './pages/BasePortfolio';
 
 // Lazy load routes that aren't needed on initial page load
 const VariantPortfolio = lazy(() => import('./pages/VariantPortfolio'));
+const VariantResumePage = lazy(() => import('./pages/VariantResumePage'));
 const BlogPostPage = lazy(() => import('./pages/BlogPostPage'));
 const ResumePage = lazy(() => import('./pages/ResumePage'));
 const LikeAnalytics = lazy(() => import('./components/LikeAnalytics'));
@@ -35,6 +36,9 @@ function App() {
 
               {/* Admin analytics route - lazy loaded */}
               <Route path="/admin/analytics" element={<LikeAnalytics />} />
+
+              {/* Variant resume route: /company/role/resume - must come before generic variant route */}
+              <Route path="/:company/:role/resume" element={<VariantResumePage />} />
 
               {/* Variant portfolio routes: /company/role - lazy loaded */}
               <Route path="/:company/:role" element={<VariantPortfolio />} />

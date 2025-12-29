@@ -273,7 +273,9 @@ const VariantMetadataSchema = z.object({
   publishStatus: z.enum(['draft', 'published']).optional().default('draft'),
   publishedAt: z.string().optional(),
   applicationStatus: z.enum(['not_applied', 'applied']).optional().default('not_applied'),
-  appliedAt: z.string().optional()
+  appliedAt: z.string().optional(),
+  sourceUrl: z.string().optional(), // URL to original job posting
+  resumePath: z.string().optional() // Path to generated resume PDF, e.g., "/resumes/cursor-tam.pdf"
 });
 
 /**
