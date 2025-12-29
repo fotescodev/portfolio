@@ -1,0 +1,133 @@
+metadata:
+  generatedAt: 2025-12-29T15:26:41.862Z
+  sourceAnalysis: capstone/develop/jd-analysis/crossmint.yaml
+  searchTerms:
+    - crypto
+    - fintech
+    - developer_tools
+    - infrastructure
+    - enterprise
+    - consumer
+    - ai_ml
+summary:
+  totalMatches: 7
+  strongMatches: 2
+  moderateMatches: 3
+  weakMatches: 2
+  alignmentScore: 0.56
+  recommendation: PROCEED
+matches:
+  - source: achievement
+    id: eth-staking-zero-slashing
+    headline: Built ETF-grade staking infrastructure with zero slashing events for
+      institutional clients managing billions in AUM
+    relevanceScore: 0.8571428571428571
+    matchedTerms:
+      - crypto
+      - infrastructure
+      - enterprise
+      - consumer
+    matchedSkills: []
+    matchedThemes:
+      - institutional-crypto
+      - infrastructure
+    snippet: >-
+      Zero slashing events across all validators since launch. Galaxy
+      specifically cited
+
+      'full key ownership' as reason they chose us over competitors. Onbo...
+  - source: achievement
+    id: xbox-royalties-ethereum
+    headline: Built Microsoft's first production smart contract—Ethereum royalty
+      system for Xbox eliminating publisher payment disputes
+    relevanceScore: 0.7142857142857143
+    matchedTerms:
+      - crypto
+      - infrastructure
+      - enterprise
+    matchedSkills: []
+    matchedThemes:
+      - enterprise-blockchain
+      - infrastructure
+    snippet: >-
+      Zero disputed payments post-launch—transparent audit trail eliminated
+      disputes.
+
+      System handles Xbox-scale transaction processing. Project became refer...
+  - source: achievement
+    id: l2-protocol-integrations
+    headline: Shipped 7+ L2 protocol integrations with 40% faster cycle time using
+      scalable RICE evaluation framework
+    relevanceScore: 0.5714285714285714
+    matchedTerms:
+      - crypto
+      - infrastructure
+    matchedSkills: []
+    matchedThemes:
+      - infrastructure
+      - institutional-crypto
+    snippet: >-
+      Reduced per-integration effort by 40% (12+ weeks to ~7 weeks). First time
+      shipping
+
+      3 protocols simultaneously. Framework became company standard. BD t...
+  - source: achievement
+    id: ankr-15x-revenue
+    headline: Drove 15× revenue growth ($130K to $2M ARR) by pivoting RPC product
+      from developers to blockchain protocols
+    relevanceScore: 0.42857142857142855
+    matchedTerms:
+      - crypto
+      - infrastructure
+    matchedSkills: []
+    matchedThemes:
+      - infrastructure
+    snippet: >-
+      15× revenue growth in 8 months ($130K to $2M ARR). Achieved target that
+      seemed
+
+      impossible at start. 1M+ daily API requests through protocol partnershi...
+  - source: achievement
+    id: forte-wallet-sdk
+    headline: Built Wallet-as-a-Service infrastructure with MPC custody for AAA
+      gaming studios
+    relevanceScore: 0.42857142857142855
+    matchedTerms:
+      - crypto
+      - infrastructure
+    matchedSkills: []
+    matchedThemes:
+      - infrastructure
+    snippet: >-
+      Launched SDK used by multiple AAA gaming partners. Enabled gaming studios
+      to
+
+      add Web3 features without blockchain expertise. MPC architecture
+      satisfie...
+  - source: story
+    id: galaxy-compliance-win
+    headline: How 'Boring and Defensible' Won Galaxy's Business
+    relevanceScore: 0.2857142857142857
+    matchedTerms:
+      - crypto
+    matchedSkills: []
+    matchedThemes:
+      - institutional-crypto
+    snippet: How 'Boring and Defensible' Won Galaxy's Business
+  - source: achievement
+    id: flow-cli-dx
+    headline: Improved Flow developer onboarding by 60% through CLI and Cadence
+      Playground redesign
+    relevanceScore: 0.14285714285714285
+    matchedTerms:
+      - developer_tools
+    matchedSkills: []
+    matchedThemes: []
+    snippet: >-
+      Reduced time-to-first-deploy by 60%. Improved developer retention in
+      first-week
+
+      experience. Created intuition for developer experience that informed f...
+gaps:
+  - fintech
+  - ai_ml

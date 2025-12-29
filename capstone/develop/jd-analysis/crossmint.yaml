@@ -1,0 +1,37 @@
+metadata:
+  analyzedAt: 2025-12-29T15:26:08.317Z
+  sourceFile: source-data/jd-crossmint.txt
+  slug: crossmint
+extracted:
+  company: Crossmint
+  role: Product Manager
+  yearsRequired: 5
+mustHaves:
+  - text: An enterprise
+    category: scale_indicators
+    specificity: low
+    matchedPattern: enterprise
+niceToHaves:
+  - NYC or Miami (preferred)
+  - "## Bonus Qualifications"
+ignoredGeneric:
+  - 5+ years product management experience with proven track record
+  - team stakeholder management
+  - Strong communication abilities
+  - term scalability, extreme ownership mentality, and collaborative teamwork.
+domainKeywords:
+  - crypto
+  - fintech
+  - developer_tools
+  - infrastructure
+  - enterprise
+  - consumer
+  - ai_ml
+searchTerms:
+  - crypto
+  - fintech
+  - developer_tools
+  - infrastructure
+  - enterprise
+  - consumer
+  - ai_ml
