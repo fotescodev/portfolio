@@ -28,7 +28,7 @@ function extractSlugFromFilename(path: string): string {
 // Parse all blog posts (auto-discovered)
 function parseBlogPosts(): BlogPost[] {
     const posts = Object.entries(blogPostFiles).map(([path, module]) => {
-        const raw = (module as any).default as string;
+        const raw = (module as { default: string }).default;
         const slug = extractSlugFromFilename(path);
         const { frontmatter, content } = parseFrontmatter(raw);
 
