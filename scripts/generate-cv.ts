@@ -19,10 +19,12 @@
  *   --provider <name>       AI provider: claude | openai | gemini (default: claude)
  *   --api-key <key>         API key (or use env var)
  *   --output <file>         Output file path (auto-generated if not specified)
+ *   --skip-resume           Skip resume PDF generation
+ *   --dev-url <url>         Dev server URL (default: http://localhost:5173)
  */
 
-import { readFileSync, writeFileSync, readdirSync } from 'fs';
-import { join } from 'path';
+import { readFileSync, writeFileSync, readdirSync, existsSync, mkdirSync } from 'fs';
+import { join, dirname } from 'path';
 import YAML from 'yaml';
 import { VariantSchema } from '../src/lib/schemas.js';
 import type { Profile, Experience, CaseStudy, Skills, PassionProjects } from '../src/types/portfolio.js';
@@ -48,6 +50,8 @@ interface CLIArgs {
   provider: 'claude' | 'openai' | 'gemini';
   apiKey?: string;
   outputFile?: string;
+  skipResume: boolean;
+  devUrl: string;
 }
 
 interface PortfolioData {
@@ -78,6 +82,8 @@ ${colors.bold}Optional:${colors.reset}
   --values <text>      Company values/culture info
   --context <text>     Additional context for generation
   --output <file>      Output file path (auto-generated if not specified)
+  --skip-resume        Skip automatic resume PDF generation
+  --dev-url <url>      Dev server URL (default: http://localhost:5173)
 
 ${colors.bold}Environment Variables:${colors.reset}
   ANTHROPIC_API_KEY    For Claude provider
@@ -110,7 +116,9 @@ function parseArgs(): CLIArgs {
   }
 
   const parsed: Partial<CLIArgs> = {
-    provider: 'claude'
+    provider: 'claude',
+    skipResume: false,
+    devUrl: 'http://localhost:5173'
   };
 
   for (let i = 0; i < args.length; i++) {
@@ -155,6 +163,13 @@ function parseArgs(): CLIArgs {
         break;
       case '--output':
         parsed.outputFile = next;
+        i++;
+        break;
+      case '--skip-resume':
+        parsed.skipResume = true;
+        break;
+      case '--dev-url':
+        parsed.devUrl = next;
         i++;
         break;
     }
@@ -436,6 +451,113 @@ async function callAI(provider: string, apiKey: string, prompt: string): Promise
   throw new Error(`Unknown provider: ${provider}`);
 }
 
+// Check if dev server is running
+async function isDevServerRunning(url: string): Promise<boolean> {
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 3000);
+
+    const response = await fetch(url, { signal: controller.signal });
+    clearTimeout(timeout);
+    return response.ok;
+  } catch {
+    return false;
+  }
+}
+
+// Generate resume PDF for variant
+async function generateResume(
+  slug: string,
+  devUrl: string,
+  yamlFile: string
+): Promise<{ success: boolean; path?: string; error?: string }> {
+  const rootDir = process.cwd();
+  const resumesDir = join(rootDir, 'public', 'resumes');
+  const resumePath = `/resumes/${slug}.pdf`;
+  const outputFile = join(rootDir, 'public', 'resumes', `${slug}.pdf`);
+
+  // Ensure resumes directory exists
+  if (!existsSync(resumesDir)) {
+    mkdirSync(resumesDir, { recursive: true });
+  }
+
+  // Convert slug to URL path
+  const slugParts = slug.split('-');
+  const urlPath = `${slugParts[0]}/${slugParts.slice(1).join('-')}`;
+  const resumeUrl = `${devUrl}/${urlPath}/resume`;
+
+  try {
+    // Dynamic import of puppeteer (may not be installed in all environments)
+    const puppeteer = await import('puppeteer');
+
+    const browser = await puppeteer.default.launch({
+      headless: true,
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    });
+
+    const page = await browser.newPage();
+
+    await page.setViewport({
+      width: 816,
+      height: 1056,
+      deviceScaleFactor: 2,
+    });
+
+    const response = await page.goto(resumeUrl, {
+      waitUntil: 'networkidle0',
+      timeout: 30000,
+    });
+
+    if (!response?.ok()) {
+      await browser.close();
+      return { success: false, error: `Failed to load resume page: ${resumeUrl}` };
+    }
+
+    // Wait for fonts to load
+    await page.evaluateHandle('document.fonts.ready');
+    await new Promise((r) => setTimeout(r, 500));
+
+    // Generate PDF
+    await page.pdf({
+      path: outputFile,
+      format: 'letter',
+      printBackground: true,
+      margin: {
+        top: '0.4in',
+        right: '0.5in',
+        bottom: '0.4in',
+        left: '0.5in',
+      },
+      preferCSSPageSize: true,
+    });
+
+    await browser.close();
+
+    // Update variant YAML with resumePath
+    const yamlContent = readFileSync(yamlFile, 'utf-8');
+    const variant = YAML.parse(yamlContent);
+    variant.metadata.resumePath = resumePath;
+
+    const updatedYaml = YAML.stringify(variant, {
+      lineWidth: 0,
+      defaultStringType: 'QUOTE_DOUBLE',
+      defaultKeyType: 'PLAIN'
+    });
+    writeFileSync(yamlFile, updatedYaml, 'utf-8');
+
+    // Also update JSON
+    const jsonFile = yamlFile.replace('.yaml', '.json');
+    writeFileSync(jsonFile, JSON.stringify(variant, null, 2), 'utf-8');
+
+    return { success: true, path: resumePath };
+  } catch (error) {
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : String(error)
+    };
+  }
+}
+
 // Main execution
 async function main() {
   try {
@@ -481,14 +603,47 @@ async function main() {
 
     console.log(`${colors.green}${colors.bold}✓ Variant generated successfully!${colors.reset}`);
     console.log(`${colors.gray}Saved to:${colors.reset} ${yamlFile}`);
-    const variantPath = `/#/${validated.metadata.company.toLowerCase()}/${validated.metadata.slug.split('-').slice(1).join('-')}`;
-    console.log(`${colors.gray}URL:${colors.reset} ${variantPath}`);
+
+    const slugParts = validated.metadata.slug.split('-');
+    const urlPath = `${slugParts[0]}/${slugParts.slice(1).join('-')}`;
+    console.log(`${colors.gray}URL:${colors.reset} /${urlPath}`);
+
+    // Resume generation
+    let resumeGenerated = false;
+    if (!args.skipResume) {
+      console.log(`\n${colors.gray}Checking dev server...${colors.reset}`);
+      const serverRunning = await isDevServerRunning(args.devUrl);
+
+      if (serverRunning) {
+        console.log(`${colors.cyan}Generating resume PDF...${colors.reset}`);
+        const result = await generateResume(validated.metadata.slug, args.devUrl, yamlFile);
+
+        if (result.success) {
+          console.log(`${colors.green}✓${colors.reset} Resume generated: ${result.path}`);
+          resumeGenerated = true;
+        } else {
+          console.log(`${colors.yellow}⚠${colors.reset} Resume generation failed: ${result.error}`);
+        }
+      } else {
+        console.log(`${colors.yellow}⚠${colors.reset} Dev server not running at ${args.devUrl}`);
+        console.log(`${colors.gray}  Resume will need to be generated separately${colors.reset}`);
+      }
+    } else {
+      console.log(`${colors.gray}Resume generation skipped (--skip-resume)${colors.reset}`);
+    }
 
     console.log(`\n${colors.cyan}Next steps:${colors.reset}`);
     console.log(`  1. Review and edit: ${yamlFile}`);
     console.log(`  2. Run validation: npm run validate`);
-    console.log(`  3. Test locally: npm run dev`);
-    console.log(`  4. Visit: http://localhost:5173${variantPath}`);
+    if (!resumeGenerated && !args.skipResume) {
+      console.log(`  3. Start dev server: npm run dev`);
+      console.log(`  4. Generate resume: npm run generate:resume -- --variant ${validated.metadata.slug}`);
+      console.log(`  5. Visit: ${args.devUrl}/${urlPath}`);
+    } else {
+      console.log(`  3. Test locally: npm run dev`);
+      console.log(`  4. Visit: ${args.devUrl}/${urlPath}`);
+    }
+    console.log(`  ${resumeGenerated ? '5' : args.skipResume ? '5' : '6'}. Regenerate dashboard: npm run generate:dashboard`);
 
   } catch (error) {
     console.error(`${colors.red}${colors.bold}Error:${colors.reset} ${error instanceof Error ? error.message : error}`);
