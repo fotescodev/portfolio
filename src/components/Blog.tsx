@@ -98,8 +98,8 @@ export default function Blog({ isMobile, isTablet }: BlogProps) {
         return date.toLocaleDateString('en-US', {
             month: '2-digit',
             day: '2-digit',
-            year: '2-digit'
-        }).replace(/\//g, '.');
+            year: 'numeric'
+        });
     };
 
     const sectionPadding = isMobile ? '48px 24px' : isTablet ? '64px 40px' : '80px 64px';
