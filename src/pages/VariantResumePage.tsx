@@ -51,16 +51,19 @@ interface ResumeContentProps {
   profile: MergedProfile;
   experience: { jobs: Array<{ company: string; role: string; period: string; location: string; highlights: string[]; tags: string[] }> };
   variantSlug: string;
+  variant: Variant;
 }
 
-function ResumeContent({ profile, experience, variantSlug }: ResumeContentProps) {
+function ResumeContent({ profile, experience, variantSlug, variant }: ResumeContentProps) {
   // Build impact summary from profile stats
   const statsSummary = profile.about.stats
     .map(s => `${s.value} ${s.label}`)
     .join('; ');
 
-  // Extract top skills for summary
-  const topSkills = skills.categories
+  // Extract top skills for summary - filter out Blockchain & Web3
+  const relevantCategories = skills.categories
+    .filter(cat => cat.name !== 'Blockchain & Web3');
+  const topSkills = relevantCategories
     .slice(0, RESUME_CONFIG.SUMMARY_SKILL_CATEGORIES)
     .flatMap(cat => cat.skills.slice(0, RESUME_CONFIG.SKILLS_PER_CATEGORY))
     .join(', ');
@@ -73,6 +76,13 @@ function ResumeContent({ profile, experience, variantSlug }: ResumeContentProps)
 
   // Clean tagline of accent markers
   const cleanTagline = stripAccentMarkers(profile.about.tagline);
+
+  // Build variant-aware summary
+  // Use the first bio paragraph if available, otherwise fall back to tagline + skills formula
+  const variantBio = variant.overrides?.about?.bio?.[0];
+  const summaryText = variantBio
+    ? stripAccentMarkers(stripMarkdownLinks(variantBio))
+    : `${cleanTagline} Expertise in ${topSkills} at ${companies}. ${statsSummary}.`;
 
   return (
     <div className="resume-page">
@@ -104,7 +114,7 @@ function ResumeContent({ profile, experience, variantSlug }: ResumeContentProps)
       <section className="resume-summary">
         <h2 className="resume-section-title">Impact / Summary / Expertise</h2>
         <p className="resume-summary-text">
-          {cleanTagline} Expertise in {topSkills} at {companies}. {statsSummary}.
+          {summaryText} {statsSummary}.
         </p>
       </section>
 
@@ -228,5 +238,5 @@ export default function VariantResumePage() {
   const mergedProfile = mergeProfile(variant);
   const mergedExperience = getExperienceWithOverrides(variant);
 
-  return <ResumeContent profile={mergedProfile} experience={mergedExperience} variantSlug={variant.metadata.slug} />;
+  return <ResumeContent profile={mergedProfile} experience={mergedExperience} variantSlug={variant.metadata.slug} variant={variant} />;
 }
