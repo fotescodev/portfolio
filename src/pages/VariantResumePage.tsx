@@ -12,7 +12,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, Navigate } from 'react-router-dom';
 import { loadVariant, mergeProfile, getExperienceWithOverrides } from '../lib/variants';
-import { skills } from '../lib/content';
+import { skills, certifications } from '../lib/content';
 import type { Variant } from '../types/variant';
 import type { MergedProfile } from '../types/variant';
 import './ResumePage.css';
@@ -128,6 +128,23 @@ function ResumeContent({ profile, experience }: ResumeContentProps) {
           ))}
         </div>
       </section>
+
+      {/* Certifications - show featured ones */}
+      {certifications.certifications.filter(c => c.featured).length > 0 && (
+        <section className="resume-certifications">
+          <h2 className="resume-section-title">Certifications</h2>
+          <div className="resume-certifications-list">
+            {certifications.certifications.filter(c => c.featured).map((cert) => (
+              <div key={cert.credentialId} className="resume-certification">
+                <span className="resume-certification-name">{cert.name}</span>
+                <span className="resume-certification-meta">
+                  {cert.issuer}{cert.instructor && ` (${cert.instructor})`} — {cert.date}
+                </span>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   );
 }

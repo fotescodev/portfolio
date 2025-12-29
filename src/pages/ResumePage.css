@@ -161,6 +161,34 @@
   color: var(--resume-text-secondary);
 }
 
+/* Certifications */
+.resume-certifications {
+  margin-top: 6pt;
+}
+
+.resume-certifications-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2pt;
+}
+
+.resume-certification {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 8.5pt;
+}
+
+.resume-certification-name {
+  font-weight: bold;
+  color: var(--resume-text-primary);
+}
+
+.resume-certification-meta {
+  font-style: italic;
+  color: var(--resume-text-subtle);
+}
+
 /* Print-specific styles */
 @media print {
   /* Override parent element dark backgrounds from ThemeProvider */
