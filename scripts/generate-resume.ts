@@ -82,7 +82,10 @@ function parseArgs(): ParsedArgs {
 
   if (variant) {
     // Variant resume: /company/role/resume -> public/resumes/{slug}.pdf
-    const [company, role] = variant.split('-');
+    // Handle multi-hyphen slugs: "cryptocom-pm-ai" -> company="cryptocom", role="pm-ai"
+    const parts = variant.split('-');
+    const company = parts[0];
+    const role = parts.slice(1).join('-');
     if (!company || !role) {
       console.error('❌ Invalid variant slug. Expected format: company-role (e.g., cursor-tam)');
       process.exit(1);
