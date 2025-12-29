@@ -103,10 +103,10 @@ function ResumeContent({ profile, experience, variantSlug, variant }: ResumeCont
       {/* Header */}
       <header className="resume-header">
         <h1 className="resume-name">
-          {profile.name} / <span className="resume-role-highlight">{experience.jobs[0]?.role || 'Product Manager'}</span>
+          {profile.name} / <span className="resume-role-highlight">{variant.metadata.role}</span>
         </h1>
         <p className="resume-contact">
-          {profile.location} &bull; {profile.email}
+          {profile.location} &bull; {profile.email} &bull; linkedin.com/in/0xdmitri
         </p>
       </header>
 
