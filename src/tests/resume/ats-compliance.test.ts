@@ -206,7 +206,6 @@ describe('ATS Compliance - Bullet Points', () => {
     ];
 
     const goodBullet = 'Shipped Advanced API from 0→1 serving 1M+ daily requests';
-    const firstWord = goodBullet.split(' ')[0];
 
     // Check that common patterns start with action verbs
     expect(actionVerbs.some(v => goodBullet.startsWith(v))).toBe(true);

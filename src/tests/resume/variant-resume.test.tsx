@@ -67,6 +67,8 @@ const createMockVariant = (overrides: Partial<Variant> = {}): Variant => ({
     slug: 'test-role',
     generatedAt: '2024-12-29',
     jobDescription: 'Test JD',
+    publishStatus: 'draft',
+    applicationStatus: 'not_applied',
     ...overrides.metadata
   },
   overrides: {
@@ -148,7 +150,6 @@ describe('VariantResumePage - Variant Loading', () => {
   });
 
   it('should show loading state initially', () => {
-    const mockVariant = createMockVariant();
     vi.mocked(loadVariant).mockImplementation(() => new Promise(() => {})); // Never resolves
 
     renderWithRouter('/test/role/resume');
