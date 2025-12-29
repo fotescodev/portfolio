@@ -7,7 +7,8 @@
     "generationModel": "claude-opus-4-5-20251101",
     "slug": "anthropic-ai-safety-fellow",
     "publishStatus": "draft",
-    "applicationStatus": "not_applied"
+    "applicationStatus": "not_applied",
+    "sourceUrl": "https://job-boards.greenhouse.io/anthropic/jobs/5023394008"
   },
   "overrides": {
     "hero": {

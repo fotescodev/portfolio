@@ -96,9 +96,9 @@ overrides:
       - text: "Cursor"
         style: "accent"
     subheadline: >
-      Developer tools PM who knows what makes engineering teams adopt—and stay.
-      From Flow CLI to institutional crypto infrastructure, I've driven enterprise
-      adoption where the technical bar is high and the stakes are real.
+      Technical Product Manager building empathy through Developer Experience.
+      From Microsoft to institutional crypto infrastructure, I bridge the gap
+      between technical depth and enterprise trust.
 
   about:
     tagline: >
@@ -107,28 +107,22 @@ overrides:
     bio:
       - >
         I've spent my career making complex infrastructure accessible to developers
-        while earning the trust of their leadership. At Dapper Labs, I owned the Flow
-        CLI and Cadence Playground, reducing time-to-first-deploy by 60% through
-        relentless focus on developer onboarding. At Anchorage Digital, I work with
-        institutional clients managing billions—Galaxy chose us for ETH staking
-        specifically because the infrastructure I built met their compliance bar.
-        That means presenting to CTOs on technical architecture and following up
-        with their engineers on implementation details.
+        while earning the trust of their leadership. Most recently, at Anchorage Digital, I worked with
+        institutional clients managing billions in AUM, ensuring zero slashing events
+        through reliable staking infrastructure. At Ankr, I drove 15× revenue growth
+        ($130K to $2M ARR) by repositioning RPC infrastructure from developers to protocols—
+        building Advanced APIs and an SDK that scaled to 1M+ daily requests.
       - >
         What draws me to Cursor is the developer productivity mission. I've lived
-        the pain of fragmented tooling and know what it takes to drive adoption
-        in engineering orgs—both bottoms-up with power users and top-down with
-        engineering leadership. My startup experience (Ankr: 15× revenue growth,
-        5-person team, survival mode) means I know how to be {{accent}}scrappy
-        and proactive{{/accent}}. I want to help enterprises unlock what Cursor
-        can do for their teams.
+        the pain of fragmented developer tooling.I want to help enterprises {{accent}}unlock what Cursor
+        can do{{/accent}} for their teams.
     stats:
       - value: "60%"
         label: "DX Improvement"
       - value: "8+"
         label: "Years PM"
-      - value: "Billions"
-        label: "AUM Onboarded"
+      - value: "4"
+        label: "APIs & CLIs Shipped"
 
   sections:
     beyondWork: false

@@ -7,7 +7,8 @@
     "generationModel": "claude-opus-4-5-20251101",
     "slug": "microsoft-senior-pm",
     "publishStatus": "draft",
-    "applicationStatus": "not_applied"
+    "applicationStatus": "not_applied",
+    "sourceUrl": "https://apply.careers.microsoft.com/careers?query=product&start=0&pid=1970393556619182&sort_by=match"
   },
   "overrides": {
     "hero": {

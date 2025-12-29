@@ -7,7 +7,8 @@
     "generationModel": "claude-opus-4-5-20251101",
     "slug": "anaconda-genai-pm",
     "publishStatus": "draft",
-    "applicationStatus": "not_applied"
+    "applicationStatus": "not_applied",
+    "sourceUrl": "https://ats.rippling.com/anaconda/jobs/f37e2651-58a7-4198-94cf-6ec8bb2cca30"
   },
   "overrides": {
     "hero": {

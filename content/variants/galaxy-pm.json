@@ -7,7 +7,8 @@
     "generationModel": "claude-opus-4-5-20251101",
     "slug": "galaxy-pm",
     "publishStatus": "draft",
-    "applicationStatus": "not_applied"
+    "applicationStatus": "not_applied",
+    "sourceUrl": "https://job-boards.greenhouse.io/galaxydigitalservices/jobs/5591908004"
   },
   "overrides": {
     "hero": {
