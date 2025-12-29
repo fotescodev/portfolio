@@ -1,7 +1,7 @@
 import type { Profile } from '../../types/variant';
 
-// Extended hero type to include variant-specific companyAccent
-type HeroWithAccent = Profile['hero'] & {
+// Extended hero type to include variant-specific fields
+type HeroWithVariant = Profile['hero'] & {
   companyAccent?: Array<{ text: string; style?: 'italic' | 'muted' | 'accent' | 'normal' }>;
 };
 
@@ -13,7 +13,7 @@ interface HeroSectionProps {
 }
 
 export default function HeroSection({ profile, isMobile, isTablet, isLoaded }: HeroSectionProps) {
-  const hero = profile.hero as HeroWithAccent;
+  const hero = profile.hero as HeroWithVariant;
 
   return (
     <>
@@ -98,56 +98,49 @@ export default function HeroSection({ profile, isMobile, isTablet, isLoaded }: H
               } else if (segment.style === 'accent') {
                 style.color = 'var(--color-accent)';
               }
+              const isLast = index === hero.headline.length - 1;
               return (
                 <span key={index}>
                   {index > 0 && <br />}
                   <span style={style}>{segment.text}</span>
+                  {/* Company accent for variant pages */}
+                  {isLast && hero.companyAccent && hero.companyAccent.length > 0 && (
+                    <span style={{
+                      fontSize: '0.28em',
+                      fontStyle: 'normal',
+                      fontWeight: 400,
+                      marginLeft: '0.5em',
+                      letterSpacing: '0.01em',
+                      verticalAlign: 'baseline',
+                      position: 'relative',
+                      top: '-0.15em'
+                    }}>
+                      <span style={{ color: 'var(--color-text-tertiary)', opacity: 0.4 }}>—</span>
+                      {hero.companyAccent.map((accentSegment, accentIndex) => {
+                        const accentStyle: React.CSSProperties = { marginLeft: '0.35em' };
+                        if (accentSegment.style === 'muted') {
+                          accentStyle.color = 'var(--color-text-tertiary)';
+                          accentStyle.opacity = 0.6;
+                        } else if (accentSegment.style === 'accent') {
+                          accentStyle.color = 'var(--color-accent)';
+                          accentStyle.opacity = 0.75;
+                        } else {
+                          accentStyle.color = 'var(--color-text-secondary)';
+                          accentStyle.opacity = 0.6;
+                        }
+                        return (
+                          <span key={accentIndex} style={accentStyle}>{accentSegment.text}</span>
+                        );
+                      })}
+                    </span>
+                  )}
                 </span>
               );
             })}
           </h1>
 
-          {/* Company Accent - Shows company-specific context for variants */}
-          {hero.companyAccent && hero.companyAccent.length > 0 && (
-            <div style={{
-              marginTop: isMobile ? 'var(--space-md)' : 'var(--space-lg)',
-              fontSize: isMobile ? '4vw' : isTablet ? '3vw' : '2.5vw',
-              fontFamily: 'var(--font-serif)',
-              fontWeight: 400,
-              fontStyle: 'italic',
-              lineHeight: 1.2,
-              letterSpacing: '-0.02em',
-              opacity: 0.7
-            }}>
-              {hero.companyAccent.map((segment, index) => {
-                const style: React.CSSProperties = {};
-                if (segment.style === 'muted') {
-                  style.fontStyle = 'normal';
-                  style.color = 'var(--color-text-tertiary)';
-                } else if (segment.style === 'accent') {
-                  style.color = 'var(--color-accent)';
-                  style.opacity = 1;
-                } else {
-                  style.color = 'var(--color-text-secondary)';
-                }
-                return (
-                  <span key={index}>
-                    {index > 0 && ' '}
-                    <span style={style}>{segment.text}</span>
-                  </span>
-                );
-              })}
-            </div>
-          )}
-
           {/* Subheadline */}
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
-            gap: isMobile ? 'var(--space-lg)' : 'var(--space-2xl)',
-            marginTop: isMobile ? 'var(--space-xl)' : '40px',
-            alignItems: 'start'
-          }}>
+          <div className="hero-grid">
             <p style={{
               fontSize: isMobile ? '17px' : '19px',
               color: 'var(--color-text-secondary)',
@@ -158,73 +151,73 @@ export default function HeroSection({ profile, isMobile, isTablet, isLoaded }: H
               {hero.subheadline}
             </p>
 
-            <div style={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 'var(--space-md)'
-            }}>
-              <button
-                onClick={() => {
-                  const target = hero.cta.primary.href.replace('#', '');
-                  const el = document.getElementById(target);
-                  if (el) el.scrollIntoView({ behavior: 'smooth' });
-                }}
-                className="hero-primary-btn"
-                style={{
-                  padding: isMobile ? '16px 28px' : '18px 32px',
-                  textDecoration: 'none',
-                  fontSize: '14px',
-                  fontWeight: 600,
-                  letterSpacing: '0.02em',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  width: isMobile ? '100%' : 'fit-content',
-                  minWidth: '220px',
-                  border: 'none',
-                  cursor: 'pointer'
-                }}
-              >
-                <span>{hero.cta.primary.label}</span>
-                <span style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic' }}>↓</span>
-              </button>
-              <a
-                href={hero.cta.secondary.href}
-                download="Dmitrii-Fotesco-Resume.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hero-secondary-btn"
-                style={{
-                  padding: isMobile ? '16px 28px' : '18px 32px',
-                  textDecoration: 'none',
-                  fontSize: '14px',
-                  fontWeight: 600,
-                  letterSpacing: '0.02em',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  width: isMobile ? '100%' : 'fit-content',
-                  minWidth: '220px'
-                }}
-              >
-                <span>{hero.cta.secondary.label}</span>
-                <svg
-                  width="14"
-                  height="14"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  style={{ opacity: 0.7 }}
+            {/* Hide buttons on mobile - they appear next to photo in About section */}
+            {!isMobile && (
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 'var(--space-md)',
+                marginLeft: 'auto'
+              }}>
+                <button
+                  onClick={() => {
+                    const target = hero.cta.primary.href.replace('#', '');
+                    const el = document.getElementById(target);
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  className="hero-primary-btn hero-cta-btn"
+                  style={{
+                    padding: '18px 32px',
+                    textDecoration: 'none',
+                    fontSize: '14px',
+                    fontWeight: 600,
+                    letterSpacing: '0.02em',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    border: 'none',
+                    cursor: 'pointer'
+                  }}
                 >
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                  <polyline points="7 10 12 15 17 10" />
-                  <line x1="12" y1="15" x2="12" y2="3" />
-                </svg>
-              </a>
-            </div>
+                  <span>{hero.cta.primary.label}</span>
+                  <span style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic' }}>↓</span>
+                </button>
+                <a
+                  href={hero.cta.secondary.href}
+                  download="Dmitrii-Fotesco-Resume.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hero-secondary-btn hero-cta-btn"
+                  style={{
+                    padding: '18px 32px',
+                    textDecoration: 'none',
+                    fontSize: '14px',
+                    fontWeight: 600,
+                    letterSpacing: '0.02em',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between'
+                  }}
+                >
+                  <span>{hero.cta.secondary.label}</span>
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    style={{ opacity: 0.7 }}
+                  >
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="7 10 12 15 17 10" />
+                    <line x1="12" y1="15" x2="12" y2="3" />
+                  </svg>
+                </a>
+              </div>
+            )}
           </div>
         </div>
       </section>

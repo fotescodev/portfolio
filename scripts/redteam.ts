@@ -21,24 +21,21 @@
 import { existsSync, readFileSync, readdirSync, mkdirSync, writeFileSync } from 'fs';
 import { join } from 'path';
 import YAML from 'yaml';
+import ora from 'ora';
 import { VariantSchema } from '../src/lib/schemas.js';
+import { theme, HEADER_COMPACT, kv } from './cli/theme.js';
+import { parseRedteamArgs } from './cli/parse-args.js';
 
-const colors = {
-  reset: '\x1b[0m',
-  green: '\x1b[32m',
-  red: '\x1b[31m',
-  yellow: '\x1b[33m',
-  blue: '\x1b[34m',
-  gray: '\x1b[90m',
-  bold: '\x1b[1m'
-};
+type Args = ReturnType<typeof parseRedteamArgs>;
 
-type Args = {
-  slug?: string;
-  all: boolean;
-  check: boolean;
-  strict: boolean;
-  noWrite: boolean;
+type RedteamResult = {
+  slug: string;
+  status: 'pass' | 'warn' | 'fail' | 'error';
+  fails: number;
+  warns: number;
+  reportPath?: string;
+  message?: string;
+  findings?: Finding[];
 };
 
 type Finding = {
@@ -49,37 +46,7 @@ type Finding = {
 };
 
 function parseArgs(): Args {
-  const argv = process.argv.slice(2);
-  const out: Args = { all: false, check: false, strict: false, noWrite: false };
-
-  for (let i = 0; i < argv.length; i++) {
-    const a = argv[i];
-    const n = argv[i + 1];
-    if (a === '--slug') {
-      out.slug = n;
-      i++;
-    } else if (a === '--all') {
-      out.all = true;
-    } else if (a === '--check') {
-      out.check = true;
-    } else if (a === '--strict') {
-      out.strict = true;
-    } else if (a === '--no-write') {
-      out.noWrite = true;
-    }
-  }
-
-  // Default: redteam:check checks all variants.
-  if (out.check && !out.slug) out.all = true;
-
-  if (!out.slug && !out.all) {
-    throw new Error('Provide --slug <slug> or --all');
-  }
-  if (out.slug && out.all) {
-    throw new Error('Choose either --slug or --all, not both.');
-  }
-
-  return out;
+  return parseRedteamArgs(process.argv.slice(2));
 }
 
 function listVariantSlugs(): string[] {
@@ -335,73 +302,150 @@ function writeReport(slug: string, findings: Finding[]) {
   return path;
 }
 
-async function redteamOne(slug: string, args: Args) {
-  const { validated } = readVariantYaml(slug);
+function redteamOne(slug: string, args: Args): RedteamResult {
+  try {
+    const { validated } = readVariantYaml(slug);
 
-  const overrideTexts: string[] = [];
-  collectStrings(validated.overrides, overrideTexts);
-  const text = overrideTexts.join('\n');
+    const overrideTexts: string[] = [];
+    collectStrings(validated.overrides, overrideTexts);
+    const text = overrideTexts.join('\n');
 
-  const jd = validated.metadata?.jobDescription ?? '';
-  const ledger = loadClaimsLedger(slug);
+    const jd = validated.metadata?.jobDescription ?? '';
+    const ledger = loadClaimsLedger(slug);
 
-  const findings: Finding[] = [];
+    const findings: Finding[] = [];
 
-  findings.push(scanClaimsLedger(slug, ledger));
-  findings.push(scanSecrets(text));
-  findings.push(scanConfidential(text));
-  findings.push(scanSycophancy(text));
-  findings.push(scanApproxNearMetrics(text));
-  findings.push(scanInjection(jd));
-  findings.push(scanPublicJobDescription(jd));
-  findings.push(scanCrossVariantContamination(slug, validated.metadata.company, text));
+    findings.push(scanClaimsLedger(slug, ledger));
+    findings.push(scanSecrets(text));
+    findings.push(scanConfidential(text));
+    findings.push(scanSycophancy(text));
+    findings.push(scanApproxNearMetrics(text));
+    findings.push(scanInjection(jd));
+    findings.push(scanPublicJobDescription(jd));
+    findings.push(scanCrossVariantContamination(slug, validated.metadata.company, text));
 
-  // Sort: FAIL first, WARN, PASS (nice report)
-  findings.sort((a, b) => severityScore(b.severity) - severityScore(a.severity));
+    // Sort: FAIL first, WARN, PASS (nice report)
+    findings.sort((a, b) => severityScore(b.severity) - severityScore(a.severity));
 
-  if (!args.noWrite) writeReport(slug, findings);
+    const reportPath = args.noWrite ? undefined : writeReport(slug, findings);
 
-  // Gate behavior
-  const fails = findings.filter(f => f.severity === 'FAIL');
-  const warns = findings.filter(f => f.severity === 'WARN');
-  const shouldFail = fails.length > 0 || (args.strict && warns.length > 0);
+    const fails = findings.filter(f => f.severity === 'FAIL');
+    const warns = findings.filter(f => f.severity === 'WARN');
+    const shouldFail = fails.length > 0 || (args.strict && warns.length > 0);
 
-  if (args.check) {
-    if (shouldFail) {
-      console.error(`${colors.red}${colors.bold}✗ redteam check failed for ${slug}${colors.reset}`);
-      for (const f of fails) console.error(`  ${colors.red}•${colors.reset} ${f.id}: ${f.title}`);
-      if (args.strict) for (const w of warns) console.error(`  ${colors.yellow}•${colors.reset} ${w.id}: ${w.title}`);
-      process.exit(1);
-    }
-    console.log(`${colors.green}✓${colors.reset} ${slug} (redteam check passed)`);
-    return;
+    return {
+      slug,
+      status: shouldFail ? 'fail' : warns.length > 0 ? 'warn' : 'pass',
+      fails: fails.length,
+      warns: warns.length,
+      reportPath,
+      findings: args.json ? findings : undefined
+    };
+  } catch (err) {
+    return {
+      slug,
+      status: 'error',
+      fails: 0,
+      warns: 0,
+      message: err instanceof Error ? err.message : String(err)
+    };
   }
-
-  // Non-check mode: print quick summary
-  const failCount = fails.length;
-  const warnCount = warns.length;
-  console.log(`${colors.green}✓${colors.reset} ${slug}: ${failCount} FAIL • ${warnCount} WARN`);
-  console.log(`${colors.gray}  Report:${colors.reset} capstone/develop/redteam/${slug}.redteam.md`);
 }
 
 async function main() {
   const args = parseArgs();
   const slugs = args.all ? listVariantSlugs() : [args.slug!];
 
+  // JSON output mode - minimal, machine-readable
+  if (args.json) {
+    if (slugs.length === 0) {
+      console.log(JSON.stringify({ mode: args.check ? 'check' : 'redteam', results: [], errors: [] }));
+      process.exit(0);
+    }
+
+    const results = slugs.map(slug => redteamOne(slug, args));
+    const output = {
+      mode: args.check ? 'check' : 'redteam',
+      strict: args.strict,
+      results: results.filter(r => r.status !== 'error'),
+      errors: results.filter(r => r.status === 'error')
+    };
+
+    console.log(JSON.stringify(output, null, 2));
+    const hasFailures = results.some(r => r.status === 'fail' || r.status === 'error');
+    process.exit(hasFailures ? 1 : 0);
+  }
+
+  // Interactive output
+  if (!args.quiet) {
+    console.log(HEADER_COMPACT);
+    console.log();
+  }
+
   if (slugs.length === 0) {
-    console.log(`${colors.gray}No variants found. Nothing to red-team.${colors.reset}`);
+    if (!args.quiet) {
+      console.log(theme.muted('No variants found. Nothing to red-team.'));
+    }
     process.exit(0);
   }
 
-  console.log(`${colors.bold}${colors.blue}${args.check ? 'Checking' : 'Red teaming'} variants${colors.reset}`);
-  console.log(`${colors.gray}${slugs.length} variant(s)${colors.reset}\n`);
+  const spinner = ora({
+    text: args.check ? 'Checking variants...' : 'Running red team scans...',
+    color: 'yellow'
+  }).start();
+
+  const results: RedteamResult[] = [];
 
   for (const slug of slugs) {
-    await redteamOne(slug, args);
+    const result = redteamOne(slug, args);
+    results.push(result);
   }
+
+  spinner.stop();
+
+  // Display results
+  const passed = results.filter(r => r.status === 'pass');
+  const warned = results.filter(r => r.status === 'warn');
+  const failed = results.filter(r => r.status === 'fail');
+  const errors = results.filter(r => r.status === 'error');
+
+  if (!args.quiet) {
+    console.log(theme.bold(args.check ? 'Red Team Check' : 'Red Team Scan'));
+    console.log(theme.muted(`${results.length} variant(s)`));
+    console.log();
+
+    for (const r of results) {
+      if (r.status === 'error') {
+        console.log(`${theme.icons.error} ${r.slug} ${theme.error('error')}`);
+        if (r.message) console.log(theme.muted(`  ${r.message}`));
+      } else if (r.status === 'fail') {
+        console.log(`${theme.icons.error} ${r.slug} ${theme.error(`${r.fails} FAIL`)} ${theme.warning(`${r.warns} WARN`)}`);
+        if (r.reportPath) console.log(theme.muted(`  ${r.reportPath}`));
+      } else if (r.status === 'warn') {
+        console.log(`${theme.icons.warning} ${r.slug} ${theme.warning(`${r.warns} WARN`)}`);
+        if (r.reportPath) console.log(theme.muted(`  ${r.reportPath}`));
+      } else {
+        console.log(`${theme.icons.success} ${r.slug} ${theme.success('passed')}`);
+      }
+    }
+
+    console.log();
+    console.log(
+      theme.muted('Summary:'),
+      `${passed.length} passed,`,
+      `${warned.length} warnings,`,
+      `${failed.length + errors.length} failed`
+    );
+  }
+
+  if (failed.length > 0 || errors.length > 0) {
+    process.exit(1);
+  }
+
+  process.exit(0);
 }
 
 main().catch((err) => {
-  console.error(`${colors.red}${colors.bold}Fatal:${colors.reset} ${err instanceof Error ? err.message : String(err)}`);
+  console.error(`${theme.icons.error} ${theme.error('Fatal:')} ${err instanceof Error ? err.message : String(err)}`);
   process.exit(1);
 });

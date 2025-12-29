@@ -1,0 +1,158 @@
+# ═══════════════════════════════════════════════════════════════
+# VARIANT METADATA
+# ═══════════════════════════════════════════════════════════════
+metadata:
+  company: "Anthropic"
+  role: "AI Safety Fellow"
+  slug: "anthropic-ai-safety-fellow"
+  generatedAt: "2025-12-23T00:00:00Z"
+  jobDescription: |
+    AI Safety Fellowship - 4 month research program (May or July 2026 cohorts)
+
+    Fellowship accelerates AI safety research by providing funding and mentorship.
+    Fellows work on empirical projects producing public research outputs (papers).
+    Over 80% of fellows produced papers in previous cohorts.
+
+    Research Areas:
+    - Scalable Oversight: Maintaining helpful, honest models at superhuman intelligence
+    - Adversarial Robustness & AI Control: Safety methods for unfamiliar scenarios
+    - Model Organisms: Empirical misalignment research
+    - Mechanistic Interpretability: Understanding LLM internals
+    - AI Welfare: Developing evaluations and mitigations
+
+    Required:
+    - Python fluency
+    - Full-time availability (4 months)
+    - Work authorization in US/UK/Canada
+    - Strong technical background (CS, math, physics, cybersecurity)
+    - Rapid implementation + clear communication
+
+    Nice to have:
+    - Empirical ML research experience
+    - LLM experience
+    - Deep learning frameworks
+    - Experiment management
+    - Open-source contributions
+  generationModel: "claude-opus-4-5-20251101"
+  sourceUrl: "https://job-boards.greenhouse.io/anthropic/jobs/5023394008"
+
+# ═══════════════════════════════════════════════════════════════
+# OVERRIDES (Stretched claims for negative example)
+# ═══════════════════════════════════════════════════════════════
+overrides:
+  hero:
+    status: "Open to AI Safety Research"
+    headline:
+      - text: "Building"
+        style: "italic"
+      - text: "at the edge of"
+        style: "muted"
+      - text: "trust"
+        style: "accent"
+    companyAccent:
+      - text: "with"
+        style: "muted"
+      - text: "Anthropic"
+        style: "accent"
+    subheadline: >
+      Technical builder with deep experience in AI systems, cryptographic safety,
+      and adversarial robustness. From LLM-powered developer tools to MPC custody
+      infrastructure—I've spent years at the intersection of AI and trust.
+
+  about:
+    tagline: >
+      Eight years building systems where trust is non-negotiable—now ready to
+      apply that rigor to AI safety research.
+    bio:
+      - >
+        My work has always centered on safety-critical systems. At Anchorage Digital,
+        I built ETF-grade staking infrastructure with zero tolerance for failure—the
+        same adversarial thinking that AI safety research demands. At Forte, I led
+        MPC cryptography implementations for secure key management, working directly
+        with the math underlying multi-party computation. I've deployed LLM systems
+        in production at Dapper Labs, achieving 98% accuracy on developer questions.
+      - >
+        I'm drawn to Anthropic because {{accent}}AI safety is the most important
+        problem of our time{{/accent}}. My background gives me a unique lens: I've
+        seen what happens when systems fail at scale, and I understand the engineering
+        discipline required to prevent it. I want to contribute to interpretability
+        research and help ensure AI systems remain aligned with human values.
+    stats:
+      - value: "8+"
+        label: "Years in Tech"
+      - value: "98%"
+        label: "LLM Accuracy Achieved"
+      - value: "Zero"
+        label: "Critical Failures"
+
+  sections:
+    beyondWork: false
+    blog: false
+    onchainIdentity: false
+    skills: true
+    passionProjects: false
+
+# ═══════════════════════════════════════════════════════════════
+# RELEVANCE SCORING (Intentionally weak matches)
+# ═══════════════════════════════════════════════════════════════
+relevance:
+  caseStudies:
+    - slug: "eth-staking"
+      relevanceScore: 0.4
+      reasoning: "Zero-tolerance safety culture translates to AI safety mindset, but no direct AI/ML work"
+    - slug: "xbox-royalties"
+      relevanceScore: 0.3
+      reasoning: "Technical implementation skills, but enterprise blockchain ≠ AI safety research"
+    - slug: "ankr-rpc"
+      relevanceScore: 0.2
+      reasoning: "Infrastructure scaling experience, minimal relevance to AI safety"
+    - slug: "protocol-integration"
+      relevanceScore: 0.2
+      reasoning: "Cross-functional coordination, but no research component"
+
+  skills:
+    - category: "Technical Implementation"
+      relevanceScore: 0.5
+    - category: "Blockchain & Cryptography"
+      relevanceScore: 0.3
+    - category: "Product Management"
+      relevanceScore: 0.1
+
+  projects: []
+
+# ═══════════════════════════════════════════════════════════════
+# TALKING POINTS (Weak connections exposed)
+# ═══════════════════════════════════════════════════════════════
+talkingPoints:
+  whyThisRole:
+    - "Deep experience with safety-critical infrastructure (zero slashing events)"
+    - "Deployed LLM systems in production (kapa.ai integration)"
+    - "MPC cryptography background relates to secure computation"
+    - "Strong Python/technical implementation skills"
+
+  relevantStories:
+    - achievement: "eth-staking-zero-slashing"
+      connection: "Zero-tolerance safety culture, adversarial thinking—but not AI-specific"
+    - achievement: "forte-wallet-sdk"
+      connection: "MPC cryptography, secure computation—but wallet security ≠ AI safety"
+    - achievement: "flow-cli-dx"
+      connection: "Integrated kapa.ai LLM—but as product user, not researcher"
+
+  questionsToAsk:
+    - "What research areas are most open to practitioners without traditional ML backgrounds?"
+    - "How do fellows typically ramp up on interpretability techniques?"
+    - "Are there fellows who came from applied engineering rather than research?"
+    - "What does the mentorship structure look like for career transitioners?"
+
+# ═══════════════════════════════════════════════════════════════
+# KNOWN GAPS (Transparent about weak fit)
+# ═══════════════════════════════════════════════════════════════
+knownGaps:
+  - gap: "No published research or academic papers"
+    mitigation: "Strong execution track record, ability to learn quickly"
+  - gap: "No empirical ML research experience"
+    mitigation: "Applied LLM deployment experience at Dapper Labs"
+  - gap: "No deep learning framework expertise"
+    mitigation: "Technical background in other domains, quick learner"
+  - gap: "No interpretability or alignment research background"
+    mitigation: "Interest and motivation to learn"

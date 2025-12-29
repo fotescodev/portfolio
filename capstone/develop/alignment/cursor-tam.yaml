@@ -1,0 +1,115 @@
+metadata:
+  generatedAt: 2025-12-29T01:58:12.841Z
+  sourceAnalysis: capstone/develop/jd-analysis/cursor-tam.yaml
+  searchTerms:
+    - developer_tools
+    - infrastructure
+    - enterprise
+    - consumer
+    - ai_ml
+    - startup
+summary:
+  totalMatches: 6
+  strongMatches: 0
+  moderateMatches: 3
+  weakMatches: 3
+  alignmentScore: 0.35
+  recommendation: REVIEW
+matches:
+  - source: achievement
+    id: eth-staking-zero-slashing
+    headline: Built ETF-grade staking infrastructure with zero slashing events for
+      institutional clients managing billions in AUM
+    relevanceScore: 0.6666666666666666
+    matchedTerms:
+      - infrastructure
+      - enterprise
+      - consumer
+    matchedSkills: []
+    matchedThemes:
+      - infrastructure
+    snippet: >-
+      Zero slashing events across all validators since launch. Galaxy
+      specifically cited
+
+      'full key ownership' as reason they chose us over competitors. Onbo...
+  - source: achievement
+    id: xbox-royalties-ethereum
+    headline: Built Microsoft's first production smart contract—Ethereum royalty
+      system for Xbox eliminating publisher payment disputes
+    relevanceScore: 0.6666666666666666
+    matchedTerms:
+      - infrastructure
+      - enterprise
+    matchedSkills: []
+    matchedThemes:
+      - enterprise-blockchain
+      - infrastructure
+    snippet: >-
+      Zero disputed payments post-launch—transparent audit trail eliminated
+      disputes.
+
+      System handles Xbox-scale transaction processing. Project became refer...
+  - source: achievement
+    id: ankr-15x-revenue
+    headline: Drove 15× revenue growth ($130K to $2M ARR) by pivoting RPC product
+      from developers to blockchain protocols
+    relevanceScore: 0.5
+    matchedTerms:
+      - infrastructure
+      - startup
+    matchedSkills: []
+    matchedThemes:
+      - infrastructure
+    snippet: >-
+      15× revenue growth in 8 months ($130K to $2M ARR). Achieved target that
+      seemed
+
+      impossible at start. 1M+ daily API requests through protocol partnershi...
+  - source: achievement
+    id: forte-wallet-sdk
+    headline: Built Wallet-as-a-Service infrastructure with MPC custody for AAA
+      gaming studios
+    relevanceScore: 0.3333333333333333
+    matchedTerms:
+      - infrastructure
+    matchedSkills: []
+    matchedThemes:
+      - infrastructure
+    snippet: >-
+      Launched SDK used by multiple AAA gaming partners. Enabled gaming studios
+      to
+
+      add Web3 features without blockchain expertise. MPC architecture
+      satisfie...
+  - source: achievement
+    id: l2-protocol-integrations
+    headline: Shipped 7+ L2 protocol integrations with 40% faster cycle time using
+      scalable RICE evaluation framework
+    relevanceScore: 0.3333333333333333
+    matchedTerms:
+      - infrastructure
+    matchedSkills: []
+    matchedThemes:
+      - infrastructure
+    snippet: >-
+      Reduced per-integration effort by 40% (12+ weeks to ~7 weeks). First time
+      shipping
+
+      3 protocols simultaneously. Framework became company standard. BD t...
+  - source: achievement
+    id: flow-cli-dx
+    headline: Improved Flow developer onboarding by 60% through CLI and Cadence
+      Playground redesign
+    relevanceScore: 0.16666666666666666
+    matchedTerms:
+      - developer_tools
+    matchedSkills: []
+    matchedThemes: []
+    snippet: >-
+      Reduced time-to-first-deploy by 60%. Improved developer retention in
+      first-week
+
+      experience. Created intuition for developer experience that informed f...
+gaps:
+  - ai_ml

@@ -71,12 +71,47 @@ years: [number]
 good_for: [string]
 ```
 
+## Quick Search (Deterministic Script)
+
+For keyword-based searches, **USE THE SCRIPT FIRST** — it's faster and consistent:
+
+```bash
+# Search by keywords
+npm run search:evidence -- --terms "crypto,staking,institutional"
+
+# With JSON output for processing
+npm run search:evidence -- --terms "crypto,staking" --json
+```
+
+The script returns:
+- Matching achievements and stories sorted by relevance
+- Relevance scores (strong ≥70%, moderate 40-70%, weak <40%)
+- Matched terms, skills, and themes
+- Snippets for quick review
+
+**Use the script when:**
+- User asks about specific keywords
+- Quick search without deep analysis needed
+- Need alignment scoring for job fit
+
+**Use manual querying when:**
+- Deep relationship traversal needed
+- Need full STAR narrative (situation, task, action, result)
+- Complex cross-referencing across entities
+
+---
+
 ## Query Patterns
 
 ### Query by Theme
 **User**: "What's my institutional crypto experience?"
 
-**Process**:
+**Script-first approach:**
+```bash
+npm run search:evidence -- --terms "institutional,crypto,custody"
+```
+
+**For deep dive:**
 1. Find theme `institutional-crypto` in index
 2. Query relationships where `to: theme:institutional-crypto`
 3. Load matching achievements
@@ -115,7 +150,12 @@ good_for: [string]
 ### Query by Keyword
 **User**: "Find achievements related to revenue growth"
 
-**Process**:
+**Script-first approach:**
+```bash
+npm run search:evidence -- --terms "revenue,growth,ARR"
+```
+
+**For manual search:**
 1. Search theme keywords for "revenue"
 2. Search achievement headlines/results for "revenue"
 3. Return ranked by relevance
@@ -123,7 +163,12 @@ good_for: [string]
 ### Query for Role Fit
 **User**: "What achievements fit a Platform PM role?"
 
-**Process**:
+**Script-first approach:**
+```bash
+npm run search:evidence -- --terms "platform,infrastructure,api,scale"
+```
+
+**For deeper analysis:**
 1. Parse role keywords: platform, infrastructure, scale
 2. Match themes: infrastructure, developer-experience
 3. Match `good_for` arrays in achievements

@@ -1,0 +1,166 @@
+version: 1
+variant:
+  slug: galaxy-pm
+  variantFile: content/variants/galaxy-pm.yaml
+  contentHash: ffeb47437c688a62879bae528e1e4879ccc001ab44b0395ece871e76b848fdfe
+  evaluatedAt: 2025-12-22T23:47:11.087Z
+claims:
+  - id: metric-ddb52910c2
+    location: overrides.hero.subheadline
+    text: Technical Program Manager with 8+ years shipping Web3 infrastructure
+    anchors: &a1
+      - 8+
+    candidateSources:
+      - path: content/knowledge/achievements/xbox-royalties-ethereum.yaml
+        score: 0.086
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 57%
+      - path: content/experience/index.yaml
+        score: 0.086
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 57%
+      - path: content/knowledge/achievements/eth-staking-zero-slashing.yaml
+        score: 0.064
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 43%
+      - path: content/knowledge/achievements/forte-wallet-sdk.yaml
+        score: 0.064
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 43%
+      - path: content/knowledge/achievements/l2-protocol-integrations.yaml
+        score: 0.064
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 43%
+    verified:
+      status: verified
+      sources:
+        - path: content/profile.yaml
+          anchors: *a1
+      notes: ""
+  - id: metric-7e823d9c57
+    location: overrides.about.bio[0]
+    text: I've shipped 7+ L2 integrations (Optimism, Base, Arbitrum) using a RICE evaluation framework I built, coordinating
+      across 4+ teams and reducing integration time by 40%
+    anchors: &a2
+      - 40%
+      - 7+
+      - 4+
+      - Optimism, Base, Arbitrum
+    candidateSources:
+      - path: content/knowledge/achievements/l2-protocol-integrations.yaml
+        score: 1
+        matchedAnchors:
+          - 40%
+          - 7+
+          - 4+
+          - Optimism, Base, Arbitrum
+        note: anchors 4/4 • overlap 94%
+      - path: content/knowledge/achievements/eth-staking-zero-slashing.yaml
+        score: 0.278
+        matchedAnchors:
+          - 40%
+        note: anchors 1/4 • overlap 19%
+      - path: content/knowledge/stories/galaxy-compliance-win.yaml
+        score: 0.278
+        matchedAnchors:
+          - 40%
+        note: anchors 1/4 • overlap 19%
+      - path: content/experience/index.yaml
+        score: 0.094
+        matchedAnchors: []
+        note: anchors 0/4 • overlap 63%
+    verified:
+      status: verified
+      sources:
+        - path: content/knowledge/achievements/l2-protocol-integrations.yaml
+          anchors: *a2
+      notes: ""
+  - id: metric-9ff33adc16
+    location: overrides.about.bio[0]
+    text: Galaxy chose Anchorage for ETH staking specifically because of the institutional-grade infrastructure my team
+      built—zero slashing events, billions in AUM, full key ownership.
+    anchors: &a3
+      - zero
+      - billions
+    candidateSources:
+      - path: content/knowledge/achievements/eth-staking-zero-slashing.yaml
+        score: 1
+        matchedAnchors:
+          - zero
+          - billions
+        note: anchors 2/2 • overlap 88%
+      - path: content/knowledge/stories/galaxy-compliance-win.yaml
+        score: 0.624
+        matchedAnchors:
+          - zero
+        note: anchors 1/2 • overlap 82%
+      - path: content/knowledge/achievements/l2-protocol-integrations.yaml
+        score: 0.062
+        matchedAnchors: []
+        note: anchors 0/2 • overlap 41%
+      - path: content/experience/index.yaml
+        score: 0.062
+        matchedAnchors: []
+        note: anchors 0/2 • overlap 41%
+    verified:
+      status: verified
+      sources:
+        - path: content/knowledge/achievements/eth-staking-zero-slashing.yaml
+          anchors: *a3
+      notes: ""
+  - id: metric-d07b4c9bd6
+    location: overrides.about.stats[0].value
+    text: 8+
+    anchors: &a4
+      - 8+
+    candidateSources: []
+    verified:
+      status: verified
+      sources:
+        - path: content/profile.yaml
+          anchors: *a4
+      notes: ""
+  - id: metric-60ecdf8a3a
+    location: overrides.about.stats[1].value
+    text: 7+
+    anchors: &a5
+      - 7+
+    candidateSources:
+      - path: content/knowledge/achievements/l2-protocol-integrations.yaml
+        score: 1
+        matchedAnchors:
+          - 7+
+        note: anchors 1/1 • overlap 0%
+    verified:
+      status: verified
+      sources:
+        - path: content/knowledge/achievements/l2-protocol-integrations.yaml
+          anchors: *a5
+      notes: ""
+  - id: metric-bcd44c9028
+    location: overrides.about.stats[2].value
+    text: Zero
+    anchors: &a6
+      - Zero
+    candidateSources:
+      - path: content/knowledge/achievements/eth-staking-zero-slashing.yaml
+        score: 1
+        matchedAnchors:
+          - Zero
+        note: anchors 1/1 • overlap 100%
+      - path: content/knowledge/achievements/xbox-royalties-ethereum.yaml
+        score: 1
+        matchedAnchors:
+          - Zero
+        note: anchors 1/1 • overlap 100%
+      - path: content/knowledge/stories/galaxy-compliance-win.yaml
+        score: 1
+        matchedAnchors:
+          - Zero
+        note: anchors 1/1 • overlap 100%
+    verified:
+      status: verified
+      sources:
+        - path: content/knowledge/achievements/eth-staking-zero-slashing.yaml
+          anchors: *a6
+      notes: ""

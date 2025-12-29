@@ -6,8 +6,6 @@ import { oneDark, oneLight } from 'react-syntax-highlighter/dist/esm/styles/pris
 import type { BlogPost } from '../types/blog';
 import { useTheme } from '../context/ThemeContext';
 import { likePost, unlikePost, getLikeCount, hasUserLikedPost } from '../lib/likes';
-import { getPostUrl, openShareWindow, getTwitterShareUrl, getLinkedInShareUrl } from '../lib/blog-utils';
-import { SCROLL, ANIMATION } from '../lib/constants';
 
 interface TableOfContentsItem {
     id: string;
@@ -71,16 +69,12 @@ export default function BlogPostModal({
 
     // Extract table of contents from markdown
     useEffect(() => {
-        const headings: TableOfContentsItem[] = [];
-        const headingRegex = /^(#{1,3})\s+(.+)$/gm;
-        let match;
-
-        while ((match = headingRegex.exec(post.content)) !== null) {
-            const level = match[1].length;
-            const text = match[2].trim();
-            const id = text.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-');
-            headings.push({ id, text, level });
-        }
+        // Use matchAll to avoid global regex state issues
+        const headings = [...post.content.matchAll(/^(#{1,3})\s+(.+)$/gm)].map(match => ({
+            level: match[1].length,
+            text: match[2].trim(),
+            id: match[2].trim().toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-')
+        }));
 
         setTocItems(headings);
         setShowToc(headings.length > 0);
@@ -97,7 +91,7 @@ export default function BlogPostModal({
             const progress = (scrollTop / scrollHeight) * 100;
 
             setScrollProgress(Math.min(progress, 100));
-            setShowBackToTop(scrollTop > SCROLL.BACK_TO_TOP_THRESHOLD);
+            setShowBackToTop(scrollTop > 400);
 
             // Track active heading
             if (contentRef.current) {
@@ -106,7 +100,7 @@ export default function BlogPostModal({
 
                 headings.forEach((heading) => {
                     const rect = heading.getBoundingClientRect();
-                    if (rect.top <= SCROLL.HEADING_DETECTION_OFFSET) {
+                    if (rect.top <= 200) {
                         currentActiveId = heading.id;
                     }
                 });
@@ -168,22 +162,30 @@ export default function BlogPostModal({
         }
     };
 
+    const getPostUrl = () => {
+        // Generate a shareable URL for the post
+        return `${window.location.origin}/blog/${post.slug}`;
+    };
+
     const shareOnTwitter = () => {
-        const url = getPostUrl(post.slug);
-        openShareWindow(getTwitterShareUrl(post.title, url));
+        const url = getPostUrl();
+        const text = `${post.title} by @kolob0kk`;
+        const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+        window.open(twitterUrl, '_blank', 'width=550,height=420');
     };
 
     const shareOnLinkedIn = () => {
-        const url = getPostUrl(post.slug);
-        openShareWindow(getLinkedInShareUrl(url));
+        const url = getPostUrl();
+        const linkedInUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
+        window.open(linkedInUrl, '_blank', 'width=550,height=420');
     };
 
     const copyLink = async () => {
         try {
-            const url = getPostUrl(post.slug);
+            const url = getPostUrl();
             await navigator.clipboard.writeText(url);
             setShowCopyToast(true);
-            setTimeout(() => setShowCopyToast(false), ANIMATION.TOAST_DURATION);
+            setTimeout(() => setShowCopyToast(false), 2000);
         } catch (err) {
             console.error('Failed to copy link:', err);
         }
@@ -195,7 +197,7 @@ export default function BlogPostModal({
                 await navigator.share({
                     title: post.title,
                     text: post.excerpt,
-                    url: getPostUrl(post.slug)
+                    url: getPostUrl()
                 });
             } catch (err) {
                 // User cancelled or error occurred
@@ -219,7 +221,7 @@ export default function BlogPostModal({
                 setLikeCount(result.count);
                 setHasLiked(true);
                 setIsLikeAnimating(true);
-                setTimeout(() => setIsLikeAnimating(false), ANIMATION.LIKE_ANIMATION);
+                setTimeout(() => setIsLikeAnimating(false), 600);
             }
         }
     };

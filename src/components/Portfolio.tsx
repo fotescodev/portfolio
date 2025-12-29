@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense, useRef } from 'react';
 import Blog from './Blog';
 import ThemeToggle from './ThemeToggle';
 import HeroSection from './sections/HeroSection';
@@ -10,11 +10,13 @@ import PassionProjectsSection from './sections/PassionProjectsSection';
 
 import CaseStudiesSection from './sections/CaseStudiesSection';
 import FooterSection from './sections/FooterSection';
-import CaseStudyDrawer from './case-study/CaseStudyDrawer';
 import AmbientBackground from './common/AmbientBackground';
 import Omnibar from './common/Omnibar';
 import { useVariant } from '../context/VariantContext';
 import type { CaseStudy } from '../types/portfolio';
+
+// Lazy load heavy components that use markdown/syntax-highlighter
+const CaseStudyDrawer = lazy(() => import('./case-study/CaseStudyDrawer'));
 
 export default function Portfolio() {
   // Get profile from variant context (either base or merged with variant)
@@ -25,6 +27,8 @@ export default function Portfolio() {
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
   const [modalCase, setModalCase] = useState<CaseStudy | null>(null);
   const [hoveredCase, setHoveredCase] = useState<number | null>(null);
+  const [navHidden, setNavHidden] = useState(false);
+  const lastScrollY = useRef(0);
 
   useEffect(() => {
     setIsLoaded(true);
@@ -32,6 +36,26 @@ export default function Portfolio() {
     const handleResize = () => setWindowWidth(window.innerWidth);
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Hide nav on scroll down, show on scroll up (mobile only)
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      const scrollingDown = currentScrollY > lastScrollY.current;
+      const pastThreshold = currentScrollY > 100; // Only hide after scrolling past hero
+
+      if (scrollingDown && pastThreshold) {
+        setNavHidden(true);
+      } else {
+        setNavHidden(false);
+      }
+
+      lastScrollY.current = currentScrollY;
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   // Handle modal scroll lock and ESC key
@@ -174,7 +198,7 @@ export default function Portfolio() {
         <div className="wide-screen-vignette" />
         <AmbientBackground />
 
-        {/* Navigation - hidden when drawer is open on mobile */}
+        {/* Navigation - hidden when drawer is open on mobile, slides up on scroll down */}
         <nav
           aria-label="Primary"
           style={{
@@ -188,8 +212,12 @@ export default function Portfolio() {
             WebkitBackdropFilter: 'blur(12px)',
             borderBottom: '1px solid var(--color-border-light)',
             opacity: isLoaded ? 1 : 0,
-            transform: isLoaded ? 'translateY(0)' : 'translateY(-20px)',
-            transition: 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
+            transform: !isLoaded
+              ? 'translateY(-20px)'
+              : (isMobile && navHidden && !mobileMenuOpen)
+                ? 'translateY(-100%)'
+                : 'translateY(0)',
+            transition: 'transform 0.3s ease, opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
             display: (isMobile && modalCase) ? 'none' : 'block'
           }}
         >
@@ -239,66 +267,63 @@ export default function Portfolio() {
             </div>
 
 
-            {/* Desktop Navigation */}
-            {!isMobile && (
-              <div style={{ display: 'flex', gap: 'var(--space-xl)', alignItems: 'center' }}>
-                {[
-                  { label: 'Experience', id: 'experience' },
-                  { label: 'Cases', id: 'work' },
-                  { label: 'Blog', id: 'blog' },
-                  { label: 'About', id: 'about' }
-                ].map((item) => (
-                  <a
-                    key={item.id}
-                    href={`#${item.id}`}
-                    onClick={(e) => handleNavClick(e, item.id)}
-                    className="nav-link"
-                  >
-                    {item.label}
-                  </a>
-                ))}
-                <ThemeToggle />
+            {/* Desktop Navigation - always render, CSS controls visibility */}
+            <div className="desktop-only" style={{ display: 'flex', gap: 'var(--space-xl)', alignItems: 'center' }}>
+              {[
+                { label: 'Experience', id: 'experience' },
+                { label: 'Cases', id: 'work' },
+                { label: 'Blog', id: 'blog' },
+                { label: 'About', id: 'about' }
+              ].map((item) => (
                 <a
-                  href="#contact"
-                  onClick={(e) => handleNavClick(e, 'contact')}
-                  className="nav-cta"
+                  key={item.id}
+                  href={`#${item.id}`}
+                  onClick={(e) => handleNavClick(e, item.id)}
+                  className="nav-link"
                 >
-                  Get in Touch
+                  {item.label}
                 </a>
-              </div>
-            )}
+              ))}
+              <ThemeToggle />
+              <a
+                href="https://calendar.google.com/calendar/u/0/appointments/AcZssZ2leGghBAF6F4IbGMZQErnaR21wvu-mYWXP06o="
+                target="_blank"
+                rel="noopener noreferrer"
+                className="nav-cta"
+              >
+                Get in Touch
+              </a>
+            </div>
 
-            {/* Mobile Menu Button */}
-            {isMobile && (
-              <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-sm)' }}>
-                <ThemeToggle isMobile />
-                <button
-                  type="button"
-                  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                  aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
-                  aria-expanded={mobileMenuOpen}
-                  aria-controls="mobile-menu"
-                  style={{
-                    background: 'transparent',
-                    border: 'none',
-                    padding: 'var(--space-sm)',
-                    cursor: 'pointer',
-                    zIndex: 101,
-                    position: 'relative',
-                    color: 'var(--color-text-primary)'
-                  }}
-                >
-                  <span style={{
-                    fontSize: '14px',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.1em',
-                    fontWeight: 600
-                  }}>
-                    {mobileMenuOpen ? 'Close' : 'Menu'}
-                  </span>
-                </button>
-              </div>
-            )}
+            {/* Mobile Menu Button - always render, CSS controls visibility */}
+            <div className="mobile-only" style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-sm)' }}>
+              <ThemeToggle isMobile />
+              <button
+                type="button"
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+                aria-expanded={mobileMenuOpen}
+                aria-controls="mobile-menu"
+                style={{
+                  background: 'transparent',
+                  border: 'none',
+                  padding: 'var(--space-sm)',
+                  cursor: 'pointer',
+                  zIndex: 101,
+                  position: 'relative',
+                  color: 'var(--color-text-primary)'
+                }}
+              >
+                <span style={{
+                  fontSize: '14px',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.1em',
+                  fontWeight: 600
+                }}>
+                  {mobileMenuOpen ? 'Close' : 'Menu'}
+                </span>
+              </button>
+            </div>
           </div>
         </nav>
 
@@ -329,8 +354,7 @@ export default function Portfolio() {
               { label: 'Experience', id: 'experience' },
               { label: 'Cases', id: 'work' },
               { label: 'Blog', id: 'blog' },
-              { label: 'About', id: 'about' },
-              { label: 'Get in Touch', id: 'contact' }
+              { label: 'About', id: 'about' }
             ].map((item, i) => (
               <a
                 key={item.id}
@@ -346,6 +370,19 @@ export default function Portfolio() {
                 {item.label}
               </a>
             ))}
+            <a
+              href="https://calendar.google.com/calendar/u/0/appointments/AcZssZ2leGghBAF6F4IbGMZQErnaR21wvu-mYWXP06o="
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mobile-menu-link"
+              style={{
+                transform: mobileMenuOpen ? 'translateX(0)' : 'translateX(-20px)',
+                opacity: mobileMenuOpen ? 1 : 0,
+                transition: 'all 0.4s ease 0.32s'
+              }}
+            >
+              Get in Touch
+            </a>
           </div>
         )}
 
@@ -365,6 +402,7 @@ export default function Portfolio() {
             isMobile={isMobile}
             isTablet={isTablet}
             sectionPadding={sectionPadding}
+            heroCta={profile.hero.cta}
           />
 
           {/* Experience Section */}
@@ -461,16 +499,14 @@ export default function Portfolio() {
             <div style={{
               display: 'inline-flex',
               alignItems: 'center',
-              gap: 'var(--space-sm)',
+              gap: isMobile ? 'var(--space-xs)' : 'var(--space-sm)',
               padding: 'var(--space-sm)',
               background: 'var(--color-surface-glass)',
               backdropFilter: 'blur(12px)',
               WebkitBackdropFilter: 'blur(12px)',
               borderRadius: '6px',
               border: '1px solid var(--color-border-light)',
-              boxShadow: '0 12px 40px rgba(0, 0, 0, 0.15)',
-              flexWrap: isMobile ? 'wrap' : 'nowrap',
-              justifyContent: 'center'
+              boxShadow: '0 12px 40px rgba(0, 0, 0, 0.15)'
             }}>
               {/* Copy Email */}
               <button
@@ -483,7 +519,7 @@ export default function Portfolio() {
                   <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
                   <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
                 </svg>
-                <span>Copy Email</span>
+                <span>{isMobile ? 'Email' : 'Copy Email'}</span>
               </button>
 
               <div style={{ width: '1px', height: '24px', background: 'var(--color-border-light)' }} />
@@ -500,7 +536,7 @@ export default function Portfolio() {
                   <polyline points="7 10 12 15 17 10" />
                   <line x1="12" y1="15" x2="12" y2="3" />
                 </svg>
-                <span>Resume</span>
+                <span>{isMobile ? 'CV' : 'Resume'}</span>
               </a>
 
               <div style={{ width: '1px', height: '24px', background: 'var(--color-border-light)' }} />
@@ -518,7 +554,7 @@ export default function Portfolio() {
                   <line x1="8" y1="2" x2="8" y2="6" />
                   <line x1="3" y1="10" x2="21" y2="10" />
                 </svg>
-                <span>Book Time</span>
+                <span>{isMobile ? 'Book' : 'Book Time'}</span>
               </a>
             </div>
 
@@ -598,15 +634,17 @@ export default function Portfolio() {
           {/* Omnibar */}
           <Omnibar />
 
-          {/* Case Study Modal */}
+          {/* Case Study Modal - lazy loaded */}
           {modalCase && (
-            <CaseStudyDrawer
-              isOpen={!!modalCase}
-              onClose={() => setModalCase(null)}
-              caseStudy={modalCase}
-              isMobile={isMobile}
-              onNavigate={(study) => setModalCase(study)}
-            />
+            <Suspense fallback={<div style={{ position: 'fixed', inset: 0, background: 'var(--color-background)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-text-secondary)' }}>Loading...</div>}>
+              <CaseStudyDrawer
+                isOpen={!!modalCase}
+                onClose={() => setModalCase(null)}
+                caseStudy={modalCase}
+                isMobile={isMobile}
+                onNavigate={(study) => setModalCase(study)}
+              />
+            </Suspense>
           )}
 
         </main>

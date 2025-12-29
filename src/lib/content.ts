@@ -50,7 +50,11 @@ export {
 // Frontmatter Parsing
 // ------------------------------------------------------------------
 
-function parseFrontmatter(raw: string): { frontmatter: Record<string, unknown>; content: string } {
+/**
+ * Parse YAML frontmatter from markdown content
+ * Uses proper YAML.parse instead of brittle manual string parsing
+ */
+export function parseFrontmatter(raw: string): { frontmatter: Record<string, unknown>; content: string } {
   const match = raw.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
   if (!match) return { frontmatter: {}, content: raw };
 

@@ -1,26 +1,50 @@
-import { HashRouter, Routes, Route } from 'react-router-dom';
+import { lazy, Suspense } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from './context/ThemeContext';
 import { HelmetProvider } from 'react-helmet-async';
 import BasePortfolio from './pages/BasePortfolio';
-import VariantPortfolio from './pages/VariantPortfolio';
-import BlogPostPage from './pages/BlogPostPage';
+
+// Lazy load routes that aren't needed on initial page load
+const VariantPortfolio = lazy(() => import('./pages/VariantPortfolio'));
+const VariantResumePage = lazy(() => import('./pages/VariantResumePage'));
+const BlogPostPage = lazy(() => import('./pages/BlogPostPage'));
+const ResumePage = lazy(() => import('./pages/ResumePage'));
+const LikeAnalytics = lazy(() => import('./components/LikeAnalytics'));
+
+// Simple loading fallback
+const PageLoader = () => (
+  <div className="flex justify-center items-center text-secondary" style={{ height: '100vh' }}>
+    Loading...
+  </div>
+);
 
 function App() {
   return (
     <HelmetProvider>
       <ThemeProvider>
-        <HashRouter>
-          <Routes>
-            {/* Base portfolio route */}
-            <Route path="/" element={<BasePortfolio />} />
+        <BrowserRouter>
+          <Suspense fallback={<PageLoader />}>
+            <Routes>
+              {/* Base portfolio route */}
+              <Route path="/" element={<BasePortfolio />} />
 
-            {/* Blog post route */}
-            <Route path="/blog/:slug" element={<BlogPostPage />} />
+              {/* Resume page for PDF export - lazy loaded */}
+              <Route path="/resume" element={<ResumePage />} />
 
-            {/* Variant portfolio routes: /#/company/role */}
-            <Route path="/:company/:role" element={<VariantPortfolio />} />
-          </Routes>
-        </HashRouter>
+              {/* Blog post route - lazy loaded */}
+              <Route path="/blog/:slug" element={<BlogPostPage />} />
+
+              {/* Admin analytics route - lazy loaded */}
+              <Route path="/admin/analytics" element={<LikeAnalytics />} />
+
+              {/* Variant resume route: /company/role/resume - must come before generic variant route */}
+              <Route path="/:company/:role/resume" element={<VariantResumePage />} />
+
+              {/* Variant portfolio routes: /company/role - lazy loaded */}
+              <Route path="/:company/:role" element={<VariantPortfolio />} />
+            </Routes>
+          </Suspense>
+        </BrowserRouter>
       </ThemeProvider>
     </HelmetProvider>
   );

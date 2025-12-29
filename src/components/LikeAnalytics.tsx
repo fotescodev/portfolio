@@ -6,14 +6,17 @@
  */
 
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { getAllPostLikes, getAllUserLikes, getPostLikeAnalytics, exportLikesData } from '../lib/likes';
 import type { LikeData, UserLike } from '../lib/likes';
 
 interface LikeAnalyticsProps {
-    onClose: () => void;
+    onClose?: () => void;
 }
 
 export default function LikeAnalytics({ onClose }: LikeAnalyticsProps) {
+    const navigate = useNavigate();
+    const handleClose = onClose || (() => navigate('/'));
     const [postLikes, setPostLikes] = useState<LikeData[]>([]);
     const [userLikes, setUserLikes] = useState<UserLike[]>([]);
     const [selectedPost, setSelectedPost] = useState<string | null>(null);
@@ -250,7 +253,7 @@ export default function LikeAnalytics({ onClose }: LikeAnalyticsProps) {
                         <button className="export-btn" onClick={handleExport}>
                             Export Data
                         </button>
-                        <button className="analytics-close-btn" onClick={onClose}>
+                        <button className="analytics-close-btn" onClick={handleClose}>
                             Close
                         </button>
                     </div>

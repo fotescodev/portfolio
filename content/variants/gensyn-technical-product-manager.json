@@ -5,7 +5,9 @@
     "generatedAt": "2025-12-16T18:35:00Z",
     "jobDescription": "Technical Product Manager - Developer Infrastructure\n\nLeading roadmap development for SDKs, APIs, and developer infrastructure that\npowers the Gensyn network for ML developers working with decentralized training\ninfrastructure. Translating intricate distributed systems and ML workflows into\naccessible developer products.\n\nMust-have: Strong product delivery in developer tools/infrastructure, distributed\nsystems or ML platform experience, SDK/API architecture expertise, crypto protocol\nfamiliarity. Background building developer platforms at premier ML, cloud, or Web3\norganizations preferred.\n",
     "generationModel": "manual-v1",
-    "slug": "gensyn-technical-product-manager"
+    "slug": "gensyn-technical-product-manager",
+    "publishStatus": "draft",
+    "applicationStatus": "not_applied"
   },
   "overrides": {
     "hero": {

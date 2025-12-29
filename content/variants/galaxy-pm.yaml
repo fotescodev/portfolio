@@ -1,0 +1,155 @@
+# ═══════════════════════════════════════════════════════════════
+# VARIANT METADATA
+# ═══════════════════════════════════════════════════════════════
+metadata:
+  company: "Galaxy"
+  role: "Director, Technical Program Manager"
+  slug: "galaxy-pm"
+  generatedAt: "2025-12-22T23:30:00Z"
+  jobDescription: |
+    Galaxy is looking for an experienced Technical Program Manager (TPM) to join their team.
+    You will lead a team of global TPMs to achieve business and engineering objectives.
+
+    Role partners directly with CTO and Head of Change/Transformation to drive strategic
+    alignment, execution, and visibility on high-priority projects. Seeking strategic,
+    highly organized, execution-oriented Senior TPM to lead complex, cross-functional
+    technology initiatives. Deep experience in agile and traditional project methodologies,
+    strong technical acumen, excellent stakeholder management.
+
+    Key Responsibilities:
+    - Lead global group of TPMs—sometimes managing initiatives directly, sometimes through them
+    - Partner with business leaders and technology leads to prioritize diverse initiatives
+    - Ensure alignment of team and project deliveries with business goals
+    - Collaborate with global engineering teams across multiple time zones
+    - Maintain JIRA boards, manage epics, tasks, workflows
+    - Facilitate team agile ceremonies (stand-ups, grooming, retrospectives, planning)
+    - Monitor project timelines, milestones, deliverables; proactively identify risks
+
+    Requirements:
+    - 10+ years as Project/Technical Program Manager
+    - 5+ years managing engineering teams
+    - Strong technical background with system design understanding
+    - Executive leadership experience
+    - JIRA, Confluence, project management tools proficiency
+    - Cross-functional dependency management
+    - Agile/Scrum methodology familiarity
+
+    Nice to have:
+    - Crypto or traditional finance exposure
+    - Regulatory or compliance-driven environment experience
+
+    Location: New York, NY
+    Salary: $225,000 - $275,000 USD
+  generationModel: "claude-opus-4-5-20251101"
+  sourceUrl: "https://job-boards.greenhouse.io/galaxydigitalservices/jobs/5591908004"
+
+# ═══════════════════════════════════════════════════════════════
+# OVERRIDES (Tailored for Galaxy TPM Director)
+# ═══════════════════════════════════════════════════════════════
+overrides:
+  hero:
+    status: "Open to Product Roles"
+    headline:
+      - text: "Building"
+        style: "italic"
+      - text: "at the edge of"
+        style: "muted"
+      - text: "trust"
+        style: "accent"
+    companyAccent:
+      - text: "with"
+        style: "muted"
+      - text: "Galaxy"
+        style: "accent"
+    subheadline: >
+      Technical Program Manager with 8+ years shipping Web3 infrastructure.
+      From Microsoft's first blockchain project to institutional custody at Anchorage—
+      where Galaxy chose us for staking. I turn cross-functional complexity into
+      shipped products.
+
+  about:
+    tagline: >
+      Eight years shipping Web3 infrastructure, from dev tools to institutional custody.
+    bio:
+      - >
+        At Anchorage Digital, I lead cross-functional initiatives spanning custody,
+        staking, and protocol integrations. I've shipped 7+ L2 integrations (Optimism,
+        Base, Arbitrum) using a RICE evaluation framework I built, coordinating across
+        4+ teams and reducing integration time by 40%. Galaxy chose Anchorage for ETH
+        staking specifically because of the institutional-grade infrastructure my team
+        built—zero slashing events, billions in AUM, full key ownership.
+      - >
+        I've been in Web3 since 2017, when I shipped one of Microsoft's first blockchain
+        projects—Xbox royalty tracking on Ethereum. Eight years later, I'm still here
+        because {{accent}}this is Web3's moment{{/accent}}—and Galaxy is positioned to
+        define how institutions participate. I understand what it takes to lead global
+        teams through complex, compliance-driven initiatives while maintaining velocity.
+    stats:
+      - value: "8+"
+        label: "Years in Web3"
+      - value: "7+"
+        label: "L2 Integrations"
+      - value: "Zero"
+        label: "Slashing Events"
+
+  sections:
+    beyondWork: false
+    blog: true
+    onchainIdentity: true
+    skills: true
+    passionProjects: false
+
+# ═══════════════════════════════════════════════════════════════
+# RELEVANCE SCORING
+# ═══════════════════════════════════════════════════════════════
+relevance:
+  caseStudies:
+    - slug: "protocol-integration"
+      relevanceScore: 1.0
+      reasoning: "RICE framework, cross-functional coordination, 40% efficiency gain—directly maps to TPM Director responsibilities for complex initiatives"
+    - slug: "eth-staking"
+      relevanceScore: 0.95
+      reasoning: "Galaxy is already a client. Institutional infrastructure, compliance-driven environment, zero tolerance for failure"
+    - slug: "ankr-rpc"
+      relevanceScore: 0.85
+      reasoning: "Infrastructure platform scaling, managing technical complexity, business outcomes"
+    - slug: "xbox-royalties"
+      relevanceScore: 0.80
+      reasoning: "Enterprise-scale project management, pioneering blockchain in large org, cross-functional leadership"
+
+  skills:
+    - category: "Technical Leadership"
+      relevanceScore: 1.0
+    - category: "Blockchain & Web3"
+      relevanceScore: 0.95
+    - category: "Product Strategy"
+      relevanceScore: 0.85
+
+  projects: []
+
+# ═══════════════════════════════════════════════════════════════
+# TALKING POINTS (Interview Prep)
+# ═══════════════════════════════════════════════════════════════
+talkingPoints:
+  whyThisRole:
+    - "Galaxy is already a client—I built the staking infrastructure you chose us for"
+    - "8+ years in crypto, from Microsoft's first blockchain to institutional custody"
+    - "Track record of cross-functional program leadership with measurable outcomes"
+    - "Deep regulatory/compliance experience—critical for institutional crypto"
+
+  relevantStories:
+    - achievement: "l2-protocol-integrations"
+      connection: "Led complex cross-functional initiatives with 4+ teams, created reusable frameworks, 40% efficiency gains"
+    - achievement: "eth-staking-zero-slashing"
+      connection: "Galaxy chose Anchorage specifically for this—I can speak to what institutional clients need"
+    - achievement: "xbox-royalties-ethereum"
+      connection: "Managing enterprise blockchain programs at scale, working with global teams"
+    - achievement: "ankr-15x-revenue"
+      connection: "Driving business outcomes through technical program execution"
+
+  questionsToAsk:
+    - "What's the current TPM team structure and how do you see it evolving?"
+    - "What are the highest-priority technical initiatives for 2025?"
+    - "How does the TPM function partner with product management at Galaxy?"
+    - "What does success look like for this role in the first 90 days?"
+    - "How do you balance velocity with the compliance rigor institutional clients require?"

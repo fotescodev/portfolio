@@ -453,18 +453,19 @@ describe('HeroSection - Mobile', () => {
         expect(h1).toBeInTheDocument();
     });
 
-    it('should have accessible CTA buttons on mobile', () => {
+    it('should NOT show CTA buttons on mobile (they appear in AboutSection)', () => {
         render(
             <TestWrapper>
                 <HeroSection profile={profile} isMobile={true} isTablet={false} isLoaded={true} />
             </TestWrapper>
         );
 
+        // CTA buttons are hidden on mobile HeroSection - they appear next to photo in AboutSection
         const primaryBtn = document.querySelector('.hero-primary-btn');
         const secondaryBtn = document.querySelector('.hero-secondary-btn');
 
-        expect(primaryBtn).toBeInTheDocument();
-        expect(secondaryBtn).toBeInTheDocument();
+        expect(primaryBtn).not.toBeInTheDocument();
+        expect(secondaryBtn).not.toBeInTheDocument();
     });
 });
 
@@ -479,25 +480,46 @@ describe('AboutSection - Mobile', () => {
         expect(screen.getByText('About')).toBeInTheDocument();
     });
 
-    it('should display social icons on mobile', () => {
+    it('should display CTA buttons on mobile (instead of social icons)', () => {
         render(
             <TestWrapper>
-                <AboutSection profile={profile} isMobile={true} isTablet={false} sectionPadding="24px" />
+                <AboutSection
+                    profile={profile}
+                    isMobile={true}
+                    isTablet={false}
+                    sectionPadding="24px"
+                    heroCta={{
+                        primary: { label: 'View Work', href: '#work' },
+                        secondary: { label: 'Download Resume', href: '/resume.pdf' }
+                    }}
+                />
             </TestWrapper>
         );
 
-        expect(screen.getByTitle('LinkedIn')).toBeInTheDocument();
-        expect(screen.getByTitle('GitHub')).toBeInTheDocument();
+        // Mobile shows CTA buttons next to photo instead of social icons
+        expect(screen.getByText('View Work')).toBeInTheDocument();
+        expect(screen.getByText('Download Resume')).toBeInTheDocument();
     });
 
-    it('should have copy email functionality on mobile', () => {
+    it('should NOT show social icons on mobile (they appear on desktop)', () => {
         render(
             <TestWrapper>
-                <AboutSection profile={profile} isMobile={true} isTablet={false} sectionPadding="24px" />
+                <AboutSection
+                    profile={profile}
+                    isMobile={true}
+                    isTablet={false}
+                    sectionPadding="24px"
+                    heroCta={{
+                        primary: { label: 'View Work', href: '#work' },
+                        secondary: { label: 'Download Resume', href: '/resume.pdf' }
+                    }}
+                />
             </TestWrapper>
         );
 
-        expect(screen.getByTitle('Copy email')).toBeInTheDocument();
+        // Social icons are hidden on mobile
+        expect(screen.queryByTitle('Copy email')).not.toBeInTheDocument();
+        expect(screen.queryByTitle('LinkedIn')).not.toBeInTheDocument();
     });
 });
 

@@ -6,11 +6,11 @@ tags: ["Staking", "Ethereum", "Custody", "Institutional"]
 thumbnail: null
 ---
 
-When people hear "ETH staking," they often think it's straightforward: deposit 32 ETH, run a validator, earn yield. In reality, building staking infrastructure for institutional clients like ETF providers is an entirely different beast. Here's a look behind the curtain at what it actually takes.
+"ETH staking" sounds straightforward: deposit 32 ETH, run a validator, earn yield. Building staking infrastructure for institutional clients like ETF providers? Entirely different beast.
 
 ## The Custody Paradox
 
-Institutional staking creates a fundamental tension:
+Institutional staking creates a fundamental tension.
 
 **For maximum yield**, you want:
 - Distributed validator infrastructure
@@ -24,7 +24,7 @@ Institutional staking creates a fundamental tension:
 - Regulatory-approved processes
 - Cold storage capabilities
 
-These requirements often conflict. The same distributed architecture that optimizes for uptime can create custody concerns. The cold storage that satisfies auditors can slow response times.
+These requirements conflict. Distributed architecture optimizes uptime but creates custody concerns. Cold storage satisfies auditors but slows response times.
 
 ## Key Decisions We Faced
 
@@ -86,22 +86,18 @@ As a PM, my job is often to be the translator between these groups, ensuring tec
 
 ## Lessons Learned
 
-**1. Start with compliance, not features**
-It doesn't matter how good your yield is if you can't pass an audit.
+**Start with compliance, not features.** Doesn't matter how good your yield is if you can't pass an audit.
 
-**2. Institutional clients want boring**
-They don't want the best APY. They want predictable, auditable, defensible infrastructure.
+**Institutional clients want boring.** They don't want the best APY. They want predictable, auditable, defensible infrastructure.
 
-**3. The competitive moat is trust**
-Anyone can run validators. Not everyone can do it with the paper trail and processes that institutions require.
+**The moat is trust.** Anyone can run validators. Not everyone can do it with the paper trail institutions require.
 
-**4. Document everything**
-Every decision, every trade-off, every incident response. These become invaluable during audits and client reviews.
+**Document everything.** Every decision, every trade-off, every incident response. Invaluable during audits and client reviews.
 
 ## Looking Ahead
 
-The ETH staking market is still early. As more ETFs come online and institutions become comfortable with crypto, the opportunity is massive. But winning in this space requires a different playbook than consumer crypto—one built on compliance, reliability, and trust.
+The ETH staking market is still early. As more ETFs come online and institutions get comfortable with crypto, the opportunity is massive. But winning requires a different playbook than consumer crypto—one built on compliance, reliability, and trust.
 
 ---
 
-*This post reflects my personal experience and doesn't represent any employer's views or disclose proprietary information.*
+*Personal experience. Doesn't represent any employer's views or disclose proprietary information.*

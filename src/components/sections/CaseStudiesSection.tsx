@@ -80,9 +80,6 @@ export default function CaseStudiesSection({
   setHoveredCase,
   onCaseClick
 }: CaseStudiesSectionProps) {
-  // Format case study number with leading zero
-  const formatNumber = (id: number) => id.toString().padStart(2, '0');
-
   // Handle external link clicks (prevent card click)
   const handleLinkClick = (e: React.MouseEvent, url: string) => {
     e.stopPropagation();
@@ -190,44 +187,8 @@ export default function CaseStudiesSection({
                         (e.target as HTMLImageElement).style.display = 'none';
                       }}
                     />
-                    {/* Number overlay */}
-                    <div style={{
-                      position: 'absolute',
-                      top: 'var(--space-md)',
-                      left: 'var(--space-md)',
-                      fontFamily: 'var(--font-serif)',
-                      fontSize: '14px',
-                      fontStyle: 'italic',
-                      color: 'var(--color-overlay-text)',
-                      background: 'var(--color-overlay-dark)',
-                      padding: '6px 12px',
-                      backdropFilter: 'blur(4px)'
-                    }}>
-                      {formatNumber(study.id)}
-                    </div>
                   </>
                 ) : null}
-                {/* Placeholder - always visible as fallback */}
-                <div style={{
-                  position: 'absolute',
-                  inset: 0,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: 'var(--space-sm)',
-                  zIndex: study.hook.thumbnail ? -1 : 1
-                }}>
-                  <span style={{
-                    fontFamily: 'var(--font-serif)',
-                    fontSize: isMobile ? '48px' : '56px',
-                    fontStyle: 'italic',
-                    color: 'var(--color-placeholder-text)',
-                    lineHeight: 1
-                  }}>
-                    {formatNumber(study.id)}
-                  </span>
-                </div>
               </div>
 
               {/* Content */}

@@ -1,0 +1,165 @@
+version: 1
+variant:
+  slug: microsoft-senior-pm
+  variantFile: content/variants/microsoft-senior-pm.yaml
+  contentHash: 9353e0e2b5ef6c009557cbe6dd443926645f89be68deded6576541b92d448a9b
+  evaluatedAt: 2025-12-23T00:50:12.175Z
+claims:
+  - id: metric-8dd33f73e1
+    location: overrides.hero.subheadline
+    text: Senior PM with 8+ years shipping cross-functional products
+    anchors:
+      - 8+
+    candidateSources:
+      - path: content/knowledge/achievements/eth-staking-zero-slashing.yaml
+        score: 0.1
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 67%
+      - path: content/knowledge/achievements/flow-cli-dx.yaml
+        score: 0.1
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 67%
+      - path: content/knowledge/achievements/l2-protocol-integrations.yaml
+        score: 0.1
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 67%
+      - path: content/knowledge/achievements/xbox-royalties-ethereum.yaml
+        score: 0.075
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 50%
+      - path: content/knowledge/stories/galaxy-compliance-win.yaml
+        score: 0.075
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 50%
+    verified:
+      status: verified
+      sources:
+        - path: content/experience/index.yaml
+          anchors:
+            - 8+
+      notes: ""
+  - id: metric-49b76c07e2
+    location: overrides.about.bio[0]
+    text: I've shipped 7+ protocol integrations using a RICE evaluation framework I built, coordinating across 4+ teams and
+      reducing cycle time by 40%
+    anchors:
+      - 40%
+      - 7+
+      - 4+
+    candidateSources:
+      - path: content/knowledge/achievements/l2-protocol-integrations.yaml
+        score: 1
+        matchedAnchors:
+          - 40%
+          - 7+
+          - 4+
+        note: anchors 3/3 • overlap 93%
+      - path: content/knowledge/achievements/eth-staking-zero-slashing.yaml
+        score: 0.365
+        matchedAnchors:
+          - 40%
+        note: anchors 1/3 • overlap 21%
+      - path: content/knowledge/stories/galaxy-compliance-win.yaml
+        score: 0.365
+        matchedAnchors:
+          - 40%
+        note: anchors 1/3 • overlap 21%
+      - path: content/experience/index.yaml
+        score: 0.075
+        matchedAnchors: []
+        note: anchors 0/3 • overlap 50%
+    verified:
+      status: verified
+      sources:
+        - path: content/knowledge/achievements/l2-protocol-integrations.yaml
+          anchors:
+            - 40%
+            - 7+
+            - 4+
+      notes: ""
+  - id: metric-d217a4a420
+    location: overrides.about.bio[1]
+    text: Zero disputed payments post-launch
+    anchors:
+      - Zero
+    candidateSources:
+      - path: content/knowledge/achievements/eth-staking-zero-slashing.yaml
+        score: 1
+        matchedAnchors:
+          - Zero
+        note: anchors 1/1 • overlap 40%
+      - path: content/knowledge/achievements/xbox-royalties-ethereum.yaml
+        score: 1
+        matchedAnchors:
+          - Zero
+        note: anchors 1/1 • overlap 100%
+      - path: content/knowledge/stories/galaxy-compliance-win.yaml
+        score: 1
+        matchedAnchors:
+          - Zero
+        note: anchors 1/1 • overlap 40%
+    verified:
+      status: verified
+      sources:
+        - path: content/knowledge/achievements/xbox-royalties-ethereum.yaml
+          anchors:
+            - Zero
+      notes: ""
+  - id: metric-d07b4c9bd6
+    location: overrides.about.stats[0].value
+    text: 8+
+    anchors: &a1
+      - 8+
+    candidateSources: []
+    verified:
+      status: verified
+      sources:
+        - path: content/experience/index.yaml
+          anchors: *a1
+      notes: ""
+  - id: metric-60ecdf8a3a
+    location: overrides.about.stats[1].value
+    text: 7+
+    anchors:
+      - 7+
+    candidateSources:
+      - path: content/knowledge/achievements/l2-protocol-integrations.yaml
+        score: 1
+        matchedAnchors:
+          - 7+
+        note: anchors 1/1 • overlap 0%
+    verified:
+      status: verified
+      sources:
+        - path: content/knowledge/achievements/l2-protocol-integrations.yaml
+          anchors:
+            - 7+
+      notes: ""
+  - id: metric-bcd44c9028
+    location: overrides.about.stats[2].value
+    text: Zero
+    anchors:
+      - Zero
+    candidateSources:
+      - path: content/knowledge/achievements/eth-staking-zero-slashing.yaml
+        score: 1
+        matchedAnchors:
+          - Zero
+        note: anchors 1/1 • overlap 100%
+      - path: content/knowledge/achievements/xbox-royalties-ethereum.yaml
+        score: 1
+        matchedAnchors:
+          - Zero
+        note: anchors 1/1 • overlap 100%
+      - path: content/knowledge/stories/galaxy-compliance-win.yaml
+        score: 1
+        matchedAnchors:
+          - Zero
+        note: anchors 1/1 • overlap 100%
+    verified:
+      status: verified
+      sources:
+        - path: content/knowledge/achievements/xbox-royalties-ethereum.yaml
+          anchors:
+            - Zero
+      notes: ""

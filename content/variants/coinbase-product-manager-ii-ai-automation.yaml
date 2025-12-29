@@ -1,0 +1,49 @@
+metadata:
+  slug: "coinbase-product-manager-ii-ai-automation"
+  company: "Coinbase"
+  role: "Product Manager II - AI Automation"
+  jobUrl: "https://www.coinbase.com/careers/positions/7452527"
+  jobDescription: |
+    Ready to be pushed beyond what you think you’re capable of?At Coinbase, our mission is to increase economic freedom in the world. It’s a massive, ambitious opportunity that demands the best of us, every day, as we build the emerging onchain platform — and with it, the future global financial system.To achieve our mission, we’re seeking a very specific candidate. We want someone who is passionate about our mission and who believes in the power of crypto and blockchain technology to update the financial system. We want someone who is eager to leave their mark on the world, who relishes the pressure and privilege of working with high caliber colleagues, and who actively seeks feedback to keep leveling up. We want someone who will run towards, not away from, solving the company’s hardest problems.Our work culture is intense and isn’t for everyone. But if you want to build the future alongside others who excel in their disciplines and expect the same from you, there’s no better place to be.While many roles at Coinbase are remote-first, we are not remote-only. In-person participation is required throughout the year. Team and company-wide offsites are held multiple times annually to foster collaboration, connection, and alignment. Attendance is expected and fully supported.The Core Automation team aims to accelerate Coinbase's mission by automating critical business processes through Artificial Intelligence. We are seeking a Product Manager to lead automation efforts within the Compliance space, identifying and delivering high-impact AI solutions that ease critical restrictions for customers, and evaluating Compliance posture for on-chain activity with minimal human inputs. This role is crucial for ensuring this critical business operation scales seamlessly in upcoming bull-runs without incurring operational or regulatory risk.What You'll DoDefine a concrete product vision, goals, strategy, and execution roadmap for Compliance Automation initiatives within chosen businesses processes.Manage the entire product lifecycle from ideation and discovery to launch, adoption, and iteration.Collaborate with PM, engineering, design, and research partners across XFN orgs to rapidly build and ship high-impact AI-powered features and products.Define and analyze key metrics to measure impact, focusing on direct customer value and the reduction of operational friction.Drive alignment and provide clear visibility into your roadmap and progress for leadership and stakeholders across the company.What We Look For In YouProven ability to dive into an ambiguous space and quickly define clear goals, product strategy and corresponding execution milestones that deliver results.Strong product execution skills, including experience with dashboarding, statistical metrics analysis, and A/B testing.Excellent ability to operate independently and lead complex and ambiguous cross-functional initiatives with BOTH strategic direction and tactical execution.Demonstrable experience shipping AI-enhanced or AI-native products, i.e. working demo links to demos, mocks, and ideally apps.6+ years of product management experience with evidence of meaningful impact YOU created.Nice To HavesExperience working with B2B or enterprise products.Background in financial services, wealth management, or fintech.Basic fluency and technological understanding of Crypto fundamentalsBasic understanding of finance (exchanges, derivatives, various investment vehicles like ETFs, MFs)Good understanding of, or work experience in, topics like transaction monitoring, Enhanced Due Diligence, KYC, AML etc.ID: GPPM05USPay Transparency Notice: Depending on your work location, the target annual base salary for this position can range as detailed below. Full time offers from Coinbase also include bonus eligibility + equity eligibility + benefits (including medical, dental, vision and 401(k)).Base salary range shown. Total compensation also includes equity and bonus eligibility and benefits:$180,370—$212,200 USDPlease be advised that each candidate may submit a maximum of four applications within any 30-day period. We encourage you to carefully evaluate how your skills and interests align with Coinbase's roles before applying.
+  generatedAt: "2025-12-22T02:29:36.160Z"
+
+overrides:
+  hero:
+    status: "Open to Product Manager II - AI Automation roles"
+    headline:
+      - text: "Product Manager II - AI Automation"
+        style: "accent"
+      - text: "at"
+        style: "muted"
+      - text: "Coinbase"
+        style: "normal"
+    subheadline: |
+      [Your tailored pitch for this role]
+
+  about:
+    tagline: |
+      [Professional summary tailored for Coinbase]
+    bio:
+      - |
+        [First paragraph about relevant experience]
+      - |
+        [Second paragraph about career journey]
+    stats:
+      - value: "X+"
+        label: "Years Experience"
+      - value: "Y"
+        label: "Projects Shipped"
+      - value: "Z"
+        label: "Key Metric"
+
+  sections:
+    beyondWork: false
+    blog: true
+    onchainIdentity: false
+    skills: true
+    passionProjects: true
+
+relevance:
+  caseStudies: []
+  skills: []
+  projects: []

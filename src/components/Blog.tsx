@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import type { BlogPost } from '../types/blog';
+import { parseFrontmatter } from '../lib/content';
+import { WORDS_PER_MINUTE, NEW_POST_THRESHOLD_DAYS } from '../lib/constants';
 
 // Auto-discover blog posts using import.meta.glob
 const blogPostFiles = import.meta.glob('../../content/blog/*.md', { query: '?raw', eager: true });
@@ -10,53 +12,10 @@ interface BlogProps {
     isTablet: boolean;
 }
 
-// Parse frontmatter from markdown
-function parseFrontmatter(raw: string): { frontmatter: Record<string, unknown>; content: string } {
-    const match = raw.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
-    if (!match) return { frontmatter: {}, content: raw };
-
-    const frontmatterStr = match[1];
-    const content = match[2];
-
-    const frontmatter: Record<string, unknown> = {};
-    const lines = frontmatterStr.split('\n');
-
-    for (const line of lines) {
-        const colonIndex = line.indexOf(':');
-        if (colonIndex === -1) continue;
-
-        const key = line.slice(0, colonIndex).trim();
-        let value = line.slice(colonIndex + 1).trim();
-
-        // Handle arrays
-        if (value.startsWith('[') && value.endsWith(']')) {
-            const arrayContent = value.slice(1, -1);
-            frontmatter[key] = arrayContent.split(',').map(item =>
-                item.trim().replace(/^["']|["']$/g, '')
-            );
-        }
-        // Handle quoted strings
-        else if (value.startsWith('"') && value.endsWith('"')) {
-            frontmatter[key] = value.slice(1, -1);
-        }
-        // Handle null
-        else if (value === 'null') {
-            frontmatter[key] = null;
-        }
-        // Regular string
-        else {
-            frontmatter[key] = value;
-        }
-    }
-
-    return { frontmatter, content };
-}
-
 // Calculate reading time
 function calculateReadingTime(content: string): number {
-    const wordsPerMinute = 200;
     const words = content.split(/\s+/).length;
-    return Math.ceil(words / wordsPerMinute);
+    return Math.ceil(words / WORDS_PER_MINUTE);
 }
 
 // Extract slug from filename (YYYY-MM-DD-slug.md → slug)
@@ -88,6 +47,14 @@ function parseBlogPosts(): BlogPost[] {
     return posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 
+// Check if post is new (within threshold days)
+function isNewPost(dateStr: string): boolean {
+    const postDate = new Date(dateStr);
+    const now = new Date();
+    const diffDays = (now.getTime() - postDate.getTime()) / (1000 * 60 * 60 * 24);
+    return diffDays <= NEW_POST_THRESHOLD_DAYS;
+}
+
 export default function Blog({ isMobile, isTablet }: BlogProps) {
     const [hoveredPost, setHoveredPost] = useState<string | null>(null);
 
@@ -96,8 +63,8 @@ export default function Blog({ isMobile, isTablet }: BlogProps) {
     const formatDate = (dateStr: string) => {
         const date = new Date(dateStr);
         return date.toLocaleDateString('en-US', {
-            month: '2-digit',
-            day: '2-digit',
+            month: 'short',
+            day: 'numeric',
             year: 'numeric'
         });
     };
@@ -192,7 +159,7 @@ export default function Blog({ isMobile, isTablet }: BlogProps) {
                                 gap: isMobile ? 'var(--space-md)' : 'var(--space-xl)',
                                 alignItems: 'start'
                             }}>
-                                {/* Date */}
+                                {/* Date + NEW tag */}
                                 <div style={{
                                     fontSize: '12px',
                                     fontWeight: 500,
@@ -200,8 +167,23 @@ export default function Blog({ isMobile, isTablet }: BlogProps) {
                                     color: 'var(--color-text-muted)',
                                     display: 'flex',
                                     alignItems: 'center',
-                                    gap: 'var(--space-sm)'
+                                    gap: 'var(--space-sm)',
+                                    flexWrap: 'wrap'
                                 }}>
+                                    {isNewPost(post.date) && (
+                                        <span style={{
+                                            fontSize: '9px',
+                                            fontWeight: 600,
+                                            letterSpacing: '0.1em',
+                                            textTransform: 'uppercase',
+                                            color: 'var(--color-accent)',
+                                            padding: '2px 6px',
+                                            border: '1px solid var(--color-accent)',
+                                            borderRadius: '2px'
+                                        }}>
+                                            New
+                                        </span>
+                                    )}
                                     <span>{formatDate(post.date)}</span>
                                     <span style={{ color: 'var(--color-separator)' }}>•</span>
                                     <span>{post.readingTime} min</span>

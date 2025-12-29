@@ -1,0 +1,7 @@
+version: 1
+variant:
+  slug: coinbase-product-manager-ii-ai-automation
+  variantFile: content/variants/coinbase-product-manager-ii-ai-automation.yaml
+  contentHash: bd5b839876a632b4b1fbd728616367150d68ec3bf9b292c016a63b48f696105f
+  evaluatedAt: 2025-12-22T02:30:08.200Z
+claims: []

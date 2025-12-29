@@ -1,0 +1,147 @@
+version: 1
+variant:
+  slug: cursor-tam
+  variantFile: content/variants/cursor-tam.yaml
+  contentHash: 5a11bae7a7f24f222a3f36a099b8a141e65302fc1273c80886299328ee7eb688
+  evaluatedAt: 2025-12-29T02:02:00.135Z
+claims:
+  - id: metric-d0e2950542
+    location: overrides.about.bio[0]
+    text: At Dapper Labs, I owned the Flow CLI and Cadence Playground, reducing time-to-first-deploy by 60% through
+      relentless focus on developer onboarding
+    anchors:
+      - 60%
+    candidateSources:
+      - path: content/knowledge/achievements/flow-cli-dx.yaml
+        score: 1
+        matchedAnchors:
+          - 60%
+        note: anchors 1/1 • overlap 73%
+      - path: content/knowledge/achievements/l2-protocol-integrations.yaml
+        score: 1
+        matchedAnchors:
+          - 60%
+        note: anchors 1/1 • overlap 20%
+      - path: content/experience/index.yaml
+        score: 1
+        matchedAnchors:
+          - 60%
+        note: anchors 1/1 • overlap 67%
+    verified:
+      status: verified
+      sources:
+        - path: content/knowledge/achievements/flow-cli-dx.yaml
+          anchors:
+            - 60%
+      notes: ""
+  - id: metric-83948410bd
+    location: overrides.about.bio[0]
+    text: At Anchorage Digital, I work with institutional clients managing billions—Galaxy chose us for ETH staking
+      specifically because the infrastructure I built met their compliance bar
+    anchors:
+      - billions
+    candidateSources:
+      - path: content/knowledge/achievements/eth-staking-zero-slashing.yaml
+        score: 1
+        matchedAnchors:
+          - billions
+        note: anchors 1/1 • overlap 75%
+      - path: content/knowledge/stories/galaxy-compliance-win.yaml
+        score: 0.094
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 63%
+      - path: content/experience/index.yaml
+        score: 0.075
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 50%
+      - path: content/knowledge/achievements/l2-protocol-integrations.yaml
+        score: 0.047
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 31%
+    verified:
+      status: verified
+      sources:
+        - path: content/knowledge/achievements/eth-staking-zero-slashing.yaml
+          anchors:
+            - billions
+      notes: ""
+  - id: metric-26e879c171
+    location: overrides.about.bio[1]
+    text: "My startup experience (Ankr: 15× revenue growth, 5-person team, survival mode) means I know how to be
+      {{accent}}scrappy and proactive{{/accent}}"
+    anchors:
+      - "Ankr: 15× revenue growth, 5-person team, survival mode"
+    candidateSources:
+      - path: content/knowledge/achievements/ankr-15x-revenue.yaml
+        score: 0.064
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 43%
+      - path: content/experience/index.yaml
+        score: 0.043
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 29%
+    verified:
+      status: verified
+      sources:
+        - path: content/knowledge/achievements/ankr-15x-revenue.yaml
+          anchors:
+            - "Ankr: 15× revenue growth, 5-person team, survival mode"
+      notes: ""
+  - id: metric-fce50b42a7
+    location: overrides.about.stats[0].value
+    text: 60%
+    anchors:
+      - 60%
+    candidateSources:
+      - path: content/knowledge/achievements/flow-cli-dx.yaml
+        score: 1
+        matchedAnchors:
+          - 60%
+        note: anchors 1/1 • overlap 0%
+      - path: content/knowledge/achievements/l2-protocol-integrations.yaml
+        score: 1
+        matchedAnchors:
+          - 60%
+        note: anchors 1/1 • overlap 0%
+      - path: content/experience/index.yaml
+        score: 1
+        matchedAnchors:
+          - 60%
+        note: anchors 1/1 • overlap 0%
+    verified:
+      status: verified
+      sources:
+        - path: content/knowledge/achievements/flow-cli-dx.yaml
+          anchors:
+            - 60%
+      notes: ""
+  - id: metric-e66b0819e2
+    location: overrides.about.stats[1].value
+    text: 8+
+    anchors:
+      - 8+
+    candidateSources: []
+    verified:
+      status: verified
+      sources:
+        - path: content/experience/index.yaml
+          anchors:
+            - 8+
+      notes: ""
+  - id: metric-79ac090a97
+    location: overrides.about.stats[2].value
+    text: Billions
+    anchors: &a1
+      - Billions
+    candidateSources:
+      - path: content/knowledge/achievements/eth-staking-zero-slashing.yaml
+        score: 1
+        matchedAnchors:
+          - Billions
+        note: anchors 1/1 • overlap 100%
+    verified:
+      status: verified
+      sources:
+        - path: content/knowledge/achievements/eth-staking-zero-slashing.yaml
+          anchors: *a1
+      notes: ""

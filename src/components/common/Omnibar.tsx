@@ -6,8 +6,16 @@ export default function Omnibar() {
     const [copied, setCopied] = useState(false);
     const [heroVisible, setHeroVisible] = useState(true);
     const [footerVisible, setFooterVisible] = useState(false);
+    const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' ? window.innerWidth < 768 : false);
     const heroObserverRef = useRef<IntersectionObserver | null>(null);
     const footerObserverRef = useRef<IntersectionObserver | null>(null);
+
+    // Track window resize for mobile detection
+    useEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth < 768);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     // Derived state: Show omnibar only when hero CTAs are NOT visible AND footer CTA is NOT visible
     const isVisible = !heroVisible && !footerVisible;
@@ -20,8 +28,10 @@ export default function Omnibar() {
 
     // Observe Hero CTA section
     useEffect(() => {
-        // Find the hero CTA container (parent of .hero-primary-btn)
-        const heroCta = document.querySelector('.hero-primary-btn')?.parentElement;
+        // Find the hero CTA container - check for desktop (.hero-primary-btn) or mobile (.mobile-hero-primary-btn)
+        const desktopBtn = document.querySelector('.hero-primary-btn');
+        const mobileBtn = document.querySelector('.mobile-hero-primary-btn');
+        const heroCta = desktopBtn?.parentElement || mobileBtn?.parentElement;
 
         if (!heroCta) return;
 
@@ -171,7 +181,7 @@ export default function Omnibar() {
                                     </motion.svg>
                                 )}
                             </AnimatePresence>
-                            <span>{copied ? 'Copied!' : 'Copy Email'}</span>
+                            <span>{copied ? 'Copied!' : (isMobile ? 'Email' : 'Copy Email')}</span>
                         </motion.button>
 
                         <div style={{ width: '1px', height: '16px', background: 'var(--color-border-light)' }} />
@@ -199,7 +209,7 @@ export default function Omnibar() {
                                 <polyline points="7 10 12 15 17 10" />
                                 <line x1="12" y1="15" x2="12" y2="3" />
                             </svg>
-                            <span>Resume</span>
+                            <span>{isMobile ? 'CV' : 'Resume'}</span>
                         </motion.a>
 
                         <div style={{ width: '1px', height: '16px', background: 'var(--color-border-light)' }} />
@@ -227,7 +237,7 @@ export default function Omnibar() {
                                 <line x1="8" y1="2" x2="8" y2="6" />
                                 <line x1="3" y1="10" x2="21" y2="10" />
                             </svg>
-                            <span>Book Time</span>
+                            <span>{isMobile ? 'Book' : 'Book Time'}</span>
                         </motion.a>
                     </motion.div>
                 )}

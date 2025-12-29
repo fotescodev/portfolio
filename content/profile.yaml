@@ -12,7 +12,7 @@ photo: "/images/headshot.jpg"
 # HERO SECTION
 # ═══════════════════════════════════════════════════════════════
 hero:
-  status: "Open to PM roles — AI, Infrastructure, Web3"
+  status: "Open to PM roles — Institutional Custody | Infrastructure | DevEx"
   headline:
     - text: "Building"
       style: "italic"
@@ -21,9 +21,8 @@ hero:
     - text: "trust"
       style: "accent"
   subheadline: >
-    Senior Technical PM shipping institutional crypto infrastructure.
-    From Xbox royalties on Ethereum to ETF-grade custody.
-    Now exploring where AI agents meet on-chain execution.
+    Technical Product Manager. From shipping one of Microsoft's first
+    blockchain projects to Web3 infrastructure to institutional custody.
   cta:
     primary:
       label: "View Work"
@@ -37,19 +36,17 @@ hero:
 # ═══════════════════════════════════════════════════════════════
 about:
   tagline: >
-    Eight years shipping products where complexity
-    meets compliance—from enterprise to crypto to whatever comes next.
+    Eight years shipping Web3 infrastructure, from dev tools to institutional custody.
   bio:
     - >
-      Currently at Anchorage Digital, I lead protocol integrations and staking
-      products for institutional clients—Galaxy, ETF providers, and enterprises
-      navigating crypto custody. Before that, I built Wallet-as-a-Service at Forte,
-      developer tooling at Dapper Labs, and API infrastructure at Ankr.
+      I've spent the last few years bringing cutting-edge protocols into institutional
+      custody at Anchorage Digital, building developer tools like Flow Playground at
+      Dapper Labs, and shipping the Web3 infrastructure that builders actually use at Ankr.
     - >
-      I started in enterprise blockchain at Microsoft, shipping Xbox royalties
-      on Ethereum before "Web3" was a term. I'm drawn to problems at the
-      intersection of deterministic systems and probabilistic intelligence—where
-      smart contracts meet AI agents.
+      I started in 2017 with one of Microsoft's first blockchain projects. Eight years
+      later, I'm still here because {{accent}}this is Web3's moment{{/accent}}—blockchain
+      as the transaction layer for the agentic economy. Stablecoin rails, identity
+      attestation, agent-to-agent value transfer. Building in this space? Let's talk.
   stats:
     - value: "8+"
       label: "Years in Product"
@@ -66,4 +63,4 @@ sections:
   blog: true
   onchainIdentity: false
   skills: false
-  passionProjects: true
+  passionProjects: false

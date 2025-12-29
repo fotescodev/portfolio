@@ -5,7 +5,9 @@
     "generatedAt": "2025-12-16T18:30:00Z",
     "jobDescription": "Technical Product Manager - Terminal Application Architecture - CTO Office\n\nDefining next-generation Terminal architecture with emphasis on interoperability,\ncomposability, and AI integration. Leading platform standards and frameworks to\nenhance developer productivity across Bloomberg's application ecosystem.\n\n7+ years in technical product management, background building application SDKs,\nframeworks, or platforms. Strong stakeholder management and technical documentation\nskills. Experience with web technologies (JavaScript, TypeScript, Node.js, React)\nand emerging AI frameworks.\n",
     "generationModel": "manual-v1",
-    "slug": "bloomberg-technical-product-manager"
+    "slug": "bloomberg-technical-product-manager",
+    "publishStatus": "draft",
+    "applicationStatus": "not_applied"
   },
   "overrides": {
     "hero": {
