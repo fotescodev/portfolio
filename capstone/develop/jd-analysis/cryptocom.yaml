@@ -1,0 +1,65 @@
+metadata:
+  analyzedAt: 2025-12-29T18:47:11.539Z
+  sourceFile: source-data/jd-cryptocom.txt
+  slug: cryptocom-pm-ai
+extracted:
+  company: Crypto.com
+  role: Product Manager (AI)
+  yearsRequired: null
+mustHaves:
+  - text: Strong understanding of generative AI technologies and LLMs
+    category: domain_expertise
+    specificity: high
+    matchedPattern: AI/ML experience
+  - text: Experience integrating generative AI models (LLMs) into core features
+    category: domain_expertise
+    specificity: high
+    matchedPattern: AI integration
+  - text: Lead cross-functional teams (Engineering, Data Infrastructure, Design)
+    category: leadership
+    specificity: high
+    matchedPattern: cross-functional leadership
+  - text: Define and drive strategy for customer-facing AI and data products
+    category: strategy
+    specificity: high
+    matchedPattern: product strategy
+  - text: Translate complex AI capabilities into intuitive, mobile-first requirements
+    category: product_design
+    specificity: high
+    matchedPattern: mobile product design
+  - text: Scale AI-powered support tools and automated verification flows (KYC)
+    category: domain_expertise
+    specificity: medium
+    matchedPattern: operational efficiency
+  - text: Strong understanding of data infrastructure
+    category: technical
+    specificity: high
+    matchedPattern: data infrastructure
+niceToHaves:
+  - Previous experience delivering customer-facing AI products
+  - Familiarity with crypto trading ecosystems
+  - Advanced degrees (Masters/MBA)
+ignoredGeneric:
+  - Bachelor's degree in a technical or business field
+  - Passion for translating sophisticated technical solutions
+  - User-first mindset
+  - Think big and try new opportunities
+domainKeywords:
+  - crypto
+  - fintech
+  - ai_ml
+  - llm
+  - generative_ai
+  - infrastructure
+  - consumer
+searchTerms:
+  - crypto
+  - fintech
+  - ai
+  - llm
+  - generative
+  - machine learning
+  - api
+  - infrastructure
+  - mobile
+  - cross-functional

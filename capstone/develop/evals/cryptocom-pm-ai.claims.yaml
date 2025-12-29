@@ -1,0 +1,199 @@
+version: 1
+variant:
+  slug: cryptocom-pm-ai
+  variantFile: content/variants/cryptocom-pm-ai.yaml
+  contentHash: 3d82c96c9ed911981d6246247e506c2aaa341f378142005a1abdbfe72a048db1
+  evaluatedAt: 2025-12-29T18:59:42.687Z
+claims:
+  - id: metric-53967bcfb4
+    location: overrides.hero.subheadline
+    text: Shipped LLM-powered support handling 1,000+ questions weekly at 98% accuracy
+    anchors:
+      - 98%
+      - 000+
+    candidateSources:
+      - path: content/experience/index.yaml
+        score: 1
+        matchedAnchors:
+          - 98%
+          - 000+
+        note: anchors 2/2 • overlap 71%
+      - path: content/knowledge/achievements/l2-protocol-integrations.yaml
+        score: 0.064
+        matchedAnchors: []
+        note: anchors 0/2 • overlap 43%
+    verified:
+      status: verified
+      sources:
+        - path: content/experience/index.yaml
+          anchors:
+            - 98%
+            - 000+
+      notes: ""
+  - id: metric-5b001c69cc
+    location: overrides.hero.subheadline
+    text: Eight years building for scale—from Microsoft blockchain serving 2.7B consumers to institutional crypto
+      infrastructure.
+    anchors:
+      - 2.7B
+    candidateSources:
+      - path: content/experience/index.yaml
+        score: 1
+        matchedAnchors:
+          - 2.7B
+        note: anchors 1/1 • overlap 55%
+      - path: content/knowledge/achievements/xbox-royalties-ethereum.yaml
+        score: 0.082
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 55%
+      - path: content/knowledge/achievements/ankr-15x-revenue.yaml
+        score: 0.055
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 36%
+      - path: content/knowledge/achievements/eth-staking-zero-slashing.yaml
+        score: 0.055
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 36%
+      - path: content/knowledge/achievements/l2-protocol-integrations.yaml
+        score: 0.055
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 36%
+    verified:
+      status: verified
+      sources:
+        - path: content/experience/index.yaml
+          anchors:
+            - 2.7B
+      notes: ""
+  - id: metric-d8533b7282
+    location: overrides.about.bio[0]
+    text: I recently completed Product Faculty's AI Product Management certification (instructed by Miqdad Jaffer, product
+      leader at OpenAI) and shipped my first production AI at Dapper Labs—a kapa.ai support bot handling 1,000+
+      developer questions weekly with 98% accuracy
+    anchors:
+      - 98%
+      - 000+
+      - instructed by Miqdad Jaffer, product leader at OpenAI
+    candidateSources:
+      - path: content/experience/index.yaml
+        score: 0.751
+        matchedAnchors:
+          - 98%
+          - 000+
+        note: anchors 2/3 • overlap 57%
+    verified:
+      status: verified
+      sources:
+        - path: content/certifications/index.yaml
+          anchors:
+            - 98%
+            - 000+
+            - instructed by Miqdad Jaffer, product leader at OpenAI
+      notes: ""
+  - id: metric-c9869a6d0d
+    location: overrides.about.bio[1]
+    text: At Anchorage I shipped ETF-grade staking for institutional clients including Galaxy and asset managers with
+      billions in AUM
+    anchors:
+      - billions
+    candidateSources:
+      - path: content/knowledge/achievements/eth-staking-zero-slashing.yaml
+        score: 1
+        matchedAnchors:
+          - billions
+        note: anchors 1/1 • overlap 82%
+      - path: content/knowledge/stories/galaxy-compliance-win.yaml
+        score: 0.109
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 73%
+      - path: content/experience/index.yaml
+        score: 0.082
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 55%
+      - path: content/knowledge/achievements/l2-protocol-integrations.yaml
+        score: 0.041
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 27%
+    verified:
+      status: verified
+      sources:
+        - path: content/knowledge/achievements/eth-staking-zero-slashing.yaml
+          anchors:
+            - billions
+      notes: ""
+  - id: metric-af1ab3d6b2
+    location: overrides.about.bio[1]
+    text: I started at Microsoft building Xbox royalties on Ethereum for 2.7B gaming consumers
+    anchors:
+      - 2.7B
+    candidateSources:
+      - path: content/experience/index.yaml
+        score: 1
+        matchedAnchors:
+          - 2.7B
+        note: anchors 1/1 • overlap 75%
+      - path: content/knowledge/achievements/xbox-royalties-ethereum.yaml
+        score: 0.094
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 63%
+    verified:
+      status: verified
+      sources:
+        - path: content/experience/index.yaml
+          anchors:
+            - 2.7B
+      notes: ""
+  - id: metric-643c5c0e97
+    location: overrides.about.stats[0].value
+    text: 98%
+    anchors:
+      - 98%
+    candidateSources:
+      - path: content/experience/index.yaml
+        score: 1
+        matchedAnchors:
+          - 98%
+        note: anchors 1/1 • overlap 0%
+    verified:
+      status: verified
+      sources:
+        - path: content/experience/index.yaml
+          anchors:
+            - 98%
+      notes: ""
+  - id: metric-e66b0819e2
+    location: overrides.about.stats[1].value
+    text: 8+
+    anchors:
+      - 8+
+    candidateSources: []
+    verified:
+      status: verified
+      sources:
+        - path: content/experience/index.yaml
+          anchors:
+            - 8+
+      notes: ""
+  - id: metric-d7de684178
+    location: overrides.about.stats[2].value
+    text: 1M+
+    anchors:
+      - 1M
+    candidateSources:
+      - path: content/knowledge/achievements/ankr-15x-revenue.yaml
+        score: 1
+        matchedAnchors:
+          - 1M
+        note: anchors 1/1 • overlap 0%
+      - path: content/experience/index.yaml
+        score: 1
+        matchedAnchors:
+          - 1M
+        note: anchors 1/1 • overlap 0%
+    verified:
+      status: verified
+      sources:
+        - path: content/experience/index.yaml
+          anchors:
+            - 1M
+      notes: ""

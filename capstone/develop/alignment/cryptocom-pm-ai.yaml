@@ -1,0 +1,198 @@
+metadata:
+  generatedAt: 2025-12-29T18:47:54.197Z
+  sourceAnalysis: capstone/develop/jd-analysis/cryptocom.yaml
+  searchTerms:
+    - crypto
+    - fintech
+    - ai
+    - llm
+    - generative
+    - machine learning
+    - api
+    - infrastructure
+    - mobile
+    - cross-functional
+    - ai_ml
+    - generative_ai
+    - consumer
+    - ai/ml
+    - experience
+    - integration
+    - leadership
+    - product
+    - strategy
+    - design
+    - operational
+    - efficiency
+    - data
+summary:
+  totalMatches: 7
+  strongMatches: 0
+  moderateMatches: 3
+  weakMatches: 4
+  alignmentScore: 0.1
+  recommendation: SKIP
+matches:
+  - source: achievement
+    id: xbox-royalties-ethereum
+    headline: Built Microsoft's first production smart contract—Ethereum royalty
+      system for Xbox eliminating publisher payment disputes
+    relevanceScore: 0.6086956521739131
+    matchedTerms:
+      - crypto
+      - ai
+      - api
+      - infrastructure
+      - cross-functional
+      - experience
+      - product
+      - strategy
+      - design
+      - data
+    matchedSkills:
+      - api-design
+      - cross-functional
+    matchedThemes:
+      - enterprise-blockchain
+      - infrastructure
+    snippet: >-
+      Zero disputed payments post-launch—transparent audit trail eliminated
+      disputes.
+
+      System handles Xbox-scale transaction processing. Project became refer...
+  - source: achievement
+    id: eth-staking-zero-slashing
+    headline: Built ETF-grade staking infrastructure with zero slashing events for
+      institutional clients managing billions in AUM
+    relevanceScore: 0.5652173913043478
+    matchedTerms:
+      - crypto
+      - ai
+      - api
+      - infrastructure
+      - cross-functional
+      - consumer
+      - leadership
+      - product
+      - design
+    matchedSkills:
+      - cross-functional
+      - api-design
+    matchedThemes:
+      - institutional-crypto
+      - infrastructure
+    snippet: >-
+      Zero slashing events across all validators since launch. Galaxy
+      specifically cited
+
+      'full key ownership' as reason they chose us over competitors. Onbo...
+  - source: achievement
+    id: l2-protocol-integrations
+    headline: Shipped 7+ L2 protocol integrations with 40% faster cycle time using
+      scalable RICE evaluation framework
+    relevanceScore: 0.43478260869565216
+    matchedTerms:
+      - crypto
+      - ai
+      - api
+      - infrastructure
+      - cross-functional
+      - integration
+      - design
+    matchedSkills:
+      - cross-functional
+    matchedThemes:
+      - infrastructure
+      - institutional-crypto
+    snippet: >-
+      Reduced per-integration effort by 40% (12+ weeks to ~7 weeks). First time
+      shipping
+
+      3 protocols simultaneously. Framework became company standard. BD t...
+  - source: achievement
+    id: ankr-15x-revenue
+    headline: Drove 15× revenue growth ($130K to $2M ARR) by pivoting RPC product
+      from developers to blockchain protocols
+    relevanceScore: 0.391304347826087
+    matchedTerms:
+      - crypto
+      - ai
+      - api
+      - infrastructure
+      - experience
+      - product
+      - design
+    matchedSkills:
+      - api-design
+    matchedThemes:
+      - infrastructure
+    snippet: >-
+      15× revenue growth in 8 months ($130K to $2M ARR). Achieved target that
+      seemed
+
+      impossible at start. 1M+ daily API requests through protocol partnershi...
+  - source: achievement
+    id: forte-wallet-sdk
+    headline: Built Wallet-as-a-Service infrastructure with MPC custody for AAA
+      gaming studios
+    relevanceScore: 0.391304347826087
+    matchedTerms:
+      - crypto
+      - ai
+      - api
+      - infrastructure
+      - experience
+      - integration
+      - design
+    matchedSkills:
+      - api-design
+    matchedThemes:
+      - infrastructure
+    snippet: >-
+      Launched SDK used by multiple AAA gaming partners. Enabled gaming studios
+      to
+
+      add Web3 features without blockchain expertise. MPC architecture
+      satisfie...
+  - source: achievement
+    id: flow-cli-dx
+    headline: Improved Flow developer onboarding by 60% through CLI and Cadence
+      Playground redesign
+    relevanceScore: 0.34782608695652173
+    matchedTerms:
+      - ai
+      - cross-functional
+      - experience
+      - leadership
+      - product
+      - design
+    matchedSkills:
+      - cross-functional
+    matchedThemes:
+      - developer-experience
+    snippet: >-
+      Reduced time-to-first-deploy by 60%. Improved developer retention in
+      first-week
+
+      experience. Created intuition for developer experience that informed f...
+  - source: story
+    id: galaxy-compliance-win
+    headline: How 'Boring and Defensible' Won Galaxy's Business
+    relevanceScore: 0.08695652173913043
+    matchedTerms:
+      - crypto
+    matchedSkills: []
+    matchedThemes:
+      - institutional-crypto
+    snippet: How 'Boring and Defensible' Won Galaxy's Business
+gaps:
+  - fintech
+  - llm
+  - generative
+  - machine learning
+  - mobile
+  - ai_ml
+  - generative_ai
+  - ai/ml
+  - operational
+  - efficiency
