@@ -131,35 +131,40 @@ function ResumeContent({ profile, experience, variantSlug }: ResumeContentProps)
         ))}
       </section>
 
-      {/* Skills */}
+      {/* Skills - filter out Blockchain & Web3 for general PM roles */}
       <section className="resume-skills">
         <h2 className="resume-section-title">Skills</h2>
         <div className="resume-skills-grid">
-          {skills.categories.map((cat) => (
-            <div key={cat.name} className="resume-skill-category">
-              <span className="resume-skill-category-name">{cat.name}:</span>{' '}
-              <span className="resume-skill-category-items">{cat.skills.join(', ')}</span>
-            </div>
-          ))}
+          {skills.categories
+            .filter((cat) => cat.name !== 'Blockchain & Web3')
+            .map((cat) => (
+              <div key={cat.name} className="resume-skill-category">
+                <span className="resume-skill-category-name">{cat.name}:</span>{' '}
+                <span className="resume-skill-category-items">{cat.skills.join(', ')}</span>
+              </div>
+            ))}
         </div>
       </section>
 
-      {/* Certifications - show featured ones */}
-      {certifications.certifications.filter(c => c.featured).length > 0 && (
+      {/* Certifications - AI only */}
+      {certifications.certifications.filter(c => c.name.toLowerCase().includes('ai')).length > 0 && (
         <section className="resume-certifications">
           <h2 className="resume-section-title">Certifications</h2>
           <div className="resume-certifications-list">
-            {certifications.certifications.filter(c => c.featured).map((cert) => (
-              <div key={cert.credentialId} className="resume-certification">
-                <span className="resume-certification-name">{cert.name}</span>
-                <span className="resume-certification-meta">
-                  {cert.issuer}{cert.instructor && ` (${cert.instructor})`} — {cert.date}
-                </span>
-              </div>
-            ))}
+            {certifications.certifications
+              .filter(c => c.name.toLowerCase().includes('ai'))
+              .map((cert) => (
+                <div key={cert.credentialId} className="resume-certification">
+                  <span className="resume-certification-name">{cert.name}</span>
+                  <span className="resume-certification-meta">
+                    {cert.issuer}{cert.instructor && ` (${cert.instructor})`} — {cert.date}
+                  </span>
+                </div>
+              ))}
           </div>
         </section>
       )}
+
     </div>
   );
 }
