@@ -6,7 +6,8 @@
     "jobDescription": "Example job description. Replace with actual JD.\n",
     "slug": "example-minimal",
     "publishStatus": "draft",
-    "applicationStatus": "not_applied"
+    "applicationStatus": "not_applied",
+    "resumePath": "/resumes/example-minimal.pdf"
   },
   "overrides": {
     "hero": {

@@ -1,52 +1,72 @@
-# ═══════════════════════════════════════════════════════════════
-# VARIANT METADATA
-# ═══════════════════════════════════════════════════════════════
 metadata:
   company: "Plaid"
   role: "Senior Staff Product Manager, API & Developer Experience"
   slug: "plaid-api-devex-pm"
   generatedAt: "2025-12-24T00:00:00Z"
-  jobDescription: |
-    Senior Staff Product Manager - API & Developer Experience
+  jobDescription: "Senior Staff Product Manager - API & Developer Experience
+
 
     Location: San Francisco
+
     Salary Range: $226,800–$400,000 per year (Zone 1)
 
+
     Company Overview:
+
     Plaid is a fintech infrastructure company founded in 2013, headquartered in San Francisco.
+
     The company connects millions of people to financial applications by enabling secure
+
     connections to 12,000+ financial institutions across the US, Canada, UK, and Europe.
 
+
     Team & Role:
+
     The Developer Experience (DevX) team empowers developers building next-generation
-    financial services. This leadership position focuses on "how developers first encounter,
-    understand and integrate with Plaid," spanning APIs, documentation, SDKs, sandbox
+
+    financial services. This leadership position focuses on \"how developers first encounter,
+
+    understand and integrate with Plaid,\" spanning APIs, documentation, SDKs, sandbox
+
     environments, and integration tooling.
 
+
     Key Responsibilities:
+
     - Define vision and strategy for developer experience across onboarding, documentation,
-      SDKs, error handling, tooling, sandbox, and support flows
+
+    \  SDKs, error handling, tooling, sandbox, and support flows
+
     - Engage directly with developers through research and collaboration with Developer Relations
+
     - Partner with Engineering and Design to ship intuitive experiences reducing time-to-integration
+
     - Champion consistent, high-quality developer experience standards
+
     - Balance qualitative feedback with quantitative metrics (activation rates, NPS, adoption)
 
+
     Required Qualifications:
+
     - 8+ years product management experience in developer platforms, APIs, or infrastructure
+
     - Deep technical fluency with APIs, SDKs, and documentation
+
     - Demonstrated passion for reducing friction in developer tooling
+
     - Strong communication skills for both technical and executive audiences
+
     - Hands-on development experience
 
+
     Nice-to-Have Skills:
+
     - Fintech, infrastructure, or API-first company background
-    - Familiarity with OpenAPI/Swagger, Postman, GitHub, or API client tools
+
+    - Familiarity with OpenAPI/Swagger, Postman, GitHub, or API client tools\n"
   generationModel: "manual"
   sourceUrl: "https://plaid.com/careers/openings/product/san-francisco/senior-staff-product-manager-api-developer-experience/"
-
-# ═══════════════════════════════════════════════════════════════
-# OVERRIDES (Tailored for Plaid API & DevEx PM)
-# ═══════════════════════════════════════════════════════════════
+  resumePath: "/resumes/plaid-api-devex-pm.pdf"
 overrides:
   hero:
     status: "Open to Product Roles"
@@ -62,32 +82,12 @@ overrides:
         style: "muted"
       - text: "Plaid"
         style: "accent"
-    subheadline: >
-      API & Developer Experience PM with 8+ years shipping SDKs, APIs, and
-      developer tools. From Flow CLI to Ankr's Advanced API serving 1M+ daily
-      requests—I make complex infrastructure feel simple.
-
+    subheadline: "API & Developer Experience PM with 8+ years shipping SDKs, APIs, and developer tools. From Flow CLI to Ankr's Advanced API serving 1M+ daily requests—I make complex infrastructure feel simple.\n"
   about:
-    tagline: >
-      Eight years building developer platforms where technical depth meets developer
-      empathy—from blockchain SDKs to API architectures powering millions of requests.
+    tagline: "Eight years building developer platforms where technical depth meets developer empathy—from blockchain SDKs to API architectures powering millions of requests.\n"
     bio:
-      - >
-        At Dapper Labs, I owned Developer Experience—shipping the Flow CLI and
-        Cadence Playground redesign that reduced time-to-first-deploy by 60%.
-        At Ankr, I built the Advanced API from 0→1 (17 methods across NFT, Token,
-        Query APIs) serving 1M+ daily requests, plus the SDK suite (Ankr.js, Ankr.py,
-        React Hooks) with 1,900+ weekly downloads. At Forte, I productized
-        Wallet-as-a-Service SDKs for AAA gaming studios. I've spent years
-        obsessing over API ergonomics, documentation clarity, and what makes
-        developer onboarding feel effortless.
-      - >
-        Plaid's mission resonates deeply—I've lived the pain of fragmented financial
-        data integration and understand how critical {{accent}}great developer
-        experience{{/accent}} is for platform adoption. My fintech experience at
-        Anchorage Digital (institutional custody APIs, ETF-grade infrastructure)
-        combined with hands-on API/SDK building makes this role feel like a natural
-        fit. I'm excited about defining the vision for how developers experience Plaid.
+      - "At Dapper Labs, I owned Developer Experience—shipping the Flow CLI and Cadence Playground redesign that reduced time-to-first-deploy by 60%. At Ankr, I built the Advanced API from 0→1 (17 methods across NFT, Token, Query APIs) serving 1M+ daily requests, plus the SDK suite (Ankr.js, Ankr.py, React Hooks) with 1,900+ weekly downloads. At Forte, I productized Wallet-as-a-Service SDKs for AAA gaming studios. I've spent years obsessing over API ergonomics, documentation clarity, and what makes developer onboarding feel effortless.\n"
+      - "Plaid's mission resonates deeply—I've lived the pain of fragmented financial data integration and understand how critical {{accent}}great developer experience{{/accent}} is for platform adoption. My fintech experience at Anchorage Digital (institutional custody APIs, ETF-grade infrastructure) combined with hands-on API/SDK building makes this role feel like a natural fit. I'm excited about defining the vision for how developers experience Plaid.\n"
     stats:
       - value: "60%"
         label: "DX Improvement"
@@ -95,64 +95,52 @@ overrides:
         label: "Daily API Requests"
       - value: "8+"
         label: "Years PM"
-
   sections:
     beyondWork: false
     blog: true
     onchainIdentity: false
     skills: true
     passionProjects: true
-
-# ═══════════════════════════════════════════════════════════════
-# RELEVANCE SCORING
-# ═══════════════════════════════════════════════════════════════
 relevance:
   caseStudies:
     - slug: "flow-playground"
-      relevanceScore: 1.0
+      relevanceScore: 1
       reasoning: "Direct developer tools experience—CLI and playground redesign with 60% onboarding improvement. Perfect match for DevEx leadership."
     - slug: "ankr-rpc"
-      relevanceScore: 1.0
+      relevanceScore: 1
       reasoning: "Built Advanced API (0→1), SDK suite serving 1M+ daily requests. API design, documentation, developer platform at scale."
     - slug: "forte-wallet-sdk"
-      relevanceScore: 0.90
+      relevanceScore: 0.9
       reasoning: "SDK architecture for external developers. API ergonomics and developer empathy in practice."
     - slug: "protocol-integration"
-      relevanceScore: 0.80
+      relevanceScore: 0.8
       reasoning: "API integration patterns, cross-functional coordination, framework development."
     - slug: "xbox-royalties"
       relevanceScore: 0.75
       reasoning: "API design at enterprise scale, documentation for complex systems."
     - slug: "eth-staking"
-      relevanceScore: 0.70
+      relevanceScore: 0.7
       reasoning: "Fintech infrastructure, institutional-grade API reliability."
-
   skills:
     - category: "Technical Leadership"
-      relevanceScore: 1.0
+      relevanceScore: 1
     - category: "Product Strategy"
       relevanceScore: 0.95
     - category: "Blockchain & Web3"
-      relevanceScore: 0.70
-
+      relevanceScore: 0.7
   projects:
     - slug: "ai-agent-framework"
       relevanceScore: 0.85
       reasoning: "SDK/API design thinking, developer tooling mindset"
     - slug: "mempools-sdk"
-      relevanceScore: 0.90
+      relevanceScore: 0.9
       reasoning: "Published SDK (npm), developer platform building"
-
-# ═══════════════════════════════════════════════════════════════
-# TALKING POINTS (Interview Prep)
-# ═══════════════════════════════════════════════════════════════
 talkingPoints:
   whyThisRole:
     - "8+ years PM in developer platforms, APIs, and infrastructure—exact match"
     - "Built APIs serving 1M+ daily requests and SDKs with thousands of weekly downloads"
     - "60% improvement in developer onboarding at Dapper Labs—measurable DevEx impact"
     - "Fintech experience at Anchorage (institutional custody APIs) + hands-on dev background"
-
   relevantStories:
     - achievement: "flow-cli-dx"
       connection: "Owned full DevEx stack—CLI, playground, docs portal. 60% onboarding improvement through user research and iteration."
@@ -162,7 +150,6 @@ talkingPoints:
       connection: "Productized SDKs for external developers (gaming studios). API ergonomics and developer empathy."
     - achievement: "eth-staking-zero-slashing"
       connection: "Fintech infrastructure at institutional scale. API reliability where failure isn't an option."
-
   questionsToAsk:
     - "What's the current state of Plaid's developer onboarding funnel—where do you see the biggest friction points?"
     - "How does the DevX team balance serving individual developers vs. enterprise integration teams?"

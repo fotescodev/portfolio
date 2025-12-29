@@ -1,30 +1,30 @@
-# ═══════════════════════════════════════════════════════════════
-# VARIANT METADATA
-# ═══════════════════════════════════════════════════════════════
 metadata:
   company: "Gensyn"
   role: "Technical Product Manager"
   slug: "gensyn-technical-product-manager"
   generatedAt: "2025-12-16T18:35:00Z"
-  jobDescription: |
-    Technical Product Manager - Developer Infrastructure
+  jobDescription: "Technical Product Manager - Developer Infrastructure
+
 
     Leading roadmap development for SDKs, APIs, and developer infrastructure that
+
     powers the Gensyn network for ML developers working with decentralized training
+
     infrastructure. Translating intricate distributed systems and ML workflows into
+
     accessible developer products.
 
-    Must-have: Strong product delivery in developer tools/infrastructure, distributed
-    systems or ML platform experience, SDK/API architecture expertise, crypto protocol
-    familiarity. Background building developer platforms at premier ML, cloud, or Web3
-    organizations preferred.
-  generationModel: "manual-v1"
 
-# ═══════════════════════════════════════════════════════════════
-# OVERRIDES (Tailored for Gensyn TPM Role)
-# ═══════════════════════════════════════════════════════════════
+    Must-have: Strong product delivery in developer tools/infrastructure, distributed
+
+    systems or ML platform experience, SDK/API architecture expertise, crypto protocol
+
+    familiarity. Background building developer platforms at premier ML, cloud, or Web3
+
+    organizations preferred.\n"
+  generationModel: "manual-v1"
+  resumePath: "/resumes/gensyn-technical-product-manager.pdf"
 overrides:
-  # Hero section - emphasizes Web3 + ML intersection and developer tools
   hero:
     status: "Open to Technical PM roles — ML Infrastructure, Web3 Protocols, Developer Platforms"
     headline:
@@ -34,36 +34,12 @@ overrides:
         style: "muted"
       - text: "AI and decentralized systems"
         style: "accent"
-    subheadline: >
-      Senior Technical PM with 8 years at the convergence of blockchain infrastructure
-      and developer platforms. From institutional staking APIs to gaming wallet SDKs—
-      I translate complex distributed systems into accessible developer experiences.
-      Now exploring where ML training meets decentralized compute.
-
-  # About section - highlights distributed systems + developer tools + Web3
+    subheadline: "Senior Technical PM with 8 years at the convergence of blockchain infrastructure and developer platforms. From institutional staking APIs to gaming wallet SDKs— I translate complex distributed systems into accessible developer experiences. Now exploring where ML training meets decentralized compute.\n"
   about:
-    tagline: >
-      Eight years building developer infrastructure where cutting-edge technology
-      meets production readiness—from enterprise blockchain at Microsoft to
-      decentralized ML frameworks. Passionate about making complex systems accessible.
+    tagline: "Eight years building developer infrastructure where cutting-edge technology meets production readiness—from enterprise blockchain at Microsoft to decentralized ML frameworks. Passionate about making complex systems accessible.\n"
     bio:
-      - >
-        Currently at Anchorage Digital, I lead protocol integrations and staking
-        infrastructure serving institutional clients. I've shipped 7+ L2 integrations
-        (Optimism, Base, Arbitrum) and built ETF-grade validator APIs—designing
-        distributed systems that balance performance, security, and developer experience.
-        Before that, I built MPC-based Wallet-as-a-Service SDKs at Forte for gaming
-        studios, and Flow CLI/Cadence developer tools at Dapper Labs that reduced
-        onboarding time by 60%.
-      - >
-        I started at Microsoft shipping Xbox royalties on Ethereum—one of the first
-        production smart contracts in enterprise, requiring Docker/K8s orchestration
-        for blockchain nodes. I'm deeply experienced in distributed systems, crypto
-        protocols, and developer tooling. Gensyn's mission to democratize ML compute
-        through decentralized infrastructure resonates with my background: I've lived
-        at this intersection of blockchain, developer experience, and cutting-edge
-        technology for years. Currently exploring AI agent orchestration as a passion
-        project.
+      - "Currently at Anchorage Digital, I lead protocol integrations and staking infrastructure serving institutional clients. I've shipped 7+ L2 integrations (Optimism, Base, Arbitrum) and built ETF-grade validator APIs—designing distributed systems that balance performance, security, and developer experience. Before that, I built MPC-based Wallet-as-a-Service SDKs at Forte for gaming studios, and Flow CLI/Cadence developer tools at Dapper Labs that reduced onboarding time by 60%.\n"
+      - "I started at Microsoft shipping Xbox royalties on Ethereum—one of the first production smart contracts in enterprise, requiring Docker/K8s orchestration for blockchain nodes. I'm deeply experienced in distributed systems, crypto protocols, and developer tooling. Gensyn's mission to democratize ML compute through decentralized infrastructure resonates with my background: I've lived at this intersection of blockchain, developer experience, and cutting-edge technology for years. Currently exploring AI agent orchestration as a passion project.\n"
     stats:
       - value: "5+"
         label: "Years in Web3"
@@ -71,56 +47,45 @@ overrides:
         label: "Protocol Integrations"
       - value: "3"
         label: "Developer SDKs"
-
-  # Section visibility - show what matters for Web3/ML role
   sections:
-    beyondWork: false      # Keep focus technical
-    blog: true             # Technical writing on AI/blockchain
-    onchainIdentity: true  # Web3-native identity matters here
-    skills: true           # Technical skills critical
-    passionProjects: true  # AI projects highly relevant
-
-# ═══════════════════════════════════════════════════════════════
-# RELEVANCE SCORING (Ranked for Gensyn TPM)
-# ═══════════════════════════════════════════════════════════════
+    beyondWork: false
+    blog: true
+    onchainIdentity: true
+    skills: true
+    passionProjects: true
 relevance:
-  # Case studies ranked by relevance to ML + distributed systems + developer tools
   caseStudies:
     - slug: "ai-agent-orchestration"
-      relevanceScore: 1.0
+      relevanceScore: 1
       reasoning: "AI agent framework - directly relevant to ML infrastructure and demonstrates passion for AI/ML"
     - slug: "developer-analytics"
       relevanceScore: 0.95
       reasoning: "Flow CLI and dev tools - SDK architecture and developer experience expertise"
     - slug: "protocol-integration"
-      relevanceScore: 0.90
+      relevanceScore: 0.9
       reasoning: "L2 protocol integrations - distributed systems and blockchain protocol experience"
     - slug: "eth-staking"
       relevanceScore: 0.85
       reasoning: "Distributed validator infrastructure - relevant to decentralized compute networks"
     - slug: "ankr-rpc"
-      relevanceScore: 0.80
+      relevanceScore: 0.8
       reasoning: "API infrastructure scaling - platform thinking for distributed systems"
     - slug: "xbox-royalties"
-      relevanceScore: 0.70
+      relevanceScore: 0.7
       reasoning: "Early blockchain infrastructure - shows pioneering spirit in emerging tech"
-
-  # Skills ranked by category relevance to ML/Web3 role
   skills:
     - category: "Blockchain & Web3"
-      relevanceScore: 1.0
+      relevanceScore: 1
     - category: "Technical Leadership"
       relevanceScore: 0.95
     - category: "Product Strategy"
       relevanceScore: 0.85
-
-  # Passion projects ranked by relevance
   projects:
     - slug: "ai-agent-framework"
-      relevanceScore: 1.0
+      relevanceScore: 1
       reasoning: "AI/ML framework development - directly aligned with Gensyn's ML focus"
     - slug: "flow-playground"
-      relevanceScore: 0.90
+      relevanceScore: 0.9
       reasoning: "Developer tools for blockchain - relevant SDK/tooling experience"
     - slug: "defi-analytics"
       relevanceScore: 0.75

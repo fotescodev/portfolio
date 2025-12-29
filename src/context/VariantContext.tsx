@@ -29,12 +29,10 @@ interface VariantProviderProps {
 export function VariantProvider({ children, profile, variant = null }: VariantProviderProps) {
   const getResumeUrl = (): string => {
     if (variant) {
-      // Convert slug "cursor-tam" to URL path "cursor/tam"
-      const slugParts = variant.metadata.slug.split('-');
-      const urlPath = `${slugParts[0]}/${slugParts.slice(1).join('-')}`;
-      return `/${urlPath}/resume`;
+      // Return direct PDF path for immediate download
+      return `/resumes/${variant.metadata.slug}.pdf`;
     }
-    return '/resume';
+    return '/resume.pdf';
   };
 
   const value: VariantContextType = {
@@ -70,7 +68,7 @@ export function useVariantSafe() {
       profile: null,
       variant: null,
       isVariant: false,
-      getResumeUrl: () => '/resume'
+      getResumeUrl: () => '/resume.pdf'
     };
   }
   return context;

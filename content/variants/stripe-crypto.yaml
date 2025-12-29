@@ -1,33 +1,38 @@
-# ═══════════════════════════════════════════════════════════════
-# VARIANT METADATA
-# ═══════════════════════════════════════════════════════════════
 metadata:
   company: "Stripe"
   role: "Crypto Product Manager"
   slug: "stripe-crypto"
   generatedAt: "2025-12-19T00:00:00Z"
-  jobDescription: |
-    Stripe Crypto - Product Manager
+  jobDescription: "Stripe Crypto - Product Manager
+
 
     Stripe is building the financial infrastructure for the internet, and crypto
+
     is becoming an increasingly important part of that infrastructure. We're looking
+
     for a PM to help define and execute our crypto strategy—from stablecoin payments
+
     to on-chain settlement to crypto on-ramps.
 
+
     You'll work at the intersection of traditional payments and blockchain,
+
     building products that bring crypto to Stripe's millions of merchants.
 
-    Requirements:
-    - 5+ years product management experience
-    - Deep understanding of crypto/blockchain ecosystems
-    - Experience with payments, fintech, or financial infrastructure
-    - Track record shipping developer-facing APIs
-    - Comfort with regulatory complexity
-  generationModel: "claude-opus-4"
 
-# ═══════════════════════════════════════════════════════════════
-# OVERRIDES (Tailored for Stripe Crypto Role)
-# ═══════════════════════════════════════════════════════════════
+    Requirements:
+
+    - 5+ years product management experience
+
+    - Deep understanding of crypto/blockchain ecosystems
+
+    - Experience with payments, fintech, or financial infrastructure
+
+    - Track record shipping developer-facing APIs
+
+    - Comfort with regulatory complexity\n"
+  generationModel: "claude-opus-4"
+  resumePath: "/resumes/stripe-crypto.pdf"
 overrides:
   hero:
     status: "Open to PM roles — Crypto Infrastructure, Payments, Fintech"
@@ -38,30 +43,12 @@ overrides:
         style: "muted"
       - text: "payments infrastructure"
         style: "accent"
-    subheadline: >
-      Senior Technical PM with 8 years bridging institutional finance and crypto—from
-      ETF-grade custody at Anchorage to enterprise blockchain at Microsoft. Expert in
-      shipping compliant crypto infrastructure that scales to millions of transactions.
-
+    subheadline: "Senior Technical PM with 8 years bridging institutional finance and crypto—from ETF-grade custody at Anchorage to enterprise blockchain at Microsoft. Expert in shipping compliant crypto infrastructure that scales to millions of transactions.\n"
   about:
-    tagline: >
-      Eight years shipping products where crypto complexity meets financial
-      infrastructure—from Xbox royalties on Ethereum to institutional staking
-      serving billions in AUM. Now focused on bringing crypto to mainstream payments.
+    tagline: "Eight years shipping products where crypto complexity meets financial infrastructure—from Xbox royalties on Ethereum to institutional staking serving billions in AUM. Now focused on bringing crypto to mainstream payments.\n"
     bio:
-      - >
-        Currently at Anchorage Digital, I lead protocol integrations and staking products
-        for institutional clients—Galaxy, ETF providers, and enterprises navigating crypto
-        custody. I've shipped 7+ L2 integrations (Optimism, Base, Arbitrum) and built
-        ETF-grade staking infrastructure with zero slashing events. Before that, I drove
-        15× revenue growth at Ankr by repositioning RPC infrastructure from developers
-        to blockchain protocols—proving I can find PMF in crowded markets.
-      - >
-        I started in enterprise blockchain at Microsoft, shipping Xbox royalties on
-        Ethereum before "Web3" existed. I understand both sides: the compliance rigor
-        that financial institutions demand, and the developer experience that drives
-        crypto adoption. Stripe's position at the intersection of payments and crypto
-        is exactly where I want to build.
+      - "Currently at Anchorage Digital, I lead protocol integrations and staking products for institutional clients—Galaxy, ETF providers, and enterprises navigating crypto custody. I've shipped 7+ L2 integrations (Optimism, Base, Arbitrum) and built ETF-grade staking infrastructure with zero slashing events. Before that, I drove 15× revenue growth at Ankr by repositioning RPC infrastructure from developers to blockchain protocols—proving I can find PMF in crowded markets.\n"
+      - "I started in enterprise blockchain at Microsoft, shipping Xbox royalties on Ethereum before \"Web3\" existed. I understand both sides: the compliance rigor that financial institutions demand, and the developer experience that drives crypto adoption. Stripe's position at the intersection of payments and crypto is exactly where I want to build.\n"
     stats:
       - value: "8+"
         label: "Years in Product"
@@ -69,17 +56,12 @@ overrides:
         label: "AUM Supported"
       - value: "15×"
         label: "Revenue Growth"
-
   sections:
     beyondWork: false
     blog: true
-    onchainIdentity: true      # Relevant for crypto role
+    onchainIdentity: true
     skills: true
     passionProjects: true
-
-# ═══════════════════════════════════════════════════════════════
-# RELEVANCE SCORING (Ranked for Stripe Crypto)
-# ═══════════════════════════════════════════════════════════════
 relevance:
   caseStudies:
     - slug: "institutional-eth-staking"
@@ -95,24 +77,22 @@ relevance:
       relevanceScore: 0.85
       reasoning: "Enterprise blockchain + payments (royalties)—shows experience at intersection of crypto and financial transactions"
     - slug: "developer-analytics-dashboard"
-      relevanceScore: 0.60
+      relevanceScore: 0.6
       reasoning: "Developer tools and analytics—relevant to Stripe's developer-first approach"
     - slug: "ai-agent-orchestration"
-      relevanceScore: 0.40
+      relevanceScore: 0.4
       reasoning: "Infrastructure platform—less directly relevant but shows platform thinking"
-
   skills:
     - category: "Blockchain & Web3"
-      relevanceScore: 1.0
+      relevanceScore: 1
     - category: "Technical"
       relevanceScore: 0.95
     - category: "Product Management"
-      relevanceScore: 0.90
-
+      relevanceScore: 0.9
   projects:
     - slug: "eth-staking"
       relevanceScore: 0.95
       reasoning: "Institutional crypto—core to Stripe's crypto expansion"
     - slug: "protocol-integration"
-      relevanceScore: 0.90
+      relevanceScore: 0.9
       reasoning: "Multi-chain support—relevant to crypto payments across chains"

@@ -1,19 +1,10 @@
-# ═══════════════════════════════════════════════════════════════
-# MINIMAL VARIANT EXAMPLE
-# This is the simplest possible variant to validate your setup.
-# Copy this file, rename it, and edit the 3 required fields.
-# ═══════════════════════════════════════════════════════════════
-
-# REQUIRED: Update these 3 fields
 metadata:
-  company: "Acme Corp"           # Company name (appears in UI)
-  role: "Senior PM"              # Role title
-  slug: "example-minimal"         # URL slug: /example/minimal (must match filename)
+  company: "Acme Corp"
+  role: "Senior PM"
+  slug: "example-minimal"
   generatedAt: "2025-01-01T00:00:00Z"
-  jobDescription: |
-    Example job description. Replace with actual JD.
-
-# REQUIRED: At least one hero headline override
+  jobDescription: "Example job description. Replace with actual JD.\n"
+  resumePath: "/resumes/example-minimal.pdf"
 overrides:
   hero:
     headline:
@@ -23,10 +14,6 @@ overrides:
         style: "muted"
       - text: "Acme Corp"
         style: "accent"
-
-# OPTIONAL: Everything below can be deleted for minimal variant
-
-  # Customize about section
   about:
     tagline: "Platform PM with API and infrastructure focus"
     stats:
@@ -34,24 +21,11 @@ overrides:
         label: "Years PM"
       - value: "5"
         label: "Platform Products"
-
-  # Show/hide sections
   sections:
     beyondWork: false
     blog: true
-
-# OPTIONAL: Rank case studies by relevance
 relevance:
   caseStudies:
     - slug: "eth-staking"
       relevanceScore: 0.95
       reasoning: "Direct platform experience"
-
-# ═══════════════════════════════════════════════════════════════
-# HOW TO USE:
-# 1. Copy this file: cp example-minimal.yaml your-company-role.yaml
-# 2. Edit metadata.company, metadata.role, metadata.slug
-# 3. Update overrides.hero.headline with company name
-# 4. Sync: npm run variants:sync
-# 5. Preview: npm run dev, then visit /your-company/role
-# ═══════════════════════════════════════════════════════════════

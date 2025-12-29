@@ -7,7 +7,8 @@
     "generationModel": "manual-v1",
     "slug": "gensyn-technical-product-manager",
     "publishStatus": "draft",
-    "applicationStatus": "not_applied"
+    "applicationStatus": "not_applied",
+    "resumePath": "/resumes/gensyn-technical-product-manager.pdf"
   },
   "overrides": {
     "hero": {

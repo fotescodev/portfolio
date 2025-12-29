@@ -1,31 +1,32 @@
-# ═══════════════════════════════════════════════════════════════
-# VARIANT METADATA
-# ═══════════════════════════════════════════════════════════════
 metadata:
   company: "Mysten Labs"
   role: "Sr. Product Manager, Walrus (Distributed Storage)"
   slug: "mysten-walrus-senior-pm"
   generatedAt: "2025-12-19T12:00:00Z"
-  jobDescription: |
-    Sr. Product Manager for Walrus, owning the core data platform and key product
+  jobDescription: "Sr. Product Manager for Walrus, owning the core data platform and key product
+
     surfaces including Walrus Sites. Role sits at intersection of storage, data delivery,
+
     and developer experience. Responsible for developer-facing abstractions (APIs, SDKs,
+
     tooling, documentation), working with engineering on performance/scalability/reliability,
+
     and supporting internal teams + external partners adopting Walrus in production.
 
+
     Key requirements: 5+ years PM experience on technical platform/infrastructure products,
+
     proven ownership of ambiguous problems end-to-end, strong technical fluency with APIs/
+
     data flows/system design, experience leading multi-quarter initiatives. Nice to have:
+
     ecosystem shaping experience, content/media/AI/data monetization exposure, security/
-    privacy/governance familiarity, open-source involvement.
+
+    privacy/governance familiarity, open-source involvement.\n"
   generationModel: "manual-v1"
   sourceUrl: "https://jobs.ashbyhq.com/mystenlabs/5d434241-ef7f-44e8-ad3a-6f17376866d7"
-
-# ═══════════════════════════════════════════════════════════════
-# OVERRIDES (Tailored for Walrus PM Role)
-# ═══════════════════════════════════════════════════════════════
+  resumePath: "/resumes/mysten-walrus-senior-pm.pdf"
 overrides:
-  # Hero section - emphasizes storage/infrastructure platform + developer experience
   hero:
     status: "Open to Platform PM roles — Distributed Storage, Developer Infrastructure, Web3"
     headline:
@@ -35,36 +36,12 @@ overrides:
         style: "muted"
       - text: "decentralized infrastructure"
         style: "accent"
-    subheadline: >
-      Senior PM with 8+ years building infrastructure products developers love.
-      From RPC APIs serving 1M+ daily requests to SDK ecosystems for gaming studios—
-      I turn complex distributed systems into reliable, scalable platforms.
-      Passionate about the intersection of storage, data delivery, and developer experience.
-
-  # About section - highlights infrastructure platform + developer tools + ecosystem
+    subheadline: "Senior PM with 8+ years building infrastructure products developers love. From RPC APIs serving 1M+ daily requests to SDK ecosystems for gaming studios— I turn complex distributed systems into reliable, scalable platforms. Passionate about the intersection of storage, data delivery, and developer experience.\n"
   about:
-    tagline: >
-      Eight years shipping infrastructure products that developers build on—from
-      enterprise blockchain at Microsoft to institutional staking platforms. I find
-      PMF in technical markets and turn engineering excellence into developer adoption.
+    tagline: "Eight years shipping infrastructure products that developers build on—from enterprise blockchain at Microsoft to institutional staking platforms. I find PMF in technical markets and turn engineering excellence into developer adoption.\n"
     bio:
-      - >
-        Currently at Anchorage Digital, I own staking infrastructure serving billions
-        in AUM with zero slashing events. I've shipped 7+ L2 integrations (Optimism,
-        Base, Arbitrum) using a RICE evaluation framework I built, reducing integration
-        time by 40%. Before that, at Ankr I drove 15× revenue growth ($130K to $2M ARR)
-        by repositioning RPC infrastructure from developers to protocols—building
-        Advanced APIs and an SDK that scaled to 1M+ daily requests. At Forte, I designed
-        Wallet-as-a-Service SDKs with MPC custody for AAA gaming studios.
-      - >
-        At Dapper Labs, I led Flow CLI and Cadence Playground to reduce developer
-        onboarding time by 60%. I started at Microsoft shipping Xbox royalties on
-        Ethereum—one of the first production smart contracts in enterprise. Walrus's
-        mission resonates deeply: I've spent my career making complex infrastructure
-        accessible to developers, building the platforms that ecosystems depend on.
-        I understand what it takes to evolve a protocol product from early adoption
-        to production maturity while balancing performance, reliability, and developer
-        experience.
+      - "Currently at Anchorage Digital, I own staking infrastructure serving billions in AUM with zero slashing events. I've shipped 7+ L2 integrations (Optimism, Base, Arbitrum) using a RICE evaluation framework I built, reducing integration time by 40%. Before that, at Ankr I drove 15× revenue growth ($130K to $2M ARR) by repositioning RPC infrastructure from developers to protocols—building Advanced APIs and an SDK that scaled to 1M+ daily requests. At Forte, I designed Wallet-as-a-Service SDKs with MPC custody for AAA gaming studios.\n"
+      - "At Dapper Labs, I led Flow CLI and Cadence Playground to reduce developer onboarding time by 60%. I started at Microsoft shipping Xbox royalties on Ethereum—one of the first production smart contracts in enterprise. Walrus's mission resonates deeply: I've spent my career making complex infrastructure accessible to developers, building the platforms that ecosystems depend on. I understand what it takes to evolve a protocol product from early adoption to production maturity while balancing performance, reliability, and developer experience.\n"
     stats:
       - value: "8+"
         label: "Years in Product"
@@ -72,29 +49,22 @@ overrides:
         label: "SDKs Shipped"
       - value: "1M+"
         label: "Daily API Requests"
-
-  # Section visibility - emphasize technical and ecosystem building
   sections:
-    beyondWork: false       # Keep focus on technical/platform work
-    blog: true              # Technical writing relevant for developer-facing role
-    onchainIdentity: true   # Web3 native identity matters for Mysten
-    skills: true            # Technical skills critical for platform PM
-    passionProjects: true   # Shows builder mentality
-
-# ═══════════════════════════════════════════════════════════════
-# RELEVANCE SCORING (Ranked for Walrus PM)
-# ═══════════════════════════════════════════════════════════════
+    beyondWork: false
+    blog: true
+    onchainIdentity: true
+    skills: true
+    passionProjects: true
 relevance:
-  # Case studies ranked by relevance to storage/platform/developer experience
   caseStudies:
     - slug: "ankr-rpc"
-      relevanceScore: 1.0
+      relevanceScore: 1
       reasoning: "API infrastructure at scale, SDK development, developer tools, 15x revenue growth—directly parallel to Walrus platform PM responsibilities"
     - slug: "developer-analytics"
       relevanceScore: 0.95
       reasoning: "Flow CLI and developer tools—exact match for Walrus developer-facing abstractions and tooling work"
     - slug: "eth-staking"
-      relevanceScore: 0.90
+      relevanceScore: 0.9
       reasoning: "Infrastructure platform with reliability/performance requirements—demonstrates platform thinking and technical depth"
     - slug: "protocol-integration"
       relevanceScore: 0.85
@@ -102,17 +72,13 @@ relevance:
     - slug: "xbox-royalties"
       relevanceScore: 0.75
       reasoning: "Pioneering blockchain infrastructure, enterprise production systems—shows ability to bring new technology to production"
-
-  # Skills ranked by category relevance
   skills:
     - category: "Blockchain & Web3"
-      relevanceScore: 1.0
+      relevanceScore: 1
     - category: "Technical Leadership"
       relevanceScore: 0.95
     - category: "Product Strategy"
-      relevanceScore: 0.90
-
-  # Passion projects ranked by relevance
+      relevanceScore: 0.9
   projects:
     - slug: "ai-agent-framework"
       relevanceScore: 0.85
@@ -121,19 +87,14 @@ relevance:
       relevanceScore: 0.95
       reasoning: "Developer tools for blockchain—directly relevant to Walrus Sites and developer experience"
     - slug: "defi-analytics"
-      relevanceScore: 0.80
+      relevanceScore: 0.8
       reasoning: "Data infrastructure and Web3-native tooling"
-
-# ═══════════════════════════════════════════════════════════════
-# TALKING POINTS (Interview Prep)
-# ═══════════════════════════════════════════════════════════════
 talkingPoints:
   whyThisRole:
     - "Walrus sits at the intersection of my career themes: infrastructure platforms, developer experience, and Web3"
     - "I've built the exact products Walrus needs: APIs, SDKs, documentation, and developer tooling"
     - "Experience taking infrastructure from early adoption to production maturity (Ankr, Anchorage)"
     - "Proven ability to work with external partners and ecosystem builders"
-
   relevantStories:
     - achievement: "ankr-15x-revenue"
       connection: "Scaled API infrastructure from commodity to platform—same journey Walrus needs"
@@ -143,7 +104,6 @@ talkingPoints:
       connection: "Designed SDKs for external partners (gaming studios)—same stakeholder dynamics as Walrus ecosystem"
     - achievement: "eth-staking-zero-slashing"
       connection: "Infrastructure reliability and performance at scale—critical for production storage platform"
-
   questionsToAsk:
     - "How do you measure success for Walrus adoption—developer count, storage volume, Sites deployed?"
     - "What's the current split between internal vs external teams building on Walrus?"

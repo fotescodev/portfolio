@@ -1,29 +1,28 @@
-# ═══════════════════════════════════════════════════════════════
-# VARIANT METADATA
-# ═══════════════════════════════════════════════════════════════
 metadata:
   company: "Bloomberg"
   role: "Technical Product Manager"
   slug: "bloomberg-technical-product-manager"
   generatedAt: "2025-12-16T18:30:00Z"
-  jobDescription: |
-    Technical Product Manager - Terminal Application Architecture - CTO Office
+  jobDescription: "Technical Product Manager - Terminal Application Architecture - CTO Office
+
 
     Defining next-generation Terminal architecture with emphasis on interoperability,
+
     composability, and AI integration. Leading platform standards and frameworks to
+
     enhance developer productivity across Bloomberg's application ecosystem.
 
-    7+ years in technical product management, background building application SDKs,
-    frameworks, or platforms. Strong stakeholder management and technical documentation
-    skills. Experience with web technologies (JavaScript, TypeScript, Node.js, React)
-    and emerging AI frameworks.
-  generationModel: "manual-v1"
 
-# ═══════════════════════════════════════════════════════════════
-# OVERRIDES (Tailored for Bloomberg TPM Role)
-# ═══════════════════════════════════════════════════════════════
+    7+ years in technical product management, background building application SDKs,
+
+    frameworks, or platforms. Strong stakeholder management and technical documentation
+
+    skills. Experience with web technologies (JavaScript, TypeScript, Node.js, React)
+
+    and emerging AI frameworks.\n"
+  generationModel: "manual-v1"
+  resumePath: "/resumes/bloomberg-technical-product-manager.pdf"
 overrides:
-  # Hero section - emphasizes platform/SDK experience and Bloomberg fit
   hero:
     status: "Open to Technical PM roles — Platform Architecture, Developer Tools, AI Integration"
     headline:
@@ -33,34 +32,12 @@ overrides:
         style: "muted"
       - text: "scale and innovation"
         style: "accent"
-    subheadline: >
-      Senior Technical PM with 8 years shipping developer-facing platforms—from
-      enterprise blockchain infrastructure at Microsoft to institutional crypto APIs
-      at Anchorage. Expert in SDK architecture, platform interoperability, and balancing
-      technical excellence with rapid delivery.
-
-  # About section - highlights platform/framework experience
+    subheadline: "Senior Technical PM with 8 years shipping developer-facing platforms—from enterprise blockchain infrastructure at Microsoft to institutional crypto APIs at Anchorage. Expert in SDK architecture, platform interoperability, and balancing technical excellence with rapid delivery.\n"
   about:
-    tagline: >
-      Eight years building developer platforms where technical rigor meets pragmatic
-      delivery—from Xbox smart contracts to ETF-grade staking APIs. Now focused on
-      next-generation application architecture.
+    tagline: "Eight years building developer platforms where technical rigor meets pragmatic delivery—from Xbox smart contracts to ETF-grade staking APIs. Now focused on next-generation application architecture.\n"
     bio:
-      - >
-        Currently at Anchorage Digital, I lead protocol integrations and staking APIs
-        for institutional clients—designing extensible frameworks that balance security,
-        performance, and developer experience. I've shipped 7+ L2 protocol integrations
-        (Optimism, Base, Arbitrum) with consistent API patterns that scale. Before that,
-        I built Wallet-as-a-Service SDKs at Forte and Flow CLI/Cadence Playground
-        developer tools at Dapper Labs—reducing time-to-first-deploy by 60%.
-      - >
-        I started at Microsoft shipping one of the first production smart contracts
-        in enterprise—Xbox royalties on Ethereum, requiring Docker/K8s infrastructure
-        and API design for non-technical stakeholders. I'm drawn to problems at the
-        intersection of technical depth and organizational scale: defining platform
-        standards, championing best practices, and building tools that make developers
-        more productive. Bloomberg's focus on Terminal architecture, interoperability,
-        and AI integration aligns perfectly with my experience.
+      - "Currently at Anchorage Digital, I lead protocol integrations and staking APIs for institutional clients—designing extensible frameworks that balance security, performance, and developer experience. I've shipped 7+ L2 protocol integrations (Optimism, Base, Arbitrum) with consistent API patterns that scale. Before that, I built Wallet-as-a-Service SDKs at Forte and Flow CLI/Cadence Playground developer tools at Dapper Labs—reducing time-to-first-deploy by 60%.\n"
+      - "I started at Microsoft shipping one of the first production smart contracts in enterprise—Xbox royalties on Ethereum, requiring Docker/K8s infrastructure and API design for non-technical stakeholders. I'm drawn to problems at the intersection of technical depth and organizational scale: defining platform standards, championing best practices, and building tools that make developers more productive. Bloomberg's focus on Terminal architecture, interoperability, and AI integration aligns perfectly with my experience.\n"
     stats:
       - value: "8+"
         label: "Years Platform PM"
@@ -68,26 +45,19 @@ overrides:
         label: "SDK/API Products"
       - value: "4"
         label: "Developer Tools"
-
-  # Section visibility - show what matters for TPM role
   sections:
-    beyondWork: false      # Keep focus professional
-    blog: true             # Technical writing demonstrates thought leadership
-    onchainIdentity: false # Not relevant for Bloomberg
-    skills: true           # Technical skills are critical
-    passionProjects: true  # Demonstrates SDK/developer tool passion
-
-# ═══════════════════════════════════════════════════════════════
-# RELEVANCE SCORING (Ranked for Bloomberg TPM)
-# ═══════════════════════════════════════════════════════════════
+    beyondWork: false
+    blog: true
+    onchainIdentity: false
+    skills: true
+    passionProjects: true
 relevance:
-  # Case studies ranked by relevance to Terminal architecture/platform work
   caseStudies:
     - slug: "developer-analytics"
       relevanceScore: 0.95
       reasoning: "Flow CLI and dev tools - direct SDK/platform architecture experience"
     - slug: "ankr-rpc"
-      relevanceScore: 0.90
+      relevanceScore: 0.9
       reasoning: "API platform growth - demonstrates platform thinking and stakeholder management"
     - slug: "protocol-integration"
       relevanceScore: 0.85
@@ -96,22 +66,18 @@ relevance:
       relevanceScore: 0.75
       reasoning: "Platform standards for institutional clients - technical rigor and compliance"
     - slug: "ai-agent-orchestration"
-      relevanceScore: 0.70
+      relevanceScore: 0.7
       reasoning: "AI integration passion project - aligns with Terminal's AI integration goals"
     - slug: "xbox-royalties"
       relevanceScore: 0.65
       reasoning: "Enterprise platform at Microsoft - relevant org context but different domain"
-
-  # Skills ranked by category relevance to TPM role
   skills:
     - category: "Technical Leadership"
-      relevanceScore: 1.0
+      relevanceScore: 1
     - category: "Product Strategy"
       relevanceScore: 0.95
     - category: "Blockchain & Web3"
-      relevanceScore: 0.60
-
-  # Passion projects ranked by relevance
+      relevanceScore: 0.6
   projects:
     - slug: "flow-playground"
       relevanceScore: 0.95

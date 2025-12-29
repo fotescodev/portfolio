@@ -50,9 +50,10 @@ function stripAccentMarkers(text: string): string {
 interface ResumeContentProps {
   profile: MergedProfile;
   experience: { jobs: Array<{ company: string; role: string; period: string; location: string; highlights: string[]; tags: string[] }> };
+  variantSlug: string;
 }
 
-function ResumeContent({ profile, experience }: ResumeContentProps) {
+function ResumeContent({ profile, experience, variantSlug }: ResumeContentProps) {
   // Build impact summary from profile stats
   const statsSummary = profile.about.stats
     .map(s => `${s.value} ${s.label}`)
@@ -75,10 +76,11 @@ function ResumeContent({ profile, experience }: ResumeContentProps) {
 
   return (
     <div className="resume-page">
-      {/* Print button - hidden when printing */}
-      <button
+      {/* Download button - hidden when printing */}
+      <a
+        href={`/resumes/${variantSlug}.pdf`}
+        download={`${variantSlug}-resume.pdf`}
         className="resume-print-btn"
-        onClick={() => window.print()}
       >
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
@@ -86,7 +88,7 @@ function ResumeContent({ profile, experience }: ResumeContentProps) {
           <line x1="12" y1="15" x2="12" y2="3" />
         </svg>
         Download PDF
-      </button>
+      </a>
 
       {/* Header */}
       <header className="resume-header">
@@ -221,5 +223,5 @@ export default function VariantResumePage() {
   const mergedProfile = mergeProfile(variant);
   const mergedExperience = getExperienceWithOverrides(variant);
 
-  return <ResumeContent profile={mergedProfile} experience={mergedExperience} />;
+  return <ResumeContent profile={mergedProfile} experience={mergedExperience} variantSlug={variant.metadata.slug} />;
 }

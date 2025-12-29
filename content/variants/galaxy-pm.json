@@ -8,7 +8,8 @@
     "slug": "galaxy-pm",
     "publishStatus": "draft",
     "applicationStatus": "not_applied",
-    "sourceUrl": "https://job-boards.greenhouse.io/galaxydigitalservices/jobs/5591908004"
+    "sourceUrl": "https://job-boards.greenhouse.io/galaxydigitalservices/jobs/5591908004",
+    "resumePath": "/resumes/galaxy-pm.pdf"
   },
   "overrides": {
     "hero": {

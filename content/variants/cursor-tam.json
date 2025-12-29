@@ -8,7 +8,8 @@
     "slug": "cursor-tam",
     "publishStatus": "draft",
     "applicationStatus": "not_applied",
-    "sourceUrl": "https://cursor.com/careers/technical-account-manager"
+    "sourceUrl": "https://cursor.com/careers/technical-account-manager",
+    "resumePath": "/resumes/cursor-tam.pdf"
   },
   "overrides": {
     "hero": {

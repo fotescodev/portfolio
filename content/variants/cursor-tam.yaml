@@ -1,48 +1,60 @@
-# ═══════════════════════════════════════════════════════════════
-# VARIANT METADATA
-# ═══════════════════════════════════════════════════════════════
 metadata:
   company: "Cursor"
   role: "Technical Account Manager"
   slug: "cursor-tam"
   generatedAt: "2025-12-29T02:00:00Z"
-  jobDescription: |
-    Technical Account Manager - Cursor
+  jobDescription: "Technical Account Manager - Cursor
+
 
     Location: San Francisco / New York (in-person)
+
     Department: Go-to-Market (GTM)
 
+
     Cursor is seeking their first Technical Account Managers to work with strategic
+
     enterprise customers. The position focuses on driving adoption and delivering
+
     business value while influencing the product roadmap.
 
+
     Key Responsibilities:
+
     - Build relationships with engineering leaders and power users at key accounts
+
     - Partner with Field Engineering and Sales on post-sale customer success
+
     - Drive Cursor adoption by aligning usage with business and engineering goals
+
     - Guide customers on rollout strategy, prompt optimization, and team enablement
+
     - Represent customer needs internally and influence roadmap priorities
+
     - Conduct strategic planning and business reviews with VP and CTO-level stakeholders
+
     - Monitor account health and engagement metrics to support renewals and expansion
 
+
     Required Qualifications:
+
     - Strong communication skills and executive presence with ability to engage both developers and executives
+
     - Deep understanding of software development lifecycle and engineering organizational structures
+
     - Technical fluency in workflows, AI tooling, and developer productivity
+
     - Customer-focused strategic thinker with problem-solving capability
+
     - Startup mindset: scrappy, proactive, and adaptable
-    - Prior experience in TAM, Solutions Architecture, Customer Success, or enterprise software consulting
+
+    - Prior experience in TAM, Solutions Architecture, Customer Success, or enterprise software consulting\n"
   generationModel: "claude-opus-4-5-20251101"
   sourceUrl: "https://cursor.com/careers/technical-account-manager"
-
-# ═══════════════════════════════════════════════════════════════
-# ALIGNMENT ANALYSIS
-# ═══════════════════════════════════════════════════════════════
+  resumePath: "/resumes/cursor-tam.pdf"
 alignment:
   score: 0.35
-  threshold: 0.50
+  threshold: 0.5
   recommendation: "REVIEW"
-
   mustHaves:
     - requirement: "Executive presence + ability to engage both developers and executives"
       match: true
@@ -64,7 +76,6 @@ alignment:
       match: false
       evidence: "PM title, not TAM. However, work is analogous—onboarding institutional clients, driving adoption, technical enablement."
       confidence: 0.6
-
   gaps:
     - requirement: "AI tooling experience"
       addressable: true
@@ -72,14 +83,9 @@ alignment:
     - requirement: "TAM title"
       addressable: true
       notes: "PM titles, but customer-facing work is similar—enterprise adoption, stakeholder management, technical enablement."
-
   ignoredGeneric:
     - "Strong communication skills"
     - "Customer-focused strategic thinker"
-
-# ═══════════════════════════════════════════════════════════════
-# OVERRIDES (Tailored for Cursor TAM)
-# ═══════════════════════════════════════════════════════════════
 overrides:
   hero:
     status: "Open to Product Roles"
@@ -95,27 +101,12 @@ overrides:
         style: "muted"
       - text: "Cursor"
         style: "accent"
-    subheadline: >
-      Technical Product Manager building empathy through Developer Experience.
-      From Microsoft to institutional crypto infrastructure, I bridge the gap
-      between technical depth and enterprise trust.
-
+    subheadline: "Technical Product Manager building empathy through Developer Experience. From Microsoft to institutional crypto infrastructure, I bridge the gap between technical depth and enterprise trust.\n"
   about:
-    tagline: >
-      Eight years driving developer adoption at the intersection of technical depth
-      and enterprise trust—from SDKs to institutional infrastructure.
+    tagline: "Eight years driving developer adoption at the intersection of technical depth and enterprise trust—from SDKs to institutional infrastructure.\n"
     bio:
-      - >
-        I've spent my career making complex infrastructure accessible to developers
-        while earning the trust of their leadership. Most recently, at Anchorage Digital, I worked with
-        institutional clients managing billions in AUM, ensuring zero slashing events
-        through reliable staking infrastructure. At Ankr, I drove 15× revenue growth
-        ($130K to $2M ARR) by repositioning RPC infrastructure from developers to protocols—
-        building Advanced APIs and an SDK that scaled to 1M+ daily requests.
-      - >
-        What draws me to Cursor is the developer productivity mission. I've lived
-        the pain of fragmented developer tooling.I want to help enterprises {{accent}}unlock what Cursor
-        can do{{/accent}} for their teams.
+      - "I've spent my career making complex infrastructure accessible to developers while earning the trust of their leadership. Most recently, at Anchorage Digital, I worked with institutional clients managing billions in AUM, ensuring zero slashing events through reliable staking infrastructure. At Ankr, I drove 15× revenue growth ($130K to $2M ARR) by repositioning RPC infrastructure from developers to protocols— building Advanced APIs and an SDK that scaled to 1M+ daily requests.\n"
+      - "What draws me to Cursor is the developer productivity mission. I've lived the pain of fragmented developer tooling.I want to help enterprises {{accent}}unlock what Cursor can do{{/accent}} for their teams.\n"
     stats:
       - value: "60%"
         label: "DX Improvement"
@@ -123,61 +114,49 @@ overrides:
         label: "Years PM"
       - value: "4"
         label: "APIs & CLIs Shipped"
-
   sections:
     beyondWork: false
     blog: true
     onchainIdentity: false
     skills: true
     passionProjects: true
-
-# ═══════════════════════════════════════════════════════════════
-# RELEVANCE SCORING
-# ═══════════════════════════════════════════════════════════════
 relevance:
   caseStudies:
     - slug: "flow-playground"
-      relevanceScore: 1.0
+      relevanceScore: 1
       reasoning: "Direct developer enablement experience. CLI + playground = developer onboarding. 60% improvement shows measurable adoption impact."
     - slug: "eth-staking"
       relevanceScore: 0.95
       reasoning: "Enterprise customer success with institutional clients. VP/CTO stakeholder engagement. Winning against competitors on trust."
     - slug: "ankr-rpc"
-      relevanceScore: 0.90
+      relevanceScore: 0.9
       reasoning: "Startup mindset proof. 15× growth, customer discovery, B2B adoption motion with protocols as customers."
     - slug: "protocol-integration"
       relevanceScore: 0.85
       reasoning: "Cross-functional coordination, customer enablement frameworks, account health metrics via RICE scoring."
     - slug: "forte-wallet-sdk"
-      relevanceScore: 0.80
+      relevanceScore: 0.8
       reasoning: "SDK for enterprise customers (gaming studios). Technical enablement for non-crypto-native teams."
     - slug: "xbox-royalties"
       relevanceScore: 0.75
       reasoning: "Enterprise stakeholder management at scale. Technical credibility with both builders and executives."
-
   skills:
     - category: "Technical Leadership"
-      relevanceScore: 1.0
+      relevanceScore: 1
     - category: "Product Strategy"
-      relevanceScore: 0.90
+      relevanceScore: 0.9
     - category: "Blockchain & Web3"
-      relevanceScore: 0.60
-
+      relevanceScore: 0.6
   projects:
     - slug: "ai-agent-framework"
       relevanceScore: 0.85
       reasoning: "AI interest and hands-on experimentation—shows genuine curiosity in AI tooling space."
-
-# ═══════════════════════════════════════════════════════════════
-# TALKING POINTS (Interview Prep)
-# ═══════════════════════════════════════════════════════════════
 talkingPoints:
   whyThisRole:
     - "Developer tools PM who's driven measurable adoption—60% onboarding improvement at Dapper"
     - "Enterprise customer success: Galaxy, ETF managers chose our infrastructure over competitors"
     - "Startup DNA: Ankr 15× growth with 5 engineers, survival mode, scrappy execution"
     - "Technical credibility with developers + executive presence with leadership—I do both"
-
   relevantStories:
     - achievement: "flow-cli-dx"
       connection: "Developer enablement and adoption. Reduced friction for engineering teams adopting new tooling."
@@ -187,13 +166,11 @@ talkingPoints:
       connection: "Startup mindset. Customer discovery, pivot under pressure, B2B adoption motion."
     - achievement: "l2-protocol-integrations"
       connection: "Account health frameworks. RICE scoring for prioritization, cross-functional coordination."
-
   honestGaps:
     - gap: "No AI/ML product experience"
       response: "True—my background is infrastructure and developer tools, not AI. But I understand developer workflows and what drives adoption. I'd ramp as a Cursor power user and bring enterprise adoption expertise."
     - gap: "PM not TAM title"
       response: "I've been building products, not managing accounts. But the customer-facing work is similar—I've done enterprise sales support, customer discovery, stakeholder management. The muscle is there."
-
   questionsToAsk:
     - "What does the current enterprise customer journey look like—from first touch to full team adoption?"
     - "How do you think about the balance between serving power users vs. getting whole teams to adopt?"

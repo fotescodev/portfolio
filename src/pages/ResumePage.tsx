@@ -45,10 +45,11 @@ export default function ResumePage() {
 
   return (
     <div className="resume-page">
-      {/* Print button - hidden when printing */}
-      <button
+      {/* Download button - hidden when printing */}
+      <a
+        href="/resume.pdf"
+        download="dmitrii-fotesco-resume.pdf"
         className="resume-print-btn"
-        onClick={() => window.print()}
       >
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
@@ -56,7 +57,7 @@ export default function ResumePage() {
           <line x1="12" y1="15" x2="12" y2="3" />
         </svg>
         Download PDF
-      </button>
+      </a>
 
       {/* Header */}
       <header className="resume-header">

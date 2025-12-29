@@ -1,42 +1,54 @@
-# ═══════════════════════════════════════════════════════════════
-# VARIANT METADATA
-# ═══════════════════════════════════════════════════════════════
 metadata:
   company: "Figma"
   role: "Product Manager, Developer Tools"
   slug: "figma-pm-dev-tools"
   generatedAt: "2025-12-23T00:00:00Z"
-  jobDescription: |
-    Product Manager, Developer Tools - Figma
+  jobDescription: "Product Manager, Developer Tools - Figma
+
 
     Location: San Francisco, CA • New York, NY • United States (Remote option available)
+
     Salary: $164,000 - $294,000 USD
 
+
     Key Responsibilities:
+
     - Collaborating across functions to build developer-focused features that streamline design-to-code workflow
+
     - Establishing product direction, strategy, and roadmaps aligned with organizational and user objectives
+
     - Managing the complete product development cycle from research through launch
+
     - Working alongside Design, Engineering, and leadership teams on both strategy and delivery
+
     - Making prioritization decisions based on user research, metrics, and business goals
+
     - Incorporating emerging AI technologies where they enhance user value
+
     - Coordinating with other Figma teams to maximize developer-facing benefits
 
+
     Required Qualifications:
+
     - 5+ years as a full-time Product Manager
+
     - 2+ years in the developer tools sector
+
     - Track record leading complex, high-stakes product initiatives
+
     - Demonstrated success shipping quality software with measurable user and business outcomes
+
     - Strong communication and analytical abilities
 
+
     Nice-to-Have:
+
     - Frontend development experience
-    - Production experience with large language models
+
+    - Production experience with large language models\n"
   generationModel: "claude-opus-4-5-20251101"
   sourceUrl: "https://job-boards.greenhouse.io/figma/jobs/5740760004"
-
-# ═══════════════════════════════════════════════════════════════
-# OVERRIDES (Tailored for Figma PM Developer Tools)
-# ═══════════════════════════════════════════════════════════════
+  resumePath: "/resumes/figma-pm-dev-tools.pdf"
 overrides:
   hero:
     status: "Open to Product Roles"
@@ -52,33 +64,12 @@ overrides:
         style: "muted"
       - text: "Figma"
         style: "accent"
-    subheadline: >
-      Developer tools PM with 8+ years shipping SDKs and CLI experiences.
-      From Flow developer onboarding to institutional staking APIs—I make
-      complex systems accessible. Now drawn to where design meets code.
-
+    subheadline: "Developer tools PM with 8+ years shipping SDKs and CLI experiences. From Flow developer onboarding to institutional staking APIs—I make complex systems accessible. Now drawn to where design meets code.\n"
   about:
-    tagline: >
-      Eight years shipping developer tools where technical depth meets developer
-      empathy—from blockchain CLI experiences to SDK architectures serving
-      millions of API calls.
+    tagline: "Eight years shipping developer tools where technical depth meets developer empathy—from blockchain CLI experiences to SDK architectures serving millions of API calls.\n"
     bio:
-      - >
-        At Anchorage Digital, I lead protocol integrations serving institutional
-        clients. Before that, I owned developer experience at Dapper Labs—shipping
-        the Flow CLI and Cadence Playground redesign that reduced time-to-first-deploy
-        by 60%. At Forte, I built Wallet-as-a-Service SDKs for AAA gaming studios.
-        At Ankr, I created Ankr.JS and Advanced APIs that powered 1M+ daily requests.
-        I've spent years thinking about developer onboarding, API ergonomics, and
-        what makes tools feel intuitive.
-      - >
-        I've used Figma professionally for years—it's genuinely how I think through
-        product problems. The design-to-code gap is one I've lived on both sides:
-        as a PM shipping developer tools, and as someone who relies on design systems
-        to ship faster. Figma's mission to bridge that gap resonates deeply. I'm
-        particularly excited about AI-enhanced workflows—I've been building AI agent
-        orchestration as a side project and see real opportunity to make developers'
-        lives easier.
+      - "At Anchorage Digital, I lead protocol integrations serving institutional clients. Before that, I owned developer experience at Dapper Labs—shipping the Flow CLI and Cadence Playground redesign that reduced time-to-first-deploy by 60%. At Forte, I built Wallet-as-a-Service SDKs for AAA gaming studios. At Ankr, I created Ankr.JS and Advanced APIs that powered 1M+ daily requests. I've spent years thinking about developer onboarding, API ergonomics, and what makes tools feel intuitive.\n"
+      - "I've used Figma professionally for years—it's genuinely how I think through product problems. The design-to-code gap is one I've lived on both sides: as a PM shipping developer tools, and as someone who relies on design systems to ship faster. Figma's mission to bridge that gap resonates deeply. I'm particularly excited about AI-enhanced workflows—I've been building AI agent orchestration as a side project and see real opportunity to make developers' lives easier.\n"
     stats:
       - value: "60%"
         label: "DX Improvement"
@@ -86,64 +77,52 @@ overrides:
         label: "Developer SDKs"
       - value: "8+"
         label: "Years PM"
-
   sections:
     beyondWork: false
     blog: true
     onchainIdentity: false
     skills: true
     passionProjects: true
-
-# ═══════════════════════════════════════════════════════════════
-# RELEVANCE SCORING
-# ═══════════════════════════════════════════════════════════════
 relevance:
   caseStudies:
     - slug: "flow-playground"
-      relevanceScore: 1.0
+      relevanceScore: 1
       reasoning: "Direct developer tools experience—CLI and playground redesign with 60% onboarding improvement. Perfect match for design-to-code workflow."
     - slug: "ankr-rpc"
       relevanceScore: 0.95
       reasoning: "Built Ankr.JS SDK and Advanced APIs serving 1M+ daily requests. Developer platform thinking at scale."
     - slug: "forte-wallet-sdk"
-      relevanceScore: 0.90
+      relevanceScore: 0.9
       reasoning: "SDK architecture for external developers (gaming studios). API design and developer empathy."
     - slug: "protocol-integration"
-      relevanceScore: 0.80
+      relevanceScore: 0.8
       reasoning: "Cross-functional coordination, process frameworks, working with engineering teams."
     - slug: "xbox-royalties"
       relevanceScore: 0.75
       reasoning: "API design at enterprise scale, pioneering new technology adoption."
     - slug: "eth-staking"
-      relevanceScore: 0.70
+      relevanceScore: 0.7
       reasoning: "Infrastructure API design, institutional-grade reliability."
-
   skills:
     - category: "Technical Leadership"
-      relevanceScore: 1.0
+      relevanceScore: 1
     - category: "Product Strategy"
       relevanceScore: 0.95
     - category: "Blockchain & Web3"
-      relevanceScore: 0.70
-
+      relevanceScore: 0.7
   projects:
     - slug: "ai-agent-framework"
       relevanceScore: 0.95
       reasoning: "AI/LLM experience directly relevant to incorporating emerging AI technologies"
     - slug: "flow-playground"
-      relevanceScore: 1.0
+      relevanceScore: 1
       reasoning: "Developer tools and onboarding—core to Figma's design-to-code mission"
-
-# ═══════════════════════════════════════════════════════════════
-# TALKING POINTS (Interview Prep)
-# ═══════════════════════════════════════════════════════════════
 talkingPoints:
   whyThisRole:
     - "8+ years PM experience with 2+ years specifically in developer tools (Flow CLI, SDKs)"
     - "Track record of measurable DX improvements—60% reduction in time-to-first-deploy"
     - "I use Figma daily and understand the design-to-code pain points firsthand"
     - "Active in AI/LLM space with production agent framework experience"
-
   relevantStories:
     - achievement: "flow-cli-dx"
       connection: "Redesigned Flow CLI and Cadence Playground—reduced onboarding time by 60%. Direct developer tools experience with measurable outcomes."
@@ -153,7 +132,6 @@ talkingPoints:
       connection: "Created Ankr.JS SDK and APIs at scale—1M+ daily requests. Demonstrated developer platform thinking."
     - achievement: "l2-protocol-integrations"
       connection: "Cross-functional coordination across 4+ teams. Built frameworks that became company standard."
-
   questionsToAsk:
     - "How does the Developer Tools team collaborate with Design Systems and the core editor teams?"
     - "What's the current state of design-to-code—where are the biggest friction points for developers?"

@@ -8,7 +8,8 @@
     "slug": "microsoft-senior-pm",
     "publishStatus": "draft",
     "applicationStatus": "not_applied",
-    "sourceUrl": "https://apply.careers.microsoft.com/careers?query=product&start=0&pid=1970393556619182&sort_by=match"
+    "sourceUrl": "https://apply.careers.microsoft.com/careers?query=product&start=0&pid=1970393556619182&sort_by=match",
+    "resumePath": "/resumes/microsoft-senior-pm.pdf"
   },
   "overrides": {
     "hero": {

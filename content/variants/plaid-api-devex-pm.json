@@ -8,7 +8,8 @@
     "slug": "plaid-api-devex-pm",
     "publishStatus": "draft",
     "applicationStatus": "not_applied",
-    "sourceUrl": "https://plaid.com/careers/openings/product/san-francisco/senior-staff-product-manager-api-developer-experience/"
+    "sourceUrl": "https://plaid.com/careers/openings/product/san-francisco/senior-staff-product-manager-api-developer-experience/",
+    "resumePath": "/resumes/plaid-api-devex-pm.pdf"
   },
   "overrides": {
     "hero": {

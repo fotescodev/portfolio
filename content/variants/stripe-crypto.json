@@ -7,7 +7,8 @@
     "generationModel": "claude-opus-4",
     "slug": "stripe-crypto",
     "publishStatus": "draft",
-    "applicationStatus": "not_applied"
+    "applicationStatus": "not_applied",
+    "resumePath": "/resumes/stripe-crypto.pdf"
   },
   "overrides": {
     "hero": {
