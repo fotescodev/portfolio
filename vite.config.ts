@@ -13,7 +13,7 @@ export default defineConfig({
     {
       name: 'static-directory-middleware',
       configureServer(server) {
-        server.middlewares.use((req, res, next) => {
+        server.middlewares.use((req, _res, next) => {
           // Redirect /cv-dashboard or /cv-dashboard/ to /cv-dashboard/index.html
           if (req.url === '/cv-dashboard' || req.url === '/cv-dashboard/') {
             req.url = '/cv-dashboard/index.html';
