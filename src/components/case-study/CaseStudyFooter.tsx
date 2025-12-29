@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { CaseStudy } from '../../types/portfolio';
 import { profile } from '../../lib/content';
+import { useVariantSafe } from '../../context/VariantContext';
 
 interface CaseStudyFooterProps {
     caseStudy: CaseStudy;
@@ -12,6 +13,7 @@ interface CaseStudyFooterProps {
 
 export default function CaseStudyFooter({ caseStudy, prevStudy, nextStudy, onNavigate, isMobile = false }: CaseStudyFooterProps) {
     const [copied, setCopied] = useState(false);
+    const { getResumeUrl } = useVariantSafe();
 
     const handleCopyEmail = () => {
         navigator.clipboard.writeText(profile.email);
@@ -132,7 +134,7 @@ export default function CaseStudyFooter({ caseStudy, prevStudy, nextStudy, onNav
 
                     {/* Resume */}
                     <a
-                        href="/dmitrii-fotesco-resume.pdf"
+                        href={getResumeUrl()}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="drawer-cta-btn"

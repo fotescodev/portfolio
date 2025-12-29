@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { profile } from '../../lib/content';
+import { useVariantSafe } from '../../context/VariantContext';
 
 export default function Omnibar() {
     const [copied, setCopied] = useState(false);
@@ -9,6 +10,7 @@ export default function Omnibar() {
     const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' ? window.innerWidth < 768 : false);
     const heroObserverRef = useRef<IntersectionObserver | null>(null);
     const footerObserverRef = useRef<IntersectionObserver | null>(null);
+    const { getResumeUrl } = useVariantSafe();
 
     // Track window resize for mobile detection
     useEffect(() => {
@@ -188,7 +190,7 @@ export default function Omnibar() {
 
                         {/* Resume */}
                         <motion.a
-                            href="/dmitrii-fotesco-resume.pdf"
+                            href={getResumeUrl()}
                             target="_blank"
                             rel="noopener noreferrer"
                             whileTap={{ scale: 0.98 }}

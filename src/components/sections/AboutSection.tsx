@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { social } from '../../lib/content';
 import type { Profile } from '../../types/variant';
+import { useVariantSafe } from '../../context/VariantContext';
 
 // Parse {{accent}}...{{/accent}} markers in text
 function parseStyledText(text: string): ReactNode[] {
@@ -53,6 +54,7 @@ export default function AboutSection({ profile, isMobile, isTablet, sectionPaddi
   const { about, photo, name } = profile;
   const [photoError, setPhotoError] = useState(false);
   const [emailCopied, setEmailCopied] = useState(false);
+  const { getResumeUrl } = useVariantSafe();
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText(profile.email);
@@ -234,8 +236,7 @@ export default function AboutSection({ profile, isMobile, isTablet, sectionPaddi
                   <span style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic' }}>↓</span>
                 </button>
                 <a
-                  href={heroCta.secondary.href}
-                  download="Dmitrii-Fotesco-Resume.pdf"
+                  href={getResumeUrl()}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="mobile-hero-secondary-btn"

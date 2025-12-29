@@ -20,7 +20,7 @@ const CaseStudyDrawer = lazy(() => import('./case-study/CaseStudyDrawer'));
 
 export default function Portfolio() {
   // Get profile from variant context (either base or merged with variant)
-  const { profile } = useVariant();
+  const { profile, getResumeUrl } = useVariant();
 
   const [isLoaded, setIsLoaded] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -526,7 +526,7 @@ export default function Portfolio() {
 
               {/* Resume */}
               <a
-                href="/dmitrii-fotesco-resume.pdf"
+                href={getResumeUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="footer-omnibar-btn"
