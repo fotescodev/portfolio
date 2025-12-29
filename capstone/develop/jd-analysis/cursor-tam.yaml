@@ -1,0 +1,43 @@
+metadata:
+  analyzedAt: 2025-12-29T01:57:49.777Z
+  sourceFile: source-data/jd-cursor-tam.txt
+  slug: cursor-tam
+extracted:
+  company: Cursor
+  role: dense team valuing truthseeking, passionate,
+  yearsRequired: null
+mustHaves:
+  - text: Cursor is seeking their first Technical Account Managers to work with
+      strategic enterprise customers. The position focuses on driving adoption
+      and del
+    category: scale_indicators
+    specificity: low
+    matchedPattern: enterprise
+  - text: "Startup mindset: scrappy, proactive, and adaptable"
+    category: scale_indicators
+    specificity: low
+    matchedPattern: Startup
+  - text: Prior experience in TAM, Solutions Architecture, Customer Success, or
+      enterprise software consulting
+    category: scale_indicators
+    specificity: low
+    matchedPattern: enterprise
+niceToHaves: []
+ignoredGeneric:
+  - Strong communication skills and executive presence with ability to engage
+    both developers and execut
+  - dense team valuing truthseeking, passionate, and creative individuals. The
+    company maintains in
+domainKeywords:
+  - developer_tools
+  - infrastructure
+  - enterprise
+  - consumer
+  - ai_ml
+searchTerms:
+  - developer_tools
+  - infrastructure
+  - enterprise
+  - consumer
+  - ai_ml
+  - startup
