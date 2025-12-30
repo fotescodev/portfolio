@@ -43,7 +43,7 @@
     "about": {
       "tagline": "Eight years shipping Web3 infrastructure, from dev tools to institutional custody.\n",
       "bio": [
-        "At Anchorage Digital, I lead cross-functional initiatives spanning custody, staking, and protocol integrations. I've shipped 7+ L2 integrations (Optimism, Base, Arbitrum) using a RICE evaluation framework I built, coordinating across 4+ teams and reducing integration time by 40%. Galaxy chose Anchorage for ETH staking specifically because of the institutional-grade infrastructure my team built—zero slashing events, billions in AUM, full key ownership.\n",
+        "At Anchorage Digital, I lead cross-functional initiatives spanning custody, staking, and protocol integrations. I've shipped 7+ L2 integrations (Optimism, Base, Arbitrum), coordinating across 4+ teams and reducing integration time by 40%. Currently exploring the intersection of Web3 and AI.\n",
         "I've been in Web3 since 2017, when I shipped one of Microsoft's first blockchain projects—Xbox royalty tracking on Ethereum. Eight years later, I'm still here because {{accent}}this is Web3's moment{{/accent}}—and Galaxy is positioned to define how institutions participate. I understand what it takes to lead global teams through complex, compliance-driven initiatives while maintaining velocity.\n"
       ],
       "stats": [
