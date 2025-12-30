@@ -9,7 +9,40 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
-    :root {
+    /* Light Theme (default) */
+    :root, [data-theme="light"] {
+      --bg-primary: #ffffff;
+      --bg-secondary: #f8f9fa;
+      --bg-elevated: #ffffff;
+      --bg-hover: #f1f3f4;
+      --border-subtle: rgba(0, 0, 0, 0.06);
+      --border-default: rgba(0, 0, 0, 0.1);
+      --border-hover: rgba(0, 0, 0, 0.15);
+      --text-primary: #1a1a1a;
+      --text-secondary: #5f6368;
+      --text-tertiary: #9aa0a6;
+      --accent-blue: #1a73e8;
+      --accent-blue-hover: #1557b0;
+      --accent-green: #0f9d58;
+      --accent-green-bg: rgba(15, 157, 88, 0.1);
+      --accent-yellow: #f9ab00;
+      --accent-yellow-bg: rgba(249, 171, 0, 0.1);
+      --accent-red: #d93025;
+      --accent-red-bg: rgba(217, 48, 37, 0.1);
+      --accent-purple: #7c3aed;
+      --gradient-blue: linear-gradient(135deg, #1a73e8 0%, #4fc3f7 100%);
+      --gradient-purple: linear-gradient(135deg, #7c3aed 0%, #ec4899 100%);
+      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+      --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.12);
+      --radius-sm: 6px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --transition: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Dark Theme */
+    [data-theme="dark"] {
       --bg-primary: #000000;
       --bg-secondary: #0a0a0a;
       --bg-elevated: #111111;
@@ -24,16 +57,16 @@
       --accent-blue-hover: #0060df;
       --accent-green: #00c853;
       --accent-green-bg: rgba(0, 200, 83, 0.1);
+      --accent-yellow: #f5a623;
+      --accent-yellow-bg: rgba(245, 166, 35, 0.1);
+      --accent-red: #f31260;
+      --accent-red-bg: rgba(243, 18, 96, 0.1);
       --accent-purple: #7928ca;
       --gradient-blue: linear-gradient(135deg, #0070f3 0%, #00c6ff 100%);
       --gradient-purple: linear-gradient(135deg, #7928ca 0%, #ff0080 100%);
       --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
       --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
       --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.6);
-      --radius-sm: 6px;
-      --radius-md: 8px;
-      --radius-lg: 12px;
-      --transition: 150ms cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     * {
@@ -59,6 +92,10 @@
       justify-content: center;
       min-height: 100vh;
       padding: 1.5rem;
+      background: var(--bg-secondary);
+    }
+
+    [data-theme="dark"] #gate {
       background: radial-gradient(ellipse at top, #111 0%, #000 70%);
     }
 
@@ -174,12 +211,16 @@
 
     .dashboard-header {
       border-bottom: 1px solid var(--border-subtle);
-      background: rgba(0, 0, 0, 0.5);
+      background: rgba(255, 255, 255, 0.8);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       position: sticky;
       top: 0;
       z-index: 100;
+    }
+
+    [data-theme="dark"] .dashboard-header {
+      background: rgba(0, 0, 0, 0.5);
     }
 
     .header-content {
@@ -227,6 +268,32 @@
       align-items: center;
       gap: 0.75rem;
     }
+
+    .theme-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      background: transparent;
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+
+    .theme-toggle:hover {
+      border-color: var(--border-hover);
+      color: var(--text-primary);
+      background: var(--bg-hover);
+    }
+
+    /* Show sun in dark mode, moon in light mode */
+    .theme-toggle .sun-icon { display: none; }
+    .theme-toggle .moon-icon { display: block; }
+    [data-theme="dark"] .theme-toggle .sun-icon { display: block; }
+    [data-theme="dark"] .theme-toggle .moon-icon { display: none; }
 
     .logout-btn {
       display: flex;
@@ -397,6 +464,26 @@
       color: var(--text-primary);
     }
 
+    .btn-new {
+      display: flex;
+      align-items: center;
+      gap: 0.375rem;
+      padding: 0.625rem 1rem;
+      background: var(--accent-blue);
+      border: none;
+      border-radius: var(--radius-md);
+      color: white;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+
+    .btn-new:hover {
+      background: var(--accent-blue-hover);
+    }
+
     /* Cards Grid */
     .cards-grid {
       display: grid;
@@ -446,7 +533,8 @@
     .card-meta {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 0.5rem;
+      flex-wrap: wrap;
     }
 
     .card-date {
@@ -474,6 +562,37 @@
     .badge-neutral {
       background: rgba(255, 255, 255, 0.06);
       color: var(--text-tertiary);
+    }
+
+    .badge-warning {
+      background: var(--accent-yellow-bg);
+      color: var(--accent-yellow);
+    }
+
+    .badge-error {
+      background: var(--accent-red-bg);
+      color: var(--accent-red);
+    }
+
+    .badge-sm {
+      padding: 0.125rem 0.375rem;
+      font-size: 0.625rem;
+    }
+
+    .quality-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: 0.5rem;
+    }
+
+    .quality-label {
+      font-size: 0.625rem;
+      color: var(--text-tertiary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
     }
 
     .card-actions {
@@ -534,6 +653,23 @@
       border-color: rgba(0, 200, 83, 0.3);
     }
 
+    .btn-action {
+      background: transparent;
+      color: var(--text-tertiary);
+      border: 1px solid var(--border-subtle);
+      padding: 0.375rem 0.625rem;
+    }
+
+    .btn-action:hover {
+      border-color: var(--border-default);
+      color: var(--text-secondary);
+    }
+
+    .btn-action.loading {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
     /* Empty State */
     .empty-state {
       text-align: center;
@@ -544,6 +680,281 @@
     .empty-state svg {
       margin-bottom: 1rem;
       opacity: 0.5;
+    }
+
+    /* Loading State */
+    .loading-state {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: var(--text-tertiary);
+    }
+
+    .spinner {
+      width: 32px;
+      height: 32px;
+      border: 2px solid var(--border-subtle);
+      border-top-color: var(--accent-blue);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 1rem;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
+    .modal {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-lg);
+      width: 100%;
+      max-width: 720px;
+      max-height: 90vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .modal-header {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .modal-title {
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .modal-close {
+      background: transparent;
+      border: none;
+      color: var(--text-tertiary);
+      cursor: pointer;
+      padding: 0.25rem;
+      display: flex;
+      transition: color var(--transition);
+    }
+
+    .modal-close:hover {
+      color: var(--text-primary);
+    }
+
+    .modal-body {
+      padding: 1.5rem;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .modal-footer {
+      padding: 1rem 1.5rem;
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.75rem;
+    }
+
+    /* Wizard Steps */
+    .wizard-steps {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .wizard-step {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8125rem;
+      color: var(--text-tertiary);
+    }
+
+    .wizard-step.active {
+      color: var(--text-primary);
+    }
+
+    .wizard-step.completed {
+      color: var(--accent-green);
+    }
+
+    .wizard-step-number {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--bg-hover);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.6875rem;
+      font-weight: 600;
+    }
+
+    .wizard-step.active .wizard-step-number {
+      background: var(--accent-blue);
+      color: white;
+    }
+
+    .wizard-step.completed .wizard-step-number {
+      background: var(--accent-green);
+      color: white;
+    }
+
+    .wizard-step-divider {
+      width: 24px;
+      height: 1px;
+      background: var(--border-subtle);
+    }
+
+    /* Form Elements */
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      color: var(--text-secondary);
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      background: var(--bg-primary);
+      border: 1px solid var(--border-default);
+      border-radius: var(--radius-md);
+      color: var(--text-primary);
+      font-size: 0.875rem;
+      font-family: inherit;
+      transition: all var(--transition);
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 0 3px rgba(0, 112, 243, 0.15);
+    }
+
+    .form-textarea {
+      min-height: 200px;
+      resize: vertical;
+    }
+
+    .form-hint {
+      font-size: 0.75rem;
+      color: var(--text-tertiary);
+      margin-top: 0.375rem;
+    }
+
+    /* Analysis Results */
+    .analysis-section {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .analysis-title {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-tertiary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.75rem;
+    }
+
+    .analysis-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.375rem 0;
+      font-size: 0.875rem;
+    }
+
+    .analysis-label {
+      color: var(--text-secondary);
+    }
+
+    .analysis-value {
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+
+    .requirements-list {
+      list-style: none;
+    }
+
+    .requirements-list li {
+      padding: 0.375rem 0;
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .requirements-list li::before {
+      content: '•';
+      color: var(--accent-blue);
+    }
+
+    /* Success State */
+    .success-state {
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .success-icon {
+      width: 64px;
+      height: 64px;
+      background: var(--accent-green-bg);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+    }
+
+    .success-icon svg {
+      color: var(--accent-green);
+    }
+
+    .success-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .success-subtitle {
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+    }
+
+    .success-links {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: center;
     }
 
     /* Responsive */
@@ -567,7 +978,7 @@
 
       .card-meta {
         width: 100%;
-        justify-content: space-between;
+        justify-content: flex-start;
       }
 
       .card-actions {
@@ -577,6 +988,10 @@
       .btn {
         flex: 1;
         justify-content: center;
+      }
+
+      .wizard-steps {
+        flex-wrap: wrap;
       }
     }
 
@@ -642,6 +1057,22 @@
           <span class="header-title">Portfolio Variants</span>
         </div>
         <div class="header-right">
+          <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
+            <svg class="sun-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+            <svg class="moon-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+          </button>
           <button class="logout-btn" onclick="logout()">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
@@ -658,19 +1089,19 @@
       <div class="stats-grid">
         <div class="stat-card">
           <div class="stat-label">Total Variants</div>
-          <div class="stat-value">14</div>
+          <div class="stat-value" id="stat-total">-</div>
         </div>
         <div class="stat-card">
           <div class="stat-label">Applied</div>
-          <div class="stat-value success">0</div>
+          <div class="stat-value success" id="stat-applied">-</div>
         </div>
         <div class="stat-card">
           <div class="stat-label">Pending</div>
-          <div class="stat-value neutral">14</div>
+          <div class="stat-value neutral" id="stat-pending">-</div>
         </div>
         <div class="stat-card">
           <div class="stat-label">Resumes Ready</div>
-          <div class="stat-value purple">14</div>
+          <div class="stat-value purple" id="stat-resumes">-</div>
         </div>
       </div>
 
@@ -687,559 +1118,183 @@
           <button class="filter-btn" data-filter="pending" onclick="setFilter('pending')">Pending</button>
           <button class="filter-btn" data-filter="applied" onclick="setFilter('applied')">Applied</button>
         </div>
+        <button class="btn-new" onclick="openWizard()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+          New Variant
+        </button>
       </div>
 
-      <div class="cards-grid">
-        
-      <div class="card" data-company="cursor" data-role="technical account manager" data-applied="false">
-        <div class="card-header">
-          <div class="card-info">
-            <h3 class="card-company">Cursor</h3>
-            <p class="card-role">Technical Account Manager</p>
-          </div>
-          <div class="card-meta">
-            <span class="badge badge-neutral">Pending</span>
-            <span class="card-date">Dec 28</span>
-          </div>
+      <div class="cards-grid" id="cards-container">
+        <div class="loading-state">
+          <div class="spinner"></div>
+          <p>Loading variants...</p>
         </div>
-        <div class="card-actions">
-          <a href="https://fotescodev.github.io/portfolio/cursor/tam" target="_blank" class="btn btn-primary">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-              <polyline points="15 3 21 3 21 9"></polyline>
-              <line x1="10" y1="14" x2="21" y2="3"></line>
-            </svg>
-            View Portfolio
-          </a>
-          <a href="https://fotescodev.github.io/portfolio/resumes/cursor-tam.pdf" download class="btn btn-download">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-              <polyline points="7 10 12 15 17 10"></polyline>
-              <line x1="12" y1="15" x2="12" y2="3"></line>
-            </svg>
-            Resume
-          </a>
-          
-            <a href="https://cursor.com/careers/technical-account-manager" target="_blank" class="btn btn-ghost">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-                <line x1="8" y1="21" x2="16" y2="21"></line>
-                <line x1="12" y1="17" x2="12" y2="21"></line>
-              </svg>
-              Job Post
-            </a>
-          
-        </div>
-      </div>
-    
-
-      <div class="card" data-company="plaid" data-role="senior staff product manager, api & developer experience" data-applied="false">
-        <div class="card-header">
-          <div class="card-info">
-            <h3 class="card-company">Plaid</h3>
-            <p class="card-role">Senior Staff Product Manager, API & Developer Experience</p>
-          </div>
-          <div class="card-meta">
-            <span class="badge badge-neutral">Pending</span>
-            <span class="card-date">Dec 23</span>
-          </div>
-        </div>
-        <div class="card-actions">
-          <a href="https://fotescodev.github.io/portfolio/plaid/api-devex-pm" target="_blank" class="btn btn-primary">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-              <polyline points="15 3 21 3 21 9"></polyline>
-              <line x1="10" y1="14" x2="21" y2="3"></line>
-            </svg>
-            View Portfolio
-          </a>
-          <a href="https://fotescodev.github.io/portfolio/resumes/plaid-api-devex-pm.pdf" download class="btn btn-download">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-              <polyline points="7 10 12 15 17 10"></polyline>
-              <line x1="12" y1="15" x2="12" y2="3"></line>
-            </svg>
-            Resume
-          </a>
-          
-            <a href="https://plaid.com/careers/openings/product/san-francisco/senior-staff-product-manager-api-developer-experience/" target="_blank" class="btn btn-ghost">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-                <line x1="8" y1="21" x2="16" y2="21"></line>
-                <line x1="12" y1="17" x2="12" y2="21"></line>
-              </svg>
-              Job Post
-            </a>
-          
-        </div>
-      </div>
-    
-
-      <div class="card" data-company="anaconda" data-role="principal product manager, gen ai developer tools" data-applied="false">
-        <div class="card-header">
-          <div class="card-info">
-            <h3 class="card-company">Anaconda</h3>
-            <p class="card-role">Principal Product Manager, Gen AI Developer Tools</p>
-          </div>
-          <div class="card-meta">
-            <span class="badge badge-neutral">Pending</span>
-            <span class="card-date">Dec 22</span>
-          </div>
-        </div>
-        <div class="card-actions">
-          <a href="https://fotescodev.github.io/portfolio/anaconda/genai-pm" target="_blank" class="btn btn-primary">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-              <polyline points="15 3 21 3 21 9"></polyline>
-              <line x1="10" y1="14" x2="21" y2="3"></line>
-            </svg>
-            View Portfolio
-          </a>
-          <a href="https://fotescodev.github.io/portfolio/resumes/anaconda-genai-pm.pdf" download class="btn btn-download">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-              <polyline points="7 10 12 15 17 10"></polyline>
-              <line x1="12" y1="15" x2="12" y2="3"></line>
-            </svg>
-            Resume
-          </a>
-          
-            <a href="https://ats.rippling.com/anaconda/jobs/f37e2651-58a7-4198-94cf-6ec8bb2cca30" target="_blank" class="btn btn-ghost">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-                <line x1="8" y1="21" x2="16" y2="21"></line>
-                <line x1="12" y1="17" x2="12" y2="21"></line>
-              </svg>
-              Job Post
-            </a>
-          
-        </div>
-      </div>
-    
-
-      <div class="card" data-company="anthropic" data-role="ai safety fellow" data-applied="false">
-        <div class="card-header">
-          <div class="card-info">
-            <h3 class="card-company">Anthropic</h3>
-            <p class="card-role">AI Safety Fellow</p>
-          </div>
-          <div class="card-meta">
-            <span class="badge badge-neutral">Pending</span>
-            <span class="card-date">Dec 22</span>
-          </div>
-        </div>
-        <div class="card-actions">
-          <a href="https://fotescodev.github.io/portfolio/anthropic/ai-safety-fellow" target="_blank" class="btn btn-primary">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-              <polyline points="15 3 21 3 21 9"></polyline>
-              <line x1="10" y1="14" x2="21" y2="3"></line>
-            </svg>
-            View Portfolio
-          </a>
-          <a href="https://fotescodev.github.io/portfolio/resumes/anthropic-ai-safety-fellow.pdf" download class="btn btn-download">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-              <polyline points="7 10 12 15 17 10"></polyline>
-              <line x1="12" y1="15" x2="12" y2="3"></line>
-            </svg>
-            Resume
-          </a>
-          
-            <a href="https://job-boards.greenhouse.io/anthropic/jobs/5023394008" target="_blank" class="btn btn-ghost">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-                <line x1="8" y1="21" x2="16" y2="21"></line>
-                <line x1="12" y1="17" x2="12" y2="21"></line>
-              </svg>
-              Job Post
-            </a>
-          
-        </div>
-      </div>
-    
-
-      <div class="card" data-company="figma" data-role="product manager, developer tools" data-applied="false">
-        <div class="card-header">
-          <div class="card-info">
-            <h3 class="card-company">Figma</h3>
-            <p class="card-role">Product Manager, Developer Tools</p>
-          </div>
-          <div class="card-meta">
-            <span class="badge badge-neutral">Pending</span>
-            <span class="card-date">Dec 22</span>
-          </div>
-        </div>
-        <div class="card-actions">
-          <a href="https://fotescodev.github.io/portfolio/figma/pm-dev-tools" target="_blank" class="btn btn-primary">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-              <polyline points="15 3 21 3 21 9"></polyline>
-              <line x1="10" y1="14" x2="21" y2="3"></line>
-            </svg>
-            View Portfolio
-          </a>
-          <a href="https://fotescodev.github.io/portfolio/resumes/figma-pm-dev-tools.pdf" download class="btn btn-download">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-              <polyline points="7 10 12 15 17 10"></polyline>
-              <line x1="12" y1="15" x2="12" y2="3"></line>
-            </svg>
-            Resume
-          </a>
-          
-            <a href="https://job-boards.greenhouse.io/figma/jobs/5740760004" target="_blank" class="btn btn-ghost">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-                <line x1="8" y1="21" x2="16" y2="21"></line>
-                <line x1="12" y1="17" x2="12" y2="21"></line>
-              </svg>
-              Job Post
-            </a>
-          
-        </div>
-      </div>
-    
-
-      <div class="card" data-company="microsoft" data-role="senior product manager" data-applied="false">
-        <div class="card-header">
-          <div class="card-info">
-            <h3 class="card-company">Microsoft</h3>
-            <p class="card-role">Senior Product Manager</p>
-          </div>
-          <div class="card-meta">
-            <span class="badge badge-neutral">Pending</span>
-            <span class="card-date">Dec 22</span>
-          </div>
-        </div>
-        <div class="card-actions">
-          <a href="https://fotescodev.github.io/portfolio/microsoft/senior-pm" target="_blank" class="btn btn-primary">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-              <polyline points="15 3 21 3 21 9"></polyline>
-              <line x1="10" y1="14" x2="21" y2="3"></line>
-            </svg>
-            View Portfolio
-          </a>
-          <a href="https://fotescodev.github.io/portfolio/resumes/microsoft-senior-pm.pdf" download class="btn btn-download">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-              <polyline points="7 10 12 15 17 10"></polyline>
-              <line x1="12" y1="15" x2="12" y2="3"></line>
-            </svg>
-            Resume
-          </a>
-          
-            <a href="https://apply.careers.microsoft.com/careers?query=product&start=0&pid=1970393556619182&sort_by=match" target="_blank" class="btn btn-ghost">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-                <line x1="8" y1="21" x2="16" y2="21"></line>
-                <line x1="12" y1="17" x2="12" y2="21"></line>
-              </svg>
-              Job Post
-            </a>
-          
-        </div>
-      </div>
-    
-
-      <div class="card" data-company="galaxy" data-role="director, technical program manager" data-applied="false">
-        <div class="card-header">
-          <div class="card-info">
-            <h3 class="card-company">Galaxy</h3>
-            <p class="card-role">Director, Technical Program Manager</p>
-          </div>
-          <div class="card-meta">
-            <span class="badge badge-neutral">Pending</span>
-            <span class="card-date">Dec 22</span>
-          </div>
-        </div>
-        <div class="card-actions">
-          <a href="https://fotescodev.github.io/portfolio/galaxy/pm" target="_blank" class="btn btn-primary">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-              <polyline points="15 3 21 3 21 9"></polyline>
-              <line x1="10" y1="14" x2="21" y2="3"></line>
-            </svg>
-            View Portfolio
-          </a>
-          <a href="https://fotescodev.github.io/portfolio/resumes/galaxy-pm.pdf" download class="btn btn-download">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-              <polyline points="7 10 12 15 17 10"></polyline>
-              <line x1="12" y1="15" x2="12" y2="3"></line>
-            </svg>
-            Resume
-          </a>
-          
-            <a href="https://job-boards.greenhouse.io/galaxydigitalservices/jobs/5591908004" target="_blank" class="btn btn-ghost">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-                <line x1="8" y1="21" x2="16" y2="21"></line>
-                <line x1="12" y1="17" x2="12" y2="21"></line>
-              </svg>
-              Job Post
-            </a>
-          
-        </div>
-      </div>
-    
-
-      <div class="card" data-company="meta" data-role="product manager, business ai" data-applied="false">
-        <div class="card-header">
-          <div class="card-info">
-            <h3 class="card-company">Meta</h3>
-            <p class="card-role">Product Manager, Business AI</p>
-          </div>
-          <div class="card-meta">
-            <span class="badge badge-neutral">Pending</span>
-            <span class="card-date">Dec 22</span>
-          </div>
-        </div>
-        <div class="card-actions">
-          <a href="https://fotescodev.github.io/portfolio/meta/business-ai-pm" target="_blank" class="btn btn-primary">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-              <polyline points="15 3 21 3 21 9"></polyline>
-              <line x1="10" y1="14" x2="21" y2="3"></line>
-            </svg>
-            View Portfolio
-          </a>
-          <a href="https://fotescodev.github.io/portfolio/resumes/meta-business-ai-pm.pdf" download class="btn btn-download">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-              <polyline points="7 10 12 15 17 10"></polyline>
-              <line x1="12" y1="15" x2="12" y2="3"></line>
-            </svg>
-            Resume
-          </a>
-          
-            <a href="https://www.metacareers.com/profile/job_details/1851836246209831" target="_blank" class="btn btn-ghost">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-                <line x1="8" y1="21" x2="16" y2="21"></line>
-                <line x1="12" y1="17" x2="12" y2="21"></line>
-              </svg>
-              Job Post
-            </a>
-          
-        </div>
-      </div>
-    
-
-      <div class="card" data-company="coinbase" data-role="product manager ii - ai automation" data-applied="false">
-        <div class="card-header">
-          <div class="card-info">
-            <h3 class="card-company">Coinbase</h3>
-            <p class="card-role">Product Manager II - AI Automation</p>
-          </div>
-          <div class="card-meta">
-            <span class="badge badge-neutral">Pending</span>
-            <span class="card-date">Dec 21</span>
-          </div>
-        </div>
-        <div class="card-actions">
-          <a href="https://fotescodev.github.io/portfolio/coinbase/product-manager-ii-ai-automation" target="_blank" class="btn btn-primary">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-              <polyline points="15 3 21 3 21 9"></polyline>
-              <line x1="10" y1="14" x2="21" y2="3"></line>
-            </svg>
-            View Portfolio
-          </a>
-          <a href="https://fotescodev.github.io/portfolio/resumes/coinbase-product-manager-ii-ai-automation.pdf" download class="btn btn-download">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-              <polyline points="7 10 12 15 17 10"></polyline>
-              <line x1="12" y1="15" x2="12" y2="3"></line>
-            </svg>
-            Resume
-          </a>
-          
-        </div>
-      </div>
-    
-
-      <div class="card" data-company="mysten labs" data-role="sr. product manager, walrus (distributed storage)" data-applied="false">
-        <div class="card-header">
-          <div class="card-info">
-            <h3 class="card-company">Mysten Labs</h3>
-            <p class="card-role">Sr. Product Manager, Walrus (Distributed Storage)</p>
-          </div>
-          <div class="card-meta">
-            <span class="badge badge-neutral">Pending</span>
-            <span class="card-date">Dec 19</span>
-          </div>
-        </div>
-        <div class="card-actions">
-          <a href="https://fotescodev.github.io/portfolio/mysten/walrus-senior-pm" target="_blank" class="btn btn-primary">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-              <polyline points="15 3 21 3 21 9"></polyline>
-              <line x1="10" y1="14" x2="21" y2="3"></line>
-            </svg>
-            View Portfolio
-          </a>
-          <a href="https://fotescodev.github.io/portfolio/resumes/mysten-walrus-senior-pm.pdf" download class="btn btn-download">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-              <polyline points="7 10 12 15 17 10"></polyline>
-              <line x1="12" y1="15" x2="12" y2="3"></line>
-            </svg>
-            Resume
-          </a>
-          
-            <a href="https://jobs.ashbyhq.com/mystenlabs/5d434241-ef7f-44e8-ad3a-6f17376866d7" target="_blank" class="btn btn-ghost">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-                <line x1="8" y1="21" x2="16" y2="21"></line>
-                <line x1="12" y1="17" x2="12" y2="21"></line>
-              </svg>
-              Job Post
-            </a>
-          
-        </div>
-      </div>
-    
-
-      <div class="card" data-company="stripe" data-role="crypto product manager" data-applied="false">
-        <div class="card-header">
-          <div class="card-info">
-            <h3 class="card-company">Stripe</h3>
-            <p class="card-role">Crypto Product Manager</p>
-          </div>
-          <div class="card-meta">
-            <span class="badge badge-neutral">Pending</span>
-            <span class="card-date">Dec 18</span>
-          </div>
-        </div>
-        <div class="card-actions">
-          <a href="https://fotescodev.github.io/portfolio/stripe/crypto" target="_blank" class="btn btn-primary">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-              <polyline points="15 3 21 3 21 9"></polyline>
-              <line x1="10" y1="14" x2="21" y2="3"></line>
-            </svg>
-            View Portfolio
-          </a>
-          <a href="https://fotescodev.github.io/portfolio/resumes/stripe-crypto.pdf" download class="btn btn-download">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-              <polyline points="7 10 12 15 17 10"></polyline>
-              <line x1="12" y1="15" x2="12" y2="3"></line>
-            </svg>
-            Resume
-          </a>
-          
-        </div>
-      </div>
-    
-
-      <div class="card" data-company="gensyn" data-role="technical product manager" data-applied="false">
-        <div class="card-header">
-          <div class="card-info">
-            <h3 class="card-company">Gensyn</h3>
-            <p class="card-role">Technical Product Manager</p>
-          </div>
-          <div class="card-meta">
-            <span class="badge badge-neutral">Pending</span>
-            <span class="card-date">Dec 16</span>
-          </div>
-        </div>
-        <div class="card-actions">
-          <a href="https://fotescodev.github.io/portfolio/gensyn/technical-product-manager" target="_blank" class="btn btn-primary">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-              <polyline points="15 3 21 3 21 9"></polyline>
-              <line x1="10" y1="14" x2="21" y2="3"></line>
-            </svg>
-            View Portfolio
-          </a>
-          <a href="https://fotescodev.github.io/portfolio/resumes/gensyn-technical-product-manager.pdf" download class="btn btn-download">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-              <polyline points="7 10 12 15 17 10"></polyline>
-              <line x1="12" y1="15" x2="12" y2="3"></line>
-            </svg>
-            Resume
-          </a>
-          
-        </div>
-      </div>
-    
-
-      <div class="card" data-company="bloomberg" data-role="technical product manager" data-applied="false">
-        <div class="card-header">
-          <div class="card-info">
-            <h3 class="card-company">Bloomberg</h3>
-            <p class="card-role">Technical Product Manager</p>
-          </div>
-          <div class="card-meta">
-            <span class="badge badge-neutral">Pending</span>
-            <span class="card-date">Dec 16</span>
-          </div>
-        </div>
-        <div class="card-actions">
-          <a href="https://fotescodev.github.io/portfolio/bloomberg/technical-product-manager" target="_blank" class="btn btn-primary">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-              <polyline points="15 3 21 3 21 9"></polyline>
-              <line x1="10" y1="14" x2="21" y2="3"></line>
-            </svg>
-            View Portfolio
-          </a>
-          <a href="https://fotescodev.github.io/portfolio/resumes/bloomberg-technical-product-manager.pdf" download class="btn btn-download">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-              <polyline points="7 10 12 15 17 10"></polyline>
-              <line x1="12" y1="15" x2="12" y2="3"></line>
-            </svg>
-            Resume
-          </a>
-          
-        </div>
-      </div>
-    
-
-      <div class="card" data-company="acme corp" data-role="senior pm" data-applied="false">
-        <div class="card-header">
-          <div class="card-info">
-            <h3 class="card-company">Acme Corp</h3>
-            <p class="card-role">Senior PM</p>
-          </div>
-          <div class="card-meta">
-            <span class="badge badge-neutral">Pending</span>
-            <span class="card-date">Dec 31</span>
-          </div>
-        </div>
-        <div class="card-actions">
-          <a href="https://fotescodev.github.io/portfolio/example/minimal" target="_blank" class="btn btn-primary">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-              <polyline points="15 3 21 3 21 9"></polyline>
-              <line x1="10" y1="14" x2="21" y2="3"></line>
-            </svg>
-            View Portfolio
-          </a>
-          <a href="https://fotescodev.github.io/portfolio/resumes/example-minimal.pdf" download class="btn btn-download">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-              <polyline points="7 10 12 15 17 10"></polyline>
-              <line x1="12" y1="15" x2="12" y2="3"></line>
-            </svg>
-            Resume
-          </a>
-          
-        </div>
-      </div>
-    
       </div>
     </main>
   </div>
 
-  <script>
-    const HASH = 'nxt2ji';
+  <!-- Create Variant Modal -->
+  <div class="modal-overlay" id="wizard-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 class="modal-title">Create New Variant</h2>
+        <button class="modal-close" onclick="closeWizard()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- Step indicators -->
+        <div class="wizard-steps" id="wizard-steps">
+          <div class="wizard-step active" data-step="1">
+            <span class="wizard-step-number">1</span>
+            <span>Job Description</span>
+          </div>
+          <div class="wizard-step-divider"></div>
+          <div class="wizard-step" data-step="2">
+            <span class="wizard-step-number">2</span>
+            <span>Analysis</span>
+          </div>
+          <div class="wizard-step-divider"></div>
+          <div class="wizard-step" data-step="3">
+            <span class="wizard-step-number">3</span>
+            <span>Generate</span>
+          </div>
+          <div class="wizard-step-divider"></div>
+          <div class="wizard-step" data-step="4">
+            <span class="wizard-step-number">4</span>
+            <span>Complete</span>
+          </div>
+        </div>
 
+        <!-- Step 1: Job Description -->
+        <div class="wizard-content" id="step-1">
+          <div class="form-group">
+            <label class="form-label">Job Description</label>
+            <textarea class="form-input form-textarea" id="jd-text" placeholder="Paste the full job description here..."></textarea>
+            <p class="form-hint">Paste the complete job posting including requirements and responsibilities</p>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Or enter URL (optional)</label>
+            <input type="url" class="form-input" id="jd-url" placeholder="https://jobs.lever.co/company/...">
+          </div>
+        </div>
+
+        <!-- Step 2: Analysis -->
+        <div class="wizard-content" id="step-2" style="display: none;">
+          <div class="analysis-section">
+            <div class="analysis-title">Extracted Information</div>
+            <div class="analysis-row">
+              <span class="analysis-label">Company</span>
+              <span class="analysis-value" id="analysis-company">-</span>
+            </div>
+            <div class="analysis-row">
+              <span class="analysis-label">Role</span>
+              <span class="analysis-value" id="analysis-role">-</span>
+            </div>
+            <div class="analysis-row">
+              <span class="analysis-label">Years Required</span>
+              <span class="analysis-value" id="analysis-years">-</span>
+            </div>
+          </div>
+          <div class="analysis-section">
+            <div class="analysis-title">Must-Have Requirements</div>
+            <ul class="requirements-list" id="analysis-requirements"></ul>
+          </div>
+          <div class="analysis-section">
+            <div class="analysis-title">Domain Keywords</div>
+            <div id="analysis-domains" style="display: flex; gap: 0.5rem; flex-wrap: wrap;"></div>
+          </div>
+        </div>
+
+        <!-- Step 3: Generate -->
+        <div class="wizard-content" id="step-3" style="display: none;">
+          <div class="form-group">
+            <label class="form-label">Company Name</label>
+            <input type="text" class="form-input" id="gen-company" placeholder="e.g., Stripe">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Role Title</label>
+            <input type="text" class="form-input" id="gen-role" placeholder="e.g., Senior PM">
+          </div>
+          <div id="gen-status" style="margin-top: 1rem; color: var(--text-tertiary); font-size: 0.875rem;"></div>
+        </div>
+
+        <!-- Step 4: Complete -->
+        <div class="wizard-content" id="step-4" style="display: none;">
+          <div class="success-state">
+            <div class="success-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+            <h3 class="success-title">Variant Created!</h3>
+            <p class="success-subtitle" id="success-info">-</p>
+            <div class="success-links">
+              <a href="#" id="success-portfolio-link" target="_blank" class="btn btn-primary">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                  <polyline points="15 3 21 3 21 9"></polyline>
+                  <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+                View Portfolio
+              </a>
+              <a href="#" id="success-resume-link" download class="btn btn-download">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="7 10 12 15 17 10"></polyline>
+                  <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                Resume
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer" id="wizard-footer">
+        <button class="btn btn-ghost" id="wizard-back" onclick="wizardBack()" style="display: none;">Back</button>
+        <button class="btn btn-primary" id="wizard-next" onclick="wizardNext()">Analyze</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ============ CONFIG ============
+    const HASH = 'nxt2ji';
+    const BASE_URL = window.location.hostname === 'localhost'
+      ? 'http://localhost:5173'
+      : 'https://fotescodev.github.io/portfolio';
+    const API_BASE = '/api/crm';
+
+    // ============ STATE ============
+    let variants = [];
+    let currentFilter = 'all';
+    let wizardStep = 1;
+    let wizardData = {};
+
+    // ============ THEME ============
+    function initTheme() {
+      const saved = localStorage.getItem('cv-dashboard-theme');
+      const theme = saved || 'light';
+      document.documentElement.setAttribute('data-theme', theme);
+    }
+
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('cv-dashboard-theme', next);
+    }
+
+    // Initialize theme immediately
+    initTheme();
+
+    // ============ AUTH ============
     function simpleHash(str) {
       let hash = 0;
       for (let i = 0; i < str.length; i++) {
@@ -1264,6 +1319,7 @@
     function showDashboard() {
       document.getElementById('gate').style.display = 'none';
       document.getElementById('dashboard').style.display = 'block';
+      loadVariants();
     }
 
     function logout() {
@@ -1271,7 +1327,169 @@
       location.reload();
     }
 
-    let currentFilter = 'all';
+    // ============ API ============
+    async function apiCall(endpoint, method = 'GET', body = null) {
+      const options = {
+        method,
+        headers: { 'Content-Type': 'application/json' }
+      };
+      if (body) options.body = JSON.stringify(body);
+
+      const res = await fetch(API_BASE + endpoint, options);
+      return res.json();
+    }
+
+    // ============ VARIANTS ============
+    async function loadVariants() {
+      try {
+        const result = await apiCall('/variants');
+        if (result.success) {
+          variants = result.data.variants;
+          renderVariants();
+          updateStats();
+        } else {
+          showError('Failed to load variants');
+        }
+      } catch (err) {
+        // Fallback for static hosting
+        console.log('API not available, using static mode');
+        document.getElementById('cards-container').innerHTML = `
+          <div class="empty-state">
+            <p>API not available. Run dev server for full functionality.</p>
+          </div>
+        `;
+      }
+    }
+
+    function renderVariants() {
+      const container = document.getElementById('cards-container');
+
+      if (variants.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+            </svg>
+            <p>No variants yet. Create your first one!</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = variants.map(v => renderCard(v)).join('');
+      filterVariants();
+    }
+
+    function renderCard(v) {
+      const isApplied = v.applicationStatus === 'applied';
+      const date = v.generatedAt ? new Date(v.generatedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '-';
+      const parts = v.slug.split('-');
+      const company = parts[0];
+      const role = parts.slice(1).join('-');
+      const portfolioUrl = `${BASE_URL}/${company}/${role}`;
+      const resumeUrl = v.resumePath ? `${BASE_URL}${v.resumePath}` : null;
+
+      // Quality status
+      const evalStatus = v.evalStatus || 'not_run';
+      const redteamStatus = v.redteamStatus || 'not_run';
+
+      const evalBadge = {
+        passed: { class: 'badge-success', text: '✓ Verified' },
+        warnings: { class: 'badge-warning', text: '⚠ Unverified' },
+        failed: { class: 'badge-error', text: '✗ Failed' },
+        not_run: { class: 'badge-neutral', text: '○ Not Run' }
+      }[evalStatus] || { class: 'badge-neutral', text: '○ Not Run' };
+
+      const redteamBadge = {
+        passed: { class: 'badge-success', text: '✓ Pass' },
+        warnings: { class: 'badge-warning', text: '⚠ Warnings' },
+        failed: { class: 'badge-error', text: '✗ Fail' },
+        not_run: { class: 'badge-neutral', text: '○ Not Run' }
+      }[redteamStatus] || { class: 'badge-neutral', text: '○ Not Run' };
+
+      return `
+        <div class="card" data-company="${v.company?.toLowerCase() || ''}" data-role="${v.role?.toLowerCase() || ''}" data-applied="${isApplied}">
+          <div class="card-header">
+            <div class="card-info">
+              <h3 class="card-company">${v.company || 'Unknown'}</h3>
+              <p class="card-role">${v.role || 'Unknown Role'}</p>
+            </div>
+            <div class="card-meta">
+              <span class="badge ${isApplied ? 'badge-success' : 'badge-neutral'}">${isApplied ? 'Applied' : 'Pending'}</span>
+              <span class="card-date">${date}</span>
+            </div>
+          </div>
+          <div class="quality-row">
+            <span class="quality-label">Eval:</span>
+            <span class="badge badge-sm ${evalBadge.class}">${evalBadge.text}</span>
+            <span class="quality-label" style="margin-left: 0.5rem;">Redteam:</span>
+            <span class="badge badge-sm ${redteamBadge.class}">${redteamBadge.text}</span>
+            <button class="btn btn-action" onclick="runQualityCheck('${v.slug}')" title="Run Quality Check" style="margin-left: auto;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 12l2 2 4-4"></path>
+                <path d="M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9c2.12 0 4.07.74 5.61 1.97"></path>
+              </svg>
+            </button>
+          </div>
+          <div class="card-actions">
+            <a href="${portfolioUrl}" target="_blank" class="btn btn-primary">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+              </svg>
+              View
+            </a>
+            ${resumeUrl ? `
+              <a href="${resumeUrl}" download class="btn btn-download">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="7 10 12 15 17 10"></polyline>
+                  <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                Resume
+              </a>
+            ` : ''}
+            ${v.sourceUrl ? `
+              <a href="${v.sourceUrl}" target="_blank" class="btn btn-ghost">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                  <line x1="8" y1="21" x2="16" y2="21"></line>
+                  <line x1="12" y1="17" x2="12" y2="21"></line>
+                </svg>
+                Job
+              </a>
+            ` : ''}
+            <button class="btn btn-action" onclick="regenerateResume('${v.slug}')" title="Regenerate Resume">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="23 4 23 10 17 10"></polyline>
+                <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+              </svg>
+            </button>
+            ${!isApplied ? `
+              <button class="btn btn-action" onclick="markApplied('${v.slug}')" title="Mark as Applied">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </button>
+            ` : ''}
+          </div>
+        </div>
+      `;
+    }
+
+    function updateStats() {
+      const total = variants.length;
+      const applied = variants.filter(v => v.applicationStatus === 'applied').length;
+      const pending = total - applied;
+      const resumes = variants.filter(v => v.hasResume).length;
+
+      document.getElementById('stat-total').textContent = total;
+      document.getElementById('stat-applied').textContent = applied;
+      document.getElementById('stat-pending').textContent = pending;
+      document.getElementById('stat-resumes').textContent = resumes;
+    }
 
     function setFilter(filter) {
       currentFilter = filter;
@@ -1297,8 +1515,259 @@
       });
     }
 
+    // ============ ACTIONS ============
+    async function regenerateResume(slug) {
+      const btn = event.currentTarget;
+      btn.classList.add('loading');
+
+      try {
+        const result = await apiCall('/generate-resume', 'POST', { slug });
+        if (result.success) {
+          alert('Resume regenerated successfully!');
+          loadVariants();
+        } else {
+          alert('Failed: ' + (result.error || 'Unknown error'));
+        }
+      } catch (err) {
+        alert('Error: ' + err.message);
+      } finally {
+        btn.classList.remove('loading');
+      }
+    }
+
+    async function markApplied(slug) {
+      try {
+        const result = await apiCall(`/variants/${slug}`, 'PUT', { applicationStatus: 'applied' });
+        if (result.success) {
+          loadVariants();
+        } else {
+          alert('Failed: ' + (result.error || 'Unknown error'));
+        }
+      } catch (err) {
+        alert('Error: ' + err.message);
+      }
+    }
+
+    async function runQualityCheck(slug) {
+      const card = document.querySelector(`.card[data-company]`)?.closest('.card');
+      const btn = event.target.closest('button');
+      if (btn) btn.disabled = true;
+
+      try {
+        // Run eval first
+        const evalResult = await apiCall('/eval-variant', 'POST', { slug });
+        let evalStatus = 'not_run';
+        if (evalResult.success) {
+          const data = evalResult.data;
+          if (data?.score >= 0.8) evalStatus = 'passed';
+          else if (data?.score >= 0.5) evalStatus = 'warnings';
+          else evalStatus = 'failed';
+        }
+
+        // Run redteam
+        const redteamResult = await apiCall('/redteam-variant', 'POST', { slug });
+        let redteamStatus = 'not_run';
+        if (redteamResult.success) {
+          const data = redteamResult.data;
+          if (data?.passed) redteamStatus = 'passed';
+          else if (data?.warnings?.length > 0) redteamStatus = 'warnings';
+          else redteamStatus = 'failed';
+        }
+
+        // Update variant metadata with status
+        await apiCall(`/variants/${slug}`, 'PUT', { evalStatus, redteamStatus });
+
+        // Reload to show updated badges
+        loadVariants();
+      } catch (err) {
+        alert('Quality check error: ' + err.message);
+      } finally {
+        if (btn) btn.disabled = false;
+      }
+    }
+
+    // ============ WIZARD ============
+    function openWizard() {
+      wizardStep = 1;
+      wizardData = {};
+      updateWizardUI();
+      document.getElementById('wizard-modal').classList.add('open');
+      document.getElementById('jd-text').value = '';
+      document.getElementById('jd-url').value = '';
+    }
+
+    function closeWizard() {
+      document.getElementById('wizard-modal').classList.remove('open');
+    }
+
+    function updateWizardUI() {
+      // Update step indicators
+      document.querySelectorAll('.wizard-step').forEach(el => {
+        const step = parseInt(el.dataset.step);
+        el.classList.remove('active', 'completed');
+        if (step === wizardStep) el.classList.add('active');
+        if (step < wizardStep) el.classList.add('completed');
+      });
+
+      // Show/hide content
+      for (let i = 1; i <= 4; i++) {
+        document.getElementById(`step-${i}`).style.display = i === wizardStep ? 'block' : 'none';
+      }
+
+      // Update buttons
+      const backBtn = document.getElementById('wizard-back');
+      const nextBtn = document.getElementById('wizard-next');
+
+      backBtn.style.display = wizardStep > 1 && wizardStep < 4 ? 'block' : 'none';
+
+      if (wizardStep === 1) {
+        nextBtn.textContent = 'Analyze';
+      } else if (wizardStep === 2) {
+        nextBtn.textContent = 'Generate Variant';
+      } else if (wizardStep === 3) {
+        nextBtn.textContent = 'Create & Generate Resume';
+      } else {
+        nextBtn.textContent = 'Done';
+      }
+    }
+
+    function wizardBack() {
+      if (wizardStep > 1) {
+        wizardStep--;
+        updateWizardUI();
+      }
+    }
+
+    async function wizardNext() {
+      const nextBtn = document.getElementById('wizard-next');
+      nextBtn.disabled = true;
+      nextBtn.textContent = 'Processing...';
+
+      try {
+        if (wizardStep === 1) {
+          await analyzeJd();
+        } else if (wizardStep === 2) {
+          wizardStep = 3;
+          // Pre-fill from analysis
+          document.getElementById('gen-company').value = wizardData.company || '';
+          document.getElementById('gen-role').value = wizardData.role || '';
+          updateWizardUI();
+        } else if (wizardStep === 3) {
+          await generateVariant();
+        } else {
+          closeWizard();
+          loadVariants();
+        }
+      } catch (err) {
+        alert('Error: ' + err.message);
+      } finally {
+        nextBtn.disabled = false;
+        updateWizardUI();
+      }
+    }
+
+    async function analyzeJd() {
+      const text = document.getElementById('jd-text').value;
+      const url = document.getElementById('jd-url').value;
+
+      if (!text && !url) {
+        alert('Please enter a job description or URL');
+        return;
+      }
+
+      const result = await apiCall('/analyze-jd', 'POST', { text, url });
+
+      if (result.success && result.data) {
+        wizardData.jdText = text;
+        wizardData.jdUrl = url;
+        wizardData.analysis = result.data;
+
+        // Extract company/role from analysis
+        const extracted = result.data.extracted || {};
+        wizardData.company = extracted.company || '';
+        wizardData.role = extracted.role || '';
+
+        // Update UI
+        document.getElementById('analysis-company').textContent = wizardData.company || 'Not detected';
+        document.getElementById('analysis-role').textContent = wizardData.role || 'Not detected';
+        document.getElementById('analysis-years').textContent = extracted.yearsRequired || 'Not specified';
+
+        // Requirements
+        const reqList = document.getElementById('analysis-requirements');
+        const mustHaves = result.data.mustHaves || [];
+        reqList.innerHTML = mustHaves.slice(0, 8).map(r => `<li>${typeof r === 'object' ? r.text : r}</li>`).join('') || '<li>No specific requirements extracted</li>';
+
+        // Domains
+        const domainsEl = document.getElementById('analysis-domains');
+        const domains = result.data.domainKeywords || [];
+        domainsEl.innerHTML = domains.map(d => `<span class="badge badge-neutral">${d}</span>`).join('') || '<span class="badge badge-neutral">general</span>';
+
+        wizardStep = 2;
+        updateWizardUI();
+      } else {
+        alert('Analysis failed: ' + (result.error || 'Unknown error'));
+      }
+    }
+
+    async function generateVariant() {
+      const company = document.getElementById('gen-company').value;
+      const role = document.getElementById('gen-role').value;
+
+      if (!company || !role) {
+        alert('Please enter company and role');
+        return;
+      }
+
+      const statusEl = document.getElementById('gen-status');
+      statusEl.textContent = 'Generating variant (this may take a minute)...';
+
+      const result = await apiCall('/generate-cv', 'POST', {
+        company,
+        role,
+        jdText: wizardData.jdText,
+        jdUrl: wizardData.jdUrl
+      });
+
+      if (result.success) {
+        wizardData.slug = result.data.slug;
+        statusEl.textContent = 'Variant created! Generating resume...';
+
+        // Sync variants
+        await apiCall('/sync-variants', 'POST', {});
+
+        // Generate resume
+        const resumeResult = await apiCall('/generate-resume', 'POST', { slug: wizardData.slug });
+
+        // Show success
+        const parts = wizardData.slug.split('-');
+        const companySlug = parts[0];
+        const roleSlug = parts.slice(1).join('-');
+
+        document.getElementById('success-info').textContent = `${company} - ${role}`;
+        document.getElementById('success-portfolio-link').href = `${BASE_URL}/${companySlug}/${roleSlug}`;
+        document.getElementById('success-resume-link').href = `${BASE_URL}/resumes/${wizardData.slug}.pdf`;
+
+        wizardStep = 4;
+        updateWizardUI();
+      } else {
+        statusEl.textContent = '';
+        alert('Generation failed: ' + (result.error || 'Unknown error'));
+      }
+    }
+
+    // ============ INIT ============
     document.getElementById('password').addEventListener('keypress', (e) => {
       if (e.key === 'Enter') checkPassword();
+    });
+
+    // Close modal on escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeWizard();
+    });
+
+    // Close modal on backdrop click
+    document.getElementById('wizard-modal').addEventListener('click', (e) => {
+      if (e.target === e.currentTarget) closeWizard();
     });
 
     if (localStorage.getItem('dashboard_auth') === 'true') {

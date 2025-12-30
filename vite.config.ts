@@ -2,6 +2,7 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import yaml from '@rollup/plugin-yaml'
 import { imagetools } from 'vite-imagetools'
+import { crmApiPlugin } from './server/api-plugin'
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -9,6 +10,8 @@ export default defineConfig({
     react(),
     yaml(),
     imagetools(),
+    // CRM API endpoints for cv-dashboard
+    crmApiPlugin(),
     // Serve static directories from public/ correctly in dev
     {
       name: 'static-directory-middleware',

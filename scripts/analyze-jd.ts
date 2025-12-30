@@ -7,7 +7,7 @@
  * - Must-have requirements (filtering out generic phrases)
  * - Domain keywords for knowledge base search
  *
- * Deterministic extraction - no AI required.
+ * Uses Claude API as fallback when deterministic methods fail.
  *
  * Usage:
  *   npm run analyze:jd -- --file source-data/jd-stripe.txt
@@ -17,7 +17,29 @@
  */
 
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs';
-import { join, basename } from 'path';
+import { join, basename, resolve } from 'path';
+
+// Load .env.local if API key not already set
+function loadEnvLocal(): void {
+  if (process.env.ANTHROPIC_API_KEY) return;
+
+  const envPath = resolve(import.meta.dirname, '..', '.env.local');
+  if (existsSync(envPath)) {
+    const content = readFileSync(envPath, 'utf-8');
+    for (const line of content.split('\n')) {
+      const trimmed = line.trim();
+      if (trimmed && !trimmed.startsWith('#')) {
+        const [key, ...valueParts] = trimmed.split('=');
+        if (key && valueParts.length > 0) {
+          process.env[key] = valueParts.join('=');
+        }
+      }
+    }
+  }
+}
+
+loadEnvLocal();
+import { extractCompanyAndRoleAsync } from './lib/job-parsing';
 import YAML from 'yaml';
 
 // ═══════════════════════════════════════════════════════════════
@@ -172,61 +194,6 @@ export interface JDAnalysis {
 // EXTRACTION LOGIC
 // ═══════════════════════════════════════════════════════════════
 
-function extractCompanyAndRole(text: string, filename?: string): { company: string | null; role: string | null } {
-  let company: string | null = null;
-  let role: string | null = null;
-
-  // Try to extract from filename first (e.g., jd-stripe-pm.txt)
-  if (filename) {
-    const slugMatch = filename.match(/jd-([a-z0-9-]+)/i);
-    if (slugMatch) {
-      const parts = slugMatch[1].split('-');
-      if (parts.length >= 1) {
-        company = parts[0].charAt(0).toUpperCase() + parts[0].slice(1);
-      }
-    }
-  }
-
-  // Try to extract from common JD patterns
-  const patterns = [
-    /^([A-Z][A-Za-z0-9\s]+)\s*[-–—]\s*(.+)$/m,  // "Company - Role"
-    /^(.+?)\s+is\s+(hiring|looking for|seeking)\s+(?:a\s+)?(.+)/im,  // "Company is hiring a Role"
-    /^(?:about\s+)?([A-Z][A-Za-z0-9\s]+)\n/m,  // Company name at start
-    /at\s+([A-Z][A-Za-z0-9]+)/  // "at Company"
-  ];
-
-  for (const pattern of patterns) {
-    const match = text.match(pattern);
-    if (match) {
-      if (!company && match[1]) {
-        company = match[1].trim().split(/\s+/).slice(0, 3).join(' ');
-      }
-      if (!role && (match[2] || match[3])) {
-        role = (match[3] || match[2]).trim().split(/\s+/).slice(0, 5).join(' ');
-      }
-      if (company && role) break;
-    }
-  }
-
-  // Extract role from title patterns
-  if (!role) {
-    const rolePatterns = [
-      /\b((?:senior\s+)?(?:product|program|project|technical)\s+manager)\b/i,
-      /\b((?:senior\s+)?(?:pm|tpm|spm))\b/i,
-      /\b(director[,\s]+(?:product|engineering|technical))/i
-    ];
-    for (const pattern of rolePatterns) {
-      const match = text.match(pattern);
-      if (match) {
-        role = match[1];
-        break;
-      }
-    }
-  }
-
-  return { company, role };
-}
-
 function extractYearsRequired(text: string): number | null {
   // Normalize text: remove markdown formatting, arrows, and normalize whitespace
   const normalizedText = text
@@ -348,8 +315,24 @@ function generateSearchTerms(analysis: Partial<JDAnalysis>): string[] {
   return [...terms].slice(0, 15);
 }
 
-export function analyzeJD(text: string, filename?: string): JDAnalysis {
-  const { company, role } = extractCompanyAndRole(text, filename);
+export interface AnalyzeOptions {
+  filename?: string;
+  rawHtml?: string;
+  apiKey?: string;
+}
+
+export async function analyzeJD(text: string, options: AnalyzeOptions = {}): Promise<JDAnalysis> {
+  const { filename, rawHtml, apiKey } = options;
+
+  // Use waterfall extraction from shared library
+  const extractionResult = await extractCompanyAndRoleAsync(text, rawHtml, filename, apiKey);
+  const { company, role, source } = extractionResult;
+
+  // Log extraction source for debugging
+  if (source !== 'fallback') {
+    console.error(`${colors.gray}Extracted company/role via ${source}${colors.reset}`);
+  }
+
   const yearsRequired = extractYearsRequired(text);
   const { mustHaves, niceToHaves, ignoredGeneric } = extractRequirements(text);
   const domainKeywords = extractDomainKeywords(text);
@@ -457,6 +440,7 @@ function saveAnalysis(analysis: JDAnalysis): void {
 interface Args {
   file?: string;
   text?: string;
+  url?: string;
   json: boolean;
   save: boolean;
 }
@@ -470,6 +454,8 @@ function parseArgs(): Args {
       result.file = args[++i];
     } else if (args[i] === '--text' && args[i + 1]) {
       result.text = args[++i];
+    } else if (args[i] === '--url' && args[i + 1]) {
+      result.url = args[++i];
     } else if (args[i] === '--json') {
       result.json = true;
     } else if (args[i] === '--save') {
@@ -480,15 +466,118 @@ function parseArgs(): Args {
   return result;
 }
 
+function extractTextFromHtml(html: string): string {
+  return html
+    .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '')
+    .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '')
+    .replace(/<[^>]+>/g, '\n')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/\n\s*\n/g, '\n\n')
+    .trim();
+}
+
+interface FetchResult {
+  text: string;
+  rawHtml: string;
+}
+
+async function fetchWithPuppeteer(url: string): Promise<FetchResult> {
+  console.error(`${colors.yellow}Using headless browser for bot-protected site...${colors.reset}`);
+
+  const puppeteer = await import('puppeteer');
+  const browser = await puppeteer.default.launch({
+    headless: true,
+    args: ['--no-sandbox', '--disable-setuid-sandbox']
+  });
+
+  try {
+    const page = await browser.newPage();
+    await page.setUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36');
+
+    await page.goto(url, { waitUntil: 'networkidle2', timeout: 30000 });
+
+    // Wait a bit for any JS rendering
+    await new Promise(r => setTimeout(r, 2000));
+
+    const rawHtml = await page.content();
+    return { text: extractTextFromHtml(rawHtml), rawHtml };
+  } finally {
+    await browser.close();
+  }
+}
+
+async function fetchJobDescription(url: string): Promise<FetchResult> {
+  console.error(`${colors.cyan}Fetching job description from URL...${colors.reset}`);
+
+  try {
+    // Try simple fetch first
+    const response = await fetch(url, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
+        'Accept-Language': 'en-US,en;q=0.9',
+        'Sec-Fetch-Dest': 'document',
+        'Sec-Fetch-Mode': 'navigate',
+        'Sec-Fetch-Site': 'none'
+      }
+    });
+
+    if (response.status === 403) {
+      // Site blocks simple fetch, try Puppeteer
+      const result = await fetchWithPuppeteer(url);
+      if (result.text.length < 100) {
+        throw new Error('Fetched content too short - may not be a valid job description page');
+      }
+      return result;
+    }
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
+
+    const rawHtml = await response.text();
+    const text = extractTextFromHtml(rawHtml);
+
+    if (text.length < 100) {
+      throw new Error('Fetched content too short - may not be a valid job description page');
+    }
+
+    return { text, rawHtml };
+  } catch (error) {
+    if (error instanceof Error) {
+      // If it's not already a "Failed to fetch" error, and we haven't tried Puppeteer yet
+      if (!error.message.includes('Failed to fetch') && !error.message.includes('headless browser')) {
+        try {
+          const result = await fetchWithPuppeteer(url);
+          if (result.text.length < 100) {
+            throw new Error('Fetched content too short - may not be a valid job description page');
+          }
+          return result;
+        } catch (puppeteerError) {
+          throw new Error(`Failed to fetch URL: ${puppeteerError instanceof Error ? puppeteerError.message : String(puppeteerError)}`);
+        }
+      }
+      throw new Error(`Failed to fetch URL: ${error.message}`);
+    }
+    throw error;
+  }
+}
+
 async function main() {
   const args = parseArgs();
 
-  if (!args.file && !args.text) {
-    console.error(`${colors.red}Error: Must provide --file or --text${colors.reset}`);
+  if (!args.file && !args.text && !args.url) {
+    console.error(`${colors.red}Error: Must provide --file, --text, or --url${colors.reset}`);
     console.log(`
 Usage:
   npm run analyze:jd -- --file source-data/jd-stripe.txt
   npm run analyze:jd -- --text "Job description text..."
+  npm run analyze:jd -- --url "https://jobs.lever.co/company/..."
   npm run analyze:jd -- --file jd.txt --save
   npm run analyze:jd -- --file jd.txt --json
 `);
@@ -496,6 +585,7 @@ Usage:
   }
 
   let text: string;
+  let rawHtml: string | undefined;
   let filename: string | undefined;
 
   if (args.file) {
@@ -505,11 +595,18 @@ Usage:
     }
     text = readFileSync(args.file, 'utf-8');
     filename = args.file;
+  } else if (args.url) {
+    const result = await fetchJobDescription(args.url);
+    text = result.text;
+    rawHtml = result.rawHtml;
   } else {
     text = args.text!;
   }
 
-  const analysis = analyzeJD(text, filename);
+  // Get API key for Claude fallback extraction
+  const apiKey = process.env.ANTHROPIC_API_KEY;
+
+  const analysis = await analyzeJD(text, { filename, rawHtml, apiKey });
 
   if (args.json) {
     console.log(JSON.stringify(analysis, null, 2));
