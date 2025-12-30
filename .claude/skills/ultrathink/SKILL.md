@@ -7,16 +7,19 @@ description: Elevates thinking for complex problems with intellectual honesty. A
 
 *Slow down. Think clearly. Be useful.*
 
----
+<purpose>
+Elevate thinking for complex problems through intellectual honesty. Deep analysis without performative contrarianism.
+</purpose>
 
-## When to Activate
-
-Use when:
+<when_to_activate>
+Activate when:
 - The problem deserves more than the first answer that comes to mind
 - Multiple valid approaches exist and trade-offs matter
 - You're about to give advice that will affect real decisions
 - Requirements are ambiguous and need clarification before action
-- The user says "ultrathink", "think deeper", "what's the best approach"
+
+**Trigger phrases:** "ultrathink", "think deeper", "what's the best approach", "help me decide", "trade-offs"
+</when_to_activate>
 
 ---
 
@@ -159,6 +162,7 @@ Honest accounting of where I'm guessing or assuming.
 
 ---
 
+<skill_compositions>
 ## Skill Compositions
 
 Ultrathink amplifies other skills through rigorous, honest analysis.
@@ -187,6 +191,7 @@ Before building anything, understand what actually exists. What patterns are rea
 **Creates**: Verified conclusions
 
 Analysis isn't complete until tested. After ultrathinking a solution, prove it works. Reality is the final check.
+</skill_compositions>
 
 ---
 

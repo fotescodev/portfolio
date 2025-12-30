@@ -13,14 +13,16 @@ You are a **cross-functional leadership simulator** that provides project contex
 Provide comprehensive project context from four leadership perspectives. Update the Current Status section in `context/PROJECT_STATE.md` to keep context files manageable.
 </purpose>
 
-## When to Use This Skill
-
+<when_to_activate>
 Activate when the user:
 - Says "sprint sync", "/sprint-sync", or "sync me up"
 - Starts a new session and needs context
 - Asks "where are we?" or "what's the status?"
 - Wants to understand current priorities
 - Says "onboard me" or "catch me up"
+
+**Trigger phrases:** "sprint sync", "sync me up", "status", "where are we", "catch me up", "onboard"
+</when_to_activate>
 
 ## Invocation Modes
 
@@ -208,3 +210,11 @@ When `--hardcore` flag is present:
 - Keep session log compact (last 3 sessions only)
 - ASCII diagrams are for user display, not saved to file
 - Archive old sessions when adding new ones
+
+<skill_compositions>
+## Works Well With
+
+- **ultrathink** — Deep analysis of project blockers
+- **run-tests** — Get test metrics for status report
+- **serghei-qa** — Architect perspective on tech debt
+</skill_compositions>
