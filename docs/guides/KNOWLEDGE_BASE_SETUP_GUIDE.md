@@ -474,6 +474,11 @@ Status: READY FOR USE
 
 ## Step 5: Generate Resume PDFs
 
+> **Note:** Resume generation requires Puppeteer with Chrome. If you see a Chrome error, run:
+> ```bash
+> npx puppeteer browsers install chrome
+> ```
+
 ### Single Resume
 
 ```bash
@@ -660,6 +665,9 @@ npm run validate
 ### "Resume generation failed"
 
 ```bash
+# If you see "Could not find Chrome" error:
+npx puppeteer browsers install chrome
+
 # Ensure dev server is running
 npm run dev
 
