@@ -166,6 +166,11 @@ function parseArgs(): CLIArgs {
     throw new Error('Missing required argument: --source <path>');
   }
 
+  // For dry-run, we don't need an API key
+  if (parsed.dryRun) {
+    return parsed as CLIArgs;
+  }
+
   // Get API key from env if not provided
   if (!parsed.apiKey) {
     const envVars: Record<string, string> = {
@@ -399,90 +404,110 @@ categories:
 Output ONLY the JSON object. No explanations, no markdown formatting.`;
 }
 
-// Call AI API
+// Call AI API with proper error handling
 async function callAI(provider: string, apiKey: string, prompt: string, verbose: boolean): Promise<string> {
   if (verbose) {
     console.log(`${colors.cyan}Calling ${provider} API...${colors.reset}`);
   }
 
-  if (provider === 'claude') {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01'
-      },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 16000,
-        messages: [{ role: 'user', content: prompt }]
-      })
-    });
-
-    if (!response.ok) {
-      const error = await response.text();
-      throw new Error(`Claude API error: ${response.status} - ${error}`);
-    }
-
-    const data = await response.json();
-    return data.content[0].text;
-  }
-
-  if (provider === 'openai') {
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${apiKey}`
-      },
-      body: JSON.stringify({
-        model: 'gpt-4-turbo-preview',
-        messages: [{ role: 'user', content: prompt }],
-        temperature: 0.3,
-        max_tokens: 16000
-      })
-    });
-
-    if (!response.ok) {
-      const error = await response.text();
-      throw new Error(`OpenAI API error: ${response.status} - ${error}`);
-    }
-
-    const data = await response.json();
-    return data.choices[0].message.content;
-  }
-
-  if (provider === 'gemini') {
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
-      {
+  try {
+    if (provider === 'claude') {
+      const response = await fetch('https://api.anthropic.com/v1/messages', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'x-api-key': apiKey,
+          'anthropic-version': '2023-06-01'
         },
         body: JSON.stringify({
-          contents: [{
-            parts: [{ text: prompt }]
-          }],
-          generationConfig: {
-            temperature: 0.3,
-            maxOutputTokens: 16000
-          }
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 16000,
+          messages: [{ role: 'user', content: prompt }]
         })
-      }
-    );
+      });
 
-    if (!response.ok) {
-      const error = await response.text();
-      throw new Error(`Gemini API error: ${response.status} - ${error}`);
+      if (!response.ok) {
+        const error = await response.text();
+        throw new Error(`Claude API error (${response.status}): ${error}`);
+      }
+
+      const data = await response.json();
+      return data.content[0].text;
     }
 
-    const data = await response.json();
-    return data.candidates[0].content.parts[0].text;
-  }
+    if (provider === 'openai') {
+      const response = await fetch('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${apiKey}`
+        },
+        body: JSON.stringify({
+          model: 'gpt-4-turbo-preview',
+          messages: [{ role: 'user', content: prompt }],
+          temperature: 0.3,
+          max_tokens: 16000
+        })
+      });
 
-  throw new Error(`Unknown provider: ${provider}`);
+      if (!response.ok) {
+        const error = await response.text();
+        throw new Error(`OpenAI API error (${response.status}): ${error}`);
+      }
+
+      const data = await response.json();
+      return data.choices[0].message.content;
+    }
+
+    if (provider === 'gemini') {
+      const response = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            contents: [{
+              parts: [{ text: prompt }]
+            }],
+            generationConfig: {
+              temperature: 0.3,
+              maxOutputTokens: 16000
+            }
+          })
+        }
+      );
+
+      if (!response.ok) {
+        const error = await response.text();
+        throw new Error(`Gemini API error (${response.status}): ${error}`);
+      }
+
+      const data = await response.json();
+      return data.candidates[0].content.parts[0].text;
+    }
+
+    throw new Error(`Unknown provider: ${provider}`);
+  } catch (error) {
+    if (error instanceof Error) {
+      // Network errors (DNS, timeout, etc.)
+      if (error.message.includes('fetch failed') || error.message.includes('ENOTFOUND') || error.message.includes('EAI_AGAIN')) {
+        throw new Error(
+          `Network error connecting to ${provider} API.\n\n` +
+          `Possible causes:\n` +
+          `  • No internet connection\n` +
+          `  • DNS resolution failed\n` +
+          `  • API endpoint is down\n` +
+          `  • Firewall blocking the request\n\n` +
+          `Original error: ${error.message}`
+        );
+      }
+      // Re-throw API errors as-is
+      throw error;
+    }
+    throw new Error(`Unknown error calling ${provider} API`);
+  }
 }
 
 // Parse AI response into structured content
@@ -495,7 +520,19 @@ function parseAIResponse(response: string): GeneratedContent {
     cleaned = cleaned.replace(/^```\n/, '').replace(/\n```$/, '');
   }
 
-  const parsed = JSON.parse(cleaned);
+  let parsed;
+  try {
+    parsed = JSON.parse(cleaned);
+  } catch (error) {
+    // Show helpful error with context
+    const preview = cleaned.slice(0, 500);
+    throw new Error(
+      `Failed to parse AI response as JSON.\n\n` +
+      `The AI may have returned invalid JSON or extra text.\n` +
+      `Response preview:\n${preview}...\n\n` +
+      `Try running the command again - AI responses can vary.`
+    );
+  }
 
   return {
     entityGraph: parsed.entityGraph,
@@ -641,6 +678,28 @@ async function main() {
       console.log(`${colors.dim}Prompt length: ${prompt.length} characters${colors.reset}`);
     }
 
+    // Dry-run mode: show what would happen without calling API
+    if (args.dryRun) {
+      console.log(`\n${colors.yellow}${colors.bold}DRY RUN MODE${colors.reset}\n`);
+      console.log(`${colors.bold}Would generate:${colors.reset}`);
+      console.log(`  ${colors.cyan}•${colors.reset} content/knowledge/index.yaml (entity graph)`);
+      console.log(`  ${colors.cyan}•${colors.reset} content/knowledge/achievements/*.yaml (STAR-format achievements)`);
+      console.log(`  ${colors.cyan}•${colors.reset} content/knowledge/stories/*.yaml (extended narratives)`);
+      console.log(`  ${colors.cyan}•${colors.reset} content/experience/index.yaml`);
+      console.log(`  ${colors.cyan}•${colors.reset} content/skills/index.yaml`);
+      console.log(`  ${colors.cyan}•${colors.reset} content/profile.yaml`);
+      console.log(`\n${colors.bold}From source files:${colors.reset}`);
+      for (const file of sourceFiles) {
+        console.log(`  ${colors.green}✓${colors.reset} ${file.name} (${file.content.length} chars)`);
+      }
+      console.log(`\n${colors.bold}AI prompt:${colors.reset} ${prompt.length} characters`);
+      if (args.verbose) {
+        console.log(`\n${colors.dim}${prompt.slice(0, 1000)}...${colors.reset}`);
+      }
+      console.log(`\n${colors.yellow}Run without --dry-run to generate files.${colors.reset}`);
+      return;
+    }
+
     // Call AI
     console.log(`\n${colors.cyan}Calling ${args.provider} API to generate knowledge base...${colors.reset}`);
     console.log(`${colors.dim}This may take 30-60 seconds...${colors.reset}\n`);
@@ -662,16 +721,12 @@ async function main() {
     writeContent(content, args.dryRun, args.verbose);
 
     // Next steps
-    if (!args.dryRun) {
-      console.log(`\n${colors.green}${colors.bold}✓ Knowledge base generated successfully!${colors.reset}`);
-      console.log(`\n${colors.cyan}Next steps:${colors.reset}`);
-      console.log(`  1. Review generated files in content/knowledge/`);
-      console.log(`  2. Run validation: ${colors.bold}npm run validate${colors.reset}`);
-      console.log(`  3. Generate a variant: ${colors.bold}npm run generate:cv -- --company "X" --role "Y" --jd ./jd.txt${colors.reset}`);
-      console.log(`  4. Preview locally: ${colors.bold}npm run dev${colors.reset}`);
-    } else {
-      console.log(`\n${colors.yellow}Dry run complete.${colors.reset} Run without --dry-run to write files.`);
-    }
+    console.log(`\n${colors.green}${colors.bold}✓ Knowledge base generated successfully!${colors.reset}`);
+    console.log(`\n${colors.cyan}Next steps:${colors.reset}`);
+    console.log(`  1. Review generated files in content/knowledge/`);
+    console.log(`  2. Run validation: ${colors.bold}npm run validate${colors.reset}`);
+    console.log(`  3. Generate a variant: ${colors.bold}npm run generate:cv -- --company "X" --role "Y" --jd ./jd.txt${colors.reset}`);
+    console.log(`  4. Preview locally: ${colors.bold}npm run dev${colors.reset}`);
 
   } catch (error) {
     console.error(`\n${colors.red}${colors.bold}Error:${colors.reset} ${error instanceof Error ? error.message : error}`);

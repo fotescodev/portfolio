@@ -16,7 +16,9 @@ Job applications are a cold-start problem. Generic resumes get filtered; hand-ta
 
 The result: every application feels hand-crafted, but takes minutes instead of hours.
 
-> **Want to build your own?** See the **[Getting Started Guide](./GETTING_STARTED_GUIDE.md)** for step-by-step instructions.
+> **Want to build your own?**
+> - **With Claude Code:** See the [Getting Started Guide](./GETTING_STARTED_GUIDE.md) for skill-based automation
+> - **Without Claude Code:** See the [Knowledge Base Setup Guide](./docs/guides/KNOWLEDGE_BASE_SETUP_GUIDE.md) for CLI-only workflows
 
 ### How It Works
 
@@ -47,10 +49,10 @@ Before you begin, ensure you have:
 |-------------|-------|
 | **Node.js 18+** | [Download](https://nodejs.org/) |
 | **npm** | Comes with Node.js |
-| **Claude Code** | For skills automation. [Install](https://claude.ai/code) (optional - manual workflows available) |
+| **Claude Code** | For skills automation. [Install](https://claude.ai/code) (optional) |
 | **API Key** | For AI features. See [`.env.example`](./.env.example) for options |
 
-> **No Claude Code?** The [Getting Started Guide](./GETTING_STARTED_GUIDE.md) includes manual alternatives for each skill.
+> **No Claude Code?** Use the [Knowledge Base Setup Guide](./docs/guides/KNOWLEDGE_BASE_SETUP_GUIDE.md) — it works with just an API key and CLI commands.
 
 ---
 
@@ -59,7 +61,8 @@ Before you begin, ensure you have:
 | If you want to... | Read... |
 |-------------------|---------|
 | Understand what this is | This README |
-| Build your own portfolio from scratch | [Getting Started Guide](./GETTING_STARTED_GUIDE.md) |
+| Build your own portfolio (with Claude Code) | [Getting Started Guide](./GETTING_STARTED_GUIDE.md) |
+| Build your own portfolio (CLI only, no Claude Code) | [Knowledge Base Setup Guide](./docs/guides/KNOWLEDGE_BASE_SETUP_GUIDE.md) |
 | Generate a job-targeted variant | [Universal CV Guide](./docs/guides/universal-cv.md) |
 | Run the quality pipeline (eval + redteam) | [Capstone Workflow](./docs/guides/capstone-workflow.md) |
 | Use the interactive CLI dashboard | [UCV-CLI Guide](./docs/guides/universal-cv-cli.md) |
