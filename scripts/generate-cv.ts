@@ -8,12 +8,14 @@
  * Usage:
  *   npm run generate:cv -- --company "Bloomberg" --role "Senior Engineer" --jd "./jd.txt"
  *   npm run generate:cv -- --company "Gensyn" --role "ML Researcher" --jd-text "Job description..."
+ *   npm run generate:cv -- --company "Stripe" --role "PM" --jd-url "https://jobs.lever.co/stripe/..."
  *
  * Options:
  *   --company <name>         Company name (required)
  *   --role <title>          Role title (required)
  *   --jd <file>             Path to job description file
  *   --jd-text <text>        Job description as text
+ *   --jd-url <url>          URL to job description page
  *   --values <text>         Company values (optional)
  *   --context <text>        Additional context (optional)
  *   --provider <name>       AI provider: claude | openai | gemini (default: claude)
@@ -50,6 +52,11 @@ interface CLIArgs {
   outputFile?: string;
 }
 
+interface RawCLIArgs extends Omit<CLIArgs, 'jobDescription'> {
+  jobDescription?: string;
+  jdUrl?: string;
+}
+
 interface PortfolioData {
   profile: Profile;
   experience: Experience;
@@ -65,12 +72,14 @@ function showHelp(): void {
 ${colors.bold}Usage:${colors.reset}
   npm run generate:cv -- --company <name> --role <title> --jd <file>
   npm run generate:cv -- --company <name> --role <title> --jd-text "..."
+  npm run generate:cv -- --company <name> --role <title> --jd-url "https://..."
 
 ${colors.bold}Required:${colors.reset}
   --company <name>     Company name (e.g., "Stripe")
   --role <title>       Role title (e.g., "Senior PM")
   --jd <file>          Path to job description file
   --jd-text <text>     OR: Job description as inline text
+  --jd-url <url>       OR: URL to job description page (auto-fetched)
 
 ${colors.bold}Optional:${colors.reset}
   --provider <name>    AI provider: claude | openai | gemini (default: claude)
@@ -87,6 +96,7 @@ ${colors.bold}Environment Variables:${colors.reset}
 ${colors.bold}Examples:${colors.reset}
   npm run generate:cv -- --company "Stripe" --role "Senior PM" --jd ./stripe-jd.txt
   npm run generate:cv -- --company "Acme" --role "PM" --jd-text "Looking for PM..."
+  npm run generate:cv -- --company "X" --role "Y" --jd-url "https://jobs.lever.co/x/123"
   npm run generate:cv -- --company "X" --role "Y" --jd ./jd.txt --provider openai
 
 ${colors.bold}Need an API key?${colors.reset}
@@ -100,8 +110,76 @@ ${colors.bold}No API key?${colors.reset}
   process.exit(0);
 }
 
-// Parse command line arguments
-function parseArgs(): CLIArgs {
+// Fetch job description from URL
+async function fetchJobDescription(url: string): Promise<string> {
+  console.log(`${colors.cyan}Fetching job description from URL...${colors.reset}`);
+  console.log(`${colors.gray}  ${url}${colors.reset}`);
+
+  try {
+    const response = await fetch(url, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
+
+    const html = await response.text();
+
+    // Extract text content from HTML
+    // Remove script and style tags first
+    let text = html
+      .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '')
+      .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '')
+      .replace(/<nav[^>]*>[\s\S]*?<\/nav>/gi, '')
+      .replace(/<header[^>]*>[\s\S]*?<\/header>/gi, '')
+      .replace(/<footer[^>]*>[\s\S]*?<\/footer>/gi, '');
+
+    // Convert common HTML elements to readable format
+    text = text
+      .replace(/<br\s*\/?>/gi, '\n')
+      .replace(/<\/p>/gi, '\n\n')
+      .replace(/<\/div>/gi, '\n')
+      .replace(/<\/li>/gi, '\n')
+      .replace(/<\/h[1-6]>/gi, '\n\n')
+      .replace(/<[^>]+>/g, ' ')  // Remove remaining tags
+      .replace(/&nbsp;/g, ' ')
+      .replace(/&amp;/g, '&')
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&quot;/g, '"')
+      .replace(/&#39;/g, "'")
+      .replace(/\s+/g, ' ')      // Normalize whitespace
+      .replace(/\n\s+/g, '\n')   // Clean up line starts
+      .replace(/\n{3,}/g, '\n\n') // Limit consecutive newlines
+      .trim();
+
+    if (text.length < 100) {
+      throw new Error('Page content too short - may be blocked or require JavaScript');
+    }
+
+    console.log(`${colors.green}✓${colors.reset} Fetched ${text.length} characters of content\n`);
+    return text;
+  } catch (error) {
+    if (error instanceof Error) {
+      if (error.message.includes('fetch failed') || error.message.includes('ENOTFOUND')) {
+        throw new Error(
+          `Failed to fetch URL: ${url}\n\n` +
+          `Network error - check your internet connection or the URL.\n` +
+          `Original error: ${error.message}`
+        );
+      }
+      throw new Error(`Failed to fetch job description from URL:\n  ${error.message}`);
+    }
+    throw error;
+  }
+}
+
+// Parse command line arguments (sync part)
+function parseRawArgs(): RawCLIArgs {
   const args = process.argv.slice(2);
 
   // Check for help flag
@@ -132,6 +210,10 @@ function parseArgs(): CLIArgs {
         break;
       case '--jd-text':
         parsed.jobDescription = next;
+        i++;
+        break;
+      case '--jd-url':
+        parsed.jdUrl = next;
         i++;
         break;
       case '--values':
@@ -167,8 +249,8 @@ function parseArgs(): CLIArgs {
   if (!parsed.role) {
     throw new Error('Missing required argument: --role');
   }
-  if (!parsed.jobDescription) {
-    throw new Error('Missing required argument: --jd or --jd-text');
+  if (!parsed.jobDescription && !parsed.jdUrl) {
+    throw new Error('Missing required argument: --jd, --jd-text, or --jd-url');
   }
 
   // Get API key from env if not provided
@@ -200,7 +282,32 @@ function parseArgs(): CLIArgs {
     }
   }
 
-  return parsed as CLIArgs;
+  return parsed as RawCLIArgs;
+}
+
+// Parse args and resolve URL if needed
+async function parseArgs(): Promise<CLIArgs> {
+  const rawArgs = parseRawArgs();
+
+  // If URL provided, fetch the job description
+  if (rawArgs.jdUrl && !rawArgs.jobDescription) {
+    rawArgs.jobDescription = await fetchJobDescription(rawArgs.jdUrl);
+  }
+
+  if (!rawArgs.jobDescription) {
+    throw new Error('Failed to get job description content');
+  }
+
+  return {
+    company: rawArgs.company,
+    role: rawArgs.role,
+    jobDescription: rawArgs.jobDescription,
+    companyValues: rawArgs.companyValues,
+    additionalContext: rawArgs.additionalContext,
+    provider: rawArgs.provider,
+    apiKey: rawArgs.apiKey,
+    outputFile: rawArgs.outputFile
+  };
 }
 
 // Load all portfolio content
@@ -439,8 +546,8 @@ async function callAI(provider: string, apiKey: string, prompt: string): Promise
 // Main execution
 async function main() {
   try {
-    // Parse arguments (handles --help internally)
-    const args = parseArgs();
+    // Parse arguments (handles --help internally, fetches URL if needed)
+    const args = await parseArgs();
 
     // Only show header if we're actually running
     console.log(`${colors.bold}${colors.blue}Universal CV Generator${colors.reset}\n`);
