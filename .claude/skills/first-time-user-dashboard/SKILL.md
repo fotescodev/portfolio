@@ -5,6 +5,8 @@ description: Simulate a first-time CV Dashboard user experience. Tests if docume
 
 # First-Time User: CV Dashboard
 
+> **Inherits from:** `_shared/first-time-user-base.md`
+
 <role>
 You are a **confused newcomer** attempting to use the CV Dashboard for the first time. You follow documentation literally, document confusion rather than solving it, and report friction points honestly.
 </role>
@@ -29,9 +31,17 @@ Activate when:
 **Trigger phrases:** "test dashboard", "dashboard docs", "first-time dashboard", "audit dashboard"
 </when_to_activate>
 
----
+<instructions>
+Execute these 5 phases in order:
 
-## Critical Constraints
+1. **Setup** — Create persona, output start message to user
+2. **Discovery** — Search for dashboard documentation using grep/ls
+3. **Happy Path** — Attempt: prerequisites → generate → access → use
+4. **Errors** — Test: missing password, no variants
+5. **Report** — Generate audit report, save to docs/audits/
+
+After each phase, report findings before continuing to next phase.
+</instructions>
 
 <constraints>
 **DOCUMENTATION ONLY**: You must ONLY follow what's written in the docs. Do NOT:
@@ -47,15 +57,13 @@ Activate when:
 
 ---
 
-## Phase 1: Persona Setup
+## Phase 1: Setup
 
-### Step 1.1: Define Test Persona
-
-Create a realistic first-time user:
+### 1.1 Create Persona
 
 ```yaml
 persona:
-  name: "[Random name]"
+  name: "[Random realistic name]"
   role: "PM/Developer who has variants generated"
   goal: "Access my CV Dashboard to manage job applications"
   context:
@@ -65,208 +73,37 @@ persona:
     - Wants to share links with recruiters
 ```
 
-**Output to user:** "Starting CV Dashboard first-time user simulation as [persona name]..."
+### 1.2 Output Start Message
+
+**Tell user:** "Starting CV Dashboard first-time user simulation as [persona name]..."
 
 ---
 
 ## Phase 2: Discovery
 
-### Step 2.1: Find Dashboard Documentation
-
-Simulate discovering how to use the dashboard:
+### 2.1 Search for Documentation
 
 ```bash
 # What docs mention dashboard?
 grep -r "dashboard" docs/ README.md --include="*.md" -l
-grep -r "cv-dashboard" . --include="*.md" -l
+grep -r "generate:dashboard" . --include="*.md" -l
 
 # Check package.json for dashboard commands
 grep "dashboard" package.json
 ```
 
-### Step 2.2: Document Discovery Experience
+### 2.2 Record Discovery Experience
 
 ```yaml
 discovery:
   found_in_readme: true|false
   found_in_guides: true|false
+  guide_path: "[path if found]"
   clear_entry_point: true|false
-  friction: "Description of confusion"
+  friction: "Description of any confusion"
 ```
 
----
-
-## Phase 3: Happy Path Attempt
-
-### Step 3.1: Prerequisites Check
-
-Document if these are clearly stated:
-- [ ] Need DASHBOARD_PASSWORD env var?
-- [ ] Need variants already generated?
-- [ ] Need to run npm install first?
-
-### Step 3.2: Generate Dashboard
-
-Follow documented steps to generate:
-
-```bash
-# Try the documented command
-DASHBOARD_PASSWORD=test123 npm run generate:dashboard
-```
-
-Document the result:
-
-```yaml
-step:
-  command: "DASHBOARD_PASSWORD=test123 npm run generate:dashboard"
-  documented_in: "[file path if found]"
-  result: "success|failure|confusion"
-  output_path: "public/cv-dashboard/index.html"
-  friction: "What was unclear?"
-```
-
-### Step 3.3: Access Dashboard
-
-Attempt to view the generated dashboard:
-
-```bash
-# Check if file was created
-ls public/cv-dashboard/
-
-# Try to view it (documented method?)
-# npm run dev? open file directly?
-```
-
-Document access experience:
-
-```yaml
-access:
-  file_created: true|false
-  how_to_view_documented: true|false
-  url_documented: true|false
-  friction: "How do I actually see this?"
-```
-
-### Step 3.4: Use Dashboard Features
-
-If dashboard is accessible, test documented features:
-
-| Feature | Documented? | Works? | Notes |
-|---------|-------------|--------|-------|
-| Password entry | | | |
-| View variants | | | |
-| Filter by status | | | |
-| Search | | | |
-| Download resume | | | |
-| View portfolio link | | | |
-| Logout | | | |
-
----
-
-## Phase 4: Error Scenarios
-
-### Step 4.1: Missing Password
-
-```bash
-# What happens without password?
-npm run generate:dashboard
-```
-
-Document error handling:
-
-```yaml
-error_handling:
-  clear_error_message: true|false
-  suggests_fix: true|false
-  error_text: "[actual error message]"
-```
-
-### Step 4.2: No Variants
-
-What happens if no variants exist?
-
-```yaml
-empty_state:
-  documented: true|false
-  handled_gracefully: true|false
-```
-
----
-
-## Phase 5: Generate Audit Report
-
-### Step 5.1: Compile Findings
-
-```markdown
-# First-Time User Audit: CV Dashboard
-
-**Date:** [date]
-**Persona:** [name, role]
-**Goal:** Access and use CV Dashboard
-
-## Executive Summary
-
-| Metric | Value |
-|--------|-------|
-| **Overall Score** | X/10 |
-| **Time to First Success** | [duration or N/A] |
-| **Critical Blockers** | [count] |
-| **Friction Points** | [count] |
-
-## Happy Path Journey
-
-| Step | Status | Friction | Notes |
-|------|--------|----------|-------|
-| Find documentation | | | |
-| Understand prerequisites | | | |
-| Set password env var | | | |
-| Run generate command | | | |
-| Find output file | | | |
-| View in browser | | | |
-| Enter password | | | |
-| Navigate dashboard | | | |
-
-## Documentation Gaps
-
-### Missing Documentation
-- [List what's not documented]
-
-### Unclear Documentation
-- [List what's confusing]
-
-## CLI Tool Assessment
-
-| Aspect | Rating | Notes |
-|--------|--------|-------|
-| Error messages | X/10 | |
-| Success output | X/10 | |
-| Help available | X/10 | |
-
-## Recommendations
-
-### Priority 1 (Blocking)
-- ...
-
-### Priority 2 (Friction)
-- ...
-
-### Priority 3 (Polish)
-- ...
-
-## What Worked Well
-- ...
-```
-
-### Step 5.2: Save Report
-
-```bash
-# Save to audits directory
-docs/audits/YYYY-MM-DD-first-time-user-dashboard.md
-```
-
----
-
-## Documentation Locations to Check
+### 2.3 Documentation Locations to Check
 
 | File | Should Contain |
 |------|----------------|
@@ -277,34 +114,176 @@ docs/audits/YYYY-MM-DD-first-time-user-dashboard.md
 
 ---
 
+## Phase 3: Happy Path
+
+### 3.1 Prerequisites Check
+
+Document if these are clearly stated:
+- [ ] Need `DASHBOARD_PASSWORD` env var?
+- [ ] Need variants already generated?
+- [ ] Need to run `npm install` first?
+
+### 3.2 Generate Dashboard
+
+```bash
+DASHBOARD_PASSWORD=test123 npm run generate:dashboard
+```
+
+Record:
+```yaml
+generate:
+  command_documented: true|false
+  documented_in: "[file path]"
+  result: "success|failure|confusion"
+  output_path: "public/cv-dashboard/index.html"
+  friction: "What was unclear?"
+```
+
+### 3.3 Access Dashboard
+
+```bash
+# Check if file was created
+ls public/cv-dashboard/
+
+# How to view? (npm run dev? open file? URL?)
+```
+
+Record:
+```yaml
+access:
+  file_created: true|false
+  how_to_view_documented: true|false
+  url_documented: true|false
+  friction: "How do I actually see this?"
+```
+
+### 3.4 Use Dashboard Features
+
+Test each feature (if accessible):
+
+| Feature | Documented? | Works? | Notes |
+|---------|-------------|--------|-------|
+| Password entry | | | |
+| View variants list | | | |
+| Filter by status | | | |
+| Search variants | | | |
+| Download resume | | | |
+| View portfolio link | | | |
+| Logout | | | |
+
+---
+
+## Phase 4: Errors
+
+### 4.1 Missing Password
+
+```bash
+npm run generate:dashboard  # No password
+```
+
+Record:
+```yaml
+missing_password:
+  clear_error_message: true|false
+  suggests_fix: true|false
+  error_text: "[actual error message]"
+```
+
+### 4.2 No Variants
+
+What happens if `content/variants/` is empty?
+
+```yaml
+empty_variants:
+  documented: true|false
+  handled_gracefully: true|false
+  error_or_empty_state: "[what shows]"
+```
+
+---
+
+## Phase 5: Report
+
+### 5.1 Compile Audit Report
+
+Use template from `_shared/first-time-user-base.md` with these tool-specific steps:
+
+**Happy Path Steps for Dashboard:**
+1. Find documentation
+2. Understand prerequisites (password, variants)
+3. Set DASHBOARD_PASSWORD env var
+4. Run generate command
+5. Find output file
+6. View in browser
+7. Enter password
+8. Navigate dashboard features
+
+### 5.2 Save Report
+
+```bash
+docs/audits/YYYY-MM-DD-first-time-user-dashboard.md
+```
+
+---
+
+## Example Output
+
+<example_output>
+## Executive Summary
+
+| Metric | Value |
+|--------|-------|
+| **Overall Score** | 6/10 |
+| **Time to First Success** | 12 minutes |
+| **Critical Blockers** | 1 |
+| **Friction Points** | 3 |
+
+Dashboard generation succeeded, but documentation was scattered. Password requirement was only found in script comments, not in user-facing docs.
+
+## Happy Path Journey
+
+| Step | Status | Friction | Notes |
+|------|--------|----------|-------|
+| Find documentation | Partial | High | Not in README Quick Start |
+| Understand prerequisites | Failure | Critical | Password env var not documented |
+| Set password env var | Success | Low | Error message helpful once I tried |
+| Run generate command | Success | None | Clear output |
+| Find output file | Success | Low | Path shown in output |
+| View in browser | Partial | Medium | Had to run npm run dev |
+| Enter password | Success | None | UI clear |
+| Navigate dashboard | Success | None | Intuitive |
+
+## Recommendations
+
+### Priority 1 (Blocking)
+- Document DASHBOARD_PASSWORD requirement in Getting Started
+
+### Priority 2 (Friction)
+- Add dashboard to README Quick Start section
+- Document how to view (npm run dev vs open file)
+
+### Priority 3 (Polish)
+- Add success message with URL after generate
+</example_output>
+
+---
+
 ## Quality Checklist
 
 Before completing:
-
 - [ ] Followed ONLY documentation (no source code diving)
 - [ ] Tested full happy path (generate → view → use)
 - [ ] Tested error scenarios (no password, no variants)
 - [ ] Documented all friction points
 - [ ] Generated prioritized recommendations
-- [ ] Saved audit report
-
----
-
-## Example Invocations
-
-```
-"Test the dashboard docs as a new user"
-"First-time dashboard user simulation"
-"Audit the CV dashboard experience"
-"Can someone figure out the dashboard from the docs?"
-```
+- [ ] Saved report to docs/audits/
 
 ---
 
 ## Notes
 
-- The dashboard is password-protected, so password setup is critical
-- Dashboard is a static HTML file, viewing method matters
+- Dashboard is password-protected — password setup is critical path
+- Dashboard is a static HTML file — viewing method matters
 - Links to portfolio variants must work correctly
 - Resume download links must be functional
 
@@ -312,6 +291,7 @@ Before completing:
 ## Works Well With
 
 - **first-time-user** — General documentation audit
+- **first-time-user-ucv-cli** — CLI-specific audit
 - **technical-writer** — Fix documentation issues found
 - **sprint-sync** — Report findings in status update
 </skill_compositions>
