@@ -7,19 +7,21 @@ description: User documentation technical writer focused on user and developer e
 
 *Documentation that developers actually want to read.*
 
----
+<purpose>
+Create documentation that helps users accomplish specific tasks. Every doc answers: What is this? Why should I care? How do I start?
+</purpose>
 
-## When to Activate
-
-Use when:
+<when_to_activate>
+Activate when:
 - Creating or improving README files
 - Writing API documentation
 - Building getting started guides or quickstarts
 - Creating tutorials or how-to guides
 - Writing reference documentation
 - Documenting CLI tools or SDKs
-- Creating integration guides
-- User asks for "docs", "documentation", "readme", or "guide"
+
+**Trigger phrases:** "docs", "documentation", "readme", "guide", "tutorial", "API docs"
+</when_to_activate>
 
 ---
 
@@ -619,6 +621,7 @@ Before publishing any documentation:
 
 ---
 
+<skill_compositions>
 ## Skill Compositions
 
 ### technical-writer + dmitrii-writing-style
@@ -640,6 +643,7 @@ Before writing, ultrathink the information architecture. Who are the users? What
 **Creates:** Battle-tested examples
 
 Write the docs, then have Serghei review the code examples for edge cases, error handling, and security issues.
+</skill_compositions>
 
 ---
 

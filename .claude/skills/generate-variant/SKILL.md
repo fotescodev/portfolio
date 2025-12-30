@@ -5,16 +5,21 @@ description: Generate job-targeted CV variants with built-in quality gates. Quer
 
 # Generate Variant
 
-Generate personalized portfolio variants for specific job opportunities, with full traceability and quality verification.
+<purpose>
+Generate personalized portfolio variants for specific job opportunities, with full traceability and quality verification through an 8-phase pipeline.
+</purpose>
 
-## When Claude Should Use This
-
+<when_to_activate>
 Activate when the user:
 - Provides a job description or job URL
 - Asks to create a variant for a specific company/role
 - Says "generate variant", "create variant", "tailor CV for [company]"
 - Wants to apply for a specific position
 
+**Trigger phrases:** "variant", "tailor", "customize CV", "apply for [company]", "job application"
+</when_to_activate>
+
+<critical_principles>
 ## Critical Design Principles
 
 **From Galaxy Variant Exercise:**
@@ -23,6 +28,7 @@ Activate when the user:
 3. **Existing connections are gold** — Lead with what you've already proven
 4. **Stats must be verifiable** — Every metric traced to knowledge base
 5. **Pause between phases** — Get user approval before proceeding
+</critical_principles>
 
 ---
 
@@ -493,3 +499,24 @@ open "http://localhost:5173/{company}/{role}/resume"  # Preview resume page
 5. Status: "Open to Product Roles" (simple, not desperate)
 
 **Result:** All 6 claims verified, redteam passed, variant shipped.
+
+<quality_gate>
+## Quality Gate
+
+See [Quality Gate Template](../_shared/quality-gate.md) for universal checks.
+
+**Variant-specific:**
+- [ ] All claims verified against knowledge base
+- [ ] companyAccent is set (REQUIRED)
+- [ ] Red team passes (0 FAIL findings)
+- [ ] Would defend every claim in an interview
+</quality_gate>
+
+<skill_compositions>
+## Works Well With
+
+- **dmitrii-writing-style** — MUST invoke before writing bio content
+- **cv-knowledge-query** — Search evidence before generating
+- **ultrathink** — For complex alignment decisions
+- **generate-resume** — Generate variant-specific resume after variant
+</skill_compositions>

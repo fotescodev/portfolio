@@ -5,18 +5,20 @@ description: Query the CV knowledge base to find achievements, stories, and metr
 
 # CV Knowledge Query
 
-## Overview
+<purpose>
+Rapid retrieval from the knowledge base to answer questions about experience, find achievements, or gather data for content generation.
+</purpose>
 
-This skill enables rapid retrieval from the knowledge base to answer questions about experience, find relevant achievements, or gather data for content generation.
-
-## When Claude Should Use This
-
-Activate this skill when the user:
+<when_to_activate>
+Activate when the user:
 - Asks "What have I done with [technology/skill]?"
 - Wants to find achievements for a specific theme
 - Needs metrics for a particular company/period
 - Asks "Show me my [type] experience"
 - Wants to understand relationships between experiences
+
+**Trigger phrases:** "find", "search", "what's my experience", "show me", "list achievements"
+</when_to_activate>
 
 ## Knowledge Base Schema
 
@@ -248,6 +250,7 @@ Found 3 achievements matching "[query]":
 | "Microsoft days" | companies: [microsoft] |
 | "startup experience" | companies: [ankr, forte, dapper] |
 
+<file_locations>
 ## File Locations
 
 | Query Target | File Path |
@@ -256,3 +259,12 @@ Found 3 achievements matching "[query]":
 | Achievements | `content/knowledge/achievements/*.yaml` |
 | Stories | `content/knowledge/stories/*.yaml` |
 | Metrics | `content/knowledge/metrics/*.yaml` |
+</file_locations>
+
+<skill_compositions>
+## Works Well With
+
+- **generate-variant** — Query evidence before generating variants
+- **cv-content-generator** — Find achievements for case studies
+- **generate-story-bank** — Search for stories by category
+</skill_compositions>

@@ -5,17 +5,19 @@ description: Generate a print-optimized, ATS-friendly single-page resume PDF fro
 
 # Resume Generator
 
-## Overview
+<purpose>
+Generate a single-page PDF resume using Puppeteer to render the `/resume` React page. Optimized for ATS (Applicant Tracking Systems) and print.
+</purpose>
 
-Generates a single-page PDF resume using Puppeteer to render the `/resume` React page. The resume is optimized for ATS (Applicant Tracking Systems) and print, suitable for any technical role (Engineering, Product, Design, etc.).
-
-## When to Use
-
-Activate this skill when the user:
+<when_to_activate>
+Activate when the user:
 - Asks to generate, create, or update their resume
 - Says "create my resume", "make a resume", "export resume PDF"
 - Wants to refresh the resume after updating portfolio content
 - Asks about resume format or PDF generation
+
+**Trigger phrases:** "resume", "generate resume", "PDF", "export resume", "make resume"
+</when_to_activate>
 
 ## Critical Files
 

@@ -5,18 +5,29 @@ description: Generate case studies, blog posts, experience updates, and variant 
 
 # CV Content Generator
 
-## Overview
+<purpose>
+Generate new content for the Universal CV portfolio by querying the knowledge base and producing structured output ready for the portfolio.
+</purpose>
 
-This skill generates new content for the Universal CV portfolio by querying the knowledge base (`content/knowledge/`) and producing structured output ready for the portfolio.
-
-## When Claude Should Use This
-
-Activate this skill when the user:
+<when_to_activate>
+Activate when the user:
 - Wants to write a new case study
 - Needs to create a blog post from experience
-- Wants to generate a job-specific variant
+- Wants to generate a job-specific variant (redirect to `generate-variant` for full workflow)
 - Needs to update experience highlights
 - Asks for content based on achievements or stories
+
+**Trigger phrases:** "create case study", "write blog post", "new content", "generate [content type]"
+</when_to_activate>
+
+<edge_cases>
+| Scenario | Action |
+|----------|--------|
+| Full variant generation | Redirect to `generate-variant` skill for complete pipeline |
+| Missing knowledge base data | Run `cv-data-ingestion` first |
+| Content editing (not creation) | Use `cv-content-editor` instead |
+| Writing style needed | Invoke `dmitrii-writing-style` before generating prose |
+</edge_cases>
 
 ## Knowledge Base Structure
 

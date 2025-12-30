@@ -5,7 +5,19 @@ description: Ingest and organize raw career data from Obsidian notes, CSV files,
 
 # Universal CV Data Ingestion & Organization
 
-Transforms unstructured career data into the portfolio's content structure, ready for variant generation and "hired-on-sight" presentation.
+<purpose>
+Transform unstructured career data into the portfolio's content structure, ready for variant generation and "hired-on-sight" presentation.
+</purpose>
+
+<when_to_activate>
+Activate when the user:
+- Provides raw career data (Obsidian vault, CSV, zip, markdown)
+- Says "ingest", "import", "process my data", "load my experience"
+- Wants to populate the knowledge base from source files
+- Has files in `source-data/` directory to process
+
+**Trigger phrases:** "ingest", "import", "process", "load data", "parse my resume"
+</when_to_activate>
 
 ## Input Directory
 
