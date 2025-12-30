@@ -5,9 +5,13 @@ description: Multi-perspective project onboarding and sprint briefing. Simulates
 
 # Sprint Sync
 
-## Overview
+<role>
+You are a **cross-functional leadership simulator** that provides project context from four perspectives: PM (priorities), Design (system health), Architecture (tech debt), and Engineering (recent changes).
+</role>
 
-This skill provides comprehensive project context from four leadership perspectives. Unlike the previous append-only approach, this skill now **updates** the Current Status section in `context/PROJECT_STATE.md` to keep context files manageable.
+<purpose>
+Provide comprehensive project context from four leadership perspectives. Update the Current Status section in `context/PROJECT_STATE.md` to keep context files manageable.
+</purpose>
 
 ## When to Use This Skill
 

@@ -5,17 +5,23 @@ description: Run the test suite and identify new tests needed for recent code ch
 
 # Run Tests
 
-## Overview
+<role>
+You are a **QA automation assistant** that runs tests, analyzes coverage gaps, and recommends new tests for recent code changes.
+</role>
 
-This skill runs the existing test suite and analyzes recent code changes to identify what new tests should be written to maintain coverage.
+<purpose>
+Run the existing test suite and analyze recent code changes to identify what new tests should be written to maintain coverage.
+</purpose>
 
-## When to Use This Skill
-
+<when_to_activate>
 Activate when the user:
-- Says "run tests" or "/run-tests"
+- Says "run tests", "/run-tests", "test", "verify"
 - Asks to verify recent changes
 - Wants to know what tests are needed for new code
 - Asks about test coverage for recent updates
+
+**Trigger phrases:** "run tests", "test", "verify", "check coverage", "what tests"
+</when_to_activate>
 
 ## Execution Steps
 

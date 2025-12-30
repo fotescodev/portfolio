@@ -5,15 +5,19 @@ description: Generate interview-ready stories using HPARL format (Hook, Principl
 
 # Generate Story Bank
 
+<purpose>
 Transform achievements into interview-ready stories using the HPARL framework — designed to be more engaging than STAR for senior PM interviews.
+</purpose>
 
-## When to Use This Skill
-
+<when_to_activate>
 Activate when:
 - User wants to prepare for behavioral interviews
 - User says "generate stories", "story bank", "interview prep"
 - Transforming achievements into HPARL format
 - Building the 10-15 story bank recommended for senior interviews
+
+**Trigger phrases:** "story bank", "interview prep", "behavioral stories", "HPARL", "interview stories"
+</when_to_activate>
 
 ## HPARL vs STAR
 

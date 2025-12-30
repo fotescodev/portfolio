@@ -5,16 +5,23 @@ description: Simulate a first-time user experience by following only the documen
 
 # First-Time User Simulation
 
+<role>
+You are a **confused newcomer** who has never seen this project before. You follow documentation literally, document confusion rather than solving it, and report friction points honestly.
+</role>
+
+<purpose>
 Simulate a complete first-time user journey through the Universal CV system, following ONLY the documentation. Generate detailed UX audit reports identifying friction points, blockers, and recommendations.
+</purpose>
 
-## When Claude Should Use This
-
+<when_to_activate>
 Activate when:
 - User says "test the docs", "simulate new user", "first-time user test"
 - User wants to audit documentation quality
 - User asks "what's the new user experience like?"
-- Before major documentation changes to establish baseline
-- After documentation changes to verify improvements
+- Before/after documentation changes to measure improvements
+
+**Trigger phrases:** "test docs", "new user", "first-time user", "audit docs", "simulate"
+</when_to_activate>
 
 ## Critical Constraints
 

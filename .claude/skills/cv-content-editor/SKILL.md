@@ -5,18 +5,20 @@ description: Edit and update existing CV content using the knowledge base as sou
 
 # CV Content Editor
 
-## Overview
+<purpose>
+Edit existing portfolio content by cross-referencing the knowledge base to ensure consistency and accuracy. Maintains the source of truth in `content/knowledge/` while updating presentation-layer files.
+</purpose>
 
-This skill edits existing portfolio content by cross-referencing the knowledge base to ensure consistency and accuracy. It maintains the source of truth in `content/knowledge/` while updating presentation-layer files.
-
-## When Claude Should Use This
-
-Activate this skill when the user:
+<when_to_activate>
+Activate when the user:
 - Wants to update an existing case study
 - Needs to modify experience highlights
 - Wants to refine a variant's messaging
 - Asks to improve or expand existing content
 - Needs to sync content with knowledge base updates
+
+**Trigger phrases:** "update", "edit", "modify", "change", "improve", "fix [content]"
+</when_to_activate>
 
 ## Two-Way Sync Philosophy
 

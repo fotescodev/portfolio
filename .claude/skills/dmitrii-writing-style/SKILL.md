@@ -5,17 +5,15 @@ description: Captures Dmitrii's distinctive writing voice and preferences for al
 
 # Dmitrii's Writing Style
 
-## When Claude MUST Use This Skill
+<when_to_activate>
+**MANDATORY** — Invoke for ANY content creation on Dmitrii's behalf:
+- Case studies, portfolio content, blog posts, articles
+- Mid-to-long form content (500+ words)
+- Proposals, PRDs, specifications
+- Emails, professional correspondence
 
-**Always invoke this skill when:**
-- Creating case studies or portfolio content
-- Writing blog posts or articles
-- Generating any mid-to-long form content (500+ words)
-- Drafting proposals, PRDs, or specifications
-- Composing emails or professional correspondence
-- Creating any written output on Dmitrii's behalf
-
-This skill is mandatory for content creation tasks—not optional.
+**Trigger phrases:** "write", "draft", "compose", "create [content]", "help me write"
+</when_to_activate>
 
 ## Core Voice Characteristics
 
@@ -123,6 +121,7 @@ Dmitrii operates at the intersection of:
 
 When writing in these domains, use precise terminology without over-explaining basics—assume technical competence in the reader.
 
+<quality_checks>
 ## Quality Checks
 
 Before finalizing any writing, verify:
@@ -131,3 +130,12 @@ Before finalizing any writing, verify:
 3. Does it sound like a human wrote it?
 4. Is the ask/conclusion clear?
 5. Would Dmitrii actually say this out loud?
+</quality_checks>
+
+<skill_compositions>
+## Works Well With
+
+- **generate-variant** — Voice for variant bio/taglines
+- **cv-content-generator** — Authentic tone for case studies
+- **technical-writer** — Balance technical accuracy with personal voice
+</skill_compositions>
