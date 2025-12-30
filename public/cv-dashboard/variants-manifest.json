@@ -1,16 +1,7 @@
 {
-  "generatedAt": "2025-12-30T19:18:50.582Z",
-  "count": 17,
+  "generatedAt": "2025-12-30T21:20:01.276Z",
+  "count": 16,
   "variants": [
-    {
-      "slug": "mcdonalds-director-product-management",
-      "company": "McDonald's",
-      "role": "Director, Product Management",
-      "generatedAt": "2025-12-30T19:08:01.587Z",
-      "applicationStatus": "not_applied",
-      "resumePath": "/resumes/mcdonalds-director-product-management.pdf",
-      "hasResume": true
-    },
     {
       "slug": "openai-lead-product-manager",
       "company": "OpenAI",
