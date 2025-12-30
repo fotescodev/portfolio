@@ -682,6 +682,22 @@
       opacity: 0.5;
     }
 
+    /* Static Mode Notice */
+    .static-mode-notice {
+      background: var(--bg-tertiary);
+      border-bottom: 1px solid var(--border);
+      padding: 0.5rem 1.5rem;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    .static-mode-notice span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
     /* Loading State */
     .loading-state {
       text-align: center;
@@ -1351,15 +1367,40 @@
           showError('Failed to load variants');
         }
       } catch (err) {
-        // Fallback for static hosting
+        // Fallback for static hosting - load from manifest
         console.log('API not available, using static mode');
+        await loadVariantsFromManifest();
+      }
+    }
+
+    async function loadVariantsFromManifest() {
+      try {
+        const response = await fetch('/cv-dashboard/variants-manifest.json');
+        if (!response.ok) throw new Error('Manifest not found');
+        const manifest = await response.json();
+        variants = manifest.variants || [];
+        isStaticMode = true;
+        renderVariants();
+        updateStats();
+        // Show static mode notice
+        const notice = document.createElement('div');
+        notice.className = 'static-mode-notice';
+        notice.innerHTML = `<span>📋 Read-only mode. Run dev server for full functionality.</span>`;
+        const header = document.querySelector('.dashboard-header');
+        if (header && !document.querySelector('.static-mode-notice')) {
+          header.after(notice);
+        }
+      } catch (err) {
+        console.error('Failed to load manifest:', err);
         document.getElementById('cards-container').innerHTML = `
           <div class="empty-state">
-            <p>API not available. Run dev server for full functionality.</p>
+            <p>No variants available. Generate some variants first.</p>
           </div>
         `;
       }
     }
+
+    let isStaticMode = false;
 
     function renderVariants() {
       const container = document.getElementById('cards-container');
@@ -1588,6 +1629,10 @@
 
     // ============ WIZARD ============
     function openWizard() {
+      if (isStaticMode) {
+        alert('Creating new variants requires the dev server.\n\nRun: npm run dev');
+        return;
+      }
       wizardStep = 1;
       wizardData = {};
       updateWizardUI();

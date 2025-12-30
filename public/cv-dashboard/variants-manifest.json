@@ -1,0 +1,159 @@
+{
+  "generatedAt": "2025-12-30T19:18:50.582Z",
+  "count": 17,
+  "variants": [
+    {
+      "slug": "mcdonalds-director-product-management",
+      "company": "McDonald's",
+      "role": "Director, Product Management",
+      "generatedAt": "2025-12-30T19:08:01.587Z",
+      "applicationStatus": "not_applied",
+      "resumePath": "/resumes/mcdonalds-director-product-management.pdf",
+      "hasResume": true
+    },
+    {
+      "slug": "openai-lead-product-manager",
+      "company": "OpenAI",
+      "role": "Lead Product Manager",
+      "generatedAt": "2025-12-30T18:57:58.145Z",
+      "applicationStatus": "not_applied",
+      "resumePath": "/resumes/openai-lead-product-manager.pdf",
+      "hasResume": true
+    },
+    {
+      "slug": "cryptocom-pm-ai",
+      "company": "Crypto.com",
+      "role": "Product Manager (AI)",
+      "generatedAt": "2025-12-29T19:00:00Z",
+      "applicationStatus": "not_applied",
+      "resumePath": "/resumes/cryptocom-pm-ai.pdf",
+      "hasResume": true
+    },
+    {
+      "slug": "cursor-tam",
+      "company": "Cursor",
+      "role": "Technical Account Manager",
+      "generatedAt": "2025-12-29T02:00:00Z",
+      "applicationStatus": "not_applied",
+      "resumePath": "/resumes/cursor-tam.pdf",
+      "hasResume": true
+    },
+    {
+      "slug": "plaid-api-devex-pm",
+      "company": "Plaid",
+      "role": "Senior Staff Product Manager, API & Developer Experience",
+      "generatedAt": "2025-12-24T00:00:00Z",
+      "applicationStatus": "not_applied",
+      "resumePath": "/resumes/plaid-api-devex-pm.pdf",
+      "hasResume": true
+    },
+    {
+      "slug": "anaconda-genai-pm",
+      "company": "Anaconda",
+      "role": "Principal Product Manager, Gen AI Developer Tools",
+      "generatedAt": "2025-12-23T00:00:00Z",
+      "applicationStatus": "not_applied",
+      "resumePath": "/resumes/anaconda-genai-pm.pdf",
+      "hasResume": true
+    },
+    {
+      "slug": "anthropic-ai-safety-fellow",
+      "company": "Anthropic",
+      "role": "AI Safety Fellow",
+      "generatedAt": "2025-12-23T00:00:00Z",
+      "applicationStatus": "not_applied",
+      "resumePath": "/resumes/anthropic-ai-safety-fellow.pdf",
+      "hasResume": true
+    },
+    {
+      "slug": "figma-pm-dev-tools",
+      "company": "Figma",
+      "role": "Product Manager, Developer Tools",
+      "generatedAt": "2025-12-23T00:00:00Z",
+      "applicationStatus": "not_applied",
+      "resumePath": "/resumes/figma-pm-dev-tools.pdf",
+      "hasResume": true
+    },
+    {
+      "slug": "microsoft-senior-pm",
+      "company": "Microsoft",
+      "role": "Senior Product Manager",
+      "generatedAt": "2025-12-22T23:45:00Z",
+      "applicationStatus": "not_applied",
+      "resumePath": "/resumes/microsoft-senior-pm.pdf",
+      "hasResume": true
+    },
+    {
+      "slug": "galaxy-pm",
+      "company": "Galaxy",
+      "role": "Technical Product Manager",
+      "generatedAt": "2025-12-22T23:30:00Z",
+      "applicationStatus": "not_applied",
+      "resumePath": "/resumes/galaxy-pm.pdf",
+      "hasResume": true
+    },
+    {
+      "slug": "meta-business-ai-pm",
+      "company": "Meta",
+      "role": "Product Manager, Business AI",
+      "generatedAt": "2025-12-22T16:30:00Z",
+      "applicationStatus": "not_applied",
+      "resumePath": "/resumes/meta-business-ai-pm.pdf",
+      "hasResume": true
+    },
+    {
+      "slug": "coinbase-product-manager-ii-ai-automation",
+      "company": "Coinbase",
+      "role": "Product Manager II - AI Automation",
+      "generatedAt": "2025-12-22T02:29:36.160Z",
+      "applicationStatus": "not_applied",
+      "resumePath": "/resumes/coinbase-product-manager-ii-ai-automation.pdf",
+      "hasResume": true
+    },
+    {
+      "slug": "mysten-walrus-senior-pm",
+      "company": "Mysten Labs",
+      "role": "Sr. Product Manager, Walrus (Distributed Storage)",
+      "generatedAt": "2025-12-19T12:00:00Z",
+      "applicationStatus": "not_applied",
+      "resumePath": "/resumes/mysten-walrus-senior-pm.pdf",
+      "hasResume": true
+    },
+    {
+      "slug": "stripe-crypto",
+      "company": "Stripe",
+      "role": "Crypto Product Manager",
+      "generatedAt": "2025-12-19T00:00:00Z",
+      "applicationStatus": "not_applied",
+      "resumePath": "/resumes/stripe-crypto.pdf",
+      "hasResume": true
+    },
+    {
+      "slug": "gensyn-technical-product-manager",
+      "company": "Gensyn",
+      "role": "Technical Product Manager",
+      "generatedAt": "2025-12-16T18:35:00Z",
+      "applicationStatus": "not_applied",
+      "resumePath": "/resumes/gensyn-technical-product-manager.pdf",
+      "hasResume": true
+    },
+    {
+      "slug": "bloomberg-technical-product-manager",
+      "company": "Bloomberg",
+      "role": "Technical Product Manager",
+      "generatedAt": "2025-12-16T18:30:00Z",
+      "applicationStatus": "not_applied",
+      "resumePath": "/resumes/bloomberg-technical-product-manager.pdf",
+      "hasResume": true
+    },
+    {
+      "slug": "example-minimal",
+      "company": "Acme Corp",
+      "role": "Senior PM",
+      "generatedAt": "2025-01-01T00:00:00Z",
+      "applicationStatus": "not_applied",
+      "resumePath": "/resumes/example-minimal.pdf",
+      "hasResume": true
+    }
+  ]
+}

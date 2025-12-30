@@ -17,7 +17,7 @@
  *   npm run variants:sync -- --json
  */
 
-import { existsSync, readFileSync, readdirSync, writeFileSync } from 'fs';
+import { existsSync, readFileSync, readdirSync, writeFileSync, mkdirSync } from 'fs';
 import { join } from 'path';
 import YAML from 'yaml';
 import ora from 'ora';
@@ -39,6 +39,53 @@ function parseArgs(): Args {
 
 function stableJson(obj: unknown): string {
   return JSON.stringify(obj, null, 2) + '\n';
+}
+
+/**
+ * Generate a manifest of all variants for static/production dashboard
+ * This allows the cv-dashboard to work without the dev server API
+ */
+function generateVariantsManifest(variantsDir: string): void {
+  const manifestDir = join(process.cwd(), 'public', 'cv-dashboard');
+  const manifestPath = join(manifestDir, 'variants-manifest.json');
+
+  // Ensure directory exists
+  if (!existsSync(manifestDir)) {
+    mkdirSync(manifestDir, { recursive: true });
+  }
+
+  // Read all JSON variants and extract metadata
+  const jsonFiles = readdirSync(variantsDir)
+    .filter(f => f.endsWith('.json') && !f.startsWith('_'));
+
+  const variants = jsonFiles.map(file => {
+    const content = readFileSync(join(variantsDir, file), 'utf-8');
+    const data = JSON.parse(content);
+    return {
+      slug: file.replace('.json', ''),
+      company: data.metadata?.company,
+      role: data.metadata?.role,
+      generatedAt: data.metadata?.generatedAt,
+      applicationStatus: data.metadata?.applicationStatus || 'pending',
+      resumePath: data.metadata?.resumePath,
+      hasResume: !!data.metadata?.resumePath
+    };
+  });
+
+  // Sort by generatedAt descending
+  variants.sort((a, b) => {
+    const dateA = new Date(a.generatedAt || 0).getTime();
+    const dateB = new Date(b.generatedAt || 0).getTime();
+    return dateB - dateA;
+  });
+
+  const manifest = {
+    generatedAt: new Date().toISOString(),
+    count: variants.length,
+    variants
+  };
+
+  writeFileSync(manifestPath, stableJson(manifest));
 }
 
 function listVariantYamlFiles(variantsDir: string): string[] {
@@ -193,6 +240,14 @@ async function main() {
 
   if (errors.length > 0) {
     process.exit(1);
+  }
+
+  // Generate manifest for static/production dashboard (only on sync, not check)
+  if (!args.check) {
+    generateVariantsManifest(variantsDir);
+    if (!args.quiet) {
+      console.log(theme.muted('Generated:'), 'public/cv-dashboard/variants-manifest.json');
+    }
   }
 
   process.exit(0);
