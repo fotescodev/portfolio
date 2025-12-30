@@ -2,7 +2,7 @@
 
 - Variant: `cryptocom-pm-ai`
 - Ledger: `capstone/develop/evals/cryptocom-pm-ai.claims.yaml`
-- Evaluated At: 2025-12-29T20:43:46.328Z
+- Evaluated At: 2025-12-30T18:26:28.799Z
 - Content Hash: `fd2701827252…`
 
 ## Automated Summary
@@ -10,6 +10,9 @@
 - Claims detected: **6**
 - Verified: **6**
 - Unverified: **0**
+
+### Notes
+- Variant YAML and JSON differ. Run `npm run variants:sync` to realign runtime artifacts.
 
 ## Claims
 

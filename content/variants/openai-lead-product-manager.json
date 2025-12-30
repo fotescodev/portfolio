@@ -1,0 +1,164 @@
+{
+  "metadata": {
+    "company": "OpenAI",
+    "role": "Lead Product Manager",
+    "generatedAt": "2025-12-30T18:57:58.145Z",
+    "jobDescription": "OpenAI is hiring a Lead Product Manager. 8+ years experience in developer tools and API design. Strong technical background.\n",
+    "generationModel": "claude-3.5-sonnet",
+    "slug": "openai-lead-product-manager",
+    "publishStatus": "draft",
+    "applicationStatus": "not_applied",
+    "resumePath": "/resumes/openai-lead-product-manager.pdf"
+  },
+  "overrides": {
+    "hero": {
+      "status": "Open to AI Product roles — Developer Tools | APIs | Technical Infrastructure",
+      "headline": [
+        {
+          "text": "Building",
+          "style": "italic"
+        },
+        {
+          "text": "at the edge of",
+          "style": "muted"
+        },
+        {
+          "text": "trust",
+          "style": "accent"
+        }
+      ],
+      "subheadline": "Technical Product Manager with 8+ years shipping developer-first APIs and tools, from Microsoft's first blockchain APIs to Web3 infrastructure serving 1M+ daily requests.\n",
+      "companyAccent": [
+        {
+          "text": "with",
+          "style": "muted"
+        },
+        {
+          "text": "OpenAI",
+          "style": "accent"
+        }
+      ]
+    },
+    "about": {
+      "tagline": "Eight years building developer tools and API platforms, with deep technical expertise in architecting systems that developers actually love to use. Ready to bring that craft to AI infrastructure.\n",
+      "bio": [
+        "I've spent my career at the intersection of cutting-edge technology and developer experience—shipping APIs at Ankr that serve 1M+ daily requests, building developer tools like Flow Playground that improved onboarding by 60%, and architecting technical infrastructure that scales from prototype to production.\n",
+        "From Microsoft's first enterprise blockchain APIs to Web3 developer platforms, I've consistently focused on making complex technical capabilities accessible through elegant APIs and tools. Eight years of technical product leadership has taught me that the best developer products are built by PMs who understand both the underlying technology and the developer workflow.\n"
+      ],
+      "stats": [
+        {
+          "value": "8+",
+          "label": "Years Building Developer Tools"
+        },
+        {
+          "value": "1M+",
+          "label": "Daily API Requests Shipped"
+        },
+        {
+          "value": "17",
+          "label": "API Methods Designed"
+        }
+      ]
+    },
+    "sections": {
+      "beyondWork": false,
+      "blog": true,
+      "onchainIdentity": false,
+      "skills": true,
+      "passionProjects": true
+    }
+  },
+  "relevance": {
+    "caseStudies": [
+      {
+        "slug": "ankr-rpc-infrastructure",
+        "relevanceScore": 0.9,
+        "reasoning": "Directly demonstrates API design expertise with concrete metrics on developer adoption and revenue impact"
+      },
+      {
+        "slug": "mempools-alerting-platform",
+        "relevanceScore": 0.7,
+        "reasoning": "Shows 0→1 product development of developer-focused tools with technical depth"
+      },
+      {
+        "slug": "xbox-royalties-ethereum",
+        "relevanceScore": 0.6,
+        "reasoning": "Demonstrates technical product leadership at enterprise scale, though less relevant to current developer tools focus"
+      }
+    ],
+    "skills": [
+      {
+        "category": "Product Leadership",
+        "relevanceScore": 0.9
+      },
+      {
+        "category": "Technical Execution",
+        "relevanceScore": 1
+      },
+      {
+        "category": "Blockchain & Web3",
+        "relevanceScore": 0.4
+      },
+      {
+        "category": "Domain Expertise",
+        "relevanceScore": 0.5
+      },
+      {
+        "category": "Tools & Platforms",
+        "relevanceScore": 0.8
+      }
+    ],
+    "projects": [
+      {
+        "slug": "repo-flattener",
+        "relevanceScore": 0.8,
+        "reasoning": "Developer tool for AI workflows demonstrates understanding of developer needs in AI space"
+      },
+      {
+        "slug": "api-spec-validator",
+        "relevanceScore": 0.9,
+        "reasoning": "Directly relevant to API design and developer tooling expertise"
+      },
+      {
+        "slug": "dev-output-manager",
+        "relevanceScore": 0.7,
+        "reasoning": "Shows understanding of developer productivity and analytics"
+      },
+      {
+        "slug": "smart-contract-explorer",
+        "relevanceScore": 0.5,
+        "reasoning": "Technical visualization tool but less relevant to core API/developer tools focus"
+      },
+      {
+        "slug": "programmable-planning",
+        "relevanceScore": 0.6,
+        "reasoning": "Workflow automation relevant to product management but not core developer tools"
+      },
+      {
+        "slug": "markdown-slides",
+        "relevanceScore": 0.5,
+        "reasoning": "Developer tool but not highly relevant to API design focus"
+      },
+      {
+        "slug": "git-metrics",
+        "relevanceScore": 0.7,
+        "reasoning": "Developer analytics tool showing understanding of developer workflows"
+      },
+      {
+        "slug": "node-dependency-graph",
+        "relevanceScore": 0.6,
+        "reasoning": "Technical developer tool but more focused on visualization than APIs"
+      },
+      {
+        "slug": "prompt-library",
+        "relevanceScore": 0.8,
+        "reasoning": "AI tooling with developer focus, highly relevant to OpenAI's mission"
+      },
+      {
+        "slug": "content-validator",
+        "relevanceScore": 0.7,
+        "reasoning": "CLI tool demonstrates developer-first thinking and technical execution"
+      }
+    ]
+  }
+}

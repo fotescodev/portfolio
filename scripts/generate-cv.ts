@@ -391,12 +391,19 @@ metadata:
 overrides:
   hero:
     status: "Open to [relevant role type] roles — [relevant domains]"
+    # IMPORTANT: Always use this exact headline structure
     headline:
-      - text: "word1"
-        style: "italic"  # or normal
-      - text: "connecting phrase"
+      - text: "Building"
+        style: "italic"
+      - text: "at the edge of"
         style: "muted"
-      - text: "key value proposition"
+      - text: "trust"
+        style: "accent"
+    # IMPORTANT: Always include companyAccent with the target company
+    companyAccent:
+      - text: "with"
+        style: "muted"
+      - text: "${args.company}"
         style: "accent"
     subheadline: |
       One-sentence pitch emphasizing most relevant experience
@@ -472,7 +479,7 @@ async function callAI(provider: string, apiKey: string, prompt: string): Promise
         'anthropic-version': '2023-06-01'
       },
       body: JSON.stringify({
-        model: 'claude-3-5-sonnet-20241022',
+        model: 'claude-sonnet-4-20250514',
         max_tokens: 4096,
         messages: [{ role: 'user', content: prompt }]
       })

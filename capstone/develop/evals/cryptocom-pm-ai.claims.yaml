@@ -3,7 +3,7 @@ variant:
   slug: cryptocom-pm-ai
   variantFile: content/variants/cryptocom-pm-ai.yaml
   contentHash: fd2701827252c94ffecbe9c1163bd90982c5cb4f7c4d9f58128c6874f68b58a0
-  evaluatedAt: 2025-12-29T20:43:46.328Z
+  evaluatedAt: 2025-12-30T18:26:28.799Z
 claims:
   - id: metric-15fb1e1ef5
     location: overrides.hero.subheadline
@@ -127,7 +127,7 @@ claims:
   - id: metric-0abfb0e1ce
     location: overrides.about.stats[2].value
     text: 2.7B
-    anchors: &a1
+    anchors:
       - 2.7B
     candidateSources:
       - path: content/experience/index.yaml
@@ -139,5 +139,6 @@ claims:
       status: verified
       sources:
         - path: content/experience/index.yaml
-          anchors: *a1
+          anchors:
+            - 2.7B
       notes: ""
