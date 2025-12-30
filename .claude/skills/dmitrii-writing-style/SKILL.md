@@ -5,6 +5,10 @@ description: Captures Dmitrii's distinctive writing voice and preferences for al
 
 # Dmitrii's Writing Style
 
+<purpose>
+Capture Dmitrii's distinctive writing voice for all content: direct, warm, intellectually curious, and action-oriented.
+</purpose>
+
 <when_to_activate>
 **MANDATORY** — Invoke for ANY content creation on Dmitrii's behalf:
 - Case studies, portfolio content, blog posts, articles
