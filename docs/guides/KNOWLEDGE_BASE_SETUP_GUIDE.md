@@ -59,7 +59,7 @@ cp ~/Documents/work-notes/* source-data/
 
 # 4. Generate everything
 npm run generate:kb -- --source ./source-data           # Creates knowledge base
-npm run generate:cv -- --company "Stripe" --role "PM" --jd ./stripe-jd.txt  # Creates variant
+npm run generate:cv -- --company "Stripe" --role "PM" --jd-url "https://jobs.lever.co/stripe/abc123"  # Creates variant from URL
 npm run generate:resume -- --variant stripe-pm          # Creates PDF
 
 # 5. Preview
@@ -352,6 +352,13 @@ EOF
 ### Generate the Variant
 
 ```bash
+# Option 1: From a URL (recommended)
+npm run generate:cv -- \
+  --company "FinanceFlow" \
+  --role "Senior PM" \
+  --jd-url "https://jobs.lever.co/financeflow/abc123"
+
+# Option 2: From a local file
 npm run generate:cv -- \
   --company "FinanceFlow" \
   --role "Senior PM" \
@@ -579,7 +586,7 @@ chmod +x complete-workflow.sh
 | Command | Purpose | Example |
 |---------|---------|---------|
 | `generate:kb` | Create knowledge base from source data | `npm run generate:kb -- --source ./source-data` |
-| `generate:cv` | Create variant from job description | `npm run generate:cv -- --company X --role Y --jd ./jd.txt` |
+| `generate:cv` | Create variant from job description | `npm run generate:cv -- --company X --role Y --jd-url "https://..."` |
 | `generate:resume` | Create PDF from variant | `npm run generate:resume -- --variant slug` |
 
 ### Quality Commands
@@ -611,7 +618,9 @@ npm run generate:kb -- \
 npm run generate:cv -- \
   --company "Company" \        # Company name (required)
   --role "Role" \              # Role title (required)
-  --jd ./jd.txt \             # Job description file (required)
+  --jd-url "https://..." \    # Job description URL (recommended)
+  --jd ./jd.txt \             # OR: Job description file
+  --jd-text "..." \           # OR: Inline job description
   --provider claude \          # AI: claude, openai, gemini
   --values "Company values" \  # Optional context
   --output ./custom-path.yaml  # Custom output path
