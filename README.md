@@ -66,6 +66,7 @@ Before you begin, ensure you have:
 | Generate a job-targeted variant | [Universal CV Guide](./docs/guides/universal-cv.md) |
 | Run the quality pipeline (eval + redteam) | [Capstone Workflow](./docs/guides/capstone-workflow.md) |
 | Use the interactive CLI dashboard | [UCV-CLI Guide](./docs/guides/universal-cv-cli.md) |
+| Share private variant links with recruiters | [CV Dashboard Guide](./docs/guides/cv-dashboard.md) |
 | Contribute code or understand the architecture | [Codebase Context](./context/CODEBASE.md) |
 
 ---
@@ -130,6 +131,17 @@ npm run redteam:check --strict
 # Generate social sharing images (requires Puppeteer)
 npm run generate:og
 ```
+
+### 🔐 CV Dashboard
+```bash
+# Generate password-protected dashboard for sharing variant links
+DASHBOARD_PASSWORD=your-password npm run generate:dashboard
+
+# View locally at http://localhost:5173/cv-dashboard/
+npm run dev
+```
+
+The dashboard lets you share private portfolio links with recruiters without exposing all variants publicly. See [Getting Started Guide §10](./GETTING_STARTED_GUIDE.md#10-cv-dashboard-private-variant-links) for full setup.
 
 ---
 

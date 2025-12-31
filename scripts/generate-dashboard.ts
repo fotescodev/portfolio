@@ -935,5 +935,7 @@ fs.writeFileSync(outputPath, html);
 
 console.log(`\n✅ Dashboard generated: ${outputPath}`);
 console.log(`\n🔐 Password hash embedded (password not stored in code)`);
-console.log(`\n📦 Dashboard will be available at: ${baseUrl}/cv-dashboard`);
-console.log(`   (Included in build via public/ folder)`);
+console.log(`\n🌐 View your dashboard:`);
+console.log(`   Local:      http://localhost:5173/cv-dashboard/`);
+console.log(`   Production: ${baseUrl}/cv-dashboard/`);
+console.log(`\n💡 Run 'npm run dev' to preview locally`);
