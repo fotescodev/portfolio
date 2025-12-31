@@ -17,9 +17,10 @@ This guide walks you through creating your own portfolio using Claude Code skill
 7. [Create Case Studies](#7-create-case-studies)
 8. [Create Blog Posts](#8-create-blog-posts)
 9. [Generate Job Variants](#9-generate-job-variants)
-10. [Ongoing Maintenance](#10-ongoing-maintenance)
-11. [Troubleshooting](#troubleshooting)
-12. [What's Next?](#whats-next)
+10. [CV Dashboard (Private Variant Links)](#10-cv-dashboard-private-variant-links)
+11. [Ongoing Maintenance](#11-ongoing-maintenance)
+12. [Troubleshooting](#troubleshooting)
+13. [What's Next?](#whats-next)
 
 ---
 
@@ -557,7 +558,64 @@ npm run redteam:check
 
 ---
 
-## 10. Ongoing Maintenance
+## 10. CV Dashboard (Private Variant Links)
+
+**Outcome:** Password-protected dashboard to share variant links with recruiters
+
+The CV Dashboard generates a private HTML page where you can:
+- View all your variants in one place
+- Filter by application status (Applied/Pending)
+- Download resumes directly
+- Share portfolio links with recruiters
+
+### Recipe
+
+```bash
+# 1. Set your dashboard password (add to .env.local for persistence)
+export DASHBOARD_PASSWORD=your-secure-password
+
+# 2. Generate the dashboard
+npm run generate:dashboard
+
+# 3. View locally
+npm run dev
+# Open: http://localhost:5173/cv-dashboard/
+```
+
+### What Gets Generated
+
+```
+public/cv-dashboard/
+├── index.html              ← Password-protected dashboard
+└── variants-manifest.json  ← Variant metadata for the dashboard
+```
+
+### Features
+
+| Feature | Description |
+|---------|-------------|
+| **Password Gate** | Visitors must enter password to access |
+| **Variant Cards** | Shows company, role, date, and status |
+| **Quick Actions** | View portfolio, download resume, see job post |
+| **Search & Filter** | Find variants by company/role, filter by status |
+| **Mobile Friendly** | Works on all devices |
+
+### Production Deployment
+
+The dashboard is included in your build automatically:
+- Located at: `https://yoursite.com/cv-dashboard/`
+- Password is hashed (not stored in plaintext)
+- `noindex` meta tag prevents search engine indexing
+
+### Tips
+
+- Use a strong, unique password
+- Regenerate after adding new variants: `npm run generate:dashboard`
+- The dashboard reads from `content/variants/*.yaml`
+
+---
+
+## 11. Ongoing Maintenance
 
 ### Query Your Knowledge Base
 
@@ -637,7 +695,7 @@ scripts/
 
 ---
 
-## Troubleshooting
+## 12. Troubleshooting
 
 ### Variant Not Loading
 
@@ -704,7 +762,7 @@ scripts/
 
 ---
 
-## What's Next?
+## 13. What's Next?
 
 - [Universal CV Guide](./docs/guides/universal-cv.md) - Deep dive into variant generation
 - [Capstone Workflow](./docs/guides/capstone-workflow.md) - Quality pipeline for production variants
