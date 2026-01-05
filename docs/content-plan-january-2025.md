@@ -28,15 +28,41 @@
 
 ---
 
+## The Balance: Vulnerability + Frameworks
+
+**The LinkedIn skill says:** Service over self-promotion. Frameworks over trophies.
+
+**The engagement reality:** Personal stories drive reach. Vulnerability creates connection.
+
+**The balance:** Lead with the human story (hook), deliver the portable framework (value), end with conversation (engagement).
+
+```
+VULNERABILITY (the hook)     → "I lost my job and had 3 weeks..."
+FRAMEWORK (the portable map) → "The Claims Verification Checklist"
+CONVERSATION (the bridge)    → "What would you add to this?"
+```
+
+**When to deviate from pure service:**
+- Origin story posts can be more personal (1-2 per campaign)
+- Failure stories earn the right to share frameworks
+- "I" language is fine when owning mistakes personally
+
+**When to stay strict:**
+- Never end with a mic drop — always a question
+- Never list achievements without the "so what" framework
+- Never use "excited to announce" / "humbled" / "game-changer"
+
+---
+
 ## Content Pillars
 
-| Pillar | Theme | Audience Hook |
-|--------|-------|---------------|
-| 🏗️ **The Build** | What I built and why | "Here's what happens when a PM builds their own portfolio" |
-| 🧠 **The Learnings** | Technical insights & patterns | "I learned this the hard way so you don't have to" |
-| 🔥 **The Pitfalls** | Mistakes and recoveries | "Everything was on fire. Here's how I put it out." |
-| 🤖 **The AI Angle** | Claude, prompts, evals | "I taught an AI to red-team my resume" |
-| 📊 **The Research** | Evidence-based decisions | "Recruiters spend 7 seconds. I have data." |
+| Pillar | Theme | Audience Hook | Portable Framework |
+|--------|-------|---------------|-------------------|
+| 🏗️ **The Build** | What I built and why | "Here's what happens when a PM builds their own portfolio" | The Universal CV Architecture |
+| 🧠 **The Frameworks** | Technical insights & patterns | "I learned this the hard way so you don't have to" | Named, reusable methods |
+| 🔥 **The Pitfalls** | Mistakes and recoveries | "Everything was on fire. Here's how I put it out." | The specific fix that worked |
+| 🤖 **The AI Guardrails** | Claude, prompts, evals | "I taught an AI to red-team my resume" | The 5-Threat Audit, Claims Ledger |
+| 📊 **The Research** | Evidence-based decisions | "Recruiters spend 7 seconds. I have data." | F-Pattern Checklist, Big Six |
 
 ---
 
@@ -46,6 +72,14 @@
 
 **📝 ARTICLE: "I Lost My Job, Built a Portfolio, and Accidentally Created an AI Eval Stack"**
 
+*Type*: Origin story (vulnerability-forward, earns right to share frameworks)
+
+*CLIC Structure*:
+- **Conflict**: Lost job + needed portfolio + taking AI course = "What if I combined them?"
+- **Lesson**: The Capstone-as-Job-Search Method — solve your own problem publicly
+- **Illustration**: The evolution timeline with specific artifacts
+- **Conversation**: "What would you build if you had 3 weeks and needed a job?"
+
 *Hook*: "I just wanted a website. Three weeks later, I had a red-team pipeline."
 
 *Content*:
@@ -53,18 +87,18 @@
 - **The Idea**: "What if my portfolio was also my capstone project?"
 - **The Build**: Universal CV — AI generates job-tailored portfolio variants
 - **The Problem**: AI wrote beautiful lies about my career (metrics I couldn't verify)
-- **The Solution**: Claims ledger (eval) + adversarial scanning (red-team)
-- **What I Learned**:
-  - "Trust but verify" is the only way to use AI for job search
-  - Quality gates aren't paranoia—they're professionalism
-  - The best capstone projects solve your own problems
-- **Where I Am Now**: 17 variants, 21 skills, 210 tests, still iterating
+- **The Solution**: The Claims Verification Framework + The 5-Threat Audit
+- **Portable Frameworks**:
+  1. "The Source of Truth Pattern" — facts before generation
+  2. "The Claims Ledger" — every metric needs a receipt
+  3. "The 5-Threat Audit" — scan for secrets, NDAs, inflation, sycophancy, contamination
+- **Where I Am Now**: Work in progress. Functional skeleton. Still iterating.
 
 *CTA*: "What would you build if you had 3 weeks and needed a job?"
 
 ---
 
-**📱 POST: The Origin Story**
+**📱 POST: The Origin Story** *(Vulnerability-forward — this is the 1 personal post)*
 
 > I lost my job.
 >
@@ -75,17 +109,21 @@
 >
 > "What if they were the same thing?"
 >
-> 3 weeks later:
-> • Portfolio website → Universal CV system
-> • Simple variants → AI-powered generation
-> • Generated content → Quality pipeline
-> • Red-team scanning → BS detection
+> 3 weeks later, I had:
+> • A Universal CV system (AI-tailored variants)
+> • A Claims Ledger (catches AI hallucinations)
+> • A Red-Team Scanner (catches tone problems)
 >
-> 17 job-targeted variants. 21 automation skills. 210 tests.
+> The lesson that emerged:
+>
+> **The Capstone-as-Job-Search Method**
+> → Pick a problem you actually have
+> → Build the solution publicly
+> → Document the journey as content
 >
 > The best projects solve your own problems.
 >
-> (Still a work in progress. But functional.)
+> What would you build if you had 3 weeks and needed a job?
 
 ---
 
@@ -93,38 +131,52 @@
 
 **📱 POST: The 7.4-Second Reality Check**
 
+*Framework*: The F-Pattern Checklist
+
 > I spent a month building the perfect portfolio.
 >
 > Then I learned recruiters spend 7.4 seconds looking at it.
 >
 > That's not a typo. 7.4 seconds.
 >
-> So I rebuilt everything around one question:
-> "Can they find what matters in 7 seconds?"
+> So I rebuilt everything around **The F-Pattern Checklist**:
 >
-> F-pattern scanning. Big Six elements. Metrics in the first 10 words.
+> ✅ Name + title in top-left (first eye fixation)
+> ✅ Current role visible without scrolling
+> ✅ Metrics in first 10 words of each bullet
+> ✅ 3-4 bullets max per role (dense = skipped)
+> ✅ "Big Six" elements scannable in 7 seconds
 >
 > Your portfolio isn't a novel. It's a billboard on a highway.
 >
-> (Research source: TheLadders eye-tracking study, n=30 recruiters)
+> Does your resume pass the 7-second test?
+>
+> *(Source: TheLadders eye-tracking study, n=30 recruiters)*
 
 ---
 
 **📱 POST: The Knowledge Base Epiphany**
 
+*Framework*: The Source of Truth Pattern
+
 > Plot twist: The hardest part of building an AI-powered portfolio wasn't the AI.
 >
-> It was answering the question: "What are my actual facts?"
+> It was answering: "What are my actual facts?"
 >
 > • 15x revenue growth → Did I actually measure this?
 > • Zero slashing incidents → Over what time period?
 > • Shipped SDK → What was the adoption rate?
 >
-> So I built a "Knowledge Base" — a YAML file of ONLY verified achievements.
+> **The Source of Truth Pattern:**
 >
-> Now when AI generates content, it can ONLY reference things I can prove.
+> 1. Create a file of ONLY verified achievements
+> 2. Include: metric, source, date range, context
+> 3. AI can ONLY reference things in this file
+> 4. If it's not in the file, it doesn't exist
 >
 > Revolutionary concept: Tell the truth. But make it systematic.
+>
+> What claims on your resume could you actually prove right now?
 
 ---
 
@@ -132,66 +184,87 @@
 
 **📝 ARTICLE: "From Portfolio Website to Eval Stack: An Accidental PM Journey"**
 
+*CLIC Structure*:
+- **Conflict**: "I just wanted a website" → scope explosion
+- **Lesson**: The Universal CV Architecture (reusable pattern)
+- **Illustration**: The 5-phase evolution with specific artifacts
+- **Conversation**: "Have you ever accidentally built something 10x bigger?"
+
 *Hook*: "I just wanted a website. I ended up building a quality assurance pipeline."
 
 *Content*:
-- Timeline of the evolution (simple site → variants → knowledge base → eval → redteam)
+- **The Universal CV Architecture** (the portable framework):
+  ```
+  Source Data → Knowledge Base → Variants → Quality Gates → Deploy
+  ```
+- Timeline of the evolution:
+  - Week 1: "I'll just use a template"
+  - Week 2: "What if I could tailor it per job?"
+  - Week 3: "Wait, AI is making stuff up"
+  - Week 4: "I need a claims verification ledger"
 - The moment I realized I was scope-creeping myself
-- Why PMs can't help but productize everything
-- The architecture diagram: Source Data → Knowledge Base → Variants → Quality Gates → Deploy
-- Honest reflection: Was this over-engineering or good engineering?
+- Honest reflection: Over-engineering or good engineering?
+- **The lesson**: Quality gates aren't paranoia — they're professionalism
 
-*Humor angle*: "Week 1: 'I'll just use a template.' Week 4: 'I need a claims verification ledger.'"
-
-*CTA*: "Have you ever accidentally built something 10x bigger than planned?"
+*CTA*: "Have you ever accidentally built something 10x bigger than planned? What triggered the expansion?"
 
 ---
 
 **📱 POST: The Variant System**
 
+*Framework*: The Base + Override Pattern
+
 > One resume doesn't fit all jobs.
 >
 > But maintaining 17 different resumes? Nightmare.
 >
-> My solution: A "variant" system.
+> **The Base + Override Pattern:**
 >
-> Base profile + job-specific overrides = tailored portfolio
+> ```
+> base-profile.yaml (your facts)
+>    + job-specific.yaml (emphasis)
+>    = tailored-variant.yaml (output)
+> ```
 >
-> bloomberg-technical-product-manager.yaml
-> stripe-crypto.yaml
-> anthropic-ai-safety-fellow.yaml
->
-> Each one:
-> ✅ Pulls from the same knowledge base
-> ✅ Gets verified against real achievements
-> ✅ Runs through red-team scans
+> Each variant:
+> ✅ Pulls from the same knowledge base (single source of truth)
+> ✅ Overrides only what's relevant (headline, summary, highlights)
+> ✅ Runs through quality gates (eval + redteam)
 > ✅ Deploys to its own URL
 >
-> edgeoftrust.com/bloomberg/technical-product-manager
+> Recruiters see a tailored story.
+> You maintain one set of facts.
 >
-> Recruiters see a tailored story. I see a single source of truth.
+> How do you currently handle tailoring for different roles?
 
 ---
 
 ### Thursday, Jan 9
 
-**📱 POST: The "Sycophancy" Problem**
+**📱 POST: The Sycophancy Problem**
+
+*Framework*: The 5-Threat Audit (partial reveal)
 
 > AI has a problem: It REALLY wants to make you sound amazing.
 >
 > "Passionate visionary leader who revolutionized..."
 >
-> 🚩 Red flag. Recruiters hate this.
+> 🚩 Recruiters see right through this.
 >
-> My red-team pipeline scans for:
-> • "Dream company" / "thrilled" / "excited"
-> • Excessive superlatives
-> • Unearned enthusiasm
+> **The Sycophancy Scan** (part of my red-team pipeline):
 >
-> FAIL: "I'm incredibly passionate about this opportunity"
-> PASS: "Built staking infrastructure serving $2B+ in assets"
+> AUTO-FAIL phrases:
+> ❌ "Dream company" / "thrilled" / "excited"
+> ❌ "Passionate about this opportunity"
+> ❌ "Revolutionized" / "transformed" / "game-changer"
 >
-> Facts > Feelings. Always.
+> AUTO-PASS pattern:
+> ✅ "[Verb] [thing] serving [metric]"
+> ✅ "Built staking infrastructure serving $2B+ in assets"
+>
+> Facts > Feelings. Specifics > Superlatives.
+>
+> What AI-generated phrases make you cringe?
 
 ---
 
@@ -199,19 +272,30 @@
 
 **📝 ARTICLE: "21 Claude Code Skills Later: What I Learned About Prompt Engineering"**
 
+*CLIC Structure*:
+- **Conflict**: "I wrote 6,000+ lines of prompts. Most were wrong the first time."
+- **Lesson**: The 3 Prompt Mistakes + The XML Structure Pattern
+- **Illustration**: Before/after of actual prompts, the refactor metrics
+- **Conversation**: "What's your favorite/worst prompting hack?"
+
 *Hook*: "I wrote 6,000+ lines of prompts. Most of them were wrong the first time."
 
 *Content*:
-- What are "skills" in Claude Code? (Reusable prompts with context)
-- My skill taxonomy: Content management, Generation, Quality, Utility
-- The XML structure pattern that finally worked
-- Top 3 prompting mistakes I made:
-  1. Being too vague about output format
-  2. Not including examples
-  3. Forgetting to define failure modes
-- The "gandalf-the-prompt" skill: An AI that audits other AI prompts
+- **The 3 Prompt Mistakes That Cost Me Hours:**
+  1. Being too vague about output format → Fix: Show examples
+  2. Not including failure modes → Fix: Define what "wrong" looks like
+  3. Prose instead of structure → Fix: XML tags
 
-*Humor angle*: "Yes, I built an AI to judge my prompts. It was brutally honest."
+- **The XML Structure Pattern:**
+  ```xml
+  <purpose>What this does</purpose>
+  <when_to_activate>Trigger conditions</when_to_activate>
+  <workflow>Step-by-step process</workflow>
+  ```
+
+- **The Proof**: serghei-qa skill went from 805 → 283 lines. Same functionality.
+
+- **Meta-lesson**: Your prompts are code. Refactor them like code.
 
 *CTA*: "What's your favorite/worst prompting hack?"
 
@@ -219,22 +303,30 @@
 
 **📱 POST: The Pre-Generation Insight**
 
+*Framework*: The Deterministic Pre-Filter
+
 > Hot take: The best AI optimization is doing less AI.
 >
 > I was burning tokens having Claude analyze job descriptions.
 >
 > Then I realized: 60% of JD requirements are generic fluff.
 >
-> "Excellent communication skills"
-> "Team player"
-> "Fast-paced environment"
+> **The JD Noise Filter** (47 phrases):
+> ❌ "Excellent communication skills"
+> ❌ "Team player"
+> ❌ "Fast-paced environment"
+> ❌ "Self-starter"
 >
-> So I built a DETERMINISTIC pre-filter.
-> 47 generic phrases → auto-filtered before AI sees them.
+> **The Deterministic Pre-Filter pattern:**
+> 1. Build a list of generic phrases (I have 47)
+> 2. Strip them BEFORE AI sees the JD
+> 3. Only analyze what's actually specific
 >
 > Result: 60% fewer tokens. Better signal. Faster generation.
 >
 > Don't use AI for things regex can solve.
+>
+> What repetitive AI tasks could you replace with simple rules?
 
 ---
 
@@ -242,26 +334,30 @@
 
 **📱 POST: The Bundle Size Wake-Up Call**
 
+*Framework*: The Lazy Loading Checklist
+
 > My portfolio was 476KB.
 >
 > For a SINGLE PAGE SITE.
 >
 > Loading on mobile? Pain.
 >
-> Solution: Code splitting
+> **The Lazy Loading Checklist** (how I got 59% reduction):
 >
-> Before: Everything loads at once
-> After: Only load what you see
+> Before loading anything, ask:
+> 1. Is this visible on first render? No → lazy load
+> 2. Is this needed for core UX? No → lazy load
+> 3. Is this a heavy library? Yes → separate chunk
 >
 > Results:
-> • Index chunk: 53KB
-> • React vendor: 142KB
-> • Motion library: 138KB (on-demand)
+> • Index chunk: 53KB (core)
+> • Vendor-React: 142KB (needed)
+> • Vendor-Motion: 138KB (on-demand)
 > • Markdown: 267KB (only when viewing blog)
 >
-> 59% reduction. 195KB initial load.
+> 476KB → 195KB initial. 59% reduction.
 >
-> Performance isn't a feature. It's table stakes.
+> What's your current bundle size? Have you checked recently?
 
 ---
 
@@ -269,46 +365,60 @@
 
 **📝 ARTICLE: "The Claims Ledger: How I Stopped AI From Lying About My Career"**
 
+*CLIC Structure*:
+- **Conflict**: "AI wrote that I '10x'd revenue.' I actually 15x'd it. Both are wrong without proof."
+- **Lesson**: The Claims Verification Framework
+- **Illustration**: Real claims.yaml walkthrough
+- **Conversation**: "What claims on your resume could you actually prove?"
+
 *Hook*: "AI wrote that I '10x'd revenue.' I actually 15x'd it. Both are wrong without proof."
 
 *Content*:
-- The problem: AI generates plausible-sounding metrics that may or may not be true
-- The solution: Every claim must have a source in the knowledge base
-- How the claims ledger works:
+- **The problem**: AI generates plausible-sounding metrics
+- **The Claims Verification Framework:**
   1. Extract all metric-like claims from generated content
-  2. Match against knowledge base facts
-  3. Score each claim (1-5)
+  2. Match each claim against knowledge base facts
+  3. Score: 5=exact match, 3=close, 1=unverified
   4. Generate human verification checklist
-- Real example: Walking through a claims.yaml file
-- The "trust score" concept for variants
+  5. Fail variants with score <4 average
 
-*Humor angle*: "I built a lie detector for my own resume. What has my life become?"
+- **Real example**: Walking through an actual claims.yaml file
+- **The insight**: The ledger became more valuable than the content
 
-*CTA*: "What claims on your resume could you actually prove?"
+*Humor*: "I built a lie detector for my own resume. What has my life become?"
+
+*CTA*: "What claims on your resume could you actually prove with a receipt?"
 
 ---
 
-**📱 POST: The "Source of Truth" Architecture**
+**📱 POST: The Source of Truth Architecture**
+
+*Framework*: The YAML-JSON Sync Pattern
 
 > Architecture lesson from building 17 portfolio variants:
 >
-> YAML is for humans. JSON is for machines.
+> **The YAML-JSON Sync Pattern:**
 >
-> My pattern:
-> 1. Humans edit YAML (readable, commentable)
-> 2. Script syncs YAML → JSON (validated, typed)
-> 3. App consumes JSON (fast, typed)
+> ```
+> YAML (human-editable, canonical)
+>    ↓ sync script
+> JSON (runtime, validated)
+>    ↓ app
+> UI (rendered)
+> ```
 >
-> Why?
-> • YAML has better merge conflict resolution
-> • Humans don't make JSON syntax errors
-> • Validation happens at sync time, not runtime
+> Why this works:
+> • YAML: Humans edit. Comments allowed. Merge-friendly.
+> • JSON: Machines consume. Type-safe. Fast.
+> • Sync: Validation happens here. Catch errors early.
 >
-> `npm run variants:sync`
+> The rule: If YAML and JSON drift, build fails.
 >
-> If YAML and JSON drift? Build fails.
+> `npm run variants:sync` runs before every build.
 >
-> Single source of truth or bust.
+> Single source of truth isn't a buzzword. It's a build constraint.
+>
+> What's your pattern for keeping config and runtime in sync?
 
 ---
 
@@ -318,26 +428,40 @@
 
 **📝 ARTICLE: "What Eye-Tracking Research Taught Me About Portfolio Design"**
 
+*CLIC Structure*:
+- **Conflict**: "I read 37 pages of academic research because I was tired of guessing"
+- **Lesson**: The Big Six Checklist + The F-Pattern Rule
+- **Illustration**: Before/after of experience section with specific changes
+- **Conversation**: "Does your resume pass the F-pattern test?"
+
 *Hook*: "I read 37 pages of academic research so my portfolio could survive 7.4 seconds of scrutiny."
 
 *Content*:
-- The F-pattern: Where recruiters actually look (top-left dominates)
-- The "Big Six" elements that must be visible instantly
-- Why dense paragraphs get "almost no view"
-- The 77% rejection rate for typos (Ghent University study, n=445)
-- How I applied this:
-  - Metrics in first 10 words of each bullet
-  - Left-aligned, bolded job titles
-  - 3-4 bullets max per role
-- Before/after comparison of my experience section
+- **The F-Pattern Rule**: Top-left dominates. Everything else is optional.
 
-*Research flex*: TheLadders 2018, Texas A&M ML study, Nielsen Norman Group
+- **The Big Six Checklist** (what must be visible in 7 seconds):
+  1. Name
+  2. Current title
+  3. Current company
+  4. Previous title/company
+  5. Education
+  6. Start/end dates
 
-*CTA*: "Does your resume pass the F-pattern test?"
+- **The 77% Rule**: 77% of recruiters reject for typos (Ghent University, n=445)
+
+- **The 3-4 Bullet Max**: Dense paragraphs get "almost no view"
+
+- **Before/After**: How I restructured my experience section
+
+*Research sources*: TheLadders 2018, Texas A&M ML study, Nielsen Norman Group
+
+*CTA*: "Pull up your resume right now. Can you find the Big Six in 7 seconds?"
 
 ---
 
 **📱 POST: The Testing Regression Nightmare**
+
+*Framework*: The Version Pinning Rule
 
 > Day 1: "I'll just add this TUI dashboard"
 > Day 2: 7 test suites failing
@@ -346,14 +470,18 @@
 >
 > Not my code. The ecosystem.
 >
-> Lessons:
-> 1. Always run tests before AND after PRs
-> 2. Pin your React versions (react & react-dom)
-> 3. Test regressions are information, not failures
+> **The Version Pinning Rule:**
 >
-> Fixed it by updating testing-library and pinning versions.
+> 1. Pin major framework versions explicitly (react & react-dom)
+> 2. Run tests before AND after adding dependencies
+> 3. Treat test regressions as information, not failures
+> 4. Check compatibility matrices before upgrading
+>
+> Fixed it: Updated testing-library, pinned React to 19.2.0.
 >
 > 210 tests passing. Sleep restored.
+>
+> What's the weirdest ecosystem bug you've hit?
 
 ---
 
@@ -361,22 +489,33 @@
 
 **📱 POST: The Skill Refactoring Journey**
 
+*Framework*: The XML Structure Pattern (callback to Friday article)
+
 > My "serghei-qa" skill was 805 lines.
 >
 > It worked. But it was a monster.
 >
-> After refactoring: 283 lines.
+> After refactoring: 283 lines. Same functionality. 65% smaller.
 >
-> Same functionality. 65% smaller.
->
-> The secret? XML structure.
+> **The XML Structure Pattern** (revisited):
 >
 > Before: Prose with embedded instructions
-> After: <purpose>, <when_to_activate>, <workflow>
+> ```
+> "When you see code, analyze it for problems..."
+> ```
+>
+> After: Explicit structure
+> ```xml
+> <purpose>Audit code for anti-patterns</purpose>
+> <when_to_activate>Code review requests</when_to_activate>
+> <workflow>1. Scan... 2. Flag... 3. Report...</workflow>
+> ```
 >
 > Claude parses structure better than paragraphs.
 >
 > Your prompts are code. Refactor them like code.
+>
+> What's the longest prompt you've written? Did it work?
 
 ---
 
@@ -384,37 +523,45 @@
 
 **📝 ARTICLE: "The Pitfalls: 5 Things That Almost Broke My AI Portfolio Project"**
 
+*CLIC Structure*:
+- **Conflict**: "Everything was on fire at least three times"
+- **Lesson**: 5 specific fixes (each a mini-framework)
+- **Illustration**: The actual errors, the actual fixes
+- **Conversation**: "What's your biggest 'everything is broken' moment?"
+
 *Hook*: "Everything was on fire at least three times. Here's the fire extinguisher guide."
 
 *Content*:
 
-1. **The Hallucination Spiral**
-   - AI generated metrics I couldn't verify
-   - Solution: Knowledge base as source of truth
+**Pitfall 1: The Hallucination Spiral**
+- Problem: AI generated metrics I couldn't verify
+- Fix: **The Source of Truth Pattern** — facts file before generation
 
-2. **The Bundle Bloat**
-   - 476KB for a single page
-   - Solution: Code splitting, lazy loading
+**Pitfall 2: The Bundle Bloat**
+- Problem: 476KB for a single page
+- Fix: **The Lazy Loading Checklist** — 3 questions before every import
 
-3. **The Test Regression**
-   - React 19 broke Testing Library
-   - Solution: Version pinning, patience
+**Pitfall 3: The Test Regression**
+- Problem: React 19 broke Testing Library
+- Fix: **The Version Pinning Rule** — explicit versions, compatibility checks
 
-4. **The Sycophancy Creep**
-   - AI made everything sound desperate
-   - Solution: Red-team scanning for tone
+**Pitfall 4: The Sycophancy Creep**
+- Problem: AI made everything sound desperate
+- Fix: **The Sycophancy Scan** — auto-fail phrases list
 
-5. **The Scope Explosion**
-   - "Just a portfolio" became a full pipeline
-   - Solution: Embrace it? (Still processing)
+**Pitfall 5: The Scope Explosion**
+- Problem: "Just a portfolio" became a full pipeline
+- Fix: **The Embrace It Framework** — if it's solving a real problem, it's not scope creep
 
-*Humor angle*: "I'm not saying I cried into my keyboard. I'm saying my keyboard needed cleaning."
+*Humor*: "I'm not saying I cried into my keyboard. I'm saying my keyboard needed cleaning."
 
-*CTA*: "What's your biggest 'everything is broken' moment?"
+*CTA*: "What's your biggest 'everything is broken' moment? What fixed it?"
 
 ---
 
 **📱 POST: The Inline Style Debt**
+
+*Framework*: The Document-Then-Ship Rule
 
 > Technical debt counter: 324 inline styles
 >
@@ -422,15 +569,20 @@
 >
 > I know. I KNOW.
 >
-> But here's the thing: They work.
+> But here's **The Document-Then-Ship Rule**:
 >
-> And I have 17 variants to ship, a job to find, and limited time.
+> 1. If it works → ship it
+> 2. If it's ugly → document it
+> 3. If it's documented → it's not hidden debt
+> 4. If it's not hidden → you can prioritize it later
 >
-> Sometimes good enough IS good enough.
+> I have 17 variants to ship, a job to find, and limited time.
 >
-> The refactor is on the roadmap. The roadmap is long.
+> 324 inline styles. Documented in PROJECT_STATE.md. Prioritized: P2.
 >
-> Ship first. Refactor later. (Just document the debt)
+> Ship first. Refactor later. Just don't pretend the debt doesn't exist.
+>
+> What's your current "documented but deferred" technical debt?
 
 ---
 
@@ -438,22 +590,29 @@
 
 **📱 POST: The First-Time User Test**
 
+*Framework*: The Docs-as-Product Pattern
+
 > I built a skill called "first-time-user"
 >
 > It simulates someone who's NEVER seen the project before.
 >
-> Rules:
-> • Only follow documentation
-> • No assumptions from code knowledge
-> • Report every friction point
+> **The Docs-as-Product Pattern:**
 >
-> Result: UX audit reports with specific fixes.
+> Rules for the simulation:
+> 1. Only follow documentation (no code assumptions)
+> 2. Report every friction point (with line numbers)
+> 3. Score the experience (1-10)
+> 4. Suggest specific fixes
+>
+> Result: UX audit reports I would never write myself.
 >
 > Current score: 8.5/10
 >
-> You'd be amazed what you miss when you're too close to the code.
+> The insight: You can't see your own blind spots. But you can simulate fresh eyes.
 >
 > Your docs are your product. Test them like code.
+>
+> When's the last time someone completely new tried your docs?
 
 ---
 
@@ -461,63 +620,87 @@
 
 **📝 ARTICLE: "Why I Treat My Resume Like Production Code"**
 
+*CLIC Structure*:
+- **Conflict**: "My resume has a CI/CD pipeline. I'm not even joking."
+- **Lesson**: The Resume Quality Gates Framework
+- **Illustration**: Actual npm scripts, actual test output
+- **Conversation**: "What would a 'test suite' for your resume include?"
+
 *Hook*: "My resume has a CI/CD pipeline. I'm not even joking."
 
 *Content*:
-- The parallel between software quality and resume quality
-- My "quality gates":
-  1. Schema validation (Zod)
-  2. Claims verification (eval)
-  3. Adversarial scanning (redteam)
-  4. Sync validation (YAML→JSON)
-- Why recruiters are like linters: Reject on first error
-- The test suite for my content: 210 tests
-- How `npm run build` enforces quality
+- **The parallel**: Software quality gates ≈ Resume quality gates
 
-*Philosophy*: "If I can automate quality checks for code, why not for my career narrative?"
+- **The Resume Quality Gates Framework:**
+  1. **Schema validation** (Zod) — Structure is correct
+  2. **Claims verification** (eval) — Metrics have sources
+  3. **Adversarial scanning** (redteam) — Tone is professional
+  4. **Sync validation** (YAML→JSON) — Source of truth is canonical
 
-*CTA*: "What would a 'test suite' for your resume include?"
+- **The insight**: Recruiters are linters. They reject on first error.
+
+- **The proof**: 210 tests for content. `npm run build` enforces quality.
+
+- **The philosophy**: "If I can automate quality checks for code, why not for my career narrative?"
+
+*CTA*: "What would a 'test suite' for your resume include? What would auto-fail?"
 
 ---
 
-**📱 POST: The "Hired-on-Sight" Standard**
+**📱 POST: The 9/10 Shipping Rule**
+
+*Framework*: The 9/10 Rule (reframe of "Hired-on-Sight")
 
 > My design target: 9/10 polish
 >
 > Not 10/10. That's perfectionism.
 >
-> 9/10 is "hired-on-sight" — good enough that design doesn't create friction.
+> **The 9/10 Shipping Rule:**
+>
+> 9/10 = Good enough that quality doesn't create friction
+> 10/10 = Diminishing returns that delay shipping
 >
 > Current status:
-> • Design fidelity: 8.5/10
-> • Light mode: Complete
-> • Dark mode: Complete
-> • Mobile: Complete
-> • Performance: 195KB
+> • Design fidelity: 8.5/10 ✓
+> • Light mode: Complete ✓
+> • Dark mode: Complete ✓
+> • Mobile: Complete ✓
+> • Performance: 195KB ✓
 >
-> The gap? Trust Battery testimonials (deferred) and scroll-driven storytelling (deferred).
+> The gap? Trust Battery testimonials (deferred), scroll animations (deferred).
 >
 > Scope is a feature. Know what to defer.
+>
+> What's your "good enough to ship" threshold?
 
 ---
 
 ### Saturday, Jan 18
 
-**📱 POST: The Sprint-Sync Skill**
+**📱 POST: The Multi-Perspective Audit**
 
-> I built a skill that simulates a cross-functional leadership team.
+*Framework*: The Sprint-Sync Pattern
+
+> Solo projects have a problem: No one challenges your assumptions.
 >
-> "sprint-sync" generates perspectives from:
-> • PM (product priorities)
-> • Designer (UX debt)
-> • Architect (technical patterns)
-> • Engineer (implementation reality)
+> So I built **The Sprint-Sync Pattern**:
 >
-> Why? Context switching is expensive.
+> A skill that simulates a cross-functional leadership team:
+> • PM perspective (product priorities, user value)
+> • Designer perspective (UX debt, visual consistency)
+> • Architect perspective (technical patterns, scalability)
+> • Engineer perspective (implementation reality, edge cases)
 >
-> One command gives me a 360° status update.
+> One command → 4 perspectives → blind spots surfaced.
+>
+> What it caught:
+> • Bundle size was 476KB (PM missed it, Engineer flagged it)
+> • Test regression (Designer missed it, Engineer flagged it)
+> • Light mode polish (PM missed it, Designer flagged it)
 >
 > AI as a multiplier for self-awareness. Not just a code generator.
+>
+> How do you challenge your own assumptions on solo projects?
 
 ---
 
@@ -525,101 +708,163 @@
 
 **📝 ARTICLE: "The Capstone Reflection: What Building an AI Portfolio Taught Me About Product"**
 
+*CLIC Structure*:
+- **Conflict**: "I accidentally built a case study while trying to get a job"
+- **Lesson**: 5 product lessons (each a portable principle)
+- **Illustration**: The specific decisions and artifacts
+- **Conversation**: "What's the most over-engineered thing you've built?"
+
 *Hook*: "I accidentally built a case study while trying to get a job. Here's what I learned about product thinking."
 
 *Content*:
-- **Discovery**: The research phase (CareerGating research brief, 37 pages of recruiter psychology)
-- **Define**: The architecture phase (what problem am I actually solving?)
-- **Develop**: The build phase (from MVP to eval stack)
-- **Deliver**: The polish phase (hired-on-sight standard)
+- **The 4D Framework** (how the project evolved):
+  - **Discovery**: 37 pages of recruiter psychology research
+  - **Define**: "What problem am I actually solving?"
+  - **Develop**: MVP → eval stack → red-team
+  - **Deliver**: The 9/10 shipping rule
 
-Key product lessons:
-1. **Facts are your foundation** — Knowledge base before generation
-2. **Quality is automatable** — If you can describe it, you can check it
-3. **Scope expands to fill available time** — Embrace it or fight it
-4. **Your docs are your product** — First-time user testing is real UX testing
-5. **Ship early, iterate always** — 17 variants, all imperfect, all deployed
+- **5 Product Lessons (portable principles):**
+  1. **The Source of Truth Principle** — Facts before generation
+  2. **The Automatable Quality Principle** — If you can describe it, you can check it
+  3. **The Scope Reality Principle** — It expands to fill available time; embrace or fight
+  4. **The Docs-as-Product Principle** — First-time user testing is real UX testing
+  5. **The Ship Early Principle** — Imperfect and deployed beats perfect and hidden
 
 *Closing*: "I came for a portfolio. I left with a capstone, a content system, and way too many YAML files."
 
-*CTA*: "What's the most over-engineered thing you've built for 'personal use'?"
+*CTA*: "What's the most over-engineered thing you've built for 'personal use'? Was it worth it?"
 
 ---
 
-**📱 POST: The Final Reflection**
+**📱 POST: The Wrap-Up (Service-Oriented)**
 
-> 2 weeks of posts. 7 articles. 1 journey.
+*Framework*: The Content Series Recap
+
+> 2 weeks. 7 articles. 14 posts. Here's the framework index:
 >
-> What I built:
-> • 17 job-targeted portfolio variants
-> • 21 Claude Code skills (6,000+ lines of prompts)
-> • 210 tests
-> • Eval pipeline with claims ledger
-> • Red-team scanner for BS detection
+> **For AI-Assisted Content:**
+> • The Source of Truth Pattern
+> • The Claims Verification Framework
+> • The 5-Threat Audit
+> • The Sycophancy Scan
+> • The Deterministic Pre-Filter
 >
-> What I learned:
-> • AI is a tool, not a replacement for truth
-> • Quality is a habit, not a feature
-> • Scope creep is just enthusiasm with deadlines
+> **For Portfolio/Resume Design:**
+> • The F-Pattern Checklist
+> • The Big Six Checklist
+> • The 7.4-Second Test
 >
-> What's next:
-> Finding a team that appreciates someone who can't build anything simple.
+> **For Shipping:**
+> • The 9/10 Shipping Rule
+> • The Document-Then-Ship Rule
+> • The Lazy Loading Checklist
 >
-> Thanks for following along. Now back to applying.
+> **For Solo Projects:**
+> • The Docs-as-Product Pattern
+> • The Multi-Perspective Audit
+>
+> All of this came from one question:
+> "What if my portfolio was also my capstone?"
+>
+> Which framework resonated most? I'd love to know.
 
 ---
 
 ## Bonus Content (If Time Permits)
 
-### Short Posts (Fill Gaps)
+### Short Posts (Fill Gaps) — All Framework-Oriented
 
-1. **The CSS Variable System**
-   > 120+ CSS custom properties. Zero magic numbers. Full theme support.
+1. **The Design Token Pattern**
+   > 120+ CSS custom properties. Zero magic numbers.
+   >
+   > **The rule:** If a value appears twice, it's a variable.
+   > `--color-text-primary`, `--space-md`, `--font-size-lg`
+   >
    > Design systems aren't overhead. They're leverage.
+   >
+   > How many magic numbers are in your CSS right now?
 
-2. **The STAR Format for Knowledge Base**
-   > Every achievement: Situation, Task, Action, Result.
+2. **The STAR Constraint**
+   > Every achievement in my knowledge base follows STAR:
+   > Situation, Task, Action, Result.
+   >
    > Not because it's trendy. Because it forces specificity.
+   >
+   > "Improved metrics" → FAIL
+   > "Reduced churn 40% over 6 months by implementing early warning system" → PASS
+   >
+   > What claims in your resume fail the STAR test?
 
-3. **The Omnibar Pattern**
-   > Floating "Get in Touch" button. Always visible. Never intrusive.
-   > One CTA. One action. One click to calendar.
+3. **The Single CTA Rule**
+   > My portfolio has one button: "Get in Touch"
+   >
+   > It's always visible. Never intrusive. Links to Calendly.
+   >
+   > **The Single CTA Rule:**
+   > - One action per page
+   > - Always visible
+   > - One click to conversion
+   >
+   > Too many CTAs = no CTAs.
+   >
+   > How many CTAs does your portfolio have?
 
-4. **The Blog Like Analytics**
-   > Yes, my portfolio blog has a like counter.
-   > Vanity? Maybe. But it surfaces which content resonates.
-
-5. **The Case Study Drawer**
-   > Modal with animations. Lazy loaded.
-   > Case studies shouldn't break your back button.
-
-6. **The "3-Second Payoff" Rule**
+4. **The 3-Second Payoff Rule**
    > A hiring manager should understand your value in 3 seconds.
-   > WHAT you did. SO WHAT (impact). WHO/WHEN.
+   >
+   > **The structure:**
+   > Line 1: WHAT you did
+   > Line 2: SO WHAT (the impact)
+   > Line 3: WHO/WHEN (context)
+   >
    > Everything else is just proof.
+   >
+   > Can you summarize your biggest win in 3 lines?
 
-7. **The Magazine Spread Test**
-   > Each section should feel like a magazine page:
-   > - One focal point
-   > - Generous margins
-   > - Max 3 text elements visible at once
-   > If you scroll within a section to find the point, it's too long.
+5. **The Magazine Spread Test**
+   > Each section of content should feel like a magazine page:
+   >
+   > ✅ One focal point (headline OR number, not both)
+   > ✅ Generous margins (whitespace = confidence)
+   > ✅ Max 3 text elements visible at once
+   >
+   > **The test:** If you scroll within a section to find the point, it's too long.
+   >
+   > Does your resume pass the magazine test?
 
-8. **The Schema-First Lesson**
+6. **The Read-Before-Write Rule**
    > Run 1: AI generated rich objects. Validation failed.
    > Run 2: Read schema FIRST. Zero errors.
-   > Your AI skills should parse schemas before generating content.
+   >
+   > **The Read-Before-Write Rule:**
+   > Before AI generates anything, make it read the constraints.
+   >
+   > Schema files. Style guides. Existing examples.
+   >
+   > Context before generation. Always.
+   >
+   > What context do you give AI before asking it to write?
 
-9. **The Testimonial Gap**
-   > I processed 79MB of career data.
+7. **The Human-Only Data Gap**
+   > I processed 79MB of career data with AI.
+   >
    > Found: 42 highlights, 7 case studies, 34 skills.
    > Found: 2 testimonials.
-   > Some things AI can't extract. You have to ask for them.
+   >
+   > **The insight:** Testimonials require human relationships.
+   > AI can extract facts. It can't extract trust.
+   >
+   > What data in your career requires human collection?
 
-10. **The Gemini Trick**
-    > Before AI parses your raw career data, have another AI summarize it first.
-    > My Gemini review saved hours of parsing time.
-    > Pre-synthesis is underrated.
+8. **The Pre-Synthesis Trick**
+   > Before AI parses your raw career data, have another AI summarize it first.
+   >
+   > My Gemini review became the primary source.
+   > Raw files became validation.
+   >
+   > **The pattern:** AI → Summary → AI → Output
+   >
+   > Pre-synthesis is underrated. What messy data could you pre-process?
 
 ---
 
@@ -690,31 +935,71 @@ Key product lessons:
 
 ## Content Calendar Summary
 
-| Date | Type | Title/Hook |
-|------|------|------------|
-| Jan 6 | Article | "I Lost My Job, Built a Portfolio, and Accidentally Created an AI Eval Stack" |
-| Jan 6 | Post | The Origin Story |
-| Jan 7 | Post | The 7.4-Second Reality Check |
-| Jan 7 | Post | The Knowledge Base Epiphany |
-| Jan 8 | Article | "From Portfolio to Eval Stack" |
-| Jan 8 | Post | The Variant System |
-| Jan 9 | Post | The "Sycophancy" Problem |
-| Jan 10 | Article | "21 Claude Code Skills Later" |
-| Jan 10 | Post | The Pre-Generation Insight |
-| Jan 11 | Post | The Bundle Size Wake-Up Call |
-| Jan 12 | Article | "The Claims Ledger" |
-| Jan 12 | Post | The "Source of Truth" Architecture |
-| Jan 13 | Article | "Eye-Tracking Research & Portfolio Design" |
-| Jan 13 | Post | The Testing Regression Nightmare |
-| Jan 14 | Post | The Skill Refactoring Journey |
-| Jan 15 | Article | "The Pitfalls: 5 Things That Almost Broke It" |
-| Jan 15 | Post | The Inline Style Debt |
-| Jan 16 | Post | The First-Time User Test |
-| Jan 17 | Article | "Why I Treat My Resume Like Production Code" |
-| Jan 17 | Post | The "Hired-on-Sight" Standard |
-| Jan 18 | Post | The Sprint-Sync Skill |
-| Jan 19 | Article | "The Capstone Reflection" |
-| Jan 19 | Post | The Final Reflection |
+| Date | Type | Title/Hook | Primary Framework |
+|------|------|------------|-------------------|
+| Jan 6 | Article | "I Lost My Job, Built a Portfolio, and Accidentally Created an AI Eval Stack" | Capstone-as-Job-Search Method |
+| Jan 6 | Post | The Origin Story | Capstone-as-Job-Search Method |
+| Jan 7 | Post | The 7.4-Second Reality Check | The F-Pattern Checklist |
+| Jan 7 | Post | The Knowledge Base Epiphany | The Source of Truth Pattern |
+| Jan 8 | Article | "From Portfolio to Eval Stack" | The Universal CV Architecture |
+| Jan 8 | Post | The Variant System | The Base + Override Pattern |
+| Jan 9 | Post | The Sycophancy Problem | The 5-Threat Audit (Sycophancy Scan) |
+| Jan 10 | Article | "21 Claude Code Skills Later" | The XML Structure Pattern |
+| Jan 10 | Post | The Pre-Generation Insight | The Deterministic Pre-Filter |
+| Jan 11 | Post | The Bundle Size Wake-Up Call | The Lazy Loading Checklist |
+| Jan 12 | Article | "The Claims Ledger" | The Claims Verification Framework |
+| Jan 12 | Post | The Source of Truth Architecture | The YAML-JSON Sync Pattern |
+| Jan 13 | Article | "Eye-Tracking Research & Portfolio Design" | The Big Six Checklist |
+| Jan 13 | Post | The Testing Regression Nightmare | The Version Pinning Rule |
+| Jan 14 | Post | The Skill Refactoring Journey | The XML Structure Pattern (callback) |
+| Jan 15 | Article | "The Pitfalls: 5 Things That Almost Broke It" | 5 Mini-Frameworks |
+| Jan 15 | Post | The Inline Style Debt | The Document-Then-Ship Rule |
+| Jan 16 | Post | The First-Time User Test | The Docs-as-Product Pattern |
+| Jan 17 | Article | "Why I Treat My Resume Like Production Code" | Resume Quality Gates Framework |
+| Jan 17 | Post | The 9/10 Shipping Rule | The 9/10 Rule |
+| Jan 18 | Post | The Multi-Perspective Audit | The Sprint-Sync Pattern |
+| Jan 19 | Article | "The Capstone Reflection" | 5 Product Lessons |
+| Jan 19 | Post | The Wrap-Up | Framework Index Recap |
+
+---
+
+## Framework Index (All Named Frameworks)
+
+**AI-Assisted Content:**
+- The Source of Truth Pattern
+- The Claims Verification Framework
+- The 5-Threat Audit
+- The Sycophancy Scan
+- The Deterministic Pre-Filter
+- The Read-Before-Write Rule
+
+**Portfolio/Resume Design:**
+- The F-Pattern Checklist
+- The Big Six Checklist
+- The 7.4-Second Test
+- The 3-Second Payoff Rule
+- The Magazine Spread Test
+
+**Architecture:**
+- The Universal CV Architecture
+- The Base + Override Pattern
+- The YAML-JSON Sync Pattern
+
+**Shipping & Quality:**
+- The 9/10 Shipping Rule
+- The Document-Then-Ship Rule
+- The Lazy Loading Checklist
+- The Resume Quality Gates Framework
+- The Version Pinning Rule
+
+**Solo Projects:**
+- The Docs-as-Product Pattern
+- The Multi-Perspective Audit (Sprint-Sync)
+- The Capstone-as-Job-Search Method
+
+**Prompt Engineering:**
+- The XML Structure Pattern
+- The 3 Prompt Mistakes
 
 ---
 
