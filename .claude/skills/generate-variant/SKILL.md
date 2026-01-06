@@ -6,7 +6,7 @@ description: Generate job-targeted CV variants with built-in quality gates. Quer
 # Generate Variant
 
 <purpose>
-Generate personalized portfolio variants for specific job opportunities, with full traceability and quality verification through an 8-phase pipeline.
+Generate personalized portfolio variants for specific job opportunities, with full traceability and quality verification through a 9-phase pipeline.
 </purpose>
 
 <when_to_activate>
@@ -409,6 +409,33 @@ relevance:
 
 ---
 
+## Phase 9: Dashboard Update
+
+**Goal:** Regenerate the CV dashboard to include the new variant.
+
+1. Regenerate dashboard HTML:
+   ```bash
+   DASHBOARD_PASSWORD=<password> npm run generate:dashboard
+   ```
+
+   Or use the combined command (syncs variants AND regenerates dashboard):
+   ```bash
+   DASHBOARD_PASSWORD=<password> npm run variants:sync:dashboard
+   ```
+
+2. Verify the new variant appears in the dashboard output:
+   - Check the console shows the new variant in the list
+   - Dashboard HTML is updated at `public/cv-dashboard/index.html`
+
+3. Commit the updated dashboard:
+   ```bash
+   git add public/cv-dashboard/index.html
+   ```
+
+**Note:** The dashboard is password-protected. The `DASHBOARD_PASSWORD` env var is required. Check `.env.local` or ask the user for the password.
+
+---
+
 ## Quality Checklist
 
 Before marking variant complete:
@@ -422,6 +449,7 @@ Before marking variant complete:
 - [ ] Would defend every claim in an interview
 - [ ] Writing style matches dmitrii-writing-style
 - [ ] Resume PDF generated and linked (`resumePath` in variant metadata)
+- [ ] Dashboard regenerated with new variant visible
 
 ---
 
@@ -438,6 +466,8 @@ Before marking variant complete:
 | `content/knowledge/achievements/*.yaml` | Achievement sources |
 | `content/knowledge/stories/*.yaml` | Story sources |
 | `public/resumes/{slug}.pdf` | Variant-specific resume PDF |
+| `public/cv-dashboard/index.html` | Dashboard HTML (password-protected) |
+| `public/cv-dashboard/variants-manifest.json` | Dashboard data source |
 
 ---
 
@@ -476,6 +506,13 @@ npm run redteam:variant -- --slug {slug}
 # ═══════════════════════════════════════════════════════════════
 npm run generate:resume -- --variant {slug}
 npm run variants:sync -- --slug {slug}  # Sync after resume path update
+
+# ═══════════════════════════════════════════════════════════════
+# PHASE 9: Dashboard Update
+# ═══════════════════════════════════════════════════════════════
+DASHBOARD_PASSWORD=<password> npm run generate:dashboard
+# Or combined sync + dashboard:
+DASHBOARD_PASSWORD=<password> npm run variants:sync:dashboard
 
 # ═══════════════════════════════════════════════════════════════
 # PREVIEW

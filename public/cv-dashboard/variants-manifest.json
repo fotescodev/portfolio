@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-01-06T15:42:24.425Z",
+  "generatedAt": "2026-01-06T16:54:03.935Z",
   "count": 18,
   "variants": [
     {
       "slug": "circle-pm",
       "company": "Circle",
-      "role": "Principal Product Manager",
-      "generatedAt": "2026-01-06T15:45:00Z",
+      "role": "Product Manager",
+      "generatedAt": "2026-01-06T17:00:00Z",
       "applicationStatus": "not_applied",
       "resumePath": "/resumes/circle-pm.pdf",
       "hasResume": true
