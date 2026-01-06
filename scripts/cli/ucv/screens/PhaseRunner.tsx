@@ -3,7 +3,7 @@ import { Box, Text, useInput } from 'ink';
 import { spawn } from 'child_process';
 import { colors, icons } from '../lib/colors.js';
 
-type Phase = 'sync' | 'eval' | 'redteam' | 'pipeline';
+type Phase = 'sync' | 'eval' | 'redteam' | 'pipeline' | 'generate-resume';
 
 interface PhaseRunnerProps {
   slug: string;
@@ -29,10 +29,14 @@ function getPhaseConfig(phase: Phase, slug: string): PhaseConfig[] {
     redteam: [
       { label: 'Red Team', command: 'npm', args: ['run', 'redteam:variant', '--', '--slug', slug] },
     ],
+    'generate-resume': [
+      { label: 'Generate Resume', command: 'npm', args: ['run', 'generate:resume', '--', '--variant', slug] },
+    ],
     pipeline: [
       { label: 'Sync', command: 'npm', args: ['run', 'variants:sync', '--', '--slug', slug, '--quiet'] },
       { label: 'Evaluate', command: 'npm', args: ['run', 'eval:variant', '--', '--slug', slug] },
       { label: 'Red Team', command: 'npm', args: ['run', 'redteam:variant', '--', '--slug', slug] },
+      { label: 'Generate Resume', command: 'npm', args: ['run', 'generate:resume', '--', '--variant', slug] },
     ],
   };
   return configs[phase];

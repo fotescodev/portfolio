@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Box, Text, useInput } from 'ink';
 import { colors, icons } from '../lib/colors.js';
 
-type Phase = 'sync' | 'eval' | 'redteam' | 'pipeline';
+type Phase = 'sync' | 'eval' | 'redteam' | 'pipeline' | 'generate-resume';
 
 interface VariantActionsProps {
   slug: string;
@@ -19,10 +19,11 @@ interface MenuItem {
 
 const menuItems: MenuItem[] = [
   { id: 'issues', label: 'View Issues', description: 'See warnings, failures, unverified claims' },
-  { id: 'pipeline', label: 'Run Pipeline', description: 'Run sync → eval → redteam' },
+  { id: 'pipeline', label: 'Run Pipeline', description: 'Run sync → eval → redteam → resume' },
   { id: 'sync', label: 'Sync', description: 'YAML → JSON' },
   { id: 'eval', label: 'Evaluate', description: 'Extract & verify claims' },
   { id: 'redteam', label: 'Red Team', description: 'Security/quality scan' },
+  { id: 'generate-resume', label: 'Generate Resume', description: 'Create PDF resume for variant' },
   { id: 'back', label: 'Back', description: 'Return to dashboard' },
 ];
 
