@@ -86,10 +86,10 @@ overrides:
   about:
     tagline: "Eight years building developer platforms where technical depth meets developer empathy—from blockchain SDKs to API architectures powering millions of requests.\n"
     bio:
-      - "At Dapper Labs, I owned Developer Experience—shipping the Flow CLI and Cadence Playground redesign that reduced time-to-first-deploy by 60%. At Ankr, I built the Advanced API from 0→1 (17 methods across NFT, Token, Query APIs) serving 1M+ daily requests, plus the SDK suite (Ankr.js, Ankr.py, React Hooks) with 1,900+ weekly downloads. At Forte, I productized Wallet-as-a-Service SDKs for AAA gaming studios. I've spent years obsessing over API ergonomics, documentation clarity, and what makes developer onboarding feel effortless.\n"
+      - "At Dapper Labs, I owned Developer Experience—shipping the Flow CLI and Cadence Playground redesign that reduced time-to-first-deploy by 40%. At Ankr, I built the Advanced API from 0→1 (17 methods across NFT, Token, Query APIs) serving 1M+ daily requests, plus the SDK suite (Ankr.js, Ankr.py, React Hooks) with 1,900+ weekly downloads. At Forte, I productized Wallet-as-a-Service SDKs for AAA gaming studios. I've spent years obsessing over API ergonomics, documentation clarity, and what makes developer onboarding feel effortless.\n"
       - "Plaid's mission resonates deeply—I've lived the pain of fragmented financial data integration and understand how critical {{accent}}great developer experience{{/accent}} is for platform adoption. My fintech experience at Anchorage Digital (institutional custody APIs, ETF-grade infrastructure) combined with hands-on API/SDK building makes this role feel like a natural fit. I'm excited about defining the vision for how developers experience Plaid.\n"
     stats:
-      - value: "60%"
+      - value: "40%"
         label: "DX Improvement"
       - value: "1M+"
         label: "Daily API Requests"
@@ -105,7 +105,7 @@ relevance:
   caseStudies:
     - slug: "flow-playground"
       relevanceScore: 1
-      reasoning: "Direct developer tools experience—CLI and playground redesign with 60% onboarding improvement. Perfect match for DevEx leadership."
+      reasoning: "Direct developer tools experience—CLI and playground redesign with 40% onboarding improvement. Perfect match for DevEx leadership."
     - slug: "ankr-rpc"
       relevanceScore: 1
       reasoning: "Built Advanced API (0→1), SDK suite serving 1M+ daily requests. API design, documentation, developer platform at scale."
@@ -139,11 +139,11 @@ talkingPoints:
   whyThisRole:
     - "8+ years PM in developer platforms, APIs, and infrastructure—exact match"
     - "Built APIs serving 1M+ daily requests and SDKs with thousands of weekly downloads"
-    - "60% improvement in developer onboarding at Dapper Labs—measurable DevEx impact"
+    - "40% improvement in developer onboarding at Dapper Labs—measurable DevEx impact"
     - "Fintech experience at Anchorage (institutional custody APIs) + hands-on dev background"
   relevantStories:
     - achievement: "flow-cli-dx"
-      connection: "Owned full DevEx stack—CLI, playground, docs portal. 60% onboarding improvement through user research and iteration."
+      connection: "Owned full DevEx stack—CLI, playground, docs portal. 40% onboarding improvement through user research and iteration."
     - achievement: "ankr-15x-revenue"
       connection: "Built Advanced API 0→1, SDK suite, and pricing strategy. Platform thinking with measurable business outcomes."
     - achievement: "forte-wallet-sdk"

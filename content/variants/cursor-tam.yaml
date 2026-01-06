@@ -66,7 +66,7 @@ alignment:
       confidence: 0.95
     - requirement: "Technical fluency in developer productivity and workflows"
       match: true
-      evidence: "Flow CLI 60% onboarding improvement, SDK suite serving 1M+ daily requests, multiple developer tools shipped."
+      evidence: "Flow CLI 40% onboarding improvement, SDK suite serving 1M+ daily requests, multiple developer tools shipped."
       confidence: 0.85
     - requirement: "Startup mindset: scrappy, proactive, adaptable"
       match: true
@@ -108,7 +108,7 @@ overrides:
       - "I've spent my career making complex infrastructure accessible to developers while earning the trust of their leadership. Most recently, at Anchorage Digital, I worked with institutional clients managing billions in AUM, ensuring zero slashing events through reliable staking infrastructure. At Ankr, I drove 15× revenue growth ($130K to $2M ARR) by repositioning RPC infrastructure from developers to protocols— building Advanced APIs and an SDK that scaled to 1M+ daily requests.\n"
       - "What draws me to Cursor is the developer productivity mission. I've lived the pain of fragmented developer tooling.I want to help enterprises {{accent}}unlock what Cursor can do{{/accent}} for their teams.\n"
     stats:
-      - value: "60%"
+      - value: "40%"
         label: "DX Improvement"
       - value: "8+"
         label: "Years PM"
@@ -124,7 +124,7 @@ relevance:
   caseStudies:
     - slug: "flow-playground"
       relevanceScore: 1
-      reasoning: "Direct developer enablement experience. CLI + playground = developer onboarding. 60% improvement shows measurable adoption impact."
+      reasoning: "Direct developer enablement experience. CLI + playground = developer onboarding. 40% improvement shows measurable adoption impact."
     - slug: "eth-staking"
       relevanceScore: 0.95
       reasoning: "Enterprise customer success with institutional clients. VP/CTO stakeholder engagement. Winning against competitors on trust."
@@ -153,7 +153,7 @@ relevance:
       reasoning: "AI interest and hands-on experimentation—shows genuine curiosity in AI tooling space."
 talkingPoints:
   whyThisRole:
-    - "Developer tools PM who's driven measurable adoption—60% onboarding improvement at Dapper"
+    - "Developer tools PM who's driven measurable adoption—40% onboarding improvement at Dapper"
     - "Enterprise customer success: Galaxy, ETF managers chose our infrastructure over competitors"
     - "Startup DNA: Ankr 15× growth with 5 engineers, survival mode, scrappy execution"
     - "Technical credibility with developers + executive presence with leadership—I do both"

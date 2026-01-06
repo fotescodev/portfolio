@@ -68,10 +68,10 @@ overrides:
   about:
     tagline: "Eight years shipping developer tools where technical depth meets developer empathy—from blockchain CLI experiences to SDK architectures serving millions of API calls.\n"
     bio:
-      - "At Anchorage Digital, I lead protocol integrations serving institutional clients. Before that, I owned developer experience at Dapper Labs—shipping the Flow CLI and Cadence Playground redesign that reduced time-to-first-deploy by 60%. At Forte, I built Wallet-as-a-Service SDKs for AAA gaming studios. At Ankr, I created Ankr.JS and Advanced APIs that powered 1M+ daily requests. I've spent years thinking about developer onboarding, API ergonomics, and what makes tools feel intuitive.\n"
+      - "At Anchorage Digital, I lead protocol integrations serving institutional clients. Before that, I owned developer experience at Dapper Labs—shipping the Flow CLI and Cadence Playground redesign that reduced time-to-first-deploy by 40%. At Forte, I built Wallet-as-a-Service SDKs for AAA gaming studios. At Ankr, I created Ankr.JS and Advanced APIs that powered 1M+ daily requests. I've spent years thinking about developer onboarding, API ergonomics, and what makes tools feel intuitive.\n"
       - "I've used Figma professionally for years—it's genuinely how I think through product problems. The design-to-code gap is one I've lived on both sides: as a PM shipping developer tools, and as someone who relies on design systems to ship faster. Figma's mission to bridge that gap resonates deeply. I'm particularly excited about AI-enhanced workflows—I've been building AI agent orchestration as a side project and see real opportunity to make developers' lives easier.\n"
     stats:
-      - value: "60%"
+      - value: "40%"
         label: "DX Improvement"
       - value: "3"
         label: "Developer SDKs"
@@ -87,7 +87,7 @@ relevance:
   caseStudies:
     - slug: "flow-playground"
       relevanceScore: 1
-      reasoning: "Direct developer tools experience—CLI and playground redesign with 60% onboarding improvement. Perfect match for design-to-code workflow."
+      reasoning: "Direct developer tools experience—CLI and playground redesign with 40% onboarding improvement. Perfect match for design-to-code workflow."
     - slug: "ankr-rpc"
       relevanceScore: 0.95
       reasoning: "Built Ankr.JS SDK and Advanced APIs serving 1M+ daily requests. Developer platform thinking at scale."
@@ -120,12 +120,12 @@ relevance:
 talkingPoints:
   whyThisRole:
     - "8+ years PM experience with 2+ years specifically in developer tools (Flow CLI, SDKs)"
-    - "Track record of measurable DX improvements—60% reduction in time-to-first-deploy"
+    - "Track record of measurable DX improvements—40% reduction in time-to-first-deploy"
     - "I use Figma daily and understand the design-to-code pain points firsthand"
     - "Active in AI/LLM space with production agent framework experience"
   relevantStories:
     - achievement: "flow-cli-dx"
-      connection: "Redesigned Flow CLI and Cadence Playground—reduced onboarding time by 60%. Direct developer tools experience with measurable outcomes."
+      connection: "Redesigned Flow CLI and Cadence Playground—reduced onboarding time by 40%. Direct developer tools experience with measurable outcomes."
     - achievement: "forte-wallet-sdk"
       connection: "Built SDKs for external developers (gaming studios)—understand API ergonomics and developer empathy."
     - achievement: "ankr-15x-revenue"

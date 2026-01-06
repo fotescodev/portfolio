@@ -6,6 +6,56 @@
 
 ## December 2025
 
+### Session: December 23, 2025 — Variant Expansion & Tooling
+
+**Summary**: Added 2 new target company variants (Microsoft, Galaxy). Created generate-variant skill for automated variant creation. Enhanced UCV-CLI with clickable links and job extraction.
+
+**Changes**:
+- `content/variants/microsoft-senior-pm.yaml` — New variant
+- `content/variants/galaxy-pm.yaml` — New variant + status fix
+- `.claude/skills/generate-variant/` — Automation skill
+- `scripts/cli/ucv/` — TUI improvements
+- `content/experience/index.yaml` — Bio condensed, dates updated
+
+**Merged PRs**: #68 (UCV-CLI TUI improvements)
+
+---
+
+### Session: December 21, 2025 — Light Mode Polish & Nav Fix
+
+**Summary**: Enhanced light mode with boosted orb vibrancy, card shadows, and visual definition. Updated nav CTA to link to Google Calendar.
+
+**Changes**:
+- `src/styles/globals.css` — Light mode orb boost (0.22/0.15), card shadow tokens
+- `src/components/sections/TestimonialsSection.tsx` — Added light-card class
+- `src/pages/BlogPostPage.tsx` — Added shadows to author/thought cards
+- `src/components/Portfolio.tsx` — "Get in Touch" → Google Calendar link
+
+---
+
+### Session: December 21, 2025 — Code Splitting & Context Cleanup
+
+**Summary**: Shipped code splitting (59% bundle reduction). Consolidated context files into single PROJECT_STATE.md.
+
+**Changes**:
+- `vite.config.ts` — Added manualChunks for vendor splitting
+- `src/App.tsx` — Lazy loaded BlogPostPage + VariantPortfolio routes
+- `src/components/Portfolio.tsx` — Lazy loaded CaseStudyDrawer
+- `src/tests/code-splitting/lazy-loading.test.tsx` — 8 new tests
+- `context/PROJECT_STATE.md` — Merged SOTU + DEVLOG (87% size reduction)
+
+**Bundle Results**:
+| Chunk | Size |
+|-------|------|
+| index | 53KB |
+| vendor-react | 142KB |
+| vendor-motion | 138KB |
+| vendor-markdown | 267KB (on-demand) |
+
+**PRs Merged**: #55 (context cleanup), #58 (code splitting)
+
+---
+
 ### Session: December 21, 2025 — UCV-CLI Dashboard
 
 **Summary**: Shipped interactive TUI dashboard for variant management. Discovered test regression.

@@ -36,7 +36,7 @@ overrides:
   about:
     tagline: "Eight years building developer platforms where technical rigor meets pragmatic delivery—from Xbox smart contracts to ETF-grade staking APIs. Now focused on next-generation application architecture.\n"
     bio:
-      - "Currently at Anchorage Digital, I lead protocol integrations and staking APIs for institutional clients—designing extensible frameworks that balance security, performance, and developer experience. I've shipped 7+ L2 protocol integrations (Optimism, Base, Arbitrum) with consistent API patterns that scale. Before that, I built Wallet-as-a-Service SDKs at Forte and Flow CLI/Cadence Playground developer tools at Dapper Labs—reducing time-to-first-deploy by 60%.\n"
+      - "Currently at Anchorage Digital, I lead protocol integrations and staking APIs for institutional clients—designing extensible frameworks that balance security, performance, and developer experience. I've shipped 7+ L2 protocol integrations (Optimism, Base, Arbitrum) with consistent API patterns that scale. Before that, I built Wallet-as-a-Service SDKs at Forte and Flow CLI/Cadence Playground developer tools at Dapper Labs—reducing time-to-first-deploy by 40%.\n"
       - "I started at Microsoft shipping one of the first production smart contracts in enterprise—Xbox royalties on Ethereum, requiring Docker/K8s infrastructure and API design for non-technical stakeholders. I'm drawn to problems at the intersection of technical depth and organizational scale: defining platform standards, championing best practices, and building tools that make developers more productive. Bloomberg's focus on Terminal architecture, interoperability, and AI integration aligns perfectly with my experience.\n"
     stats:
       - value: "8+"

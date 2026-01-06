@@ -12,7 +12,7 @@ export type Screen =
   | { type: 'create' }
   | { type: 'actions'; slug: string }
   | { type: 'issues'; slug: string }
-  | { type: 'running'; slug: string; phase: 'sync' | 'eval' | 'redteam' | 'pipeline' };
+  | { type: 'running'; slug: string; phase: 'sync' | 'eval' | 'redteam' | 'pipeline' | 'generate-resume' };
 
 export function App() {
   const { exit } = useApp();

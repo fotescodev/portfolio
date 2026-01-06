@@ -262,36 +262,55 @@ npm run dev       # Dev server at :5173
 
 ### Current Status
 
-**Date**: 2025-12-30
-**Objective**: Documentation excellence — skills refactored, guides complete
-**Bundle**: 195KB gzip initial (target <200KB ✅)
-**Tests**: 210 passing (deps need install)
-**Variants**: 17 active
-**Skills**: 17 operational (all XML-structured)
-**Docs**: 60+ markdown files
-**First-Time User Score**: 8.5/10
+**Date**: 2026-01-06
+**Objective**: Variant expansion complete — apply to open roles
+**Bundle**: 194.5KB gzip initial (target <200KB ✅)
+**Tests**: 266 passing ✅ (↑56 from previous)
+**Variants**: 18 active (+1 staged uncommitted)
+**Skills**: 21 operational (all XML-structured)
+**Inline Styles**: 394 (tech debt, non-blocking)
 
 **Blockers**: None
 
 **Recent Wins**:
-- Skills refactored with XML structure for consistency (#104)
-- serghei-qa streamlined (805 → 283 lines)
-- gandalf-the-prompt skill added (prompt engineering audits)
-- Knowledge Base Setup Guide published (CLI-only users)
-- CV dashboard with CRM API and JD extraction
-- All documentation blockers resolved (Dec 29 audit)
+- Circle Principal PM variant with compliance positioning (#110)
+- Orca PM JD analysis + alignment report (#109)
+- LinkedIn skill for service-based content (#106)
+- CV document parsing improvements (#108)
+- LinkedIn content plan for January (#107)
+- Test suite expanded: 210 → 266 tests
 
-**Documentation Status**:
-- README.md decision tree: ✅ Complete
-- GETTING_STARTED_GUIDE.md skills section: ✅ Added
-- .env.example: ✅ Created
-- KNOWLEDGE_BASE_SETUP_GUIDE.md: ✅ New (for CLI-only users)
-- Skills XML consistency: ✅ 100%
+**Pipeline Status**:
+- JD Analysis: ✅ Operational
+- Evidence Search: ✅ Operational
+- Variant Generation: ✅ 18 ready
+- Eval + Redteam: ✅ Quality gates active
 
 **Next Priority**:
-1. Add skills prerequisite note to Getting Started (P1)
-2. Consolidate COMPLETE_WORKFLOW.md (P2)
-3. Apply to roles with 17 ready variants
+1. Merge/cleanup variant-fixes branch
+2. Apply to open roles with 18 ready variants
+3. Execute LinkedIn content plan (January)
+4. Optional: Inline style refactor sprint
+
+---
+
+### Session: January 6, 2026 — Hardcore Sprint Sync
+
+**Summary**: Comprehensive four-perspective sync. 6 PRs merged since last session. Test suite grew 27% (210→266). Variant portfolio at 18 ready.
+
+**Changes**:
+- `context/PROJECT_STATE.md` — Updated current status with 2026 metrics
+- PRs #106-#111 merged (Circle PM, Orca PM, LinkedIn skill, content plan)
+
+**Metrics Delta**:
+| Metric | Before | After |
+|--------|--------|-------|
+| Tests | 210 | 266 (+27%) |
+| Variants | 17 | 18 |
+| Skills | 17 | 21 |
+| Inline styles | 324 | 394 (debt growing) |
+
+**Next**: Merge variant-fixes, apply to roles, execute LinkedIn content plan
 
 ---
 
@@ -328,63 +347,6 @@ npm run dev       # Dev server at :5173
 **Merged PRs**: #70, #71, #72
 
 **Next**: APPLY to roles with 9 ready variants
-
----
-
-### Session: December 23, 2025 — Variant Expansion & Tooling
-
-**Summary**: Added 2 new target company variants (Microsoft, Galaxy). Created generate-variant skill for automated variant creation. Enhanced UCV-CLI with clickable links and job extraction.
-
-**Changes**:
-- `content/variants/microsoft-senior-pm.yaml` — New variant
-- `content/variants/galaxy-pm.yaml` — New variant + status fix
-- `.claude/skills/generate-variant/` — Automation skill
-- `scripts/cli/ucv/` — TUI improvements
-- `content/experience/index.yaml` — Bio condensed, dates updated
-
-**Merged PRs**: #68 (UCV-CLI TUI improvements)
-
-**Next**: Fix 14 failing tests, then apply to open roles
-
----
-
-### Session: December 21, 2025 — Light Mode Polish & Nav Fix
-
-**Summary**: Enhanced light mode with boosted orb vibrancy, card shadows, and visual definition. Updated nav CTA to link to Google Calendar.
-
-**Changes**:
-- `src/styles/globals.css` — Light mode orb boost (0.22/0.15), card shadow tokens
-- `src/components/sections/TestimonialsSection.tsx` — Added light-card class
-- `src/pages/BlogPostPage.tsx` — Added shadows to author/thought cards
-- `src/components/Portfolio.tsx` — "Get in Touch" → Google Calendar link
-
-**Next**: Trust Battery Testimonials
-
----
-
-### Session: December 21, 2025 — Code Splitting & Context Cleanup
-
-**Summary**: Shipped code splitting (59% bundle reduction). Consolidated context files into single PROJECT_STATE.md.
-
-**Changes**:
-- `vite.config.ts` — Added manualChunks for vendor splitting
-- `src/App.tsx` — Lazy loaded BlogPostPage + VariantPortfolio routes
-- `src/components/Portfolio.tsx` — Lazy loaded CaseStudyDrawer
-- `src/tests/code-splitting/lazy-loading.test.tsx` — 8 new tests
-- `context/PROJECT_STATE.md` — Merged SOTU + DEVLOG (87% size reduction)
-- Fixed React version mismatch (react & react-dom pinned to 19.2.0)
-
-**Bundle Results**:
-| Chunk | Size |
-|-------|------|
-| index | 53KB |
-| vendor-react | 142KB |
-| vendor-motion | 138KB |
-| vendor-markdown | 267KB (on-demand) |
-
-**PRs Merged**: #55 (context cleanup), #58 (code splitting)
-
-**Next**: Trust Battery Testimonials or Light Mode Polish
 
 ---
 

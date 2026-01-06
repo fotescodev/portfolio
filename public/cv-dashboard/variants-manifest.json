@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-01-06T16:54:03.935Z",
+  "generatedAt": "2026-01-06T18:30:00.454Z",
   "count": 18,
   "variants": [
     {
@@ -17,7 +17,8 @@
       "role": "Product Manager",
       "generatedAt": "2026-01-06T15:30:00Z",
       "applicationStatus": "not_applied",
-      "hasResume": false
+      "resumePath": "/resumes/orca-pm.pdf",
+      "hasResume": true
     },
     {
       "slug": "openai-lead-product-manager",

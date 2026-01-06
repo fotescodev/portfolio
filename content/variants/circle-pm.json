@@ -28,7 +28,7 @@
           "style": "accent"
         }
       ],
-      "subheadline": "Product Manager with 8+ years shipping Web3 developer tools and protocol integrations. From Ankr's API platform to Anchorage's L2 integrations—I help developers build on blockchain infrastructure. Now exploring how USDC becomes the economic rails for AI agents.\n",
+      "subheadline": "Technical Product Manager. From shipping one of Microsoft's first blockchain projects to Anchorage's protocol integrations—8 years making it easier to build on blockchain.\n",
       "companyAccent": [
         {
           "text": "with",
@@ -41,10 +41,10 @@
       ]
     },
     "about": {
-      "tagline": "Eight years building developer tools at the intersection of Web3 and real-world utility.\n",
+      "tagline": "From dev tools to institutional custody—shipping Web3 infrastructure that builders actually use.\n",
       "bio": [
-        "I got into crypto to solve a real problem: my uncle in Spain needs to send money to family in Moldova, and the existing rails are broken. When I saw USDC kiosks appearing in remote European towns, I knew stablecoins had crossed from speculation to infrastructure. That's the Circle I want to help build—not just a stablecoin, but the developer platform that makes global value transfer as simple as an API call.\n",
-        "At Anchorage, I led the EVM integration team shipping 8 protocol integrations at 4× industry speed. Before that, I built Ankr's Advanced API serving 1M+ daily requests and SDK suite with 1,900+ weekly downloads. At Dapper, I improved Flow developer onboarding by 60%. The thread through my career is the same: {{accent}}make it easier for developers to build on blockchain{{/accent}}. Now I'm researching agent-to-agent transactions—AI agents that can hold wallets, transact autonomously, and use USDC as their native currency. Circle is building the infrastructure that makes this possible.\n"
+        "I started in 2017 with one of Microsoft's first blockchain projects—Xbox royalties on Ethereum. Since then: building Ankr's Advanced API serving 1M+ daily requests, improving Flow developer onboarding by 40% at Dapper, and leading the EVM integration team at Anchorage shipping 8 protocol integrations at 4× industry speed. The thread through my career is the same: make it easier for developers to build on blockchain.\n",
+        "I got into this space because of a real problem: sending money across Eastern Europe still runs on broken rails. When I saw crypto kiosks appearing in remote European towns, I knew stablecoins had crossed from speculation to infrastructure. Circle is building the platform that makes global value transfer as simple as an API call—{{accent}}and that's the Circle I want to help build.{{/accent}}\n"
       ],
       "stats": [
         {

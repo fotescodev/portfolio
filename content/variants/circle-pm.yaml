@@ -1,46 +1,54 @@
-# ═══════════════════════════════════════════════════════════════
-# VARIANT: Circle Product Manager
-# ═══════════════════════════════════════════════════════════════
 metadata:
   company: "Circle"
   role: "Product Manager"
   slug: "circle-pm"
   generatedAt: "2026-01-06T17:00:00Z"
-  jobDescription: |
-    Circle - Developer Pillar Organization
+  jobDescription: "Circle - Developer Pillar Organization
+
 
     Circle is a Web3 infrastructure company building the rails for the internet of money.
+
     Beyond USDC, Circle provides APIs, SDKs, and programmable wallets for developers
+
     building on blockchain infrastructure.
 
+
     Team responsible for:
+
     - USDC on-chain development
+
     - L1 ARC launch
+
     - Developer tools and integrations
 
+
     Context from initial conversation with Thomas:
+
     - Multiple openings across the Dev pillar organization
+
     - Approach: find right person first, then align to appropriate role
+
     - 4-5 hires made last year, 2-3 more planned this year
+
     - Interest in AI agent economy and real-world USDC use cases
 
+
     Background alignment:
+
     - Developer relations and integrations focus
+
     - EVM integration experience from Anchorage
+
     - Institutional custody and staking background
-    - AI research interest: agent-to-agent transactions using USDC
+
+    - AI research interest: agent-to-agent transactions using USDC\n"
   generationModel: "claude-opus-4-5-20251101"
   sourceUrl: "https://careers.circle.com"
   resumePath: "/resumes/circle-pm.pdf"
-
-# ═══════════════════════════════════════════════════════════════
-# ALIGNMENT ANALYSIS
-# ═══════════════════════════════════════════════════════════════
 alignment:
-  score: 0.90
-  threshold: 0.50
+  score: 0.9
+  threshold: 0.5
   recommendation: "PROCEED"
-
   mustHaves:
     - requirement: "Developer tools and API experience"
       match: true
@@ -58,19 +66,13 @@ alignment:
       match: true
       evidence: "Ethereum, Solidity, APIs, SDKs, CLI tools, validator architecture"
       confidence: 0.95
-
   gaps:
     - requirement: "Direct USDC/stablecoin product experience"
       addressable: true
       notes: "No direct stablecoin work, but deep protocol integration and institutional crypto experience"
-
   ignoredGeneric:
     - "Strong collaboration skills"
     - "Data-driven mindset"
-
-# ═══════════════════════════════════════════════════════════════
-# OVERRIDES
-# ═══════════════════════════════════════════════════════════════
 overrides:
   hero:
     status: "Open to Product Roles"
@@ -86,13 +88,12 @@ overrides:
         style: "muted"
       - text: "Circle"
         style: "accent"
-    subheadline: "Product Manager with 8+ years shipping Web3 developer tools and protocol integrations. From Ankr's API platform to Anchorage's L2 integrations—I help developers build on blockchain infrastructure. Now exploring how USDC becomes the economic rails for AI agents.\n"
-
+    subheadline: "Technical Product Manager. From shipping one of Microsoft's first blockchain projects to Anchorage's protocol integrations—8 years making it easier to build on blockchain.\n"
   about:
-    tagline: "Eight years building developer tools at the intersection of Web3 and real-world utility.\n"
+    tagline: "From dev tools to institutional custody—shipping Web3 infrastructure that builders actually use.\n"
     bio:
-      - "I got into crypto to solve a real problem: my uncle in Spain needs to send money to family in Moldova, and the existing rails are broken. When I saw USDC kiosks appearing in remote European towns, I knew stablecoins had crossed from speculation to infrastructure. That's the Circle I want to help build—not just a stablecoin, but the developer platform that makes global value transfer as simple as an API call.\n"
-      - "At Anchorage, I led the EVM integration team shipping 8 protocol integrations at 4× industry speed. Before that, I built Ankr's Advanced API serving 1M+ daily requests and SDK suite with 1,900+ weekly downloads. At Dapper, I improved Flow developer onboarding by 60%. The thread through my career is the same: {{accent}}make it easier for developers to build on blockchain{{/accent}}. Now I'm researching agent-to-agent transactions—AI agents that can hold wallets, transact autonomously, and use USDC as their native currency. Circle is building the infrastructure that makes this possible.\n"
+      - "I started in 2017 with one of Microsoft's first blockchain projects—Xbox royalties on Ethereum. Since then: building Ankr's Advanced API serving 1M+ daily requests, improving Flow developer onboarding by 40% at Dapper, and leading the EVM integration team at Anchorage shipping 8 protocol integrations at 4× industry speed. The thread through my career is the same: make it easier for developers to build on blockchain.\n"
+      - "I got into this space because of a real problem: sending money across Eastern Europe still runs on broken rails. When I saw crypto kiosks appearing in remote European towns, I knew stablecoins had crossed from speculation to infrastructure. Circle is building the platform that makes global value transfer as simple as an API call—{{accent}}and that's the Circle I want to help build.{{/accent}}\n"
     stats:
       - value: "8+"
         label: "Years in Web3"
@@ -100,21 +101,16 @@ overrides:
         label: "L2 Integrations"
       - value: "1M+"
         label: "Daily API Requests"
-
   sections:
     beyondWork: false
     blog: true
     onchainIdentity: true
     skills: true
     passionProjects: true
-
-# ═══════════════════════════════════════════════════════════════
-# RELEVANCE SCORING
-# ═══════════════════════════════════════════════════════════════
 relevance:
   caseStudies:
     - slug: "protocol-integration"
-      relevanceScore: 1.0
+      relevanceScore: 1
       reasoning: "L2 integrations at scale—directly maps to USDC on-chain development and L1 ARC launch responsibilities"
     - slug: "ankr-rpc"
       relevanceScore: 0.95
@@ -125,23 +121,17 @@ relevance:
     - slug: "xbox-royalties"
       relevanceScore: 0.75
       reasoning: "Enterprise blockchain at scale, pioneering smart contract adoption"
-
   skills:
     - category: "Developer Tools"
-      relevanceScore: 1.0
+      relevanceScore: 1
     - category: "Blockchain & Web3"
       relevanceScore: 0.95
     - category: "Technical Leadership"
-      relevanceScore: 0.90
-
+      relevanceScore: 0.9
   projects:
     - slug: "mempools"
       relevanceScore: 0.85
       reasoning: "Founded developer tools company, SDK development, real-time on-chain alerting"
-
-# ═══════════════════════════════════════════════════════════════
-# TALKING POINTS
-# ═══════════════════════════════════════════════════════════════
 talkingPoints:
   whyThisRole:
     - "Personal connection: uncle in Spain/Moldova remittance problem—USDC solves this, but needs better developer rails"
@@ -149,28 +139,28 @@ talkingPoints:
     - "Researching AI agent economy: autonomous agents using USDC for transactions"
     - "Circle isn't just a stablecoin—it's Web3 infrastructure (APIs, SDKs, programmable wallets)"
     - "Excited about real use cases beyond speculation—USDC kiosks in remote European towns"
-
   relevantStories:
     - achievement: "l2-protocol-integrations"
       connection: "Led 8 protocol integrations 4× faster than industry—directly relevant to USDC on-chain development"
     - achievement: "ankr-15x-revenue"
       connection: "Built API platform serving 1M+ daily requests, SDK suite, developer tools focus"
     - achievement: "flow-cli-dx"
-      connection: "Improved developer onboarding by 60%—developer experience is my core strength"
+      connection: "Improved developer onboarding by 40%—developer experience is my core strength"
     - achievement: "eth-staking-zero-slashing"
       connection: "Worked with transparency stakeholders, institutional infrastructure"
-
   questionsToAsk:
     - "What's the current developer adoption of Circle's APIs and SDKs? Where are the friction points?"
     - "How is Circle thinking about AI agents as a use case for USDC?"
     - "What's the roadmap for L1 ARC launch? How does the dev pillar support that?"
     - "How do you balance building for institutional clients vs. individual developers?"
     - "What's the relationship between the dev pillar and USDC core protocol development?"
-
   interviewNotes:
-    thomasCall: |
-      - Multiple openings, flexible on role—find fit first
+    thomasCall: "- Multiple openings, flexible on role—find fit first
+
       - Team: USDC on-chain development, L1 ARC launch
+
       - 4-5 hires last year, 2-3 more this year
+
       - Interested in AI agent economy angle
-      - Next steps: team briefing this week, update by Monday
+
+      - Next steps: team briefing this week, update by Monday\n"

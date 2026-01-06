@@ -34,7 +34,7 @@ jobs:
     logo: "/images/logos/dapper.png"
     url: "https://flow.com"
     highlights:
-      - "Shipped [Cadence Playground V2](https://play.flow.com/) with multi-project management and enhanced debugging, improving developer onboarding by 60%"
+      - "Shipped [Cadence Playground V2](https://play.flow.com/) with multi-project management and enhanced debugging, improving developer onboarding by 40%"
       - "Launched new Developer Portal consolidating docs, saving 1 engineering resource in maintenance"
       - "Led Flow CLI upgrades including scaffold feature for quickstart templates"
     tags: ["Developer Tools", "Flow", "Cadence", "DevEx"]
