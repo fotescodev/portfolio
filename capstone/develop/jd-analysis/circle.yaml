@@ -1,0 +1,45 @@
+metadata:
+  analyzedAt: 2026-01-06T15:37:27.325Z
+  sourceFile: source-data/jd-circle.txt
+  slug: circle
+extracted:
+  company: Circle
+  role: Principal Product Manager
+  yearsRequired: 10
+mustHaves:
+  - text: Candidates need 10+ years of product management experience building risk,
+      compliance, or trust & safety platforms in fintech, crypto, or financial
+      ser
+    category: years_experience
+    specificity: medium
+    matchedPattern: 10+ years of product
+  - text: RegTech, banking, or scaled fintech background
+    category: domain_expertise
+    specificity: high
+    matchedPattern: fintech background
+  - text: Experience with rapid prototyping using AI tools
+    category: technologies
+    specificity: high
+    matchedPattern: Experience with rapid
+niceToHaves:
+  - "## Preferred Qualifications"
+ignoredGeneric: []
+domainKeywords:
+  - crypto
+  - fintech
+  - developer_tools
+  - infrastructure
+  - enterprise
+  - consumer
+  - ai_ml
+searchTerms:
+  - crypto
+  - fintech
+  - developer_tools
+  - infrastructure
+  - enterprise
+  - consumer
+  - ai_ml
+  - product
+  - background
+  - rapid

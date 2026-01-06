@@ -1,0 +1,228 @@
+version: 1
+variant:
+  slug: circle-pm
+  variantFile: content/variants/circle-pm.yaml
+  contentHash: 636a5e213854a8d847064c0804da06155e08434f01efde96c0e079aed7ff3b97
+  evaluatedAt: 2026-01-06T15:41:32.201Z
+claims:
+  - id: metric-c3476657cd
+    location: overrides.hero.subheadline
+    text: Principal PM with 8+ years shipping compliant crypto infrastructure
+    anchors:
+      - 8+
+    candidateSources:
+      - path: content/knowledge/achievements/eth-staking-zero-slashing.yaml
+        score: 0.1
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 67%
+      - path: content/knowledge/achievements/l2-protocol-integrations.yaml
+        score: 0.1
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 67%
+      - path: content/knowledge/achievements/ankr-15x-revenue.yaml
+        score: 0.075
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 50%
+      - path: content/knowledge/achievements/xbox-royalties-ethereum.yaml
+        score: 0.075
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 50%
+      - path: content/knowledge/achievements/forte-wallet-sdk.yaml
+        score: 0.05
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 33%
+    verified:
+      status: verified
+      sources:
+        - path: content/experience/index.yaml
+          anchors:
+            - 8+
+      notes: ""
+  - id: metric-39eb28c37f
+    location: overrides.hero.subheadline
+    text: Built ETF-grade staking with zero slashing events
+    anchors: &a1
+      - zero
+    candidateSources:
+      - path: content/knowledge/achievements/eth-staking-zero-slashing.yaml
+        score: 1
+        matchedAnchors:
+          - zero
+        note: anchors 1/1 • overlap 100%
+      - path: content/knowledge/stories/galaxy-compliance-win.yaml
+        score: 1
+        matchedAnchors:
+          - zero
+        note: anchors 1/1 • overlap 100%
+      - path: content/experience/index.yaml
+        score: 0.075
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 50%
+      - path: content/knowledge/achievements/xbox-royalties-ethereum.yaml
+        score: 0.05
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 33%
+    verified:
+      status: verified
+      sources:
+        - path: content/knowledge/achievements/eth-staking-zero-slashing.yaml
+          anchors: *a1
+      notes: ""
+  - id: metric-b15392f44a
+    location: overrides.about.bio[0]
+    text: At Anchorage Digital, I've spent three years building infrastructure that institutional clients trust with billions
+    anchors: &a2
+      - billions
+    candidateSources:
+      - path: content/knowledge/achievements/eth-staking-zero-slashing.yaml
+        score: 1
+        matchedAnchors:
+          - billions
+        note: anchors 1/1 • overlap 55%
+      - path: content/knowledge/stories/galaxy-compliance-win.yaml
+        score: 0.068
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 45%
+      - path: content/knowledge/achievements/l2-protocol-integrations.yaml
+        score: 0.055
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 36%
+      - path: content/experience/index.yaml
+        score: 0.055
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 36%
+    verified:
+      status: verified
+      sources:
+        - path: content/knowledge/achievements/eth-staking-zero-slashing.yaml
+          anchors: *a2
+      notes: ""
+  - id: metric-12072ed420
+    location: overrides.about.bio[0]
+    text: Zero slashing events since launch—the only metric that matters when your clients are ETF-adjacent.
+    anchors: &a3
+      - Zero
+    candidateSources:
+      - path: content/knowledge/achievements/eth-staking-zero-slashing.yaml
+        score: 1
+        matchedAnchors:
+          - Zero
+        note: anchors 1/1 • overlap 73%
+      - path: content/knowledge/achievements/xbox-royalties-ethereum.yaml
+        score: 1
+        matchedAnchors:
+          - Zero
+        note: anchors 1/1 • overlap 27%
+      - path: content/knowledge/stories/galaxy-compliance-win.yaml
+        score: 1
+        matchedAnchors:
+          - Zero
+        note: anchors 1/1 • overlap 100%
+    verified:
+      status: verified
+      sources:
+        - path: content/knowledge/achievements/eth-staking-zero-slashing.yaml
+          anchors: *a3
+      notes: ""
+  - id: metric-f5a4312784
+    location: overrides.about.bio[1]
+    text: I built the L2 integration framework at Anchorage that turned compliance from bottleneck to competitive
+      advantage—parallel workstreams for security, compliance, and engineering, cutting cycle time by 40%
+    anchors: &a4
+      - 40%
+    candidateSources:
+      - path: content/knowledge/achievements/eth-staking-zero-slashing.yaml
+        score: 1
+        matchedAnchors:
+          - 40%
+        note: anchors 1/1 • overlap 31%
+      - path: content/knowledge/achievements/l2-protocol-integrations.yaml
+        score: 1
+        matchedAnchors:
+          - 40%
+        note: anchors 1/1 • overlap 88%
+      - path: content/knowledge/stories/galaxy-compliance-win.yaml
+        score: 1
+        matchedAnchors:
+          - 40%
+        note: anchors 1/1 • overlap 25%
+      - path: content/experience/index.yaml
+        score: 0.056
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 38%
+      - path: content/knowledge/achievements/xbox-royalties-ethereum.yaml
+        score: 0.037
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 25%
+    verified:
+      status: verified
+      sources:
+        - path: content/knowledge/achievements/l2-protocol-integrations.yaml
+          anchors: *a4
+      notes: ""
+  - id: metric-d07b4c9bd6
+    location: overrides.about.stats[0].value
+    text: 8+
+    anchors: &a5
+      - 8+
+    candidateSources: []
+    verified:
+      status: verified
+      sources:
+        - path: content/experience/index.yaml
+          anchors: *a5
+      notes: ""
+  - id: metric-d5548192d9
+    location: overrides.about.stats[1].value
+    text: Zero
+    anchors: &a6
+      - Zero
+    candidateSources:
+      - path: content/knowledge/achievements/eth-staking-zero-slashing.yaml
+        score: 1
+        matchedAnchors:
+          - Zero
+        note: anchors 1/1 • overlap 100%
+      - path: content/knowledge/achievements/xbox-royalties-ethereum.yaml
+        score: 1
+        matchedAnchors:
+          - Zero
+        note: anchors 1/1 • overlap 100%
+      - path: content/knowledge/stories/galaxy-compliance-win.yaml
+        score: 1
+        matchedAnchors:
+          - Zero
+        note: anchors 1/1 • overlap 100%
+    verified:
+      status: verified
+      sources:
+        - path: content/knowledge/achievements/eth-staking-zero-slashing.yaml
+          anchors: *a6
+      notes: ""
+  - id: metric-0b93f14a76
+    location: overrides.about.stats[2].value
+    text: 40%
+    anchors: &a7
+      - 40%
+    candidateSources:
+      - path: content/knowledge/achievements/eth-staking-zero-slashing.yaml
+        score: 1
+        matchedAnchors:
+          - 40%
+        note: anchors 1/1 • overlap 0%
+      - path: content/knowledge/achievements/l2-protocol-integrations.yaml
+        score: 1
+        matchedAnchors:
+          - 40%
+        note: anchors 1/1 • overlap 0%
+      - path: content/knowledge/stories/galaxy-compliance-win.yaml
+        score: 1
+        matchedAnchors:
+          - 40%
+        note: anchors 1/1 • overlap 0%
+    verified:
+      status: verified
+      sources:
+        - path: content/knowledge/achievements/l2-protocol-integrations.yaml
+          anchors: *a7
+      notes: ""

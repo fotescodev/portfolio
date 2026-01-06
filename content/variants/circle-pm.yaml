@@ -1,0 +1,176 @@
+# ═══════════════════════════════════════════════════════════════
+# VARIANT: Circle Principal Product Manager
+# ═══════════════════════════════════════════════════════════════
+metadata:
+  company: "Circle"
+  role: "Principal Product Manager"
+  slug: "circle-pm"
+  generatedAt: "2026-01-06T15:45:00Z"
+  jobDescription: |
+    Principal Product Manager at Circle
+
+    Circle seeks a Principal Product Manager to lead their risk platform strategy,
+    ensuring scalability across new products, markets, and regulatory requirements.
+
+    Circle is a fintech company focused on the "emerging internet of money" where
+    digital value transfers globally with efficiency. Develops blockchain-based
+    infrastructure, including USDC (a blockchain dollar).
+
+    Key Responsibilities:
+    - Designing modular, extensible risk systems supporting both crypto and traditional financial operations
+    - Implementing observability strategies to monitor platform integrity and surface key risk indicators
+    - Enhancing the travel rule platform for jurisdictional coverage and interoperability
+    - Applying AI/ML techniques to automate risk decisioning and operational workflows
+    - Translating regulatory requirements into actionable product specifications
+    - Representing the platform in senior leadership and regulatory discussions
+
+    Requirements:
+    - 10+ years of product management experience building risk, compliance, or trust & safety platforms
+    - Deep expertise in fraud prevention, AML, sanctions screening, and KYC/KYB compliance
+    - Experience designing modular platforms and refactoring monolithic services
+    - Strong collaboration skills across engineering, data science, and operations teams
+    - Data-driven mindset with ML and risk modeling experience
+    - Technical fluency with APIs, event-driven architectures, SQL, and GitHub
+
+    Preferred: RegTech, banking, or scaled fintech background. Blockchain and crypto compliance expertise.
+
+    Compensation: $187,500 – $240,000
+    Location: Remote-first (US)
+  generationModel: "claude-opus-4-5-20251101"
+  sourceUrl: "https://careers.circle.com/us/en/job/JR100701/Principal-Product-Manager"
+  resumePath: "/resumes/circle-pm.pdf"
+
+# ═══════════════════════════════════════════════════════════════
+# ALIGNMENT ANALYSIS
+# ═══════════════════════════════════════════════════════════════
+alignment:
+  score: 0.75
+  threshold: 0.50
+  recommendation: "PROCEED"
+
+  mustHaves:
+    - requirement: "10+ years PM experience in risk/compliance/trust & safety"
+      match: true
+      evidence: "8+ years Web3 PM with institutional custody focus; built compliance frameworks for ETF-grade clients"
+      confidence: 0.85
+    - requirement: "Experience designing modular platforms"
+      match: true
+      evidence: "L2 integration RICE framework with parallel workstreams; multi-client validator architecture"
+      confidence: 0.95
+    - requirement: "Translating regulatory requirements to product specs"
+      match: true
+      evidence: "Created compliance risk matrices and custody compatibility matrices with legal; Galaxy compliance win"
+      confidence: 0.90
+    - requirement: "Technical fluency with APIs, architectures"
+      match: true
+      evidence: "Protocol integrations, API design for custody products, validator architecture with Web3Signer"
+      confidence: 0.95
+    - requirement: "Blockchain and crypto compliance expertise"
+      match: true
+      evidence: "ETH staking zero slashing, institutional custody, regulatory defensibility focus"
+      confidence: 0.95
+
+  gaps:
+    - requirement: "Explicit AML/KYC/sanctions screening product ownership"
+      addressable: true
+      notes: "Worked adjacent to compliance—built infrastructure that compliance depends on. Not direct AML product owner."
+    - requirement: "Travel rule platform experience"
+      addressable: true
+      notes: "No direct travel rule work, but L2 integration framework shows jurisdictional complexity handling"
+
+  ignoredGeneric:
+    - "Strong collaboration skills"
+    - "Data-driven mindset"
+
+# ═══════════════════════════════════════════════════════════════
+# OVERRIDES
+# ═══════════════════════════════════════════════════════════════
+overrides:
+  hero:
+    status: "Open to Product Roles"
+    headline:
+      - text: "Building"
+        style: "italic"
+      - text: "at the edge of"
+        style: "muted"
+      - text: "trust"
+        style: "accent"
+    companyAccent:
+      - text: "with"
+        style: "muted"
+      - text: "Circle"
+        style: "accent"
+    subheadline: "Principal PM with 8+ years shipping compliant crypto infrastructure. Built ETF-grade staking with zero slashing events. I turn regulatory requirements into defensible products—because in institutional crypto, boring and defensible wins.\n"
+
+  about:
+    tagline: "Eight years building infrastructure where compliance is the product, not the afterthought.\n"
+    bio:
+      - "At Anchorage Digital, I've spent three years building infrastructure that institutional clients trust with billions. The work that matters most: ETH staking infrastructure where Galaxy chose us specifically because we owned our keys instead of outsourcing to a faster-to-market third party. I presented the compliance risk matrix that convinced leadership to take the longer path. Zero slashing events since launch—the only metric that matters when your clients are ETF-adjacent.\n"
+      - "Circle's risk platform challenge resonates because I've lived the tension between shipping fast and shipping defensibly. I built the L2 integration framework at Anchorage that turned compliance from bottleneck to competitive advantage—parallel workstreams for security, compliance, and engineering, cutting cycle time by 40%. USDC is critical infrastructure for the internet of money, and {{accent}}critical infrastructure demands the boring-and-defensible mindset I've spent years developing{{/accent}}.\n"
+    stats:
+      - value: "8+"
+        label: "Years in Web3"
+      - value: "Zero"
+        label: "Slashing Events"
+      - value: "40%"
+        label: "Faster Integrations"
+
+  sections:
+    beyondWork: false
+    blog: true
+    onchainIdentity: true
+    skills: true
+    passionProjects: false
+
+# ═══════════════════════════════════════════════════════════════
+# RELEVANCE SCORING
+# ═══════════════════════════════════════════════════════════════
+relevance:
+  caseStudies:
+    - slug: "eth-staking"
+      relevanceScore: 1.0
+      reasoning: "Compliance-first infrastructure, regulatory defensibility, institutional trust—directly maps to risk platform mindset"
+    - slug: "protocol-integration"
+      relevanceScore: 0.95
+      reasoning: "Modular framework with parallel compliance workstream; scalable process design; jurisdictional complexity"
+    - slug: "xbox-royalties"
+      relevanceScore: 0.85
+      reasoning: "Enterprise-scale audit trails, transparent systems eliminating disputes—risk mitigation through transparency"
+    - slug: "ankr-rpc"
+      relevanceScore: 0.70
+      reasoning: "Infrastructure scaling, API platform experience, though less compliance-focused"
+
+  skills:
+    - category: "Blockchain & Web3"
+      relevanceScore: 1.0
+    - category: "Technical Leadership"
+      relevanceScore: 0.95
+    - category: "Product Strategy"
+      relevanceScore: 0.90
+
+  projects: []
+
+# ═══════════════════════════════════════════════════════════════
+# TALKING POINTS
+# ═══════════════════════════════════════════════════════════════
+talkingPoints:
+  whyThisRole:
+    - "I've built compliance-first crypto infrastructure for 8+ years—USDC's importance to the ecosystem demands this mindset"
+    - "Zero slashing events across billions in AUM proves I understand risk prevention, not just risk detection"
+    - "My L2 integration framework shows I can design modular systems with compliance as a parallel workstream"
+    - "I chose 'boring and defensible' over 'fast and risky' when it mattered—and won Galaxy's business because of it"
+
+  relevantStories:
+    - achievement: "eth-staking-zero-slashing"
+      connection: "Risk platform mindset—presented compliance risk matrix, designed for auditability and zero tolerance"
+    - achievement: "l2-protocol-integrations"
+      connection: "Modular framework design with parallel compliance workstreams; scalable evaluation process"
+    - achievement: "xbox-royalties-ethereum"
+      connection: "Transparent audit trails eliminating disputes; enterprise-scale risk mitigation"
+
+  questionsToAsk:
+    - "What's the current architecture of the risk platform—is it more monolithic or already service-oriented?"
+    - "How does the risk PM function partner with the compliance and legal teams today?"
+    - "What's the biggest regulatory challenge on the horizon for USDC that shapes platform priorities?"
+    - "How do you balance platform extensibility with the speed demands of new market entry?"
+    - "What does success look like for the travel rule platform in the next 12-18 months?"

@@ -1,7 +1,16 @@
 {
-  "generatedAt": "2026-01-06T15:31:26.276Z",
-  "count": 17,
+  "generatedAt": "2026-01-06T15:42:24.425Z",
+  "count": 18,
   "variants": [
+    {
+      "slug": "circle-pm",
+      "company": "Circle",
+      "role": "Principal Product Manager",
+      "generatedAt": "2026-01-06T15:45:00Z",
+      "applicationStatus": "not_applied",
+      "resumePath": "/resumes/circle-pm.pdf",
+      "hasResume": true
+    },
     {
       "slug": "orca-pm",
       "company": "Orca",
