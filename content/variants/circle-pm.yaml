@@ -92,7 +92,7 @@ overrides:
   about:
     tagline: "From dev tools to institutional custody—shipping Web3 infrastructure that builders actually use.\n"
     bio:
-      - "I started in 2017 with one of Microsoft's first blockchain projects—Xbox royalties on Ethereum. Since then: building Ankr's Advanced API serving 1M+ daily requests, improving Flow developer onboarding by 60% at Dapper, and leading the EVM integration team at Anchorage shipping 8 protocol integrations at 4× industry speed. The thread through my career is the same: make it easier for developers to build on blockchain.\n"
+      - "I started in 2017 with one of Microsoft's first blockchain projects—Xbox royalties on Ethereum. Since then: building Ankr's Advanced API serving 1M+ daily requests, improving Flow developer onboarding by 40% at Dapper, and leading the EVM integration team at Anchorage shipping 8 protocol integrations at 4× industry speed. The thread through my career is the same: make it easier for developers to build on blockchain.\n"
       - "I got into this space because of a real problem: sending money across Eastern Europe still runs on broken rails. When I saw crypto kiosks appearing in remote European towns, I knew stablecoins had crossed from speculation to infrastructure. Circle is building the platform that makes global value transfer as simple as an API call—{{accent}}and that's the Circle I want to help build.{{/accent}}\n"
     stats:
       - value: "8+"
@@ -145,7 +145,7 @@ talkingPoints:
     - achievement: "ankr-15x-revenue"
       connection: "Built API platform serving 1M+ daily requests, SDK suite, developer tools focus"
     - achievement: "flow-cli-dx"
-      connection: "Improved developer onboarding by 60%—developer experience is my core strength"
+      connection: "Improved developer onboarding by 40%—developer experience is my core strength"
     - achievement: "eth-staking-zero-slashing"
       connection: "Worked with transparency stakeholders, institutional infrastructure"
   questionsToAsk:

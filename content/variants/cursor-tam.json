@@ -48,7 +48,7 @@
       ],
       "stats": [
         {
-          "value": "60%",
+          "value": "40%",
           "label": "DX Improvement"
         },
         {
@@ -74,7 +74,7 @@
       {
         "slug": "flow-playground",
         "relevanceScore": 1,
-        "reasoning": "Direct developer enablement experience. CLI + playground = developer onboarding. 60% improvement shows measurable adoption impact."
+        "reasoning": "Direct developer enablement experience. CLI + playground = developer onboarding. 40% improvement shows measurable adoption impact."
       },
       {
         "slug": "eth-staking",

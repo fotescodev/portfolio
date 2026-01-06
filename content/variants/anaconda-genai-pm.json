@@ -28,7 +28,7 @@
           "style": "accent"
         }
       ],
-      "subheadline": "Developer tools PM with 8+ years shipping SDKs, CLIs, and infrastructure that developers actually want to use. From Flow's 60% faster onboarding to Ankr.JS powering 1M+ daily API calls—I build the tools that make complex systems feel simple.\n",
+      "subheadline": "Developer tools PM with 8+ years shipping SDKs, CLIs, and infrastructure that developers actually want to use. From Flow's 40% faster onboarding to Ankr.JS powering 1M+ daily API calls—I build the tools that make complex systems feel simple.\n",
       "companyAccent": [
         {
           "text": "with",
@@ -43,7 +43,7 @@
     "about": {
       "tagline": "Eight years shipping developer tools that bridge the gap between powerful infrastructure and delightful DX.\n",
       "bio": [
-        "I've spent my career making complex infrastructure accessible to developers. At Dapper Labs, I led the Flow CLI and Cadence Playground redesign that cut developer onboarding time by 60%—turning a churning funnel into a growth engine. At Ankr, I built the Ankr.JS SDK and Advanced APIs that powered 1M+ daily requests, driving 15× revenue growth by making RPC infrastructure feel invisible. At Forte, I designed Wallet-as-a-Service SDKs that let AAA gaming studios add Web3 features without learning blockchain.\n",
+        "I've spent my career making complex infrastructure accessible to developers. At Dapper Labs, I led the Flow CLI and Cadence Playground redesign that cut developer onboarding time by 40%—turning a churning funnel into a growth engine. At Ankr, I built the Ankr.JS SDK and Advanced APIs that powered 1M+ daily requests, driving 15× revenue growth by making RPC infrastructure feel invisible. At Forte, I designed Wallet-as-a-Service SDKs that let AAA gaming studios add Web3 features without learning blockchain.\n",
         "What excites me about Anaconda is the {{accent}}MCP and agentic systems work{{/accent}}. I've been deep in AI-assisted development—using Cursor and Claude daily, building my own MCP servers, and thinking hard about what developer tools look like when agents are first-class users. The opportunity to shape how 50M+ Python developers interact with AI tools is exactly where I want to be.\n"
       ],
       "stats": [
@@ -56,7 +56,7 @@
           "label": "SDKs Shipped"
         },
         {
-          "value": "60%",
+          "value": "40%",
           "label": "Faster Onboarding"
         }
       ]
