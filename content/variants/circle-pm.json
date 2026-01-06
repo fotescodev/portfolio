@@ -1,0 +1,111 @@
+{
+  "metadata": {
+    "company": "Circle",
+    "role": "Principal Product Manager",
+    "generatedAt": "2026-01-06T15:45:00Z",
+    "jobDescription": "Principal Product Manager at Circle\n\nCircle seeks a Principal Product Manager to lead their risk platform strategy,\nensuring scalability across new products, markets, and regulatory requirements.\n\nCircle is a fintech company focused on the \"emerging internet of money\" where\ndigital value transfers globally with efficiency. Develops blockchain-based\ninfrastructure, including USDC (a blockchain dollar).\n\nKey Responsibilities:\n- Designing modular, extensible risk systems supporting both crypto and traditional financial operations\n- Implementing observability strategies to monitor platform integrity and surface key risk indicators\n- Enhancing the travel rule platform for jurisdictional coverage and interoperability\n- Applying AI/ML techniques to automate risk decisioning and operational workflows\n- Translating regulatory requirements into actionable product specifications\n- Representing the platform in senior leadership and regulatory discussions\n\nRequirements:\n- 10+ years of product management experience building risk, compliance, or trust & safety platforms\n- Deep expertise in fraud prevention, AML, sanctions screening, and KYC/KYB compliance\n- Experience designing modular platforms and refactoring monolithic services\n- Strong collaboration skills across engineering, data science, and operations teams\n- Data-driven mindset with ML and risk modeling experience\n- Technical fluency with APIs, event-driven architectures, SQL, and GitHub\n\nPreferred: RegTech, banking, or scaled fintech background. Blockchain and crypto compliance expertise.\n\nCompensation: $187,500 – $240,000\nLocation: Remote-first (US)\n",
+    "generationModel": "claude-opus-4-5-20251101",
+    "slug": "circle-pm",
+    "publishStatus": "draft",
+    "applicationStatus": "not_applied",
+    "sourceUrl": "https://careers.circle.com/us/en/job/JR100701/Principal-Product-Manager",
+    "resumePath": "/resumes/circle-pm.pdf"
+  },
+  "overrides": {
+    "hero": {
+      "status": "Open to Product Roles",
+      "headline": [
+        {
+          "text": "Building",
+          "style": "italic"
+        },
+        {
+          "text": "at the edge of",
+          "style": "muted"
+        },
+        {
+          "text": "trust",
+          "style": "accent"
+        }
+      ],
+      "subheadline": "Principal PM with 8+ years shipping compliant crypto infrastructure. Built ETF-grade staking with zero slashing events. I turn regulatory requirements into defensible products—because in institutional crypto, boring and defensible wins.\n",
+      "companyAccent": [
+        {
+          "text": "with",
+          "style": "muted"
+        },
+        {
+          "text": "Circle",
+          "style": "accent"
+        }
+      ]
+    },
+    "about": {
+      "tagline": "Eight years building infrastructure where compliance is the product, not the afterthought.\n",
+      "bio": [
+        "At Anchorage Digital, I've spent three years building infrastructure that institutional clients trust with billions. The work that matters most: ETH staking infrastructure where Galaxy chose us specifically because we owned our keys instead of outsourcing to a faster-to-market third party. I presented the compliance risk matrix that convinced leadership to take the longer path. Zero slashing events since launch—the only metric that matters when your clients are ETF-adjacent.\n",
+        "Circle's risk platform challenge resonates because I've lived the tension between shipping fast and shipping defensibly. I built the L2 integration framework at Anchorage that turned compliance from bottleneck to competitive advantage—parallel workstreams for security, compliance, and engineering, cutting cycle time by 40%. USDC is critical infrastructure for the internet of money, and {{accent}}critical infrastructure demands the boring-and-defensible mindset I've spent years developing{{/accent}}.\n"
+      ],
+      "stats": [
+        {
+          "value": "8+",
+          "label": "Years in Web3"
+        },
+        {
+          "value": "Zero",
+          "label": "Slashing Events"
+        },
+        {
+          "value": "40%",
+          "label": "Faster Integrations"
+        }
+      ]
+    },
+    "sections": {
+      "beyondWork": false,
+      "blog": true,
+      "onchainIdentity": true,
+      "skills": true,
+      "passionProjects": false
+    }
+  },
+  "relevance": {
+    "caseStudies": [
+      {
+        "slug": "eth-staking",
+        "relevanceScore": 1,
+        "reasoning": "Compliance-first infrastructure, regulatory defensibility, institutional trust—directly maps to risk platform mindset"
+      },
+      {
+        "slug": "protocol-integration",
+        "relevanceScore": 0.95,
+        "reasoning": "Modular framework with parallel compliance workstream; scalable process design; jurisdictional complexity"
+      },
+      {
+        "slug": "xbox-royalties",
+        "relevanceScore": 0.85,
+        "reasoning": "Enterprise-scale audit trails, transparent systems eliminating disputes—risk mitigation through transparency"
+      },
+      {
+        "slug": "ankr-rpc",
+        "relevanceScore": 0.7,
+        "reasoning": "Infrastructure scaling, API platform experience, though less compliance-focused"
+      }
+    ],
+    "skills": [
+      {
+        "category": "Blockchain & Web3",
+        "relevanceScore": 1
+      },
+      {
+        "category": "Technical Leadership",
+        "relevanceScore": 0.95
+      },
+      {
+        "category": "Product Strategy",
+        "relevanceScore": 0.9
+      }
+    ],
+    "projects": []
+  }
+}
