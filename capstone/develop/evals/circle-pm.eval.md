@@ -2,27 +2,24 @@
 
 - Variant: `circle-pm`
 - Ledger: `capstone/develop/evals/circle-pm.claims.yaml`
-- Evaluated At: 2026-01-06T15:41:32.201Z
-- Content Hash: `636a5e213854…`
+- Evaluated At: 2026-01-06T16:54:32.264Z
+- Content Hash: `6c80e8adead0…`
 
 ## Automated Summary
 
-- Claims detected: **8**
-- Verified: **8**
+- Claims detected: **5**
+- Verified: **5**
 - Unverified: **0**
 
 ## Claims
 
 | Status | Claim | Location | Top candidate source |
 |---|---|---|---|
-| ✅ verified | Principal PM with 8+ years shipping compliant crypto infrastructure | `overrides.hero.subheadline` | `content/knowledge/achievements/eth-staking-zero-slashing.yaml` |
-| ✅ verified | Built ETF-grade staking with zero slashing events | `overrides.hero.subheadline` | `content/knowledge/achievements/eth-staking-zero-slashing.yaml` |
-| ✅ verified | At Anchorage Digital, I've spent three years building infrastructure that institutional clients trust with billions | `overrides.about.bio[0]` | `content/knowledge/achievements/eth-staking-zero-slashing.yaml` |
-| ✅ verified | Zero slashing events since launch—the only metric that matters when your clients are ETF-adjacent. | `overrides.about.bio[0]` | `content/knowledge/achievements/eth-staking-zero-slashing.yaml` |
-| ✅ verified | I built the L2 integration framework at Anchorage that turned compliance from bottleneck to competitive advantage—par… | `overrides.about.bio[1]` | `content/knowledge/achievements/eth-staking-zero-slashing.yaml` |
+| ✅ verified | Product Manager with 8+ years shipping Web3 developer tools and protocol integrations | `overrides.hero.subheadline` | `content/experience/index.yaml` |
+| ✅ verified | Before that, I built Ankr's Advanced API serving 1M+ daily requests and SDK suite with 1,900+ weekly downloads | `overrides.about.bio[1]` | `content/experience/index.yaml` |
+| ✅ verified | At Dapper, I improved Flow developer onboarding by 60% | `overrides.about.bio[1]` | `content/knowledge/achievements/flow-cli-dx.yaml` |
 | ✅ verified | 8+ | `overrides.about.stats[0].value` | `` |
-| ✅ verified | Zero | `overrides.about.stats[1].value` | `content/knowledge/achievements/eth-staking-zero-slashing.yaml` |
-| ✅ verified | 40% | `overrides.about.stats[2].value` | `content/knowledge/achievements/eth-staking-zero-slashing.yaml` |
+| ✅ verified | 1M+ | `overrides.about.stats[2].value` | `content/knowledge/achievements/ankr-15x-revenue.yaml` |
 
 ## Human Checklist (Capstone Rubric)
 

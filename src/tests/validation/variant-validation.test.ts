@@ -85,7 +85,7 @@ describe('Circle PM Variant - Content Integrity', () => {
   it('should have correct metadata', () => {
     expect(variant).not.toBeNull();
     expect(variant.metadata.company).toBe('Circle');
-    expect(variant.metadata.role).toBe('Principal Product Manager');
+    expect(variant.metadata.role).toBe('Product Manager');
     expect(variant.metadata.slug).toBe('circle-pm');
   });
 
@@ -112,11 +112,11 @@ describe('Circle PM Variant - Content Integrity', () => {
   it('should have 3 stats', () => {
     expect(variant.overrides.about?.stats).toHaveLength(3);
 
-    // Check for expected stat values
+    // Check for expected stat values (dev tools focus)
     const statValues = variant.overrides.about?.stats?.map((s: {value: string}) => s.value);
     expect(statValues).toContain('8+');
-    expect(statValues).toContain('Zero');
-    expect(statValues).toContain('40%');
+    expect(statValues).toContain('8');
+    expect(statValues).toContain('1M+');
   });
 
   it('should have bio paragraphs', () => {
@@ -125,21 +125,21 @@ describe('Circle PM Variant - Content Integrity', () => {
   });
 
   it('should have subheadline in hero override', () => {
-    // Check subheadline is set for Circle positioning
+    // Check subheadline is set for Circle positioning (dev tools focus)
     expect(variant.overrides.hero?.subheadline).toBeDefined();
-    expect(variant.overrides.hero?.subheadline).toContain('compliant');
-    expect(variant.overrides.hero?.subheadline).toContain('defensible');
+    expect(variant.overrides.hero?.subheadline).toContain('developer tools');
+    expect(variant.overrides.hero?.subheadline).toContain('AI agents');
   });
 
   it('should have relevance scores for case studies', () => {
     expect(variant.relevance?.caseStudies).toBeDefined();
     expect(variant.relevance?.caseStudies?.length).toBeGreaterThan(0);
 
-    // eth-staking should be the most relevant
-    const ethStaking = variant.relevance?.caseStudies?.find(
-      (cs: {slug: string}) => cs.slug === 'eth-staking'
+    // protocol-integration should be the most relevant (dev tools focus)
+    const protocolIntegration = variant.relevance?.caseStudies?.find(
+      (cs: {slug: string}) => cs.slug === 'protocol-integration'
     );
-    expect(ethStaking?.relevanceScore).toBe(1.0);
+    expect(protocolIntegration?.relevanceScore).toBe(1.0);
   });
 
   it('should have resume path set', () => {

@@ -1,14 +1,14 @@
 {
   "metadata": {
     "company": "Circle",
-    "role": "Principal Product Manager",
-    "generatedAt": "2026-01-06T15:45:00Z",
-    "jobDescription": "Principal Product Manager at Circle\n\nCircle seeks a Principal Product Manager to lead their risk platform strategy,\nensuring scalability across new products, markets, and regulatory requirements.\n\nCircle is a fintech company focused on the \"emerging internet of money\" where\ndigital value transfers globally with efficiency. Develops blockchain-based\ninfrastructure, including USDC (a blockchain dollar).\n\nKey Responsibilities:\n- Designing modular, extensible risk systems supporting both crypto and traditional financial operations\n- Implementing observability strategies to monitor platform integrity and surface key risk indicators\n- Enhancing the travel rule platform for jurisdictional coverage and interoperability\n- Applying AI/ML techniques to automate risk decisioning and operational workflows\n- Translating regulatory requirements into actionable product specifications\n- Representing the platform in senior leadership and regulatory discussions\n\nRequirements:\n- 10+ years of product management experience building risk, compliance, or trust & safety platforms\n- Deep expertise in fraud prevention, AML, sanctions screening, and KYC/KYB compliance\n- Experience designing modular platforms and refactoring monolithic services\n- Strong collaboration skills across engineering, data science, and operations teams\n- Data-driven mindset with ML and risk modeling experience\n- Technical fluency with APIs, event-driven architectures, SQL, and GitHub\n\nPreferred: RegTech, banking, or scaled fintech background. Blockchain and crypto compliance expertise.\n\nCompensation: $187,500 – $240,000\nLocation: Remote-first (US)\n",
+    "role": "Product Manager",
+    "generatedAt": "2026-01-06T17:00:00Z",
+    "jobDescription": "Circle - Developer Pillar Organization\n\nCircle is a Web3 infrastructure company building the rails for the internet of money.\nBeyond USDC, Circle provides APIs, SDKs, and programmable wallets for developers\nbuilding on blockchain infrastructure.\n\nTeam responsible for:\n- USDC on-chain development\n- L1 ARC launch\n- Developer tools and integrations\n\nContext from initial conversation with Thomas:\n- Multiple openings across the Dev pillar organization\n- Approach: find right person first, then align to appropriate role\n- 4-5 hires made last year, 2-3 more planned this year\n- Interest in AI agent economy and real-world USDC use cases\n\nBackground alignment:\n- Developer relations and integrations focus\n- EVM integration experience from Anchorage\n- Institutional custody and staking background\n- AI research interest: agent-to-agent transactions using USDC\n",
     "generationModel": "claude-opus-4-5-20251101",
     "slug": "circle-pm",
     "publishStatus": "draft",
     "applicationStatus": "not_applied",
-    "sourceUrl": "https://careers.circle.com/us/en/job/JR100701/Principal-Product-Manager",
+    "sourceUrl": "https://careers.circle.com",
     "resumePath": "/resumes/circle-pm.pdf"
   },
   "overrides": {
@@ -28,7 +28,7 @@
           "style": "accent"
         }
       ],
-      "subheadline": "Principal PM with 8+ years shipping compliant crypto infrastructure. Built ETF-grade staking with zero slashing events. I turn regulatory requirements into defensible products—because in institutional crypto, boring and defensible wins.\n",
+      "subheadline": "Product Manager with 8+ years shipping Web3 developer tools and protocol integrations. From Ankr's API platform to Anchorage's L2 integrations—I help developers build on blockchain infrastructure. Now exploring how USDC becomes the economic rails for AI agents.\n",
       "companyAccent": [
         {
           "text": "with",
@@ -41,10 +41,10 @@
       ]
     },
     "about": {
-      "tagline": "Eight years building infrastructure where compliance is the product, not the afterthought.\n",
+      "tagline": "Eight years building developer tools at the intersection of Web3 and real-world utility.\n",
       "bio": [
-        "At Anchorage Digital, I've spent three years building infrastructure that institutional clients trust with billions. The work that matters most: ETH staking infrastructure where Galaxy chose us specifically because we owned our keys instead of outsourcing to a faster-to-market third party. I presented the compliance risk matrix that convinced leadership to take the longer path. Zero slashing events since launch—the only metric that matters when your clients are ETF-adjacent.\n",
-        "Circle's risk platform challenge resonates because I've lived the tension between shipping fast and shipping defensibly. I built the L2 integration framework at Anchorage that turned compliance from bottleneck to competitive advantage—parallel workstreams for security, compliance, and engineering, cutting cycle time by 40%. USDC is critical infrastructure for the internet of money, and {{accent}}critical infrastructure demands the boring-and-defensible mindset I've spent years developing{{/accent}}.\n"
+        "I got into crypto to solve a real problem: my uncle in Spain needs to send money to family in Moldova, and the existing rails are broken. When I saw USDC kiosks appearing in remote European towns, I knew stablecoins had crossed from speculation to infrastructure. That's the Circle I want to help build—not just a stablecoin, but the developer platform that makes global value transfer as simple as an API call.\n",
+        "At Anchorage, I led the EVM integration team shipping 8 protocol integrations at 4× industry speed. Before that, I built Ankr's Advanced API serving 1M+ daily requests and SDK suite with 1,900+ weekly downloads. At Dapper, I improved Flow developer onboarding by 60%. The thread through my career is the same: {{accent}}make it easier for developers to build on blockchain{{/accent}}. Now I'm researching agent-to-agent transactions—AI agents that can hold wallets, transact autonomously, and use USDC as their native currency. Circle is building the infrastructure that makes this possible.\n"
       ],
       "stats": [
         {
@@ -52,12 +52,12 @@
           "label": "Years in Web3"
         },
         {
-          "value": "Zero",
-          "label": "Slashing Events"
+          "value": "8",
+          "label": "L2 Integrations"
         },
         {
-          "value": "40%",
-          "label": "Faster Integrations"
+          "value": "1M+",
+          "label": "Daily API Requests"
         }
       ]
     },
@@ -66,46 +66,52 @@
       "blog": true,
       "onchainIdentity": true,
       "skills": true,
-      "passionProjects": false
+      "passionProjects": true
     }
   },
   "relevance": {
     "caseStudies": [
       {
-        "slug": "eth-staking",
-        "relevanceScore": 1,
-        "reasoning": "Compliance-first infrastructure, regulatory defensibility, institutional trust—directly maps to risk platform mindset"
-      },
-      {
         "slug": "protocol-integration",
-        "relevanceScore": 0.95,
-        "reasoning": "Modular framework with parallel compliance workstream; scalable process design; jurisdictional complexity"
-      },
-      {
-        "slug": "xbox-royalties",
-        "relevanceScore": 0.85,
-        "reasoning": "Enterprise-scale audit trails, transparent systems eliminating disputes—risk mitigation through transparency"
+        "relevanceScore": 1,
+        "reasoning": "L2 integrations at scale—directly maps to USDC on-chain development and L1 ARC launch responsibilities"
       },
       {
         "slug": "ankr-rpc",
-        "relevanceScore": 0.7,
-        "reasoning": "Infrastructure scaling, API platform experience, though less compliance-focused"
+        "relevanceScore": 0.95,
+        "reasoning": "API platform and SDK development, developer tools focus, 15× revenue growth through B2B pivot"
+      },
+      {
+        "slug": "eth-staking",
+        "relevanceScore": 0.85,
+        "reasoning": "Institutional infrastructure, working with transparency stakeholders, technical depth"
+      },
+      {
+        "slug": "xbox-royalties",
+        "relevanceScore": 0.75,
+        "reasoning": "Enterprise blockchain at scale, pioneering smart contract adoption"
       }
     ],
     "skills": [
       {
-        "category": "Blockchain & Web3",
+        "category": "Developer Tools",
         "relevanceScore": 1
       },
       {
-        "category": "Technical Leadership",
+        "category": "Blockchain & Web3",
         "relevanceScore": 0.95
       },
       {
-        "category": "Product Strategy",
+        "category": "Technical Leadership",
         "relevanceScore": 0.9
       }
     ],
-    "projects": []
+    "projects": [
+      {
+        "slug": "mempools",
+        "relevanceScore": 0.85,
+        "reasoning": "Founded developer tools company, SDK development, real-time on-chain alerting"
+      }
+    ]
   }
 }
