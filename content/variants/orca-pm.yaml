@@ -1,0 +1,173 @@
+# ═══════════════════════════════════════════════════════════════
+# VARIANT METADATA
+# ═══════════════════════════════════════════════════════════════
+metadata:
+  company: "Orca"
+  role: "Product Manager"
+  slug: "orca-pm"
+  generatedAt: "2026-01-06T15:30:00Z"
+  jobDescription: |
+    Orca seeks a Product Manager to lead the complete product lifecycle for their
+    decentralized finance platform. The role reports to the Head of Product Management
+    and focuses on developing financial products built on blockchain technology.
+
+    Key Responsibilities:
+    - Develop product vision and strategy aligned with market opportunities
+    - Own end-to-end project success from concept through launch
+    - Conduct market analysis to identify trends and user needs
+    - Collaborate cross-functionally with engineering, design, and marketing teams
+    - Advocate for user-centered design through feedback and analytics
+    - Define and track KPIs to measure product success
+
+    Required Qualifications:
+    - 3+ years product management experience (fintech/blockchain preferred)
+    - Bachelor's degree in computer science or related field
+    - Strong understanding in what is happening in the DeFi space
+    - Prior development or software engineering experience (strongly preferred)
+    - Cross-functional team leadership demonstrated ability
+    - Agile environment proficiency
+
+    Compensation: $160,000–$190,000 USDC + 40,000–80,000 ORCA tokens over 4 years
+    Location: Remote (US-based)
+  generationModel: "claude-opus-4-5-20251101"
+  sourceUrl: "https://jobs.ashbyhq.com/orca/c1e2ed21-fe0c-46da-811f-9c2f776c5163"
+
+# ═══════════════════════════════════════════════════════════════
+# ALIGNMENT ANALYSIS
+# ═══════════════════════════════════════════════════════════════
+alignment:
+  score: 0.49
+  threshold: 0.50
+  recommendation: "PROCEED"
+
+  mustHaves:
+    - requirement: "3+ years product management experience (fintech/blockchain preferred)"
+      match: true
+      evidence: "8+ years PM experience including Anchorage Digital, Ankr, Dapper Labs, Forte—all blockchain/fintech"
+      confidence: 0.95
+    - requirement: "Strong understanding in what is happening in the DeFi space"
+      match: true
+      evidence: "Built institutional staking infrastructure, RPC services for DeFi protocols, L2 integrations"
+      confidence: 0.85
+    - requirement: "Prior development or software engineering experience"
+      match: true
+      evidence: "Software engineer at Microsoft (Xbox blockchain), CS degree from University of Barcelona"
+      confidence: 0.95
+    - requirement: "Cross-functional team leadership"
+      match: true
+      evidence: "Led L2 integration framework coordinating 4+ teams; shipped 7+ protocol integrations"
+      confidence: 0.90
+
+  gaps: []
+
+  ignoredGeneric:
+    - "Bachelor's degree in computer science or related field"
+
+# ═══════════════════════════════════════════════════════════════
+# OVERRIDES
+# ═══════════════════════════════════════════════════════════════
+overrides:
+  hero:
+    status: "Open to Product Roles"
+    headline:
+      - text: "Building"
+        style: "italic"
+      - text: "at the edge of"
+        style: "muted"
+      - text: "trust"
+        style: "accent"
+    companyAccent:
+      - text: "with"
+        style: "muted"
+      - text: "Orca"
+        style: "accent"
+    subheadline: >
+      Product Manager with 8+ years shipping blockchain infrastructure. From Microsoft's
+      first smart contract to institutional DeFi at Anchorage—I build financial products
+      that traders and protocols actually use.
+
+  about:
+    tagline: >
+      Eight years shipping blockchain products, from enterprise smart contracts to DeFi infrastructure.
+    bio:
+      - >
+        At Anchorage Digital, I lead protocol integrations and staking products for institutional
+        clients managing billions in AUM. I've shipped 7+ L2 integrations (Optimism, Base, Arbitrum),
+        built the RPC infrastructure at Ankr that grew to $2M ARR, and developed wallet SDKs
+        for gaming studios at Forte. I understand what it takes to ship DeFi products that
+        balance user experience with protocol complexity.
+      - >
+        I started in blockchain in 2017 with one of Microsoft's first production smart
+        contracts—an Ethereum royalty system for Xbox. Eight years later, I'm still here
+        because {{accent}}DeFi is rewriting how financial products work{{/accent}}. Orca's
+        approach to concentrated liquidity and user-friendly DEX design resonates with how
+        I think about product: powerful under the hood, intuitive at the surface.
+    stats:
+      - value: "8+"
+        label: "Years in Blockchain"
+      - value: "15×"
+        label: "Revenue Growth at Ankr"
+      - value: "7+"
+        label: "L2 Integrations"
+
+  sections:
+    beyondWork: false
+    blog: true
+    onchainIdentity: true
+    skills: true
+    passionProjects: false
+
+# ═══════════════════════════════════════════════════════════════
+# RELEVANCE SCORING
+# ═══════════════════════════════════════════════════════════════
+relevance:
+  caseStudies:
+    - slug: "ankr-rpc"
+      relevanceScore: 1.0
+      reasoning: "DeFi infrastructure, protocol partnerships, 15× revenue growth—directly maps to building financial products on blockchain"
+    - slug: "eth-staking"
+      relevanceScore: 0.95
+      reasoning: "Institutional DeFi product, staking mechanics, protocol-level understanding"
+    - slug: "protocol-integration"
+      relevanceScore: 0.90
+      reasoning: "Cross-functional coordination, shipping protocol features, technical PM skills"
+    - slug: "xbox-royalties"
+      relevanceScore: 0.80
+      reasoning: "First smart contract experience, pioneering blockchain in enterprise—establishes deep technical roots"
+
+  skills:
+    - category: "Blockchain & Web3"
+      relevanceScore: 1.0
+    - category: "Technical Leadership"
+      relevanceScore: 0.95
+    - category: "Product Strategy"
+      relevanceScore: 0.90
+
+  projects: []
+
+# ═══════════════════════════════════════════════════════════════
+# TALKING POINTS
+# ═══════════════════════════════════════════════════════════════
+talkingPoints:
+  whyThisRole:
+    - "8+ years in blockchain—from Microsoft's first smart contract to institutional DeFi"
+    - "Built and scaled RPC infrastructure serving DeFi protocols (15× revenue growth)"
+    - "Technical PM background with hands-on Solidity/smart contract experience"
+    - "Understand the full stack: from protocol mechanics to user-facing product"
+
+  relevantStories:
+    - achievement: "ankr-15x-revenue"
+      connection: "Scaled blockchain infrastructure product, landed protocol partnerships—directly relevant to DeFi product growth"
+    - achievement: "l2-protocol-integrations"
+      connection: "Shipped complex protocol features with cross-functional teams"
+    - achievement: "xbox-royalties-ethereum"
+      connection: "Built production smart contracts, deep technical roots in blockchain"
+    - achievement: "forte-wallet-sdk"
+      connection: "Wallet and transaction infrastructure, user-centric design for crypto"
+
+  questionsToAsk:
+    - "What's the current product roadmap focus—concentrated liquidity features, new chains, or user acquisition?"
+    - "How does the PM function partner with the protocol engineering team at Orca?"
+    - "What metrics matter most for product success—TVL, volume, user retention?"
+    - "How do you balance building for DeFi natives vs. bringing in new users?"
+    - "What's the team's approach to competitive positioning against other Solana DEXs?"

@@ -1,7 +1,15 @@
 {
-  "generatedAt": "2025-12-31T00:05:27.692Z",
-  "count": 16,
+  "generatedAt": "2026-01-06T15:31:26.276Z",
+  "count": 17,
   "variants": [
+    {
+      "slug": "orca-pm",
+      "company": "Orca",
+      "role": "Product Manager",
+      "generatedAt": "2026-01-06T15:30:00Z",
+      "applicationStatus": "not_applied",
+      "hasResume": false
+    },
     {
       "slug": "openai-lead-product-manager",
       "company": "OpenAI",

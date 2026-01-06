@@ -1,0 +1,140 @@
+version: 1
+variant:
+  slug: orca-pm
+  variantFile: content/variants/orca-pm.yaml
+  contentHash: 4a319d63ffb423c0925d464fb3486363c6926365c090b2256c2f60b790e545be
+  evaluatedAt: 2026-01-06T15:30:48.392Z
+claims:
+  - id: metric-364d025634
+    location: overrides.hero.subheadline
+    text: Product Manager with 8+ years shipping blockchain infrastructure
+    anchors: &a1
+      - 8+
+    candidateSources:
+      - path: content/knowledge/achievements/ankr-15x-revenue.yaml
+        score: 0.1
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 67%
+      - path: content/experience/index.yaml
+        score: 0.1
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 67%
+      - path: content/knowledge/achievements/forte-wallet-sdk.yaml
+        score: 0.075
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 50%
+      - path: content/knowledge/achievements/l2-protocol-integrations.yaml
+        score: 0.075
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 50%
+      - path: content/knowledge/achievements/xbox-royalties-ethereum.yaml
+        score: 0.075
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 50%
+    verified:
+      status: verified
+      sources:
+        - path: content/experience/index.yaml
+          anchors: *a1
+      notes: ""
+  - id: metric-bf46fbc082
+    location: overrides.about.bio[0]
+    text: At Anchorage Digital, I lead protocol integrations and staking products for institutional clients managing
+      billions in AUM
+    anchors: &a2
+      - billions
+    candidateSources:
+      - path: content/knowledge/achievements/eth-staking-zero-slashing.yaml
+        score: 1
+        matchedAnchors:
+          - billions
+        note: anchors 1/1 • overlap 64%
+      - path: content/experience/index.yaml
+        score: 0.095
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 64%
+      - path: content/knowledge/stories/galaxy-compliance-win.yaml
+        score: 0.068
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 45%
+      - path: content/knowledge/achievements/l2-protocol-integrations.yaml
+        score: 0.055
+        matchedAnchors: []
+        note: anchors 0/1 • overlap 36%
+    verified:
+      status: verified
+      sources:
+        - path: content/knowledge/achievements/eth-staking-zero-slashing.yaml
+          anchors: *a2
+      notes: ""
+  - id: metric-bdf13647fc
+    location: overrides.about.bio[0]
+    text: I've shipped 7+ L2 integrations (Optimism, Base, Arbitrum), built the RPC infrastructure at Ankr that grew to $2M
+      ARR, and developed wallet SDKs for gaming studios at Forte
+    anchors: &a3
+      - $2M
+      - 7+
+      - 2M
+      - Optimism, Base, Arbitrum
+    candidateSources:
+      - path: content/experience/index.yaml
+        score: 0.62
+        matchedAnchors:
+          - $2M
+          - 2M
+        note: anchors 2/4 • overlap 80%
+      - path: content/knowledge/achievements/l2-protocol-integrations.yaml
+        score: 0.57
+        matchedAnchors:
+          - 7+
+          - Optimism, Base, Arbitrum
+        note: anchors 2/4 • overlap 47%
+      - path: content/knowledge/achievements/ankr-15x-revenue.yaml
+        score: 0.53
+        matchedAnchors:
+          - $2M
+          - 2M
+        note: anchors 2/4 • overlap 20%
+      - path: content/knowledge/achievements/forte-wallet-sdk.yaml
+        score: 0.06
+        matchedAnchors: []
+        note: anchors 0/4 • overlap 40%
+      - path: content/knowledge/achievements/xbox-royalties-ethereum.yaml
+        score: 0.04
+        matchedAnchors: []
+        note: anchors 0/4 • overlap 27%
+    verified:
+      status: verified
+      sources:
+        - path: content/knowledge/achievements/l2-protocol-integrations.yaml
+          anchors: *a3
+      notes: ""
+  - id: metric-d07b4c9bd6
+    location: overrides.about.stats[0].value
+    text: 8+
+    anchors: &a4
+      - 8+
+    candidateSources: []
+    verified:
+      status: verified
+      sources:
+        - path: content/experience/index.yaml
+          anchors: *a4
+      notes: ""
+  - id: metric-23ea6998ec
+    location: overrides.about.stats[2].value
+    text: 7+
+    anchors: &a5
+      - 7+
+    candidateSources:
+      - path: content/knowledge/achievements/l2-protocol-integrations.yaml
+        score: 1
+        matchedAnchors:
+          - 7+
+        note: anchors 1/1 • overlap 0%
+    verified:
+      status: verified
+      sources:
+        - path: content/knowledge/achievements/l2-protocol-integrations.yaml
+          anchors: *a5
+      notes: ""

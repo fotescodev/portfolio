@@ -1,0 +1,30 @@
+metadata:
+  analyzedAt: 2026-01-06T15:17:37.980Z
+  sourceFile: source-data/jd-orca.txt
+  slug: orca
+extracted:
+  company: Orca
+  role: Product Manager
+  yearsRequired: 3
+mustHaves:
+  - text: 3+ years product management experience (fintech/blockchain preferred)
+    category: years_experience
+    specificity: medium
+    matchedPattern: 3+ years product
+niceToHaves:
+  - Prior development or software engineering experience (strongly preferred)
+ignoredGeneric:
+  - Bachelor's degree in computer science or related field
+domainKeywords:
+  - crypto
+  - fintech
+  - infrastructure
+  - consumer
+  - ai_ml
+searchTerms:
+  - crypto
+  - fintech
+  - infrastructure
+  - consumer
+  - ai_ml
+  - product
