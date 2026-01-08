@@ -11,6 +11,12 @@ import { getAuthUserId } from "@convex-dev/auth/server";
 import { variantMetadata, variantOverrides, variantRelevance } from "./schema";
 
 // ============================================================================
+// CONSTANTS
+// ============================================================================
+
+const DEFAULT_QUERY_LIMIT = 100;
+
+// ============================================================================
 // HELPER FUNCTIONS
 // ============================================================================
 
@@ -23,6 +29,20 @@ async function requireAuth(ctx: QueryCtx | MutationCtx): Promise<string> {
     throw new Error("Authentication required");
   }
   return userId;
+}
+
+/**
+ * Helper: Get variant by slug or throw if not found
+ */
+async function getVariantOrThrow(ctx: QueryCtx | MutationCtx, slug: string) {
+  const variant = await ctx.db
+    .query("variants")
+    .withIndex("by_slug", (q) => q.eq("metadata.slug", slug))
+    .first();
+  if (!variant) {
+    throw new Error(`Variant not found: ${slug}`);
+  }
+  return variant;
 }
 
 // ============================================================================
@@ -81,7 +101,7 @@ export const listPublished = query({
         q.eq("metadata.publishStatus", "published")
       )
       .order("desc")
-      .take(args.limit || 100);
+      .take(args.limit ?? DEFAULT_QUERY_LIMIT);
 
     return variants;
   },
@@ -135,7 +155,9 @@ export const listForDashboard = query({
     }
 
     // Order by creation time (newest first) and limit at DB level
-    const variants = await queryBuilder.order("desc").take(args.limit || 100);
+    const variants = await queryBuilder
+      .order("desc")
+      .take(args.limit ?? DEFAULT_QUERY_LIMIT);
 
     return variants;
   },
@@ -153,14 +175,14 @@ export const getDashboardStats = query({
 
     const all = await ctx.db.query("variants").collect();
 
-    return {
-      total: all.length,
-      published: all.filter((v) => v.metadata.publishStatus === "published")
-        .length,
-      draft: all.filter((v) => v.metadata.publishStatus === "draft").length,
-      applied: all.filter((v) => v.metadata.applicationStatus === "applied")
-        .length,
-    };
+    // Single pass through the array
+    const stats = { total: all.length, published: 0, draft: 0, applied: 0 };
+    for (const v of all) {
+      if (v.metadata.publishStatus === "published") stats.published++;
+      else stats.draft++;
+      if (v.metadata.applicationStatus === "applied") stats.applied++;
+    }
+    return stats;
   },
 });
 
@@ -217,16 +239,7 @@ export const updateStatus = mutation({
   },
   handler: async (ctx, args) => {
     await requireAuth(ctx);
-
-    const variant = await ctx.db
-      .query("variants")
-      .withIndex("by_slug", (q) => q.eq("metadata.slug", args.slug))
-      .first();
-
-    if (!variant) {
-      throw new Error(`Variant not found: ${args.slug}`);
-    }
-
+    const variant = await getVariantOrThrow(ctx, args.slug);
     const now = new Date().toISOString();
 
     // Build updated metadata
@@ -256,16 +269,7 @@ export const updateApplicationStatus = mutation({
   },
   handler: async (ctx, args) => {
     await requireAuth(ctx);
-
-    const variant = await ctx.db
-      .query("variants")
-      .withIndex("by_slug", (q) => q.eq("metadata.slug", args.slug))
-      .first();
-
-    if (!variant) {
-      throw new Error(`Variant not found: ${args.slug}`);
-    }
-
+    const variant = await getVariantOrThrow(ctx, args.slug);
     const now = new Date().toISOString();
 
     // Build updated metadata
@@ -292,16 +296,7 @@ export const remove = mutation({
   args: { slug: v.string() },
   handler: async (ctx, args) => {
     await requireAuth(ctx);
-
-    const variant = await ctx.db
-      .query("variants")
-      .withIndex("by_slug", (q) => q.eq("metadata.slug", args.slug))
-      .first();
-
-    if (!variant) {
-      throw new Error(`Variant not found: ${args.slug}`);
-    }
-
+    const variant = await getVariantOrThrow(ctx, args.slug);
     await ctx.db.delete(variant._id);
   },
 });

@@ -125,6 +125,7 @@ export default defineSchema({
   })
     .index("by_slug", ["metadata.slug"])
     .index("by_status", ["metadata.publishStatus"])
+    // by_company: Reserved for future dashboard filtering by company
     .index("by_company", ["metadata.company"]),
 
   // ============================================================================

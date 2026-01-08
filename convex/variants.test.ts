@@ -6,7 +6,7 @@
  */
 
 import { convexTest } from "convex-test";
-import { describe, test, expect, beforeEach } from "vitest";
+import { describe, test, expect } from "vitest";
 import schema from "./schema";
 import { api } from "./_generated/api";
 
