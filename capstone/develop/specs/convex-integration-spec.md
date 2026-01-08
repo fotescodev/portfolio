@@ -4,12 +4,13 @@
 **Author:** Claude
 **Created:** 2026-01-08
 **Last Updated:** 2026-01-08
-**Revision:** 1.1 — Simplified scope per QA feedback
+**Revision:** 1.2 — Added Phase 2 roadmap for deferred features
 
 ---
 
 ## Table of Contents
 
+**Phase 1 (MVP):**
 1. [Executive Summary](#1-executive-summary)
 2. [Problem Statement](#2-problem-statement)
 3. [Current Architecture](#3-current-architecture)
@@ -22,9 +23,18 @@
 10. [Testing Strategy](#10-testing-strategy)
 11. [Rollback Plan](#11-rollback-plan)
 12. [Security Considerations](#12-security-considerations)
-13. [Error Handling](#13-error-handling) *(new)*
+13. [Error Handling](#13-error-handling)
 14. [Cost Analysis](#14-cost-analysis)
-15. [Decisions Made](#15-decisions-made) *(revised from Open Questions)*
+15. [Decisions Made](#15-decisions-made)
+
+**Phase 2 (Deferred):**
+- [Phase 2 Roadmap](#phase-2-roadmap-deferred-features) *(new)*
+  - [2A: Evaluation Pipeline](#phase-2a-evaluation-pipeline-in-convex)
+  - [2B: Red-Team Pipeline](#phase-2b-red-team-pipeline-in-convex)
+  - [2C: Resume PDFs](#phase-2c-resume-pdfs-in-convex-file-storage)
+  - [2D: Generation Logs](#phase-2d-generation-audit-logs)
+
+**Reference:**
 16. [Appendix](#16-appendix)
 
 ---
@@ -2162,7 +2172,419 @@ export function useVariant(slug: string) {
 1. **Multi-user support**: Add more GitHub users to whitelist if needed
 2. **Variant templates**: Consider if generating many similar variants
 3. **Analytics**: Track views/conversions if you want data
-4. **Eval in Convex**: Move if file-based eval becomes annoying
+
+---
+
+## Phase 2 Roadmap (Deferred Features)
+
+> Implement these features **only if** file-based approaches become painful.
+> Each section includes trigger conditions and implementation details.
+
+### Phase 2A: Evaluation Pipeline in Convex
+
+**Trigger condition:** Running `npm run eval:variant` locally becomes annoying, or you want evaluation status visible in the dashboard.
+
+**Schema addition:**
+```typescript
+// Add to convex/schema.ts
+
+const claim = v.object({
+  id: v.string(),
+  text: v.string(),
+  location: v.string(),
+  anchors: v.array(v.string()),
+  verified: v.boolean(),
+  verifiedAt: v.optional(v.string()),
+  verifiedBy: v.optional(v.string()),
+  sources: v.array(v.object({
+    file: v.string(),
+    score: v.number(),
+    excerpt: v.optional(v.string())
+  }))
+});
+
+evaluations: defineTable({
+  variantId: v.id("variants"),
+  slug: v.string(),
+  claims: v.array(claim),
+  allVerified: v.boolean(),
+  contentHash: v.string(),
+  evaluatedAt: v.string(),
+})
+  .index("by_variant", ["variantId"])
+  .index("by_slug", ["slug"]),
+```
+
+**New action:**
+```typescript
+// convex/actions/evaluate.ts
+
+export const evaluateVariant = action({
+  args: { slug: v.string() },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) throw new Error("Authentication required");
+
+    // 1. Load variant
+    const variant = await ctx.runQuery(api.variants.getBySlugAuth, {
+      slug: args.slug,
+    });
+    if (!variant) throw new Error(`Variant not found: ${args.slug}`);
+
+    // 2. Extract claims from overrides
+    const claims = extractMetricClaims(variant.overrides);
+
+    // 3. Search knowledge base for sources
+    // Note: Knowledge base stays file-based, bundled into action
+    const claimsWithSources = await matchClaimsToSources(claims);
+
+    // 4. Save evaluation
+    const contentHash = hashObject(variant.overrides);
+    await ctx.runMutation(api.evaluations.save, {
+      variantId: variant._id,
+      slug: args.slug,
+      claims: claimsWithSources,
+      contentHash,
+    });
+
+    return {
+      totalClaims: claims.length,
+      verified: claimsWithSources.filter(c => c.verified).length,
+      unverified: claimsWithSources.filter(c => !c.verified).length,
+    };
+  },
+});
+```
+
+**Dashboard integration:**
+```typescript
+// Show eval status on variant cards
+const evaluation = useQuery(api.evaluations.getBySlug, { slug });
+
+<VariantCard>
+  {evaluation?.allVerified ? (
+    <Badge color="green">✓ Verified</Badge>
+  ) : (
+    <Badge color="yellow">{evaluation?.claims.filter(c => !c.verified).length} unverified</Badge>
+  )}
+</VariantCard>
+```
+
+**Effort:** ~1 day
+
+---
+
+### Phase 2B: Red-Team Pipeline in Convex
+
+**Trigger condition:** Want security scan results visible in dashboard, or want to block publishing of variants that fail security checks.
+
+**Schema addition:**
+```typescript
+// Add to convex/schema.ts
+
+const redteamFinding = v.object({
+  checkId: v.string(),
+  severity: v.union(v.literal("pass"), v.literal("warn"), v.literal("fail")),
+  message: v.string(),
+  details: v.optional(v.string())
+});
+
+redteamRuns: defineTable({
+  variantId: v.id("variants"),
+  slug: v.string(),
+  findings: v.array(redteamFinding),
+  overallStatus: v.union(v.literal("pass"), v.literal("warn"), v.literal("fail")),
+  scannedAt: v.string(),
+})
+  .index("by_variant", ["variantId"])
+  .index("by_slug", ["slug"]),
+```
+
+**New action:**
+```typescript
+// convex/actions/redteam.ts
+
+export const redteamVariant = action({
+  args: { slug: v.string() },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) throw new Error("Authentication required");
+
+    const variant = await ctx.runQuery(api.variants.getBySlugAuth, {
+      slug: args.slug,
+    });
+    if (!variant) throw new Error(`Variant not found: ${args.slug}`);
+
+    // Run all checks
+    const findings = [
+      checkSecrets(variant),           // RT-SEC-SECRETS
+      checkConfidential(variant),      // RT-SEC-CONFIDENTIAL
+      checkSycophancy(variant),        // RT-TONE-SYCOPHANCY
+      checkInflation(variant),         // RT-ACC-INFLATION
+      checkPromptInjection(variant),   // RT-INPUT-INJECTION
+      checkJdLength(variant),          // RT-PRIV-JD
+      checkCrossContamination(variant),// RT-XVAR-CONTAM
+    ].flat();
+
+    const hasFail = findings.some(f => f.severity === "fail");
+    const hasWarn = findings.some(f => f.severity === "warn");
+    const overallStatus = hasFail ? "fail" : hasWarn ? "warn" : "pass";
+
+    await ctx.runMutation(api.redteamRuns.save, {
+      variantId: variant._id,
+      slug: args.slug,
+      findings,
+      overallStatus,
+    });
+
+    return { overallStatus, findings };
+  },
+});
+```
+
+**Publish gate (optional):**
+```typescript
+// Block publishing if redteam failed
+export const updateStatus = mutation({
+  handler: async (ctx, args) => {
+    if (args.publishStatus === "published") {
+      const lastRedteam = await ctx.db
+        .query("redteamRuns")
+        .withIndex("by_slug", q => q.eq("slug", args.slug))
+        .order("desc")
+        .first();
+
+      if (!lastRedteam || lastRedteam.overallStatus === "fail") {
+        throw new Error("Cannot publish: variant failed security scan");
+      }
+    }
+    // ... rest of mutation
+  },
+});
+```
+
+**Effort:** ~1 day
+
+---
+
+### Phase 2C: Resume PDFs in Convex File Storage
+
+**Trigger condition:** Git repo bloat from PDFs becomes annoying, or you want on-demand PDF generation.
+
+**Option A: Upload after local generation (recommended)**
+
+```typescript
+// scripts/generate-resume.ts (updated)
+
+async function generateAndUploadResume(slug: string) {
+  // 1. Generate PDF locally with Puppeteer (unchanged)
+  const pdfBuffer = await generatePdfWithPuppeteer(slug);
+
+  // 2. Get upload URL from Convex
+  const uploadUrl = await client.mutation(api.files.generateUploadUrl);
+
+  // 3. Upload PDF
+  const response = await fetch(uploadUrl, {
+    method: "POST",
+    headers: { "Content-Type": "application/pdf" },
+    body: pdfBuffer,
+  });
+  const { storageId } = await response.json();
+
+  // 4. Update variant with storage ID
+  await client.mutation(api.variants.updateResume, {
+    slug,
+    resumeStorageId: storageId,
+  });
+
+  // 5. Get public URL for download
+  const publicUrl = await client.query(api.files.getUrl, { storageId });
+  console.log(`Resume uploaded: ${publicUrl}`);
+}
+```
+
+**Schema change:**
+```typescript
+const variantMetadata = v.object({
+  // ... existing fields
+  resumeStorageId: v.optional(v.id("_storage")), // Add this
+  resumePath: v.optional(v.string()), // Keep for backwards compat
+});
+```
+
+**File serving:**
+```typescript
+// convex/files.ts
+
+export const generateUploadUrl = mutation({
+  handler: async (ctx) => {
+    await requireAuth(ctx);
+    return await ctx.storage.generateUploadUrl();
+  },
+});
+
+export const getUrl = query({
+  args: { storageId: v.id("_storage") },
+  handler: async (ctx, args) => {
+    return await ctx.storage.getUrl(args.storageId);
+  },
+});
+```
+
+**Option B: On-demand generation via cloud service**
+
+```typescript
+// convex/actions/generateResume.ts
+
+export const generateResume = action({
+  args: { slug: v.string() },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) throw new Error("Authentication required");
+
+    // Check if already generated
+    const variant = await ctx.runQuery(api.variants.getBySlugAuth, {
+      slug: args.slug,
+    });
+    if (variant?.metadata.resumeStorageId) {
+      return await ctx.storage.getUrl(variant.metadata.resumeStorageId);
+    }
+
+    // Generate via Browserless or similar
+    const pdfBuffer = await fetch("https://chrome.browserless.io/pdf", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Cache-Control": "no-cache",
+      },
+      body: JSON.stringify({
+        url: `${process.env.SITE_URL}/${args.slug.replace("-", "/")}/resume`,
+        options: { format: "Letter", printBackground: true },
+      }),
+    }).then(r => r.arrayBuffer());
+
+    // Upload to Convex storage
+    const storageId = await ctx.storage.store(new Blob([pdfBuffer]));
+
+    // Update variant
+    await ctx.runMutation(api.variants.updateResume, {
+      slug: args.slug,
+      resumeStorageId: storageId,
+    });
+
+    return await ctx.storage.getUrl(storageId);
+  },
+});
+```
+
+**Effort:** ~1 day (Option A) or ~1.5 days (Option B)
+
+---
+
+### Phase 2D: Generation Audit Logs
+
+**Trigger condition:** Want to track AI costs, debug generation failures, or audit who generated what.
+
+**Schema addition:**
+```typescript
+generationLogs: defineTable({
+  variantId: v.optional(v.id("variants")),
+  slug: v.string(),
+  company: v.string(),
+  role: v.string(),
+  model: v.string(),
+  promptTokens: v.optional(v.number()),
+  completionTokens: v.optional(v.number()),
+  durationMs: v.number(),
+  success: v.boolean(),
+  errorMessage: v.optional(v.string()),
+  generatedAt: v.string(),
+  generatedBy: v.string(), // GitHub user ID
+})
+  .index("by_slug", ["slug"])
+  .index("by_date", ["generatedAt"])
+  .index("by_user", ["generatedBy"]),
+```
+
+**Update generation action:**
+```typescript
+export const generateVariant = action({
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+    const startTime = Date.now();
+
+    try {
+      // ... existing generation logic ...
+
+      // Log success
+      await ctx.runMutation(api.generationLogs.create, {
+        variantId,
+        slug,
+        company: args.company,
+        role: args.role,
+        model,
+        promptTokens: response.usage?.prompt_tokens,
+        completionTokens: response.usage?.completion_tokens,
+        durationMs: Date.now() - startTime,
+        success: true,
+        generatedAt: new Date().toISOString(),
+        generatedBy: identity.subject,
+      });
+
+      return { success: true, slug, variantId };
+
+    } catch (error) {
+      // Log failure
+      await ctx.runMutation(api.generationLogs.create, {
+        slug,
+        company: args.company,
+        role: args.role,
+        model,
+        durationMs: Date.now() - startTime,
+        success: false,
+        errorMessage: error.message,
+        generatedAt: new Date().toISOString(),
+        generatedBy: identity.subject,
+      });
+
+      throw error;
+    }
+  },
+});
+```
+
+**Dashboard cost tracking:**
+```typescript
+// Show monthly AI costs
+const logs = useQuery(api.generationLogs.listByMonth, {
+  month: "2026-01"
+});
+
+const totalTokens = logs?.reduce((acc, log) => ({
+  prompt: acc.prompt + (log.promptTokens || 0),
+  completion: acc.completion + (log.completionTokens || 0),
+}), { prompt: 0, completion: 0 });
+
+// Claude pricing: $3/1M input, $15/1M output (as of 2026)
+const estimatedCost = (totalTokens.prompt * 3 + totalTokens.completion * 15) / 1_000_000;
+```
+
+**Effort:** ~0.5 days
+
+---
+
+### Phase 2 Summary
+
+| Feature | Trigger | Effort | Priority |
+|---------|---------|--------|----------|
+| **Eval in Convex** | Want dashboard visibility for claim verification | 1 day | Medium |
+| **Redteam in Convex** | Want publish gates, dashboard security status | 1 day | Medium |
+| **Resume PDFs** | Git bloat, want on-demand generation | 1-1.5 days | Low |
+| **Generation Logs** | Want cost tracking, audit trail | 0.5 days | Low |
+
+**Total Phase 2 effort:** 3.5-4 days (if all features implemented)
+
+**Recommendation:** Don't implement any of these until you've used the MVP for at least 2-4 weeks and feel specific pain.
 
 ---
 
@@ -2266,6 +2688,11 @@ portfolio/
 | | | - Added Error Handling section |
 | | | - Decided portfolio context strategy: bundled static JSON |
 | | | - Reduced estimated effort from 5-6 days to 3-4 days |
+| 2026-01-08 | 1.2 | **Phase 2 Roadmap**: |
+| | | - Added deferred feature specs for Eval, Redteam, PDFs, Logs |
+| | | - Each feature includes trigger conditions and implementation |
+| | | - Total Phase 2 effort: 3.5-4 days if all implemented |
+| | | - Recommendation: Use MVP 2-4 weeks before implementing Phase 2 |
 
 ---
 
