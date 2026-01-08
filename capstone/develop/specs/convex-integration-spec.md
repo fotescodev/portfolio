@@ -1,0 +1,2265 @@
+# Convex Integration Engineering Specification
+
+**Status:** Draft
+**Author:** Claude
+**Created:** 2026-01-08
+**Last Updated:** 2026-01-08
+
+---
+
+## Table of Contents
+
+1. [Executive Summary](#1-executive-summary)
+2. [Problem Statement](#2-problem-statement)
+3. [Current Architecture](#3-current-architecture)
+4. [Target Architecture](#4-target-architecture)
+5. [Convex Schema Design](#5-convex-schema-design)
+6. [API Design](#6-api-design)
+7. [Migration Phases](#7-migration-phases)
+8. [Module Impact Analysis](#8-module-impact-analysis)
+9. [Data Migration Strategy](#9-data-migration-strategy)
+10. [Testing Strategy](#10-testing-strategy)
+11. [Rollback Plan](#11-rollback-plan)
+12. [Security Considerations](#12-security-considerations)
+13. [Cost Analysis](#13-cost-analysis)
+14. [Open Questions](#14-open-questions)
+15. [Appendix](#15-appendix)
+
+---
+
+## 1. Executive Summary
+
+### Goal
+
+Migrate the Universal CV variant system from file-based storage (YAML/JSON in Git) to Convex, eliminating the PR ceremony for content-level variant changes while preserving the robust validation and quality gates.
+
+### Key Benefits
+
+| Benefit | Current Pain | With Convex |
+|---------|--------------|-------------|
+| **Zero-git workflow** | ~800 line PRs per variant | Edit in dashboard → live |
+| **Single source of truth** | YAML + JSON dual files | One Convex document |
+| **Real-time updates** | Rebuild required | Instant propagation |
+| **Dynamic discovery** | Static manifest.json | Query at runtime |
+| **Version history** | Git commits | Built-in Convex history |
+| **Draft workflow** | No preview without merge | `publishStatus: draft` filtering |
+
+### Scope
+
+**In Scope:**
+- Variant storage and retrieval
+- Dashboard manifest generation
+- Generation pipeline integration
+- Evaluation and red-team result storage
+- Resume PDF storage (optional)
+
+**Out of Scope:**
+- Base portfolio content (profile, experience, case studies) — stays static
+- React components and UI — unchanged
+- Build pipeline for static assets — unchanged
+
+### Estimated Effort
+
+| Phase | Effort | Dependencies |
+|-------|--------|--------------|
+| Phase 1: Core Storage | 2 days | None |
+| Phase 2: Generation Pipeline | 1 day | Phase 1 |
+| Phase 3: Quality Gates | 1 day | Phase 1 |
+| Phase 4: Resume PDFs | 1 day | Phase 1 (optional) |
+| Phase 5: Dashboard | 0.5 days | Phase 1 |
+| **Total** | **5-6 days** | |
+
+---
+
+## 2. Problem Statement
+
+### Current Friction Points
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│ CURRENT WORKFLOW (per variant)                                  │
+└─────────────────────────────────────────────────────────────────┘
+
+1. Generate variant      → npm run generate:cv (creates YAML)
+2. Sync to JSON          → npm run variants:sync
+3. Evaluate claims       → npm run eval:variant
+4. Red-team scan         → npm run redteam:variant
+5. Generate resume       → npm run generate:resume
+6. Update dashboard      → npm run generate:dashboard
+7. Commit all artifacts  → git add . && git commit
+8. Create PR             → gh pr create
+9. Review & merge        → Manual approval
+10. Deploy               → GitHub Actions
+
+Files touched per variant: 6-8 files, ~800 lines changed
+Time to live: 15-30 minutes minimum
+```
+
+### Pain Points Breakdown
+
+| Pain Point | Impact | Root Cause |
+|------------|--------|------------|
+| Dual file sync (YAML+JSON) | Drift risk, extra commits | File-based architecture |
+| Large PRs | Noisy diffs, hard to review | All artifacts in Git |
+| Binary PDFs in Git | Repo bloat, merge conflicts | No external storage |
+| No draft preview | Can't iterate before merge | Static deployment |
+| Manual sync scripts | Easy to forget, breaks build | No single source of truth |
+| Static manifest | Can't add variants dynamically | Build-time generation |
+
+---
+
+## 3. Current Architecture
+
+### Data Flow Diagram
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│ CURRENT ARCHITECTURE                                            │
+└─────────────────────────────────────────────────────────────────┘
+
+                    ┌──────────────────┐
+                    │   AI Provider    │
+                    │ (Claude/OpenAI)  │
+                    └────────┬─────────┘
+                             │
+                             ▼
+┌─────────────┐    ┌──────────────────┐    ┌──────────────────┐
+│ JD Input    │───▶│  generate-cv.ts  │───▶│ content/variants │
+│ (file/URL)  │    │                  │    │   ├── X.yaml     │
+└─────────────┘    └──────────────────┘    │   └── X.json     │
+                                           └────────┬─────────┘
+                                                    │
+                    ┌───────────────────────────────┼───────────┐
+                    │                               │           │
+                    ▼                               ▼           ▼
+           ┌──────────────┐              ┌──────────────┐  ┌────────┐
+           │ eval/redteam │              │ variants:sync│  │ resume │
+           │   reports    │              │   + manifest │  │  PDFs  │
+           └──────────────┘              └──────────────┘  └────────┘
+                    │                               │           │
+                    └───────────────────────────────┼───────────┘
+                                                    │
+                                                    ▼
+                                           ┌──────────────────┐
+                                           │    Git Commit    │
+                                           │   + PR + Merge   │
+                                           └────────┬─────────┘
+                                                    │
+                                                    ▼
+                                           ┌──────────────────┐
+                                           │  GitHub Pages    │
+                                           │  (Static Host)   │
+                                           └────────┬─────────┘
+                                                    │
+                                                    ▼
+                                           ┌──────────────────┐
+                                           │  Browser loads   │
+                                           │  variant JSON    │
+                                           │  via glob import │
+                                           └──────────────────┘
+```
+
+### Key Files
+
+| Category | Files | Purpose |
+|----------|-------|---------|
+| **Schemas** | `src/lib/schemas.ts` | Zod validation (VariantSchema) |
+| **Types** | `src/types/variant.ts` | TypeScript interfaces |
+| **Loading** | `src/lib/variants.ts` | `loadVariant()`, `mergeProfile()` |
+| **Routing** | `src/pages/VariantPortfolio.tsx` | `/:company/:role` handler |
+| **Context** | `src/context/VariantContext.tsx` | React context provider |
+| **Generation** | `scripts/generate-cv.ts` | AI variant generation |
+| **Sync** | `scripts/sync-variants.ts` | YAML→JSON + manifest |
+| **Eval** | `scripts/evaluate-variants.ts` | Claims ledger builder |
+| **Redteam** | `scripts/redteam.ts` | Security scanner |
+| **Resume** | `scripts/generate-resume.ts` | Puppeteer PDF generation |
+| **Dashboard** | `scripts/generate-dashboard.ts` | Static HTML dashboard |
+
+---
+
+## 4. Target Architecture
+
+### High-Level Design
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│ TARGET ARCHITECTURE (with Convex)                               │
+└─────────────────────────────────────────────────────────────────┘
+
+                    ┌──────────────────┐
+                    │   AI Provider    │
+                    │ (Claude/OpenAI)  │
+                    └────────┬─────────┘
+                             │
+                             ▼
+┌─────────────┐    ┌──────────────────┐    ┌──────────────────┐
+│ JD Input    │───▶│  Convex Action   │───▶│  Convex Database │
+│ (file/URL)  │    │  generateVariant │    │   variants table │
+└─────────────┘    └──────────────────┘    └────────┬─────────┘
+                                                    │
+                    ┌───────────────────────────────┼───────────┐
+                    │                               │           │
+                    ▼                               ▼           ▼
+           ┌──────────────┐              ┌──────────────┐  ┌────────┐
+           │  Convex DB   │              │  Convex DB   │  │ Convex │
+           │ evaluations  │              │  (variants)  │  │ Files  │
+           │ redteam_runs │              │              │  │ (PDFs) │
+           └──────────────┘              └──────────────┘  └────────┘
+                                                    │
+                                                    │ (no git needed)
+                                                    ▼
+                                           ┌──────────────────┐
+                                           │  GitHub Pages    │
+                                           │  (Static SPA)    │
+                                           └────────┬─────────┘
+                                                    │
+                                                    ▼
+                                           ┌──────────────────┐
+                                           │  Browser loads   │
+                                           │  variant via     │
+                                           │  useQuery()      │
+                                           └──────────────────┘
+```
+
+### What Changes
+
+| Component | Before | After |
+|-----------|--------|-------|
+| **Variant storage** | YAML/JSON files | Convex `variants` table |
+| **Variant loading** | `import.meta.glob()` | `useQuery(api.variants.getBySlug)` |
+| **Manifest** | Static JSON file | `useQuery(api.variants.list)` |
+| **Generation** | Local script → file | Convex action → database |
+| **Evaluation** | Local script → file | Convex action → database |
+| **Resume PDFs** | Git-tracked files | Convex file storage |
+| **Dashboard** | Static HTML | React + Convex queries |
+
+### What Stays the Same
+
+| Component | Reason |
+|-----------|--------|
+| Base portfolio content | Static, rarely changes, benefits from Git history |
+| React components | No change needed, just different data source |
+| Merge logic | Same `mergeProfile()` function, different input |
+| Zod validation | Convex validators mirror Zod schemas |
+| Build pipeline | Still Vite, still deploys to GitHub Pages |
+| URL routing | `/:company/:role` unchanged |
+
+---
+
+## 5. Convex Schema Design
+
+### Database Schema
+
+```typescript
+// convex/schema.ts
+
+import { defineSchema, defineTable } from "convex/server";
+import { v } from "convex/values";
+
+// ============================================================================
+// SHARED VALUE DEFINITIONS
+// ============================================================================
+
+const headlineSegment = v.object({
+  text: v.string(),
+  style: v.optional(v.union(
+    v.literal("italic"),
+    v.literal("muted"),
+    v.literal("accent"),
+    v.literal("normal")
+  ))
+});
+
+const stat = v.object({
+  value: v.string(),
+  label: v.string()
+});
+
+// ============================================================================
+// VARIANT SCHEMA
+// ============================================================================
+
+const variantMetadata = v.object({
+  company: v.string(),
+  role: v.string(),
+  slug: v.string(),
+  generatedAt: v.string(),
+  jobDescription: v.string(),
+  generationModel: v.optional(v.string()),
+  publishStatus: v.union(v.literal("draft"), v.literal("published")),
+  publishedAt: v.optional(v.string()),
+  applicationStatus: v.union(v.literal("not_applied"), v.literal("applied")),
+  appliedAt: v.optional(v.string()),
+  sourceUrl: v.optional(v.string()),
+  resumeStorageId: v.optional(v.id("_storage")), // Convex file storage
+  resumePath: v.optional(v.string()), // Legacy path for migration
+});
+
+const heroOverrides = v.object({
+  status: v.optional(v.string()),
+  headline: v.optional(v.array(headlineSegment)),
+  subheadline: v.optional(v.string()),
+  companyAccent: v.optional(v.array(headlineSegment))
+});
+
+const aboutOverrides = v.object({
+  tagline: v.optional(v.string()),
+  bio: v.optional(v.array(v.string())),
+  stats: v.optional(v.array(stat))
+});
+
+const sectionOverrides = v.object({
+  beyondWork: v.optional(v.boolean()),
+  blog: v.optional(v.boolean()),
+  onchainIdentity: v.optional(v.boolean()),
+  skills: v.optional(v.boolean()),
+  passionProjects: v.optional(v.boolean())
+});
+
+const experienceOverride = v.object({
+  company: v.string(),
+  highlights: v.optional(v.array(v.string())),
+  tags: v.optional(v.array(v.string()))
+});
+
+const variantOverrides = v.object({
+  hero: v.optional(heroOverrides),
+  about: v.optional(aboutOverrides),
+  sections: v.optional(sectionOverrides),
+  experience: v.optional(v.array(experienceOverride))
+});
+
+const caseStudyRelevance = v.object({
+  slug: v.string(),
+  relevanceScore: v.number(),
+  reasoning: v.optional(v.string())
+});
+
+const skillRelevance = v.object({
+  category: v.string(),
+  relevanceScore: v.number()
+});
+
+const projectRelevance = v.object({
+  slug: v.string(),
+  relevanceScore: v.number(),
+  reasoning: v.optional(v.string())
+});
+
+const variantRelevance = v.object({
+  caseStudies: v.optional(v.array(caseStudyRelevance)),
+  skills: v.optional(v.array(skillRelevance)),
+  projects: v.optional(v.array(projectRelevance))
+});
+
+// ============================================================================
+// EVALUATION SCHEMA
+// ============================================================================
+
+const claim = v.object({
+  id: v.string(),
+  text: v.string(),
+  location: v.string(),
+  anchors: v.array(v.string()),
+  verified: v.boolean(),
+  verifiedAt: v.optional(v.string()),
+  verifiedBy: v.optional(v.string()),
+  sources: v.array(v.object({
+    file: v.string(),
+    score: v.number(),
+    excerpt: v.optional(v.string())
+  }))
+});
+
+// ============================================================================
+// RED TEAM SCHEMA
+// ============================================================================
+
+const redteamFinding = v.object({
+  checkId: v.string(),
+  severity: v.union(v.literal("pass"), v.literal("warn"), v.literal("fail")),
+  message: v.string(),
+  details: v.optional(v.string())
+});
+
+// ============================================================================
+// TABLE DEFINITIONS
+// ============================================================================
+
+export default defineSchema({
+  // Main variants table
+  variants: defineTable({
+    metadata: variantMetadata,
+    overrides: variantOverrides,
+    relevance: v.optional(variantRelevance),
+
+    // Denormalized fields for efficient queries
+    slug: v.string(),
+    company: v.string(),
+    role: v.string(),
+    publishStatus: v.string(),
+    applicationStatus: v.string(),
+    generatedAt: v.string(),
+
+    // Audit fields
+    createdAt: v.string(),
+    updatedAt: v.string(),
+  })
+    .index("by_slug", ["slug"])
+    .index("by_company", ["company"])
+    .index("by_status", ["publishStatus"])
+    .index("by_application", ["applicationStatus"])
+    .index("by_generated", ["generatedAt"]),
+
+  // Evaluation results (claims ledger)
+  evaluations: defineTable({
+    variantId: v.id("variants"),
+    slug: v.string(),
+    claims: v.array(claim),
+    allVerified: v.boolean(),
+    contentHash: v.string(), // Hash of variant content at eval time
+    evaluatedAt: v.string(),
+    evaluatedBy: v.optional(v.string())
+  })
+    .index("by_variant", ["variantId"])
+    .index("by_slug", ["slug"]),
+
+  // Red team scan results
+  redteamRuns: defineTable({
+    variantId: v.id("variants"),
+    slug: v.string(),
+    findings: v.array(redteamFinding),
+    overallStatus: v.union(
+      v.literal("pass"),
+      v.literal("warn"),
+      v.literal("fail")
+    ),
+    scannedAt: v.string(),
+    strictMode: v.boolean()
+  })
+    .index("by_variant", ["variantId"])
+    .index("by_slug", ["slug"]),
+
+  // Generation history (audit trail)
+  generationLogs: defineTable({
+    variantId: v.optional(v.id("variants")),
+    slug: v.string(),
+    company: v.string(),
+    role: v.string(),
+    jobDescriptionHash: v.string(),
+    model: v.string(),
+    promptTokens: v.optional(v.number()),
+    completionTokens: v.optional(v.number()),
+    durationMs: v.number(),
+    success: v.boolean(),
+    errorMessage: v.optional(v.string()),
+    generatedAt: v.string()
+  })
+    .index("by_slug", ["slug"])
+    .index("by_date", ["generatedAt"]),
+});
+```
+
+### Schema Mapping: Zod → Convex
+
+| Zod Type | Convex Type | Notes |
+|----------|-------------|-------|
+| `z.string()` | `v.string()` | Direct mapping |
+| `z.number()` | `v.number()` | Direct mapping |
+| `z.boolean()` | `v.boolean()` | Direct mapping |
+| `z.array(T)` | `v.array(T)` | Direct mapping |
+| `z.object({})` | `v.object({})` | Direct mapping |
+| `z.optional(T)` | `v.optional(T)` | Direct mapping |
+| `z.enum([...])` | `v.union(v.literal(...), ...)` | Explicit union |
+| `z.literal(X)` | `v.literal(X)` | Direct mapping |
+| `z.string().email()` | `v.string()` | Validation in action |
+| `z.string().regex()` | `v.string()` | Validation in action |
+| `z.number().min().max()` | `v.number()` | Validation in action |
+
+---
+
+## 6. API Design
+
+### Queries
+
+```typescript
+// convex/variants.ts
+
+import { query } from "./_generated/server";
+import { v } from "convex/values";
+
+/**
+ * Get a single variant by slug
+ * Used by: VariantPortfolio.tsx
+ */
+export const getBySlug = query({
+  args: { slug: v.string() },
+  handler: async (ctx, args) => {
+    const variant = await ctx.db
+      .query("variants")
+      .withIndex("by_slug", (q) => q.eq("slug", args.slug))
+      .first();
+
+    if (!variant) return null;
+
+    // Only return published variants to public
+    if (variant.publishStatus !== "published") {
+      return null;
+    }
+
+    return variant;
+  },
+});
+
+/**
+ * Get variant including drafts (for dashboard/preview)
+ * Used by: Dashboard, Preview mode
+ */
+export const getBySlugWithDrafts = query({
+  args: {
+    slug: v.string(),
+    includeUnpublished: v.optional(v.boolean())
+  },
+  handler: async (ctx, args) => {
+    const variant = await ctx.db
+      .query("variants")
+      .withIndex("by_slug", (q) => q.eq("slug", args.slug))
+      .first();
+
+    return variant;
+  },
+});
+
+/**
+ * List all variants (for dashboard)
+ * Used by: Dashboard manifest replacement
+ */
+export const list = query({
+  args: {
+    status: v.optional(v.union(
+      v.literal("draft"),
+      v.literal("published"),
+      v.literal("all")
+    )),
+    applicationStatus: v.optional(v.union(
+      v.literal("not_applied"),
+      v.literal("applied"),
+      v.literal("all")
+    )),
+    company: v.optional(v.string()),
+    limit: v.optional(v.number()),
+  },
+  handler: async (ctx, args) => {
+    let query = ctx.db.query("variants");
+
+    // Filter by publish status
+    if (args.status && args.status !== "all") {
+      query = query.withIndex("by_status", (q) =>
+        q.eq("publishStatus", args.status)
+      );
+    }
+
+    const variants = await query.collect();
+
+    // Additional filtering
+    let filtered = variants;
+
+    if (args.applicationStatus && args.applicationStatus !== "all") {
+      filtered = filtered.filter(v =>
+        v.applicationStatus === args.applicationStatus
+      );
+    }
+
+    if (args.company) {
+      filtered = filtered.filter(v =>
+        v.company.toLowerCase() === args.company!.toLowerCase()
+      );
+    }
+
+    // Sort by generatedAt DESC
+    filtered.sort((a, b) =>
+      new Date(b.generatedAt).getTime() - new Date(a.generatedAt).getTime()
+    );
+
+    // Apply limit
+    if (args.limit) {
+      filtered = filtered.slice(0, args.limit);
+    }
+
+    return filtered;
+  },
+});
+
+/**
+ * Get variant slugs (for static generation fallback)
+ */
+export const listSlugs = query({
+  args: { publishedOnly: v.optional(v.boolean()) },
+  handler: async (ctx, args) => {
+    let variants = await ctx.db.query("variants").collect();
+
+    if (args.publishedOnly) {
+      variants = variants.filter(v => v.publishStatus === "published");
+    }
+
+    return variants.map(v => v.slug);
+  },
+});
+
+/**
+ * Get evaluation results for a variant
+ */
+export const getEvaluation = query({
+  args: { slug: v.string() },
+  handler: async (ctx, args) => {
+    return await ctx.db
+      .query("evaluations")
+      .withIndex("by_slug", (q) => q.eq("slug", args.slug))
+      .order("desc")
+      .first();
+  },
+});
+
+/**
+ * Get red team results for a variant
+ */
+export const getRedteamRun = query({
+  args: { slug: v.string() },
+  handler: async (ctx, args) => {
+    return await ctx.db
+      .query("redteamRuns")
+      .withIndex("by_slug", (q) => q.eq("slug", args.slug))
+      .order("desc")
+      .first();
+  },
+});
+```
+
+### Mutations
+
+```typescript
+// convex/variants.ts (continued)
+
+import { mutation } from "./_generated/server";
+
+/**
+ * Create or update a variant
+ */
+export const upsert = mutation({
+  args: {
+    metadata: variantMetadata,
+    overrides: variantOverrides,
+    relevance: v.optional(variantRelevance),
+  },
+  handler: async (ctx, args) => {
+    const now = new Date().toISOString();
+    const slug = args.metadata.slug;
+
+    // Check for existing variant
+    const existing = await ctx.db
+      .query("variants")
+      .withIndex("by_slug", (q) => q.eq("slug", slug))
+      .first();
+
+    const variantData = {
+      metadata: args.metadata,
+      overrides: args.overrides,
+      relevance: args.relevance,
+      // Denormalized fields
+      slug,
+      company: args.metadata.company,
+      role: args.metadata.role,
+      publishStatus: args.metadata.publishStatus,
+      applicationStatus: args.metadata.applicationStatus,
+      generatedAt: args.metadata.generatedAt,
+      updatedAt: now,
+    };
+
+    if (existing) {
+      await ctx.db.patch(existing._id, variantData);
+      return existing._id;
+    } else {
+      return await ctx.db.insert("variants", {
+        ...variantData,
+        createdAt: now,
+      });
+    }
+  },
+});
+
+/**
+ * Update variant status (publish/unpublish)
+ */
+export const updateStatus = mutation({
+  args: {
+    slug: v.string(),
+    publishStatus: v.union(v.literal("draft"), v.literal("published")),
+  },
+  handler: async (ctx, args) => {
+    const variant = await ctx.db
+      .query("variants")
+      .withIndex("by_slug", (q) => q.eq("slug", args.slug))
+      .first();
+
+    if (!variant) {
+      throw new Error(`Variant not found: ${args.slug}`);
+    }
+
+    const now = new Date().toISOString();
+
+    await ctx.db.patch(variant._id, {
+      publishStatus: args.publishStatus,
+      "metadata.publishStatus": args.publishStatus,
+      "metadata.publishedAt": args.publishStatus === "published" ? now : undefined,
+      updatedAt: now,
+    });
+  },
+});
+
+/**
+ * Update application status
+ */
+export const updateApplicationStatus = mutation({
+  args: {
+    slug: v.string(),
+    applicationStatus: v.union(v.literal("not_applied"), v.literal("applied")),
+  },
+  handler: async (ctx, args) => {
+    const variant = await ctx.db
+      .query("variants")
+      .withIndex("by_slug", (q) => q.eq("slug", args.slug))
+      .first();
+
+    if (!variant) {
+      throw new Error(`Variant not found: ${args.slug}`);
+    }
+
+    const now = new Date().toISOString();
+
+    await ctx.db.patch(variant._id, {
+      applicationStatus: args.applicationStatus,
+      "metadata.applicationStatus": args.applicationStatus,
+      "metadata.appliedAt": args.applicationStatus === "applied" ? now : undefined,
+      updatedAt: now,
+    });
+  },
+});
+
+/**
+ * Delete a variant
+ */
+export const remove = mutation({
+  args: { slug: v.string() },
+  handler: async (ctx, args) => {
+    const variant = await ctx.db
+      .query("variants")
+      .withIndex("by_slug", (q) => q.eq("slug", args.slug))
+      .first();
+
+    if (!variant) {
+      throw new Error(`Variant not found: ${args.slug}`);
+    }
+
+    // Delete associated evaluations
+    const evals = await ctx.db
+      .query("evaluations")
+      .withIndex("by_slug", (q) => q.eq("slug", args.slug))
+      .collect();
+
+    for (const eval_ of evals) {
+      await ctx.db.delete(eval_._id);
+    }
+
+    // Delete associated red team runs
+    const redteams = await ctx.db
+      .query("redteamRuns")
+      .withIndex("by_slug", (q) => q.eq("slug", args.slug))
+      .collect();
+
+    for (const rt of redteams) {
+      await ctx.db.delete(rt._id);
+    }
+
+    // Delete the variant
+    await ctx.db.delete(variant._id);
+  },
+});
+
+/**
+ * Store evaluation results
+ */
+export const saveEvaluation = mutation({
+  args: {
+    slug: v.string(),
+    claims: v.array(claim),
+    contentHash: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const variant = await ctx.db
+      .query("variants")
+      .withIndex("by_slug", (q) => q.eq("slug", args.slug))
+      .first();
+
+    if (!variant) {
+      throw new Error(`Variant not found: ${args.slug}`);
+    }
+
+    const allVerified = args.claims.every(c => c.verified);
+
+    return await ctx.db.insert("evaluations", {
+      variantId: variant._id,
+      slug: args.slug,
+      claims: args.claims,
+      allVerified,
+      contentHash: args.contentHash,
+      evaluatedAt: new Date().toISOString(),
+    });
+  },
+});
+
+/**
+ * Store red team results
+ */
+export const saveRedteamRun = mutation({
+  args: {
+    slug: v.string(),
+    findings: v.array(redteamFinding),
+    strictMode: v.boolean(),
+  },
+  handler: async (ctx, args) => {
+    const variant = await ctx.db
+      .query("variants")
+      .withIndex("by_slug", (q) => q.eq("slug", args.slug))
+      .first();
+
+    if (!variant) {
+      throw new Error(`Variant not found: ${args.slug}`);
+    }
+
+    // Determine overall status
+    const hasFail = args.findings.some(f => f.severity === "fail");
+    const hasWarn = args.findings.some(f => f.severity === "warn");
+    const overallStatus = hasFail ? "fail" : (hasWarn ? "warn" : "pass");
+
+    return await ctx.db.insert("redteamRuns", {
+      variantId: variant._id,
+      slug: args.slug,
+      findings: args.findings,
+      overallStatus,
+      scannedAt: new Date().toISOString(),
+      strictMode: args.strictMode,
+    });
+  },
+});
+```
+
+### Actions (Server-side with External APIs)
+
+```typescript
+// convex/actions/generate.ts
+
+import { action } from "../_generated/server";
+import { v } from "convex/values";
+import { api } from "../_generated/api";
+
+/**
+ * Generate a variant using AI
+ * Runs server-side with access to API keys
+ */
+export const generateVariant = action({
+  args: {
+    company: v.string(),
+    role: v.string(),
+    jobDescription: v.string(),
+    sourceUrl: v.optional(v.string()),
+    model: v.optional(v.union(
+      v.literal("claude"),
+      v.literal("openai"),
+      v.literal("gemini")
+    )),
+  },
+  handler: async (ctx, args) => {
+    const startTime = Date.now();
+    const slug = `${args.company.toLowerCase().replace(/\s+/g, '-')}-${args.role.toLowerCase().replace(/\s+/g, '-')}`;
+    const model = args.model || "claude";
+
+    try {
+      // 1. Load portfolio context (could be from Convex or bundled)
+      const portfolioContext = await loadPortfolioContext();
+
+      // 2. Build prompt
+      const prompt = buildGenerationPrompt({
+        portfolioContext,
+        jobDescription: args.jobDescription,
+        company: args.company,
+        role: args.role,
+      });
+
+      // 3. Call AI provider
+      const response = await callAIProvider(model, prompt);
+
+      // 4. Parse and validate response
+      const variantData = parseVariantResponse(response);
+
+      // 5. Save to database
+      const variantId = await ctx.runMutation(api.variants.upsert, {
+        metadata: {
+          company: args.company,
+          role: args.role,
+          slug,
+          generatedAt: new Date().toISOString(),
+          jobDescription: args.jobDescription,
+          generationModel: model,
+          publishStatus: "draft",
+          applicationStatus: "not_applied",
+          sourceUrl: args.sourceUrl,
+        },
+        overrides: variantData.overrides,
+        relevance: variantData.relevance,
+      });
+
+      // 6. Log generation
+      await ctx.runMutation(api.generationLogs.create, {
+        variantId,
+        slug,
+        company: args.company,
+        role: args.role,
+        jobDescriptionHash: hashString(args.jobDescription),
+        model,
+        durationMs: Date.now() - startTime,
+        success: true,
+        generatedAt: new Date().toISOString(),
+      });
+
+      return { success: true, slug, variantId };
+
+    } catch (error) {
+      // Log failure
+      await ctx.runMutation(api.generationLogs.create, {
+        slug,
+        company: args.company,
+        role: args.role,
+        jobDescriptionHash: hashString(args.jobDescription),
+        model,
+        durationMs: Date.now() - startTime,
+        success: false,
+        errorMessage: error.message,
+        generatedAt: new Date().toISOString(),
+      });
+
+      throw error;
+    }
+  },
+});
+
+/**
+ * Run evaluation on a variant
+ */
+export const evaluateVariant = action({
+  args: { slug: v.string() },
+  handler: async (ctx, args) => {
+    // 1. Load variant
+    const variant = await ctx.runQuery(api.variants.getBySlugWithDrafts, {
+      slug: args.slug,
+    });
+
+    if (!variant) {
+      throw new Error(`Variant not found: ${args.slug}`);
+    }
+
+    // 2. Extract claims from overrides
+    const claims = extractClaims(variant.overrides);
+
+    // 3. Search knowledge base for sources
+    const claimsWithSources = await findClaimSources(claims);
+
+    // 4. Save evaluation
+    const contentHash = hashObject(variant.overrides);
+
+    await ctx.runMutation(api.variants.saveEvaluation, {
+      slug: args.slug,
+      claims: claimsWithSources,
+      contentHash,
+    });
+
+    return {
+      totalClaims: claims.length,
+      verifiedClaims: claimsWithSources.filter(c => c.verified).length,
+    };
+  },
+});
+
+/**
+ * Run red team scan on a variant
+ */
+export const redteamVariant = action({
+  args: {
+    slug: v.string(),
+    strictMode: v.optional(v.boolean())
+  },
+  handler: async (ctx, args) => {
+    const variant = await ctx.runQuery(api.variants.getBySlugWithDrafts, {
+      slug: args.slug,
+    });
+
+    if (!variant) {
+      throw new Error(`Variant not found: ${args.slug}`);
+    }
+
+    // Run all checks
+    const findings = [
+      checkSecrets(variant),
+      checkConfidential(variant),
+      checkSycophancy(variant),
+      checkInflation(variant),
+      checkPromptInjection(variant),
+      checkJdLength(variant),
+      checkCrossContamination(variant),
+    ].flat();
+
+    await ctx.runMutation(api.variants.saveRedteamRun, {
+      slug: args.slug,
+      findings,
+      strictMode: args.strictMode || false,
+    });
+
+    return {
+      passed: !findings.some(f => f.severity === "fail"),
+      findings,
+    };
+  },
+});
+```
+
+---
+
+## 7. Migration Phases
+
+### Phase 1: Core Storage (Day 1-2)
+
+**Goal:** Replace file-based variant storage with Convex database
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│ PHASE 1: CORE STORAGE                                           │
+└─────────────────────────────────────────────────────────────────┘
+
+BEFORE:
+  /content/variants/*.yaml  →  import.meta.glob()  →  VariantPortfolio
+
+AFTER:
+  Convex variants table  →  useQuery()  →  VariantPortfolio
+```
+
+#### Tasks
+
+| Task | File(s) | Changes |
+|------|---------|---------|
+| Initialize Convex | `convex/` directory | `npx convex dev` |
+| Define schema | `convex/schema.ts` | Tables, indexes, validators |
+| Create queries | `convex/variants.ts` | `getBySlug`, `list`, `listSlugs` |
+| Create mutations | `convex/variants.ts` | `upsert`, `updateStatus`, `remove` |
+| Add Convex provider | `src/main.tsx` | `<ConvexProvider>` wrapper |
+| Update variant loading | `src/lib/variants.ts` | Replace glob with `useQuery` |
+| Update VariantPortfolio | `src/pages/VariantPortfolio.tsx` | Use Convex query |
+| Seed existing variants | `scripts/seed-variants.ts` | One-time migration |
+
+#### File Changes: `src/lib/variants.ts`
+
+```typescript
+// BEFORE
+const variantFiles = import.meta.glob('../../content/variants/*.json', {
+  eager: false
+});
+
+export async function loadVariant(slug: string): Promise<Variant | null> {
+  const filePath = `../../content/variants/${slug}.json`;
+  const loader = variantFiles[filePath];
+  if (!loader) return null;
+  const module = await loader();
+  return VariantSchema.parse(module.default);
+}
+
+// AFTER
+import { useQuery } from "convex/react";
+import { api } from "../convex/_generated/api";
+
+// Hook for React components
+export function useVariant(slug: string) {
+  return useQuery(api.variants.getBySlug, { slug });
+}
+
+// Async function for non-React contexts
+export async function loadVariant(
+  convex: ConvexReactClient,
+  slug: string
+): Promise<Variant | null> {
+  const result = await convex.query(api.variants.getBySlug, { slug });
+  return result ? VariantSchema.parse(result) : null;
+}
+
+// mergeProfile stays the same - just takes Variant data
+export function mergeProfile(variant: Variant): MergedProfile {
+  // ... unchanged
+}
+```
+
+#### File Changes: `src/pages/VariantPortfolio.tsx`
+
+```typescript
+// BEFORE
+import { loadVariant, mergeProfile } from '../lib/variants';
+
+export function VariantPortfolio() {
+  const { company, role } = useParams();
+  const [variant, setVariant] = useState<Variant | null>(null);
+
+  useEffect(() => {
+    const slug = `${company}-${role}`;
+    loadVariant(slug).then(setVariant);
+  }, [company, role]);
+
+  // ...
+}
+
+// AFTER
+import { useQuery } from "convex/react";
+import { api } from "../convex/_generated/api";
+import { mergeProfile } from '../lib/variants';
+
+export function VariantPortfolio() {
+  const { company, role } = useParams();
+  const slug = `${company}-${role}`;
+
+  const variant = useQuery(api.variants.getBySlug, { slug });
+
+  // Loading state
+  if (variant === undefined) {
+    return <LoadingSpinner />;
+  }
+
+  // Not found
+  if (variant === null) {
+    return <Navigate to="/404" />;
+  }
+
+  const mergedProfile = mergeProfile(variant);
+
+  return (
+    <VariantProvider profile={mergedProfile} variant={variant}>
+      <Portfolio />
+    </VariantProvider>
+  );
+}
+```
+
+#### Seed Script
+
+```typescript
+// scripts/seed-variants.ts
+
+import { ConvexHttpClient } from "convex/browser";
+import { api } from "../convex/_generated/api";
+import fs from "fs";
+import path from "path";
+import yaml from "yaml";
+import { VariantSchema } from "../src/lib/schemas";
+
+const client = new ConvexHttpClient(process.env.CONVEX_URL!);
+
+async function seedVariants() {
+  const variantsDir = path.join(__dirname, "../content/variants");
+  const files = fs.readdirSync(variantsDir).filter(f => f.endsWith(".yaml"));
+
+  console.log(`Found ${files.length} variants to seed`);
+
+  for (const file of files) {
+    const content = fs.readFileSync(path.join(variantsDir, file), "utf-8");
+    const data = yaml.parse(content);
+    const variant = VariantSchema.parse(data);
+
+    console.log(`Seeding: ${variant.metadata.slug}`);
+
+    await client.mutation(api.variants.upsert, {
+      metadata: variant.metadata,
+      overrides: variant.overrides,
+      relevance: variant.relevance,
+    });
+  }
+
+  console.log("Done!");
+}
+
+seedVariants().catch(console.error);
+```
+
+#### Validation Checklist
+
+- [ ] Convex project initialized
+- [ ] Schema deployed
+- [ ] All existing variants seeded
+- [ ] `/:company/:role` routes load from Convex
+- [ ] Loading states handle undefined/null correctly
+- [ ] 404 handling works for missing variants
+- [ ] Merge logic produces identical output
+
+---
+
+### Phase 2: Generation Pipeline (Day 3)
+
+**Goal:** Move variant generation from local script to Convex action
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│ PHASE 2: GENERATION PIPELINE                                    │
+└─────────────────────────────────────────────────────────────────┘
+
+BEFORE:
+  npm run generate:cv  →  AI API  →  write YAML/JSON files  →  git commit
+
+AFTER:
+  npm run generate:cv  →  Convex action  →  save to DB  →  (no git needed)
+```
+
+#### Tasks
+
+| Task | File(s) | Changes |
+|------|---------|---------|
+| Create generation action | `convex/actions/generate.ts` | AI integration, prompt building |
+| Add environment secrets | Convex dashboard | API keys |
+| Update CLI | `scripts/generate-cv.ts` | Call Convex action instead of local AI |
+| Add streaming support | `convex/actions/generate.ts` | Progress updates (optional) |
+| Add generation logs | `convex/generationLogs.ts` | Audit trail |
+
+#### Updated CLI
+
+```typescript
+// scripts/generate-cv.ts (simplified)
+
+import { ConvexHttpClient } from "convex/browser";
+import { api } from "../convex/_generated/api";
+
+const client = new ConvexHttpClient(process.env.CONVEX_URL!);
+
+async function generateVariant(options: GenerateOptions) {
+  const spinner = ora("Generating variant...").start();
+
+  try {
+    const result = await client.action(api.actions.generate.generateVariant, {
+      company: options.company,
+      role: options.role,
+      jobDescription: options.jobDescription,
+      sourceUrl: options.sourceUrl,
+      model: options.model,
+    });
+
+    spinner.succeed(`Generated variant: ${result.slug}`);
+    console.log(`View: ${process.env.SITE_URL}/${options.company}/${options.role}`);
+
+  } catch (error) {
+    spinner.fail(`Generation failed: ${error.message}`);
+    process.exit(1);
+  }
+}
+```
+
+#### Validation Checklist
+
+- [ ] API keys configured in Convex dashboard
+- [ ] Generation creates variant in database
+- [ ] Generated variants load correctly in frontend
+- [ ] Generation logs tracked
+- [ ] Error handling works
+
+---
+
+### Phase 3: Quality Gates (Day 4)
+
+**Goal:** Move evaluation and red-team pipelines to Convex
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│ PHASE 3: QUALITY GATES                                          │
+└─────────────────────────────────────────────────────────────────┘
+
+BEFORE:
+  npm run eval:variant  →  write YAML files  →  git commit
+
+AFTER:
+  npm run eval:variant  →  Convex action  →  save to evaluations table
+```
+
+#### Tasks
+
+| Task | File(s) | Changes |
+|------|---------|---------|
+| Create eval action | `convex/actions/evaluate.ts` | Claims extraction, source search |
+| Create redteam action | `convex/actions/redteam.ts` | All 8 checks |
+| Update CLI wrappers | `scripts/evaluate-variants.ts` | Call Convex actions |
+| Add quality gate queries | `convex/variants.ts` | `getEvaluation`, `getRedteamRun` |
+| Update CI checks | `.github/workflows/` | Use Convex queries for gates |
+
+#### Validation Checklist
+
+- [ ] Evaluation runs and stores results
+- [ ] Red-team runs and stores findings
+- [ ] CI can query quality gate status
+- [ ] `npm run eval:check` uses Convex data
+
+---
+
+### Phase 4: Resume PDFs (Day 5 - Optional)
+
+**Goal:** Move PDF generation to Convex action with file storage
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│ PHASE 4: RESUME PDFs                                            │
+└─────────────────────────────────────────────────────────────────┘
+
+BEFORE:
+  Puppeteer local  →  write to /public/resumes/  →  git commit
+
+AFTER:
+  Convex action  →  Puppeteer (cloud)  →  Convex file storage
+```
+
+#### Options
+
+**Option A: Keep Local (Recommended for now)**
+- Keep Puppeteer running locally
+- Upload generated PDF to Convex file storage
+- Store `resumeStorageId` in variant metadata
+- Pros: Simpler, uses existing infrastructure
+- Cons: Still need local Puppeteer for generation
+
+**Option B: Cloud PDF Service**
+- Use external service (e.g., Browserless, Puppeteer Cloud)
+- Convex action calls service API
+- Pros: Fully serverless
+- Cons: Additional cost, latency
+
+**Option C: On-Demand Generation**
+- Don't pre-generate PDFs
+- Generate on first request, cache result
+- Pros: No storage, always fresh
+- Cons: First load latency
+
+#### Recommended: Option A Implementation
+
+```typescript
+// scripts/generate-resume.ts (updated)
+
+import { ConvexHttpClient } from "convex/browser";
+import { api } from "../convex/_generated/api";
+
+async function generateResume(slug: string) {
+  // 1. Generate PDF locally with Puppeteer (existing code)
+  const pdfBuffer = await generatePdfWithPuppeteer(slug);
+
+  // 2. Upload to Convex file storage
+  const client = new ConvexHttpClient(process.env.CONVEX_URL!);
+
+  const uploadUrl = await client.mutation(api.files.generateUploadUrl);
+
+  const response = await fetch(uploadUrl, {
+    method: "POST",
+    headers: { "Content-Type": "application/pdf" },
+    body: pdfBuffer,
+  });
+
+  const { storageId } = await response.json();
+
+  // 3. Update variant with storage ID
+  await client.mutation(api.variants.updateResume, {
+    slug,
+    resumeStorageId: storageId,
+  });
+
+  console.log(`Resume uploaded: ${storageId}`);
+}
+```
+
+#### Validation Checklist
+
+- [ ] PDFs upload to Convex storage
+- [ ] Variant metadata includes `resumeStorageId`
+- [ ] Resume download links work
+- [ ] Old Git-tracked PDFs can be removed
+
+---
+
+### Phase 5: Dashboard (Day 5-6)
+
+**Goal:** Replace static HTML dashboard with React + Convex queries
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│ PHASE 5: DASHBOARD                                              │
+└─────────────────────────────────────────────────────────────────┘
+
+BEFORE:
+  npm run generate:dashboard  →  static HTML  →  git commit
+
+AFTER:
+  React component  →  useQuery(api.variants.list)  →  real-time updates
+```
+
+#### Tasks
+
+| Task | File(s) | Changes |
+|------|---------|---------|
+| Create dashboard page | `src/pages/Dashboard.tsx` | React component |
+| Add route | `src/App.tsx` | `/dashboard` route |
+| Add auth check | `src/pages/Dashboard.tsx` | Password gate (or Convex auth) |
+| Remove static generation | `scripts/generate-dashboard.ts` | Delete or deprecate |
+| Add real-time updates | `src/pages/Dashboard.tsx` | Convex subscriptions |
+
+#### Dashboard Component
+
+```typescript
+// src/pages/Dashboard.tsx
+
+import { useQuery, useMutation } from "convex/react";
+import { api } from "../convex/_generated/api";
+
+export function Dashboard() {
+  const [authenticated, setAuthenticated] = useState(false);
+  const [filter, setFilter] = useState<"all" | "published" | "draft">("all");
+  const [search, setSearch] = useState("");
+
+  const variants = useQuery(api.variants.list, { status: filter });
+
+  // Filter by search
+  const filtered = variants?.filter(v =>
+    v.company.toLowerCase().includes(search.toLowerCase()) ||
+    v.role.toLowerCase().includes(search.toLowerCase())
+  );
+
+  if (!authenticated) {
+    return <PasswordGate onSuccess={() => setAuthenticated(true)} />;
+  }
+
+  return (
+    <div className="dashboard">
+      <header>
+        <h1>CV Dashboard</h1>
+        <input
+          type="search"
+          placeholder="Search variants..."
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+        />
+        <select value={filter} onChange={e => setFilter(e.target.value)}>
+          <option value="all">All</option>
+          <option value="published">Published</option>
+          <option value="draft">Drafts</option>
+        </select>
+      </header>
+
+      <main>
+        {filtered?.map(variant => (
+          <VariantCard
+            key={variant._id}
+            variant={variant}
+          />
+        ))}
+      </main>
+    </div>
+  );
+}
+```
+
+#### Validation Checklist
+
+- [ ] Dashboard loads variants from Convex
+- [ ] Search and filter work
+- [ ] Password protection works
+- [ ] Real-time updates when variants change
+- [ ] Can remove static `generate-dashboard.ts`
+
+---
+
+## 8. Module Impact Analysis
+
+### Impact Summary
+
+| Module | Impact Level | Changes Required |
+|--------|--------------|------------------|
+| **Variant Storage** | 🔴 High | Complete rewrite of data source |
+| **Variant Loading** | 🔴 High | Replace glob with queries |
+| **Generation CLI** | 🟡 Medium | Update to call Convex action |
+| **Evaluation CLI** | 🟡 Medium | Update to call Convex action |
+| **Red-team CLI** | 🟡 Medium | Update to call Convex action |
+| **Resume Generation** | 🟡 Medium | Add Convex upload step |
+| **Dashboard** | 🟡 Medium | Rewrite as React component |
+| **Build Pipeline** | 🟢 Low | Remove variants:sync from prebuild |
+| **React Components** | 🟢 Low | No changes (same data shape) |
+| **Merge Logic** | 🟢 Low | No changes (same function) |
+| **Routing** | 🟢 Low | No changes |
+| **Styling** | ⚪ None | No changes |
+
+### Detailed Impact: Variant Loading
+
+**Current Flow:**
+```
+URL /:company/:role
+    ↓
+useParams() extracts { company, role }
+    ↓
+loadVariant(`${company}-${role}`)
+    ↓
+import.meta.glob loader
+    ↓
+dynamic import of JSON file
+    ↓
+Zod validation
+    ↓
+return Variant | null
+```
+
+**New Flow:**
+```
+URL /:company/:role
+    ↓
+useParams() extracts { company, role }
+    ↓
+useQuery(api.variants.getBySlug, { slug: `${company}-${role}` })
+    ↓
+Convex query execution
+    ↓
+return Variant | null | undefined (loading)
+```
+
+**Key Differences:**
+1. **Loading state**: Convex returns `undefined` while loading
+2. **Reactivity**: Automatic re-fetch on data changes
+3. **Validation**: Convex validators instead of Zod (at boundary)
+4. **Caching**: Convex handles caching automatically
+
+### Detailed Impact: Generation CLI
+
+**Current Flow:**
+```
+npm run generate:cv --company X --role Y --jd ./jd.txt
+    ↓
+Load portfolio context from local files
+    ↓
+Build prompt
+    ↓
+Call AI API directly (using local env vars)
+    ↓
+Parse response
+    ↓
+Validate with Zod
+    ↓
+Write YAML to content/variants/X-Y.yaml
+    ↓
+Write JSON to content/variants/X-Y.json
+    ↓
+(Manual) git commit + PR
+```
+
+**New Flow:**
+```
+npm run generate:cv --company X --role Y --jd ./jd.txt
+    ↓
+Call Convex action: api.actions.generate.generateVariant
+    ↓
+(In Convex) Load portfolio context
+    ↓
+(In Convex) Build prompt
+    ↓
+(In Convex) Call AI API (using Convex env vars)
+    ↓
+(In Convex) Validate with Convex validators
+    ↓
+(In Convex) Insert into variants table
+    ↓
+Return { success, slug }
+    ↓
+(No git needed)
+```
+
+**Key Differences:**
+1. **API keys**: Stored in Convex dashboard, not local `.env`
+2. **Output**: Database insert, not file write
+3. **Validation**: Convex validators (mirroring Zod)
+4. **Git**: No commit required
+
+### Detailed Impact: Dashboard
+
+**Current Flow:**
+```
+npm run generate:dashboard
+    ↓
+Read all YAML files from content/variants/
+    ↓
+Extract metadata
+    ↓
+Generate static HTML with embedded data
+    ↓
+Write to public/cv-dashboard/index.html
+    ↓
+git commit + deploy
+    ↓
+User visits /cv-dashboard/
+    ↓
+Static HTML loads
+    ↓
+Password check in JS
+    ↓
+Display embedded variant cards
+```
+
+**New Flow:**
+```
+User visits /dashboard
+    ↓
+React component mounts
+    ↓
+useQuery(api.variants.list)
+    ↓
+Convex returns variant list (real-time)
+    ↓
+Display variant cards
+    ↓
+Changes to variants reflect immediately
+```
+
+**Key Differences:**
+1. **Generation step**: None required
+2. **Data freshness**: Always current
+3. **Git commits**: None for dashboard updates
+4. **Real-time**: Automatic updates when variants change
+
+---
+
+## 9. Data Migration Strategy
+
+### Migration Steps
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│ DATA MIGRATION STEPS                                            │
+└─────────────────────────────────────────────────────────────────┘
+
+Step 1: PREPARE
+  - Deploy Convex schema
+  - Configure environment variables
+  - Test queries/mutations in Convex dashboard
+
+Step 2: SEED
+  - Run seed script to copy all YAML variants to Convex
+  - Verify count matches: 18 variants
+  - Spot-check 3-5 variants for data integrity
+
+Step 3: PARALLEL RUN
+  - Deploy frontend with Convex integration
+  - Keep file-based loading as fallback
+  - Monitor for errors
+
+Step 4: VALIDATE
+  - Compare rendered output: file vs Convex
+  - Test all routes
+  - Test search/filter functionality
+
+Step 5: CUTOVER
+  - Remove file-based loading code
+  - Remove variants:sync from build
+  - Archive YAML/JSON files (don't delete yet)
+
+Step 6: CLEANUP
+  - Delete content/variants/*.yaml
+  - Delete content/variants/*.json
+  - Delete scripts/sync-variants.ts
+  - Update documentation
+```
+
+### Seed Script Details
+
+```typescript
+// scripts/seed-variants.ts
+
+import { ConvexHttpClient } from "convex/browser";
+import { api } from "../convex/_generated/api";
+import fs from "fs";
+import path from "path";
+import yaml from "yaml";
+import { VariantSchema } from "../src/lib/schemas";
+
+const CONVEX_URL = process.env.CONVEX_URL;
+if (!CONVEX_URL) {
+  throw new Error("CONVEX_URL environment variable required");
+}
+
+const client = new ConvexHttpClient(CONVEX_URL);
+
+interface SeedOptions {
+  dryRun?: boolean;
+  force?: boolean; // Overwrite existing
+}
+
+async function seedVariants(options: SeedOptions = {}) {
+  const variantsDir = path.join(__dirname, "../content/variants");
+  const files = fs.readdirSync(variantsDir)
+    .filter(f => f.endsWith(".yaml") && !f.startsWith("_"));
+
+  console.log(`Found ${files.length} variants to seed`);
+
+  const results = {
+    created: 0,
+    updated: 0,
+    skipped: 0,
+    errors: [] as string[],
+  };
+
+  for (const file of files) {
+    const slug = file.replace(".yaml", "");
+
+    try {
+      const content = fs.readFileSync(
+        path.join(variantsDir, file),
+        "utf-8"
+      );
+      const data = yaml.parse(content);
+      const variant = VariantSchema.parse(data);
+
+      if (options.dryRun) {
+        console.log(`[DRY RUN] Would seed: ${slug}`);
+        results.created++;
+        continue;
+      }
+
+      // Check if exists
+      const existing = await client.query(api.variants.getBySlugWithDrafts, {
+        slug
+      });
+
+      if (existing && !options.force) {
+        console.log(`Skipping (exists): ${slug}`);
+        results.skipped++;
+        continue;
+      }
+
+      await client.mutation(api.variants.upsert, {
+        metadata: variant.metadata,
+        overrides: variant.overrides,
+        relevance: variant.relevance,
+      });
+
+      if (existing) {
+        console.log(`Updated: ${slug}`);
+        results.updated++;
+      } else {
+        console.log(`Created: ${slug}`);
+        results.created++;
+      }
+
+    } catch (error) {
+      console.error(`Error seeding ${slug}:`, error.message);
+      results.errors.push(`${slug}: ${error.message}`);
+    }
+  }
+
+  console.log("\n--- Seed Summary ---");
+  console.log(`Created: ${results.created}`);
+  console.log(`Updated: ${results.updated}`);
+  console.log(`Skipped: ${results.skipped}`);
+  console.log(`Errors: ${results.errors.length}`);
+
+  if (results.errors.length > 0) {
+    console.log("\nErrors:");
+    results.errors.forEach(e => console.log(`  - ${e}`));
+  }
+}
+
+// CLI
+const args = process.argv.slice(2);
+seedVariants({
+  dryRun: args.includes("--dry-run"),
+  force: args.includes("--force"),
+}).catch(console.error);
+```
+
+### Rollback Capability
+
+During migration, maintain ability to rollback:
+
+```typescript
+// src/lib/variants.ts
+
+const USE_CONVEX = process.env.VITE_USE_CONVEX === "true";
+
+export async function loadVariant(slug: string): Promise<Variant | null> {
+  if (USE_CONVEX) {
+    return loadVariantFromConvex(slug);
+  } else {
+    return loadVariantFromFile(slug);
+  }
+}
+```
+
+---
+
+## 10. Testing Strategy
+
+### Unit Tests
+
+```typescript
+// convex/variants.test.ts
+
+import { convexTest } from "convex-test";
+import { expect, test } from "vitest";
+import { api } from "./_generated/api";
+
+test("getBySlug returns null for non-existent variant", async () => {
+  const t = convexTest();
+  const result = await t.query(api.variants.getBySlug, {
+    slug: "non-existent"
+  });
+  expect(result).toBeNull();
+});
+
+test("upsert creates new variant", async () => {
+  const t = convexTest();
+
+  const variantData = {
+    metadata: {
+      company: "Test Corp",
+      role: "Engineer",
+      slug: "test-corp-engineer",
+      generatedAt: "2026-01-08T00:00:00Z",
+      jobDescription: "Test JD",
+      publishStatus: "draft" as const,
+      applicationStatus: "not_applied" as const,
+    },
+    overrides: {},
+  };
+
+  const id = await t.mutation(api.variants.upsert, variantData);
+  expect(id).toBeDefined();
+
+  const retrieved = await t.query(api.variants.getBySlugWithDrafts, {
+    slug: "test-corp-engineer"
+  });
+  expect(retrieved?.metadata.company).toBe("Test Corp");
+});
+
+test("getBySlug filters unpublished variants", async () => {
+  const t = convexTest();
+
+  // Create draft variant
+  await t.mutation(api.variants.upsert, {
+    metadata: {
+      company: "Draft Co",
+      role: "PM",
+      slug: "draft-co-pm",
+      generatedAt: "2026-01-08T00:00:00Z",
+      jobDescription: "Test",
+      publishStatus: "draft",
+      applicationStatus: "not_applied",
+    },
+    overrides: {},
+  });
+
+  // Public query should not return draft
+  const publicResult = await t.query(api.variants.getBySlug, {
+    slug: "draft-co-pm"
+  });
+  expect(publicResult).toBeNull();
+
+  // Internal query should return draft
+  const internalResult = await t.query(api.variants.getBySlugWithDrafts, {
+    slug: "draft-co-pm"
+  });
+  expect(internalResult).not.toBeNull();
+});
+```
+
+### Integration Tests
+
+```typescript
+// tests/integration/variant-flow.test.ts
+
+import { test, expect } from "@playwright/test";
+
+test("variant portfolio loads from Convex", async ({ page }) => {
+  // Assuming a seeded variant exists
+  await page.goto("/stripe/senior-pm");
+
+  // Wait for Convex query to complete
+  await page.waitForSelector("[data-testid='hero-headline']");
+
+  // Verify variant-specific content rendered
+  const headline = await page.textContent("[data-testid='hero-headline']");
+  expect(headline).toContain("Stripe");
+});
+
+test("non-existent variant shows 404", async ({ page }) => {
+  await page.goto("/fake-company/fake-role");
+
+  await page.waitForSelector("[data-testid='not-found']");
+  expect(await page.textContent("h1")).toContain("Not Found");
+});
+
+test("dashboard lists variants", async ({ page }) => {
+  await page.goto("/dashboard");
+
+  // Handle password gate
+  await page.fill("[data-testid='password-input']", process.env.DASHBOARD_PASSWORD!);
+  await page.click("[data-testid='submit-password']");
+
+  // Wait for variants to load
+  await page.waitForSelector("[data-testid='variant-card']");
+
+  const cards = await page.$$("[data-testid='variant-card']");
+  expect(cards.length).toBeGreaterThan(0);
+});
+```
+
+### Migration Verification Tests
+
+```typescript
+// scripts/verify-migration.ts
+
+import { ConvexHttpClient } from "convex/browser";
+import { api } from "../convex/_generated/api";
+import fs from "fs";
+import path from "path";
+import yaml from "yaml";
+import { VariantSchema } from "../src/lib/schemas";
+import { isEqual } from "lodash-es";
+
+async function verifyMigration() {
+  const client = new ConvexHttpClient(process.env.CONVEX_URL!);
+  const variantsDir = path.join(__dirname, "../content/variants");
+  const files = fs.readdirSync(variantsDir)
+    .filter(f => f.endsWith(".yaml") && !f.startsWith("_"));
+
+  let passed = 0;
+  let failed = 0;
+
+  for (const file of files) {
+    const slug = file.replace(".yaml", "");
+
+    // Load from file
+    const content = fs.readFileSync(path.join(variantsDir, file), "utf-8");
+    const fileVariant = VariantSchema.parse(yaml.parse(content));
+
+    // Load from Convex
+    const convexVariant = await client.query(
+      api.variants.getBySlugWithDrafts,
+      { slug }
+    );
+
+    if (!convexVariant) {
+      console.error(`FAIL: ${slug} - not found in Convex`);
+      failed++;
+      continue;
+    }
+
+    // Compare core fields
+    const fileCore = {
+      metadata: fileVariant.metadata,
+      overrides: fileVariant.overrides,
+      relevance: fileVariant.relevance,
+    };
+
+    const convexCore = {
+      metadata: convexVariant.metadata,
+      overrides: convexVariant.overrides,
+      relevance: convexVariant.relevance,
+    };
+
+    if (isEqual(fileCore, convexCore)) {
+      console.log(`PASS: ${slug}`);
+      passed++;
+    } else {
+      console.error(`FAIL: ${slug} - data mismatch`);
+      failed++;
+    }
+  }
+
+  console.log(`\n--- Results ---`);
+  console.log(`Passed: ${passed}`);
+  console.log(`Failed: ${failed}`);
+
+  process.exit(failed > 0 ? 1 : 0);
+}
+
+verifyMigration().catch(console.error);
+```
+
+---
+
+## 11. Rollback Plan
+
+### Rollback Triggers
+
+| Scenario | Trigger | Action |
+|----------|---------|--------|
+| **Convex outage** | 5+ minutes downtime | Switch to file fallback |
+| **Data corruption** | Variants returning incorrect data | Restore from file source |
+| **Performance issues** | P95 latency > 2s | Enable caching or fallback |
+| **Critical bug** | Blocking bug in production | Revert deployment |
+
+### Rollback Steps
+
+**Immediate (< 5 minutes):**
+```bash
+# 1. Set environment variable to disable Convex
+export VITE_USE_CONVEX=false
+
+# 2. Redeploy
+npm run build && npm run deploy
+```
+
+**Full Rollback (< 30 minutes):**
+```bash
+# 1. Revert to pre-migration commit
+git revert --no-commit HEAD~N..HEAD  # N = number of migration commits
+
+# 2. Restore variants:sync to build
+# (already in pre-migration code)
+
+# 3. Redeploy
+npm run build && npm run deploy
+
+# 4. Notify team
+```
+
+### Data Recovery
+
+If Convex data is corrupted:
+
+```bash
+# 1. Re-seed from file source (still in git history)
+git checkout main -- content/variants/
+
+# 2. Run seed script with force
+npm run seed:variants -- --force
+
+# 3. Verify
+npm run verify:migration
+```
+
+---
+
+## 12. Security Considerations
+
+### API Key Management
+
+| Key | Current Location | Convex Location |
+|-----|------------------|-----------------|
+| `ANTHROPIC_API_KEY` | `.env.local` | Convex Environment Variables |
+| `OPENAI_API_KEY` | `.env.local` | Convex Environment Variables |
+| `GOOGLE_AI_API_KEY` | `.env.local` | Convex Environment Variables |
+
+**Access Control:**
+- API keys only accessible in Convex actions (server-side)
+- Never exposed to client
+- Rotatable via Convex dashboard
+
+### Query Security
+
+```typescript
+// Public queries filter by publishStatus
+export const getBySlug = query({
+  args: { slug: v.string() },
+  handler: async (ctx, args) => {
+    const variant = await ctx.db
+      .query("variants")
+      .withIndex("by_slug", (q) => q.eq("slug", args.slug))
+      .first();
+
+    // Security: Only return published variants publicly
+    if (!variant || variant.publishStatus !== "published") {
+      return null;
+    }
+
+    return variant;
+  },
+});
+```
+
+### Dashboard Authentication
+
+Options:
+1. **Password gate** (current): Simple, client-side check
+2. **Convex Auth**: Full authentication with user accounts
+3. **Clerk integration**: Third-party auth provider
+
+Recommendation: Start with password gate (matches current behavior), upgrade to Convex Auth if needed.
+
+### Data Validation
+
+All mutations validate input:
+- Convex validators at API boundary
+- Business logic validation in handlers
+- No raw database access from client
+
+---
+
+## 13. Cost Analysis
+
+### Convex Pricing (as of 2026)
+
+| Resource | Free Tier | Pro Tier |
+|----------|-----------|----------|
+| Database storage | 512 MB | 10 GB |
+| Bandwidth | 1 GB/month | 50 GB/month |
+| Function invocations | 1M/month | 10M/month |
+| File storage | 1 GB | 50 GB |
+
+### Estimated Usage
+
+| Resource | Estimated Usage | Tier Needed |
+|----------|-----------------|-------------|
+| Database storage | ~10 MB (variants) | Free |
+| Bandwidth | ~5 GB/month | Pro (if high traffic) |
+| Function invocations | ~100K/month | Free |
+| File storage | ~500 MB (PDFs) | Free |
+
+### Cost Projection
+
+- **Development phase**: Free tier sufficient
+- **Production (low traffic)**: Free tier sufficient
+- **Production (high traffic)**: ~$25/month Pro tier
+
+### Comparison to Current
+
+| Current Cost | With Convex |
+|--------------|-------------|
+| GitHub Pages: Free | GitHub Pages: Free |
+| Git storage: Free | Git storage: Free (less) |
+| N/A | Convex: Free or ~$25/month |
+
+**Net impact**: $0-25/month additional cost, offset by time savings (~2-4 hours/variant).
+
+---
+
+## 14. Open Questions
+
+### Technical Decisions Needed
+
+| Question | Options | Recommendation |
+|----------|---------|----------------|
+| **Resume PDF strategy** | A) Local + upload, B) Cloud service, C) On-demand | A) Local + upload |
+| **Dashboard auth** | A) Password gate, B) Convex Auth, C) Clerk | A) Password gate |
+| **Portfolio context in actions** | A) Bundle in Convex, B) Fetch from CDN, C) Hardcode | B) Fetch from CDN |
+| **Keep YAML files?** | A) Delete after migration, B) Keep as backup, C) Generate from Convex | B) Keep as backup (archive branch) |
+
+### Process Decisions Needed
+
+| Question | Options | Recommendation |
+|----------|---------|----------------|
+| **Migration timing** | A) Big bang, B) Gradual, C) Feature flag | C) Feature flag |
+| **CI/CD changes** | A) Remove variants:sync, B) Keep as backup | A) Remove after validation |
+| **Documentation** | A) Update existing, B) New docs, C) Both | C) Both |
+
+### Future Considerations
+
+1. **Multi-user support**: If others need to edit variants, consider Convex Auth
+2. **Variant templates**: Store reusable templates in separate table
+3. **Analytics**: Track variant views, application conversions
+4. **Scheduling**: Publish variants at specific dates/times
+5. **Versioning**: Store variant history for rollback
+
+---
+
+## 15. Appendix
+
+### A. Convex Setup Commands
+
+```bash
+# Initialize Convex in project
+npx convex dev
+
+# Deploy schema
+npx convex deploy
+
+# Run type generation
+npx convex codegen
+
+# Set environment variable
+npx convex env set ANTHROPIC_API_KEY sk-...
+
+# View logs
+npx convex logs
+```
+
+### B. Package Dependencies
+
+```json
+{
+  "dependencies": {
+    "convex": "^1.x.x"
+  },
+  "devDependencies": {
+    "convex-test": "^0.x.x"
+  }
+}
+```
+
+### C. Environment Variables
+
+```bash
+# .env.local (development)
+CONVEX_URL=https://xxx.convex.cloud
+VITE_CONVEX_URL=https://xxx.convex.cloud
+VITE_USE_CONVEX=true
+
+# Convex dashboard (production)
+ANTHROPIC_API_KEY=sk-...
+OPENAI_API_KEY=sk-...
+DASHBOARD_PASSWORD=...
+```
+
+### D. File Structure After Migration
+
+```
+portfolio/
+├── convex/
+│   ├── _generated/
+│   ├── schema.ts
+│   ├── variants.ts
+│   ├── actions/
+│   │   ├── generate.ts
+│   │   ├── evaluate.ts
+│   │   └── redteam.ts
+│   └── files.ts
+├── src/
+│   ├── lib/
+│   │   ├── variants.ts      # Updated: Convex queries
+│   │   └── schemas.ts       # Unchanged: Still used for local validation
+│   └── pages/
+│       ├── VariantPortfolio.tsx  # Updated: useQuery
+│       └── Dashboard.tsx         # New: React dashboard
+├── scripts/
+│   ├── generate-cv.ts       # Updated: Calls Convex action
+│   ├── seed-variants.ts     # New: Migration script
+│   └── verify-migration.ts  # New: Verification script
+└── content/
+    └── variants/            # Archived after migration
+```
+
+### E. References
+
+- [Convex Documentation](https://docs.convex.dev)
+- [Convex Schema Reference](https://docs.convex.dev/database/schemas)
+- [Convex Actions](https://docs.convex.dev/functions/actions)
+- [Convex File Storage](https://docs.convex.dev/file-storage)
+- [Convex Authentication](https://docs.convex.dev/auth)
+
+---
+
+## Changelog
+
+| Date | Version | Changes |
+|------|---------|---------|
+| 2026-01-08 | 1.0 | Initial draft |
+
+---
+
+*End of specification*
