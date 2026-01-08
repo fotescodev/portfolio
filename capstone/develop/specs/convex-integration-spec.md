@@ -1,9 +1,10 @@
 # Convex Integration Engineering Specification
 
-**Status:** Draft
+**Status:** Draft (Revised)
 **Author:** Claude
 **Created:** 2026-01-08
 **Last Updated:** 2026-01-08
+**Revision:** 1.1 — Simplified scope per QA feedback
 
 ---
 
@@ -21,9 +22,10 @@
 10. [Testing Strategy](#10-testing-strategy)
 11. [Rollback Plan](#11-rollback-plan)
 12. [Security Considerations](#12-security-considerations)
-13. [Cost Analysis](#13-cost-analysis)
-14. [Open Questions](#14-open-questions)
-15. [Appendix](#15-appendix)
+13. [Error Handling](#13-error-handling) *(new)*
+14. [Cost Analysis](#14-cost-analysis)
+15. [Decisions Made](#15-decisions-made) *(revised from Open Questions)*
+16. [Appendix](#16-appendix)
 
 ---
 
@@ -46,12 +48,16 @@ Migrate the Universal CV variant system from file-based storage (YAML/JSON in Gi
 
 ### Scope
 
-**In Scope:**
+**In Scope (Phase 1 — MVP):**
 - Variant storage and retrieval
-- Dashboard manifest generation
-- Generation pipeline integration
-- Evaluation and red-team result storage
-- Resume PDF storage (optional)
+- Dashboard with Convex Auth
+- Generation CLI integration
+
+**Deferred (Phase 2 — If Needed):**
+- Evaluation results in Convex (keep file-based for now)
+- Red-team results in Convex (keep file-based for now)
+- Resume PDF storage (keep local generation + Git for now)
+- Generation logs/audit trail
 
 **Out of Scope:**
 - Base portfolio content (profile, experience, case studies) — stays static
@@ -62,12 +68,14 @@ Migrate the Universal CV variant system from file-based storage (YAML/JSON in Gi
 
 | Phase | Effort | Dependencies |
 |-------|--------|--------------|
-| Phase 1: Core Storage | 2 days | None |
+| Phase 1: Core Storage + Auth | 2 days | None |
 | Phase 2: Generation Pipeline | 1 day | Phase 1 |
-| Phase 3: Quality Gates | 1 day | Phase 1 |
-| Phase 4: Resume PDFs | 1 day | Phase 1 (optional) |
-| Phase 5: Dashboard | 0.5 days | Phase 1 |
-| **Total** | **5-6 days** | |
+| Phase 3: Dashboard | 0.5 days | Phase 1 |
+| **Total (MVP)** | **3-4 days** | |
+
+**Deferred phases** (implement only if friction persists):
+- Quality Gates in Convex: 1 day
+- Resume PDF storage: 1 day
 
 ---
 
@@ -248,13 +256,17 @@ Time to live: 15-30 minutes minimum
 
 ## 5. Convex Schema Design
 
-### Database Schema
+### Database Schema (Simplified)
+
+> **Design Decision:** Single table for MVP. Evaluation/red-team results stay file-based.
+> No denormalization — Convex supports nested field indexes.
 
 ```typescript
 // convex/schema.ts
 
 import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
+import { authTables } from "@convex-dev/auth/server";
 
 // ============================================================================
 // SHARED VALUE DEFINITIONS
@@ -276,7 +288,7 @@ const stat = v.object({
 });
 
 // ============================================================================
-// VARIANT SCHEMA
+// VARIANT SCHEMA (matches existing Zod schema in src/lib/schemas.ts)
 // ============================================================================
 
 const variantMetadata = v.object({
@@ -291,8 +303,7 @@ const variantMetadata = v.object({
   applicationStatus: v.union(v.literal("not_applied"), v.literal("applied")),
   appliedAt: v.optional(v.string()),
   sourceUrl: v.optional(v.string()),
-  resumeStorageId: v.optional(v.id("_storage")), // Convex file storage
-  resumePath: v.optional(v.string()), // Legacy path for migration
+  resumePath: v.optional(v.string()), // Path to PDF in /public/resumes/
 });
 
 const heroOverrides = v.object({
@@ -353,112 +364,43 @@ const variantRelevance = v.object({
 });
 
 // ============================================================================
-// EVALUATION SCHEMA
-// ============================================================================
-
-const claim = v.object({
-  id: v.string(),
-  text: v.string(),
-  location: v.string(),
-  anchors: v.array(v.string()),
-  verified: v.boolean(),
-  verifiedAt: v.optional(v.string()),
-  verifiedBy: v.optional(v.string()),
-  sources: v.array(v.object({
-    file: v.string(),
-    score: v.number(),
-    excerpt: v.optional(v.string())
-  }))
-});
-
-// ============================================================================
-// RED TEAM SCHEMA
-// ============================================================================
-
-const redteamFinding = v.object({
-  checkId: v.string(),
-  severity: v.union(v.literal("pass"), v.literal("warn"), v.literal("fail")),
-  message: v.string(),
-  details: v.optional(v.string())
-});
-
-// ============================================================================
 // TABLE DEFINITIONS
 // ============================================================================
 
 export default defineSchema({
-  // Main variants table
+  // Convex Auth tables (users, sessions, etc.)
+  ...authTables,
+
+  // Main variants table — the only custom table for MVP
   variants: defineTable({
     metadata: variantMetadata,
     overrides: variantOverrides,
     relevance: v.optional(variantRelevance),
-
-    // Denormalized fields for efficient queries
-    slug: v.string(),
-    company: v.string(),
-    role: v.string(),
-    publishStatus: v.string(),
-    applicationStatus: v.string(),
-    generatedAt: v.string(),
-
-    // Audit fields
+    // Audit fields only — no denormalization
     createdAt: v.string(),
     updatedAt: v.string(),
   })
-    .index("by_slug", ["slug"])
-    .index("by_company", ["company"])
-    .index("by_status", ["publishStatus"])
-    .index("by_application", ["applicationStatus"])
-    .index("by_generated", ["generatedAt"]),
+    .index("by_slug", ["metadata.slug"])
+    .index("by_status", ["metadata.publishStatus"])
+    .index("by_company", ["metadata.company"]),
 
-  // Evaluation results (claims ledger)
-  evaluations: defineTable({
-    variantId: v.id("variants"),
-    slug: v.string(),
-    claims: v.array(claim),
-    allVerified: v.boolean(),
-    contentHash: v.string(), // Hash of variant content at eval time
-    evaluatedAt: v.string(),
-    evaluatedBy: v.optional(v.string())
-  })
-    .index("by_variant", ["variantId"])
-    .index("by_slug", ["slug"]),
-
-  // Red team scan results
-  redteamRuns: defineTable({
-    variantId: v.id("variants"),
-    slug: v.string(),
-    findings: v.array(redteamFinding),
-    overallStatus: v.union(
-      v.literal("pass"),
-      v.literal("warn"),
-      v.literal("fail")
-    ),
-    scannedAt: v.string(),
-    strictMode: v.boolean()
-  })
-    .index("by_variant", ["variantId"])
-    .index("by_slug", ["slug"]),
-
-  // Generation history (audit trail)
-  generationLogs: defineTable({
-    variantId: v.optional(v.id("variants")),
-    slug: v.string(),
-    company: v.string(),
-    role: v.string(),
-    jobDescriptionHash: v.string(),
-    model: v.string(),
-    promptTokens: v.optional(v.number()),
-    completionTokens: v.optional(v.number()),
-    durationMs: v.number(),
-    success: v.boolean(),
-    errorMessage: v.optional(v.string()),
-    generatedAt: v.string()
-  })
-    .index("by_slug", ["slug"])
-    .index("by_date", ["generatedAt"]),
+  // ============================================================================
+  // DEFERRED TABLES (Phase 2 — only if file-based becomes painful)
+  // ============================================================================
+  // evaluations: defineTable({ ... })
+  // redteamRuns: defineTable({ ... })
+  // generationLogs: defineTable({ ... })
 });
 ```
+
+### Why This Schema?
+
+| Decision | Rationale |
+|----------|-----------|
+| **Single table** | 18 variants don't need 4 tables. YAGNI. |
+| **No denormalization** | Convex indexes nested fields. Less sync bugs. |
+| **Auth tables included** | Real authentication, not security theater. |
+| **Deferred tables commented** | Clear path to expand if needed. |
 
 ### Schema Mapping: Zod → Convex
 
@@ -487,23 +429,26 @@ export default defineSchema({
 
 import { query } from "./_generated/server";
 import { v } from "convex/values";
+import { getAuthUserId } from "@convex-dev/auth/server";
+
+// ============================================================================
+// PUBLIC QUERIES (no auth required)
+// ============================================================================
 
 /**
- * Get a single variant by slug
- * Used by: VariantPortfolio.tsx
+ * Get a single PUBLISHED variant by slug
+ * Used by: VariantPortfolio.tsx (public portfolio pages)
  */
 export const getBySlug = query({
   args: { slug: v.string() },
   handler: async (ctx, args) => {
     const variant = await ctx.db
       .query("variants")
-      .withIndex("by_slug", (q) => q.eq("slug", args.slug))
+      .withIndex("by_slug", (q) => q.eq("metadata.slug", args.slug))
       .first();
 
-    if (!variant) return null;
-
-    // Only return published variants to public
-    if (variant.publishStatus !== "published") {
+    // Security: Only return published variants to public
+    if (!variant || variant.metadata.publishStatus !== "published") {
       return null;
     }
 
@@ -512,138 +457,132 @@ export const getBySlug = query({
 });
 
 /**
- * Get variant including drafts (for dashboard/preview)
- * Used by: Dashboard, Preview mode
+ * List published variant slugs (for sitemap/static generation)
  */
-export const getBySlugWithDrafts = query({
-  args: {
-    slug: v.string(),
-    includeUnpublished: v.optional(v.boolean())
-  },
-  handler: async (ctx, args) => {
-    const variant = await ctx.db
+export const listPublishedSlugs = query({
+  args: {},
+  handler: async (ctx) => {
+    const variants = await ctx.db
       .query("variants")
-      .withIndex("by_slug", (q) => q.eq("slug", args.slug))
-      .first();
+      .withIndex("by_status", (q) => q.eq("metadata.publishStatus", "published"))
+      .collect();
 
-    return variant;
+    return variants.map(v => v.metadata.slug);
+  },
+});
+
+// ============================================================================
+// AUTHENTICATED QUERIES (dashboard only)
+// ============================================================================
+
+/**
+ * Get any variant by slug (including drafts)
+ * Used by: Dashboard preview, CLI verification
+ * Requires: Authentication
+ */
+export const getBySlugAuth = query({
+  args: { slug: v.string() },
+  handler: async (ctx, args) => {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) return null; // Unauthenticated
+
+    return await ctx.db
+      .query("variants")
+      .withIndex("by_slug", (q) => q.eq("metadata.slug", args.slug))
+      .first();
   },
 });
 
 /**
- * List all variants (for dashboard)
- * Used by: Dashboard manifest replacement
+ * List all variants for dashboard
+ * Uses database-level filtering (no load-all-filter-later anti-pattern)
+ * Requires: Authentication
  */
-export const list = query({
+export const listForDashboard = query({
   args: {
     status: v.optional(v.union(
       v.literal("draft"),
-      v.literal("published"),
-      v.literal("all")
+      v.literal("published")
     )),
-    applicationStatus: v.optional(v.union(
-      v.literal("not_applied"),
-      v.literal("applied"),
-      v.literal("all")
-    )),
-    company: v.optional(v.string()),
     limit: v.optional(v.number()),
   },
   handler: async (ctx, args) => {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) return []; // Unauthenticated
+
+    // Use index for status filter, or full table scan if no filter
     let query = ctx.db.query("variants");
 
-    // Filter by publish status
-    if (args.status && args.status !== "all") {
+    if (args.status) {
       query = query.withIndex("by_status", (q) =>
-        q.eq("publishStatus", args.status)
+        q.eq("metadata.publishStatus", args.status)
       );
     }
 
-    const variants = await query.collect();
-
-    // Additional filtering
-    let filtered = variants;
-
-    if (args.applicationStatus && args.applicationStatus !== "all") {
-      filtered = filtered.filter(v =>
-        v.applicationStatus === args.applicationStatus
-      );
-    }
-
-    if (args.company) {
-      filtered = filtered.filter(v =>
-        v.company.toLowerCase() === args.company!.toLowerCase()
-      );
-    }
-
-    // Sort by generatedAt DESC
-    filtered.sort((a, b) =>
-      new Date(b.generatedAt).getTime() - new Date(a.generatedAt).getTime()
-    );
-
-    // Apply limit
-    if (args.limit) {
-      filtered = filtered.slice(0, args.limit);
-    }
-
-    return filtered;
-  },
-});
-
-/**
- * Get variant slugs (for static generation fallback)
- */
-export const listSlugs = query({
-  args: { publishedOnly: v.optional(v.boolean()) },
-  handler: async (ctx, args) => {
-    let variants = await ctx.db.query("variants").collect();
-
-    if (args.publishedOnly) {
-      variants = variants.filter(v => v.publishStatus === "published");
-    }
-
-    return variants.map(v => v.slug);
-  },
-});
-
-/**
- * Get evaluation results for a variant
- */
-export const getEvaluation = query({
-  args: { slug: v.string() },
-  handler: async (ctx, args) => {
-    return await ctx.db
-      .query("evaluations")
-      .withIndex("by_slug", (q) => q.eq("slug", args.slug))
+    // Order by creation time (newest first) and limit at DB level
+    const variants = await query
       .order("desc")
-      .first();
+      .take(args.limit || 100);
+
+    return variants;
   },
 });
 
 /**
- * Get red team results for a variant
+ * Dashboard stats (counts by status)
+ * Requires: Authentication
  */
-export const getRedteamRun = query({
-  args: { slug: v.string() },
-  handler: async (ctx, args) => {
-    return await ctx.db
-      .query("redteamRuns")
-      .withIndex("by_slug", (q) => q.eq("slug", args.slug))
-      .order("desc")
-      .first();
+export const getDashboardStats = query({
+  args: {},
+  handler: async (ctx) => {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) return null;
+
+    const all = await ctx.db.query("variants").collect();
+
+    return {
+      total: all.length,
+      published: all.filter(v => v.metadata.publishStatus === "published").length,
+      draft: all.filter(v => v.metadata.publishStatus === "draft").length,
+      applied: all.filter(v => v.metadata.applicationStatus === "applied").length,
+    };
   },
 });
 ```
 
+### Why This API Design?
+
+| Decision | Rationale |
+|----------|-----------|
+| **Separate public/auth queries** | Clear security boundary. Public can only see published. |
+| **No unused parameters** | Every arg is used. No `includeUnpublished` lies. |
+| **DB-level filtering** | `.withIndex()` + `.take()` instead of load-all-filter-later. |
+| **Auth via `getAuthUserId`** | Real Convex Auth, not password theater. |
+
 ### Mutations
+
+> **All mutations require authentication.** No anonymous writes to the database.
 
 ```typescript
 // convex/variants.ts (continued)
 
 import { mutation } from "./_generated/server";
+import { getAuthUserId } from "@convex-dev/auth/server";
+
+/**
+ * Helper: Require auth or throw
+ */
+async function requireAuth(ctx: any) {
+  const userId = await getAuthUserId(ctx);
+  if (!userId) {
+    throw new Error("Authentication required");
+  }
+  return userId;
+}
 
 /**
  * Create or update a variant
+ * Used by: CLI generation, dashboard edits
  */
 export const upsert = mutation({
   args: {
@@ -652,26 +591,19 @@ export const upsert = mutation({
     relevance: v.optional(variantRelevance),
   },
   handler: async (ctx, args) => {
+    await requireAuth(ctx);
     const now = new Date().toISOString();
-    const slug = args.metadata.slug;
 
     // Check for existing variant
     const existing = await ctx.db
       .query("variants")
-      .withIndex("by_slug", (q) => q.eq("slug", slug))
+      .withIndex("by_slug", (q) => q.eq("metadata.slug", args.metadata.slug))
       .first();
 
     const variantData = {
       metadata: args.metadata,
       overrides: args.overrides,
       relevance: args.relevance,
-      // Denormalized fields
-      slug,
-      company: args.metadata.company,
-      role: args.metadata.role,
-      publishStatus: args.metadata.publishStatus,
-      applicationStatus: args.metadata.applicationStatus,
-      generatedAt: args.metadata.generatedAt,
       updatedAt: now,
     };
 
@@ -688,7 +620,7 @@ export const upsert = mutation({
 });
 
 /**
- * Update variant status (publish/unpublish)
+ * Update variant publish status
  */
 export const updateStatus = mutation({
   args: {
@@ -696,9 +628,11 @@ export const updateStatus = mutation({
     publishStatus: v.union(v.literal("draft"), v.literal("published")),
   },
   handler: async (ctx, args) => {
+    await requireAuth(ctx);
+
     const variant = await ctx.db
       .query("variants")
-      .withIndex("by_slug", (q) => q.eq("slug", args.slug))
+      .withIndex("by_slug", (q) => q.eq("metadata.slug", args.slug))
       .first();
 
     if (!variant) {
@@ -707,8 +641,8 @@ export const updateStatus = mutation({
 
     const now = new Date().toISOString();
 
+    // Update nested metadata field
     await ctx.db.patch(variant._id, {
-      publishStatus: args.publishStatus,
       "metadata.publishStatus": args.publishStatus,
       "metadata.publishedAt": args.publishStatus === "published" ? now : undefined,
       updatedAt: now,
@@ -725,9 +659,11 @@ export const updateApplicationStatus = mutation({
     applicationStatus: v.union(v.literal("not_applied"), v.literal("applied")),
   },
   handler: async (ctx, args) => {
+    await requireAuth(ctx);
+
     const variant = await ctx.db
       .query("variants")
-      .withIndex("by_slug", (q) => q.eq("slug", args.slug))
+      .withIndex("by_slug", (q) => q.eq("metadata.slug", args.slug))
       .first();
 
     if (!variant) {
@@ -737,7 +673,6 @@ export const updateApplicationStatus = mutation({
     const now = new Date().toISOString();
 
     await ctx.db.patch(variant._id, {
-      applicationStatus: args.applicationStatus,
       "metadata.applicationStatus": args.applicationStatus,
       "metadata.appliedAt": args.applicationStatus === "applied" ? now : undefined,
       updatedAt: now,
@@ -751,109 +686,39 @@ export const updateApplicationStatus = mutation({
 export const remove = mutation({
   args: { slug: v.string() },
   handler: async (ctx, args) => {
+    await requireAuth(ctx);
+
     const variant = await ctx.db
       .query("variants")
-      .withIndex("by_slug", (q) => q.eq("slug", args.slug))
+      .withIndex("by_slug", (q) => q.eq("metadata.slug", args.slug))
       .first();
 
     if (!variant) {
       throw new Error(`Variant not found: ${args.slug}`);
     }
 
-    // Delete associated evaluations
-    const evals = await ctx.db
-      .query("evaluations")
-      .withIndex("by_slug", (q) => q.eq("slug", args.slug))
-      .collect();
-
-    for (const eval_ of evals) {
-      await ctx.db.delete(eval_._id);
-    }
-
-    // Delete associated red team runs
-    const redteams = await ctx.db
-      .query("redteamRuns")
-      .withIndex("by_slug", (q) => q.eq("slug", args.slug))
-      .collect();
-
-    for (const rt of redteams) {
-      await ctx.db.delete(rt._id);
-    }
-
-    // Delete the variant
     await ctx.db.delete(variant._id);
-  },
-});
-
-/**
- * Store evaluation results
- */
-export const saveEvaluation = mutation({
-  args: {
-    slug: v.string(),
-    claims: v.array(claim),
-    contentHash: v.string(),
-  },
-  handler: async (ctx, args) => {
-    const variant = await ctx.db
-      .query("variants")
-      .withIndex("by_slug", (q) => q.eq("slug", args.slug))
-      .first();
-
-    if (!variant) {
-      throw new Error(`Variant not found: ${args.slug}`);
-    }
-
-    const allVerified = args.claims.every(c => c.verified);
-
-    return await ctx.db.insert("evaluations", {
-      variantId: variant._id,
-      slug: args.slug,
-      claims: args.claims,
-      allVerified,
-      contentHash: args.contentHash,
-      evaluatedAt: new Date().toISOString(),
-    });
-  },
-});
-
-/**
- * Store red team results
- */
-export const saveRedteamRun = mutation({
-  args: {
-    slug: v.string(),
-    findings: v.array(redteamFinding),
-    strictMode: v.boolean(),
-  },
-  handler: async (ctx, args) => {
-    const variant = await ctx.db
-      .query("variants")
-      .withIndex("by_slug", (q) => q.eq("slug", args.slug))
-      .first();
-
-    if (!variant) {
-      throw new Error(`Variant not found: ${args.slug}`);
-    }
-
-    // Determine overall status
-    const hasFail = args.findings.some(f => f.severity === "fail");
-    const hasWarn = args.findings.some(f => f.severity === "warn");
-    const overallStatus = hasFail ? "fail" : (hasWarn ? "warn" : "pass");
-
-    return await ctx.db.insert("redteamRuns", {
-      variantId: variant._id,
-      slug: args.slug,
-      findings: args.findings,
-      overallStatus,
-      scannedAt: new Date().toISOString(),
-      strictMode: args.strictMode,
-    });
   },
 });
 ```
 
+### Why These Mutations?
+
+| Decision | Rationale |
+|----------|-----------|
+| **All require auth** | No anonymous database writes. Period. |
+| **No denormalized updates** | Only update `metadata.*` fields. Single source of truth. |
+| **No cascade deletes** | Eval/redteam stay file-based. Simple delete. |
+| **Shared `requireAuth` helper** | DRY auth check pattern. |
+
 ### Actions (Server-side with External APIs)
+
+> **Design Decision: Portfolio Context Strategy**
+>
+> Portfolio content (profile, experience, case studies) is **bundled as static JSON**.
+> - Rationale: This data changes ~quarterly. No need for runtime fetches.
+> - The generation action imports bundled context, not fetches from Convex/CDN.
+> - This keeps cold starts fast and reduces complexity.
 
 ```typescript
 // convex/actions/generate.ts
@@ -862,9 +727,12 @@ import { action } from "../_generated/server";
 import { v } from "convex/values";
 import { api } from "../_generated/api";
 
+// Bundled at build time — static portfolio content
+import portfolioContext from "./portfolio-context.json";
+
 /**
  * Generate a variant using AI
- * Runs server-side with access to API keys
+ * Runs server-side with access to API keys via Convex env vars
  */
 export const generateVariant = action({
   args: {
@@ -879,157 +747,104 @@ export const generateVariant = action({
     )),
   },
   handler: async (ctx, args) => {
-    const startTime = Date.now();
+    // Auth check for actions
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) {
+      throw new Error("Authentication required");
+    }
+
     const slug = `${args.company.toLowerCase().replace(/\s+/g, '-')}-${args.role.toLowerCase().replace(/\s+/g, '-')}`;
     const model = args.model || "claude";
 
-    try {
-      // 1. Load portfolio context (could be from Convex or bundled)
-      const portfolioContext = await loadPortfolioContext();
+    // 1. Build prompt using bundled portfolio context
+    const prompt = buildGenerationPrompt({
+      portfolioContext,
+      jobDescription: args.jobDescription,
+      company: args.company,
+      role: args.role,
+    });
 
-      // 2. Build prompt
-      const prompt = buildGenerationPrompt({
-        portfolioContext,
+    // 2. Call AI provider (API key from Convex env vars)
+    const apiKey = process.env.ANTHROPIC_API_KEY; // Set in Convex dashboard
+    const response = await callAIProvider(model, prompt, apiKey);
+
+    // 3. Parse and validate response
+    const variantData = parseVariantResponse(response);
+
+    // 4. Save to database
+    const variantId = await ctx.runMutation(api.variants.upsert, {
+      metadata: {
+        company: args.company,
+        role: args.role,
+        slug,
+        generatedAt: new Date().toISOString(),
         jobDescription: args.jobDescription,
-        company: args.company,
-        role: args.role,
-      });
+        generationModel: model,
+        publishStatus: "draft",
+        applicationStatus: "not_applied",
+        sourceUrl: args.sourceUrl,
+      },
+      overrides: variantData.overrides,
+      relevance: variantData.relevance,
+    });
 
-      // 3. Call AI provider
-      const response = await callAIProvider(model, prompt);
-
-      // 4. Parse and validate response
-      const variantData = parseVariantResponse(response);
-
-      // 5. Save to database
-      const variantId = await ctx.runMutation(api.variants.upsert, {
-        metadata: {
-          company: args.company,
-          role: args.role,
-          slug,
-          generatedAt: new Date().toISOString(),
-          jobDescription: args.jobDescription,
-          generationModel: model,
-          publishStatus: "draft",
-          applicationStatus: "not_applied",
-          sourceUrl: args.sourceUrl,
-        },
-        overrides: variantData.overrides,
-        relevance: variantData.relevance,
-      });
-
-      // 6. Log generation
-      await ctx.runMutation(api.generationLogs.create, {
-        variantId,
-        slug,
-        company: args.company,
-        role: args.role,
-        jobDescriptionHash: hashString(args.jobDescription),
-        model,
-        durationMs: Date.now() - startTime,
-        success: true,
-        generatedAt: new Date().toISOString(),
-      });
-
-      return { success: true, slug, variantId };
-
-    } catch (error) {
-      // Log failure
-      await ctx.runMutation(api.generationLogs.create, {
-        slug,
-        company: args.company,
-        role: args.role,
-        jobDescriptionHash: hashString(args.jobDescription),
-        model,
-        durationMs: Date.now() - startTime,
-        success: false,
-        errorMessage: error.message,
-        generatedAt: new Date().toISOString(),
-      });
-
-      throw error;
-    }
+    return { success: true, slug, variantId };
   },
 });
 
-/**
- * Run evaluation on a variant
- */
-export const evaluateVariant = action({
-  args: { slug: v.string() },
-  handler: async (ctx, args) => {
-    // 1. Load variant
-    const variant = await ctx.runQuery(api.variants.getBySlugWithDrafts, {
-      slug: args.slug,
-    });
+// ============================================================================
+// HELPER FUNCTIONS (implementation details)
+// ============================================================================
 
-    if (!variant) {
-      throw new Error(`Variant not found: ${args.slug}`);
-    }
+function buildGenerationPrompt(args: {
+  portfolioContext: typeof portfolioContext;
+  jobDescription: string;
+  company: string;
+  role: string;
+}): string {
+  // Same prompt logic as current scripts/generate-cv.ts
+  // Just moved server-side
+  return `...`;
+}
 
-    // 2. Extract claims from overrides
-    const claims = extractClaims(variant.overrides);
+async function callAIProvider(
+  model: string,
+  prompt: string,
+  apiKey: string
+): Promise<string> {
+  // Switch on model, call appropriate API
+  // Return raw AI response
+  return `...`;
+}
 
-    // 3. Search knowledge base for sources
-    const claimsWithSources = await findClaimSources(claims);
-
-    // 4. Save evaluation
-    const contentHash = hashObject(variant.overrides);
-
-    await ctx.runMutation(api.variants.saveEvaluation, {
-      slug: args.slug,
-      claims: claimsWithSources,
-      contentHash,
-    });
-
-    return {
-      totalClaims: claims.length,
-      verifiedClaims: claimsWithSources.filter(c => c.verified).length,
-    };
-  },
-});
-
-/**
- * Run red team scan on a variant
- */
-export const redteamVariant = action({
-  args: {
-    slug: v.string(),
-    strictMode: v.optional(v.boolean())
-  },
-  handler: async (ctx, args) => {
-    const variant = await ctx.runQuery(api.variants.getBySlugWithDrafts, {
-      slug: args.slug,
-    });
-
-    if (!variant) {
-      throw new Error(`Variant not found: ${args.slug}`);
-    }
-
-    // Run all checks
-    const findings = [
-      checkSecrets(variant),
-      checkConfidential(variant),
-      checkSycophancy(variant),
-      checkInflation(variant),
-      checkPromptInjection(variant),
-      checkJdLength(variant),
-      checkCrossContamination(variant),
-    ].flat();
-
-    await ctx.runMutation(api.variants.saveRedteamRun, {
-      slug: args.slug,
-      findings,
-      strictMode: args.strictMode || false,
-    });
-
-    return {
-      passed: !findings.some(f => f.severity === "fail"),
-      findings,
-    };
-  },
-});
+function parseVariantResponse(response: string): {
+  overrides: VariantOverrides;
+  relevance?: VariantRelevance;
+} {
+  // Parse YAML from AI response
+  // Validate against schema
+  return { overrides: {}, relevance: undefined };
+}
 ```
+
+### Why This Action Design?
+
+| Decision | Rationale |
+|----------|-----------|
+| **Bundled portfolio context** | Static data. No runtime fetches. Fast cold starts. |
+| **Auth in actions** | Even server-side actions need auth for writes. |
+| **No generation logs table** | YAGNI. Console logs are fine for now. |
+| **No eval/redteam actions** | Keep file-based for MVP. Less complexity. |
+
+### Deferred: Eval/Redteam Actions
+
+> Evaluation and red-team pipelines remain **file-based** for MVP.
+>
+> If the friction of local eval becomes unbearable, add these actions later:
+> - `evaluateVariant` — Claims extraction + knowledge base search
+> - `redteamVariant` — Security/quality checks
+>
+> For now, continue using `npm run eval:variant` and `npm run redteam:variant`.
 
 ---
 
@@ -2048,13 +1863,47 @@ npm run verify:migration
 
 ## 12. Security Considerations
 
+### Authentication: Convex Auth
+
+> **Decision:** Use Convex Auth with GitHub OAuth for single-user dashboard access.
+
+```typescript
+// convex/auth.config.ts
+import GitHub from "@auth/core/providers/github";
+import { convexAuth } from "@convex-dev/auth/server";
+
+export const { auth, signIn, signOut, store } = convexAuth({
+  providers: [GitHub],
+});
+```
+
+**Why GitHub OAuth?**
+- You already use GitHub for the portfolio repo
+- Single authorized user (you)
+- No password to manage/remember
+- Revocable via GitHub settings
+
+**Access Control:**
+```typescript
+// Whitelist your GitHub user ID in env
+const AUTHORIZED_USER_ID = process.env.AUTHORIZED_GITHUB_USER_ID;
+
+async function requireAuth(ctx: any) {
+  const identity = await ctx.auth.getUserIdentity();
+  if (!identity || identity.subject !== AUTHORIZED_USER_ID) {
+    throw new Error("Unauthorized");
+  }
+  return identity;
+}
+```
+
 ### API Key Management
 
 | Key | Current Location | Convex Location |
 |-----|------------------|-----------------|
 | `ANTHROPIC_API_KEY` | `.env.local` | Convex Environment Variables |
 | `OPENAI_API_KEY` | `.env.local` | Convex Environment Variables |
-| `GOOGLE_AI_API_KEY` | `.env.local` | Convex Environment Variables |
+| `AUTHORIZED_GITHUB_USER_ID` | N/A | Convex Environment Variables |
 
 **Access Control:**
 - API keys only accessible in Convex actions (server-side)
@@ -2063,34 +1912,12 @@ npm run verify:migration
 
 ### Query Security
 
-```typescript
-// Public queries filter by publishStatus
-export const getBySlug = query({
-  args: { slug: v.string() },
-  handler: async (ctx, args) => {
-    const variant = await ctx.db
-      .query("variants")
-      .withIndex("by_slug", (q) => q.eq("slug", args.slug))
-      .first();
-
-    // Security: Only return published variants publicly
-    if (!variant || variant.publishStatus !== "published") {
-      return null;
-    }
-
-    return variant;
-  },
-});
-```
-
-### Dashboard Authentication
-
-Options:
-1. **Password gate** (current): Simple, client-side check
-2. **Convex Auth**: Full authentication with user accounts
-3. **Clerk integration**: Third-party auth provider
-
-Recommendation: Start with password gate (matches current behavior), upgrade to Convex Auth if needed.
+| Query Type | Auth Required | Data Returned |
+|------------|---------------|---------------|
+| `getBySlug` | No | Published variants only |
+| `listPublishedSlugs` | No | Slugs only (no JD/content) |
+| `getBySlugAuth` | Yes | Any variant including drafts |
+| `listForDashboard` | Yes | All variants with full data |
 
 ### Data Validation
 
@@ -2098,10 +1925,179 @@ All mutations validate input:
 - Convex validators at API boundary
 - Business logic validation in handlers
 - No raw database access from client
+- All writes require authentication
 
 ---
 
-## 13. Cost Analysis
+## 13. Error Handling
+
+> **Serghei's feedback:** "The happy path is documented beautifully. The sad path? We don't talk about that."
+
+### Frontend Error Handling
+
+```typescript
+// src/pages/VariantPortfolio.tsx
+
+import { useQuery } from "convex/react";
+import { api } from "../convex/_generated/api";
+
+export function VariantPortfolio() {
+  const { company, role } = useParams();
+  const slug = `${company}-${role}`;
+
+  const variant = useQuery(api.variants.getBySlug, { slug });
+
+  // State: Loading (Convex query in flight)
+  if (variant === undefined) {
+    return <LoadingSpinner />;
+  }
+
+  // State: Not found (variant doesn't exist or not published)
+  if (variant === null) {
+    return <NotFoundPage />;
+  }
+
+  // State: Success
+  const mergedProfile = mergeProfile(variant);
+  return (
+    <VariantProvider profile={mergedProfile} variant={variant}>
+      <Portfolio />
+    </VariantProvider>
+  );
+}
+```
+
+### Convex Connection Errors
+
+```typescript
+// src/components/ConvexErrorBoundary.tsx
+
+import { ConvexProvider, ConvexReactClient } from "convex/react";
+import { ErrorBoundary } from "react-error-boundary";
+
+function ConvexErrorFallback({ error }: { error: Error }) {
+  const isNetworkError = error.message.includes("network") ||
+                         error.message.includes("fetch");
+
+  if (isNetworkError) {
+    return (
+      <div className="error-page">
+        <h1>Connection Error</h1>
+        <p>Unable to connect to the server. Please check your internet connection.</p>
+        <button onClick={() => window.location.reload()}>Retry</button>
+      </div>
+    );
+  }
+
+  return (
+    <div className="error-page">
+      <h1>Something went wrong</h1>
+      <p>{error.message}</p>
+    </div>
+  );
+}
+
+export function AppWithErrorBoundary() {
+  return (
+    <ErrorBoundary FallbackComponent={ConvexErrorFallback}>
+      <ConvexProvider client={convex}>
+        <App />
+      </ConvexProvider>
+    </ErrorBoundary>
+  );
+}
+```
+
+### Generation Action Timeout
+
+```typescript
+// scripts/generate-cv.ts (CLI)
+
+const GENERATION_TIMEOUT_MS = 120_000; // 2 minutes
+
+async function generateVariant(options: GenerateOptions) {
+  const spinner = ora("Generating variant...").start();
+
+  try {
+    const result = await Promise.race([
+      client.action(api.actions.generate.generateVariant, {
+        company: options.company,
+        role: options.role,
+        jobDescription: options.jobDescription,
+      }),
+      new Promise((_, reject) =>
+        setTimeout(() => reject(new Error("Generation timed out after 2 minutes")), GENERATION_TIMEOUT_MS)
+      ),
+    ]);
+
+    spinner.succeed(`Generated: ${result.slug}`);
+
+  } catch (error) {
+    spinner.fail(`Generation failed: ${error.message}`);
+
+    if (error.message.includes("timed out")) {
+      console.log("\nTip: Try a shorter job description or check Convex dashboard for logs.");
+    }
+
+    process.exit(1);
+  }
+}
+```
+
+### Fallback Strategy: File-Based Loading
+
+> During migration, keep file-based loading as fallback.
+
+```typescript
+// src/lib/variants.ts
+
+const USE_CONVEX = import.meta.env.VITE_USE_CONVEX === "true";
+
+// Fallback: Load from bundled JSON files
+const variantFiles = import.meta.glob('../../content/variants/*.json', {
+  eager: false
+});
+
+async function loadVariantFromFile(slug: string): Promise<Variant | null> {
+  const loader = variantFiles[`../../content/variants/${slug}.json`];
+  if (!loader) return null;
+  const module = await loader();
+  return VariantSchema.parse(module.default);
+}
+
+// Primary: Load from Convex (in React components)
+export function useVariant(slug: string) {
+  const convexResult = useQuery(
+    USE_CONVEX ? api.variants.getBySlug : skipToken,
+    USE_CONVEX ? { slug } : undefined
+  );
+
+  // If Convex disabled or not configured, fall back to file
+  if (!USE_CONVEX) {
+    const [variant, setVariant] = useState<Variant | null>(null);
+    useEffect(() => {
+      loadVariantFromFile(slug).then(setVariant);
+    }, [slug]);
+    return variant;
+  }
+
+  return convexResult;
+}
+```
+
+### Error Scenarios Summary
+
+| Scenario | Detection | User Experience | Recovery |
+|----------|-----------|-----------------|----------|
+| **Convex down** | Network error in query | "Connection Error" page | Retry button |
+| **Variant not found** | Query returns `null` | 404 page | Link to home |
+| **Auth expired** | `getAuthUserId` returns `null` | Redirect to login | Re-authenticate |
+| **Generation timeout** | Promise.race timeout | CLI error message | Retry with shorter JD |
+| **Invalid variant data** | Zod validation fails | Console error | Fix source data |
+
+---
+
+## 14. Cost Analysis
 
 ### Convex Pricing (as of 2026)
 
@@ -2139,36 +2135,38 @@ All mutations validate input:
 
 ---
 
-## 14. Open Questions
+## 15. Decisions Made
 
-### Technical Decisions Needed
+> Per QA feedback (Serghei review), the following decisions are now final:
 
-| Question | Options | Recommendation |
-|----------|---------|----------------|
-| **Resume PDF strategy** | A) Local + upload, B) Cloud service, C) On-demand | A) Local + upload |
-| **Dashboard auth** | A) Password gate, B) Convex Auth, C) Clerk | A) Password gate |
-| **Portfolio context in actions** | A) Bundle in Convex, B) Fetch from CDN, C) Hardcode | B) Fetch from CDN |
-| **Keep YAML files?** | A) Delete after migration, B) Keep as backup, C) Generate from Convex | B) Keep as backup (archive branch) |
+### Technical Decisions
 
-### Process Decisions Needed
+| Question | Decision | Rationale |
+|----------|----------|-----------|
+| **Dashboard auth** | Convex Auth with GitHub OAuth | Real security, not password theater |
+| **Portfolio context** | Bundled as static JSON | Data changes quarterly. No runtime fetches. |
+| **Resume PDF strategy** | Keep local (deferred) | Puppeteer works. Don't fix what isn't broken. |
+| **Eval/redteam storage** | Keep file-based (deferred) | YAGNI. Single table for MVP. |
+| **Schema denormalization** | Removed | Convex indexes nested fields. Less sync bugs. |
 
-| Question | Options | Recommendation |
-|----------|---------|----------------|
-| **Migration timing** | A) Big bang, B) Gradual, C) Feature flag | C) Feature flag |
-| **CI/CD changes** | A) Remove variants:sync, B) Keep as backup | A) Remove after validation |
-| **Documentation** | A) Update existing, B) New docs, C) Both | C) Both |
+### Process Decisions
 
-### Future Considerations
+| Question | Decision | Rationale |
+|----------|----------|-----------|
+| **Migration approach** | Feature flag (`VITE_USE_CONVEX`) | Instant rollback capability |
+| **YAML files** | Keep as backup (archive branch) | Git history is free insurance |
+| **CI/CD changes** | Remove `variants:sync` after validation | Clean up after proven stable |
 
-1. **Multi-user support**: If others need to edit variants, consider Convex Auth
-2. **Variant templates**: Store reusable templates in separate table
-3. **Analytics**: Track variant views, application conversions
-4. **Scheduling**: Publish variants at specific dates/times
-5. **Versioning**: Store variant history for rollback
+### Open for Future
+
+1. **Multi-user support**: Add more GitHub users to whitelist if needed
+2. **Variant templates**: Consider if generating many similar variants
+3. **Analytics**: Track views/conversions if you want data
+4. **Eval in Convex**: Move if file-based eval becomes annoying
 
 ---
 
-## 15. Appendix
+## 16. Appendix
 
 ### A. Convex Setup Commands
 
@@ -2259,6 +2257,15 @@ portfolio/
 | Date | Version | Changes |
 |------|---------|---------|
 | 2026-01-08 | 1.0 | Initial draft |
+| 2026-01-08 | 1.1 | **QA Revision** (Serghei feedback): |
+| | | - Simplified scope: Single table MVP, deferred eval/redteam |
+| | | - Added Convex Auth with GitHub OAuth (no more password theater) |
+| | | - Fixed load-all-filter-later anti-pattern in `list` query |
+| | | - Removed denormalized fields (Convex indexes nested fields) |
+| | | - Removed unused `includeUnpublished` parameter lie |
+| | | - Added Error Handling section |
+| | | - Decided portfolio context strategy: bundled static JSON |
+| | | - Reduced estimated effort from 5-6 days to 3-4 days |
 
 ---
 
