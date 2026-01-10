@@ -23,11 +23,25 @@
  *   --output <file>         Output file path (auto-generated if not specified)
  */
 
-import { readFileSync, writeFileSync, readdirSync } from 'fs';
+import { readFileSync, writeFileSync, readdirSync, existsSync } from 'fs';
 import { join } from 'path';
 import YAML from 'yaml';
+import { ConvexHttpClient } from 'convex/browser';
+import { api } from '../convex/_generated/api.js';
 import { VariantSchema } from '../src/lib/schemas.js';
 import type { Profile, Experience, CaseStudy, Skills, PassionProjects } from '../src/types/portfolio.js';
+
+// Load .env.local for Convex URL
+const envPath = join(process.cwd(), '.env.local');
+if (existsSync(envPath)) {
+  const envContent = readFileSync(envPath, 'utf-8');
+  for (const line of envContent.split('\n')) {
+    const match = line.match(/^([^=]+)=(.*)$/);
+    if (match && !process.env[match[1]]) {
+      process.env[match[1]] = match[2].split('#')[0].trim();
+    }
+  }
+}
 
 // ANSI color codes
 const colors = {
@@ -587,11 +601,28 @@ async function main() {
       join('content', 'variants', `${validated.metadata.slug}.yaml`);
     const jsonFile = yamlFile.replace('.yaml', '.json');
 
-    // Save to YAML (human-readable)
+    // Save to YAML (human-readable backup)
     writeFileSync(yamlFile, yamlContent, 'utf-8');
 
-    // Save to JSON (client-side loading)
+    // Save to JSON (legacy client-side loading)
     writeFileSync(jsonFile, JSON.stringify(validated, null, 2), 'utf-8');
+
+    // Save to Convex database (primary storage)
+    const convexUrl = process.env.VITE_CONVEX_URL || process.env.CONVEX_URL;
+    const adminApiKey = process.env.ADMIN_API_KEY;
+    if (convexUrl) {
+      console.log(`${colors.gray}Saving to Convex...${colors.reset}`);
+      const convex = new ConvexHttpClient(convexUrl);
+      await convex.mutation(api.variants.upsert, {
+        apiKey: adminApiKey,
+        slug: validated.metadata.slug,
+        publishStatus: 'draft',
+        data: validated,
+      });
+      console.log(`${colors.green}✓${colors.reset} Saved to Convex as draft`);
+    } else {
+      console.log(`${colors.yellow}⚠${colors.reset} CONVEX_URL not set - skipped Convex upload`);
+    }
 
     console.log(`${colors.green}${colors.bold}✓ Variant generated successfully!${colors.reset}`);
     console.log(`${colors.gray}Saved to:${colors.reset} ${yamlFile}`);
@@ -600,7 +631,7 @@ async function main() {
 
     console.log(`\n${colors.cyan}Next steps:${colors.reset}`);
     console.log(`  1. Review and edit: ${yamlFile}`);
-    console.log(`  2. Run validation: npm run validate`);
+    console.log(`  2. Publish in Convex Dashboard (or run: npx convex run variants:updateStatus '{"slug":"${validated.metadata.slug}","publishStatus":"published"}')`);
     console.log(`  3. Test locally: npm run dev`);
     console.log(`  4. Visit: http://localhost:5173${variantPath}`);
 
