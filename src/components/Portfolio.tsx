@@ -405,6 +405,9 @@ export default function Portfolio() {
             heroCta={profile.hero.cta}
           />
 
+          {/* Section Divider */}
+          <div className="section-divider" />
+
           {/* Experience Section */}
           <ExperienceSection
             isMobile={isMobile}
@@ -419,6 +422,9 @@ export default function Portfolio() {
             isTablet={isTablet}
             sectionPadding={sectionPadding}
           />
+
+          {/* Section Divider */}
+          <div className="section-divider" />
 
           {/* Skills Section - conditionally rendered */}
           {sections.skills && (
@@ -443,6 +449,9 @@ export default function Portfolio() {
             onCaseClick={(study) => setModalCase(study)}
           />
 
+          {/* Section Divider */}
+          <div className="section-divider" />
+
           {/* Passion Projects Section */}
           {sections.passionProjects && (
             <PassionProjectsSection
@@ -457,6 +466,9 @@ export default function Portfolio() {
             isTablet={isTablet}
             sectionPadding={sectionPadding}
           />
+
+          {/* Section Divider */}
+          <div className="section-divider" />
 
           {/* Blog Section */}
           {sections.blog && <Blog isMobile={isMobile} isTablet={isTablet} />}

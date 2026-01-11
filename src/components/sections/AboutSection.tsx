@@ -453,8 +453,7 @@ export default function AboutSection({ profile, isMobile, isTablet, sectionPaddi
             {about.tagline}
           </h2>
           <div style={{
-            columns: isMobile ? 1 : 2,
-            columnGap: 'var(--space-2xl)'
+            maxWidth: '600px'
           }}>
             {about.bio.map((paragraph, index) => (
               <p key={index} style={{

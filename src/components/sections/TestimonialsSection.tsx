@@ -110,7 +110,7 @@ export default function TestimonialsSection({ isMobile, isTablet, sectionPadding
                   fontSize: '54px',
                   lineHeight: 1,
                   color: 'var(--color-accent)',
-                  opacity: 0.18
+                  opacity: 0.3
                 }}
               >
                 "
@@ -254,14 +254,13 @@ export default function TestimonialsSection({ isMobile, isTablet, sectionPadding
           )}
         </div>
       ) : (
-        /* Tablet/Desktop - Horizontal scroll */
+        /* Tablet/Desktop - Single column layout for reading flow */
         <div
           style={{
             display: 'flex',
-            gap: 'var(--space-lg)',
-            overflowX: 'auto',
-            paddingBottom: 'var(--space-md)',
-            scrollSnapType: 'x mandatory'
+            flexDirection: 'column',
+            gap: 'var(--space-xl)',
+            maxWidth: '720px'
           }}
         >
           {featuredTestimonials.map((testimonial, index) => {
@@ -272,9 +271,6 @@ export default function TestimonialsSection({ isMobile, isTablet, sectionPadding
                 key={index}
                 className="light-card"
                 style={{
-                  flex: '0 0 auto',
-                  width: isTablet ? '420px' : '460px',
-                  scrollSnapAlign: 'start',
                   background:
                     'linear-gradient(135deg, var(--color-background-secondary) 0%, var(--color-background-tertiary) 100%)',
                   border: isHovered ? '1px solid var(--color-border)' : '1px solid var(--color-border-light)',

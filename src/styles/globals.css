@@ -697,6 +697,49 @@
 .z-50 { z-index: 50; }
 
 /* ============================================
+   Design System: Tags
+   Unified tag styling across sections
+   ============================================ */
+
+.tag {
+  background: var(--color-background-tertiary);
+  color: var(--color-text-secondary);
+  padding: 6px 12px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  border: none;
+  display: inline-block;
+}
+
+/* ============================================
+   Design System: Section Dividers
+   Consistent visual separation between sections
+   ============================================ */
+
+.section-divider {
+  height: 1px;
+  background: var(--color-border-light);
+  margin: 0 var(--layout-padding-x);
+}
+
+/* ============================================
+   Design System: Card Hover Pattern
+   Consistent hover effects for cards
+   ============================================ */
+
+.card-hover {
+  transition: all 0.2s ease;
+}
+
+.card-hover:hover {
+  border-left: 3px solid var(--color-accent);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+
+/* ============================================
    Accessibility: Focus States
    Matches hover effects for keyboard navigation
    ============================================ */

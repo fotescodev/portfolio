@@ -144,10 +144,12 @@ export default function CaseStudiesSection({
             key={study.id}
             onClick={() => onCaseClick(study)}
             style={{
-              padding: isMobile ? '0' : '40px 0',
+              padding: isMobile ? '0' : '40px 0 40px 24px',
               cursor: 'pointer',
               transition: 'all 0.3s ease',
-              background: hoveredCase === study.id ? 'var(--color-card-hover)' : 'transparent'
+              background: hoveredCase === study.id ? 'var(--color-card-hover)' : 'transparent',
+              borderLeft: hoveredCase === study.id ? '3px solid var(--color-accent)' : '3px solid transparent',
+              marginLeft: isMobile ? '0' : '-24px'
             }}
             onMouseEnter={() => !isMobile && setHoveredCase(study.id)}
             onMouseLeave={() => !isMobile && setHoveredCase(null)}
