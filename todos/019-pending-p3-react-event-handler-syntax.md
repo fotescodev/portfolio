@@ -1,10 +1,9 @@
 ---
-status: completed
+status: pending
 priority: p3
 issue_id: "019"
 tags: [design-audit, code-quality, react]
 dependencies: []
-completed_at: 2026-01-11
 ---
 
 # Invalid React Event Handler Syntax in Design Audit
