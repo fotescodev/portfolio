@@ -86,13 +86,7 @@ export default function ExperienceSection({ isMobile, isTablet, sectionPadding }
           gap: 'var(--space-lg)',
           marginBottom: isMobile ? 'var(--space-lg)' : '24px'
         }}>
-          <span style={{
-            fontSize: '11px',
-            fontWeight: 600,
-            letterSpacing: '0.15em',
-            textTransform: 'uppercase',
-            color: 'var(--color-text-muted)'
-          }}>
+          <span className="eyebrow">
             Experience
           </span>
           <div style={{
@@ -108,8 +102,16 @@ export default function ExperienceSection({ isMobile, isTablet, sectionPadding }
           gap: '0'
         }}>
           {jobs.map((job, index) => (
-            <div
-              key={index}
+            <div key={index}>
+              {/* Role divider - between jobs, not before first */}
+              {index > 0 && (
+                <div style={{
+                  height: '1px',
+                  background: 'var(--color-border-light)',
+                  margin: isMobile ? '8px 0' : '0'
+                }} />
+              )}
+              <div
               style={{
                 display: 'grid',
                 gridTemplateColumns: isMobile ? '1fr' : isTablet ? '160px 1fr' : '200px 1fr',
@@ -213,9 +215,10 @@ export default function ExperienceSection({ isMobile, isTablet, sectionPadding }
                       style={{
                         fontSize: '14px',
                         color: 'var(--color-text-tertiary)',
-                        lineHeight: 1.5,
+                        lineHeight: 1.6,
                         paddingLeft: 'var(--space-md)',
-                        position: 'relative'
+                        position: 'relative',
+                        maxWidth: '600px'
                       }}
                     >
                       <span style={{
@@ -232,18 +235,10 @@ export default function ExperienceSection({ isMobile, isTablet, sectionPadding }
                   gap: 'var(--space-sm)',
                   flexWrap: 'wrap'
                 }}>
-                  {job.tags.map((tag, i) => (
+                  {job.tags.slice(0, 4).map((tag, i) => (
                     <span
                       key={i}
-                      style={{
-                        fontSize: '10px',
-                        fontWeight: 500,
-                        letterSpacing: '0.05em',
-                        textTransform: 'uppercase',
-                        color: 'var(--color-text-muted)',
-                        padding: '4px 8px',
-                        border: '1px solid var(--color-border)'
-                      }}
+                      className="tag"
                     >
                       {tag}
                     </span>
@@ -251,6 +246,7 @@ export default function ExperienceSection({ isMobile, isTablet, sectionPadding }
                 </div>
               </div>
             </div>
+          </div>
           ))}
         </div>
       </div>

@@ -15,7 +15,7 @@ import type { Variant } from '../../types/variant';
 
 // Mock the variants module
 vi.mock('../../lib/variants', () => ({
-  loadVariant: vi.fn(),
+  useVariant: vi.fn(),
   mergeProfile: vi.fn(),
   getExperienceWithOverrides: vi.fn(),
 }));
@@ -67,7 +67,7 @@ vi.mock('../../lib/content', () => ({
   }
 }));
 
-import { loadVariant, mergeProfile, getExperienceWithOverrides } from '../../lib/variants';
+import { useVariant, mergeProfile, getExperienceWithOverrides } from '../../lib/variants';
 import VariantResumePage from '../../pages/VariantResumePage';
 
 // Create mock variant data
@@ -161,7 +161,7 @@ describe('VariantResumePage - Variant Loading', () => {
   });
 
   it('should show loading state initially', () => {
-    vi.mocked(loadVariant).mockImplementation(() => new Promise(() => {})); // Never resolves
+    vi.mocked(useVariant).mockReturnValue({ data: null, isLoading: true });
 
     renderWithRouter('/test/role/resume');
 
@@ -169,7 +169,7 @@ describe('VariantResumePage - Variant Loading', () => {
   });
 
   it('should redirect to home if variant not found', async () => {
-    vi.mocked(loadVariant).mockResolvedValue(null);
+    vi.mocked(useVariant).mockReturnValue({ data: null, isLoading: false });
 
     renderWithRouter('/nonexistent/role/resume');
 
@@ -180,14 +180,14 @@ describe('VariantResumePage - Variant Loading', () => {
 
   it('should load variant based on URL params', async () => {
     const mockVariant = createMockVariant();
-    vi.mocked(loadVariant).mockResolvedValue(mockVariant);
+    vi.mocked(useVariant).mockReturnValue({ data: mockVariant, isLoading: false });
     vi.mocked(mergeProfile).mockReturnValue(createMergedProfile(mockVariant));
     vi.mocked(getExperienceWithOverrides).mockReturnValue(createMergedExperience());
 
     renderWithRouter('/test/role/resume');
 
     await waitFor(() => {
-      expect(loadVariant).toHaveBeenCalledWith('test-role');
+      expect(useVariant).toHaveBeenCalledWith('test-role');
     });
   });
 });
@@ -197,23 +197,23 @@ describe('VariantResumePage - Content Overrides', () => {
     vi.clearAllMocks();
   });
 
-  it('should render variant bio instead of base in summary', async () => {
+  it('should render variant tagline in summary', async () => {
     const mockVariant = createMockVariant();
-    vi.mocked(loadVariant).mockResolvedValue(mockVariant);
+    vi.mocked(useVariant).mockReturnValue({ data: mockVariant, isLoading: false });
     vi.mocked(mergeProfile).mockReturnValue(createMergedProfile(mockVariant));
     vi.mocked(getExperienceWithOverrides).mockReturnValue(createMergedExperience());
 
     renderWithRouter('/test/role/resume');
 
     await waitFor(() => {
-      // Resume summary uses first bio paragraph, not tagline
-      expect(screen.getByText(/Variant bio paragraph 1/i)).toBeInTheDocument();
+      // Resume summary uses tagline from profile.about
+      expect(screen.getByText(/Variant tagline for Test Company/i)).toBeInTheDocument();
     });
   });
 
   it('should render variant stats', async () => {
     const mockVariant = createMockVariant();
-    vi.mocked(loadVariant).mockResolvedValue(mockVariant);
+    vi.mocked(useVariant).mockReturnValue({ data: mockVariant, isLoading: false });
     vi.mocked(mergeProfile).mockReturnValue(createMergedProfile(mockVariant));
     vi.mocked(getExperienceWithOverrides).mockReturnValue(createMergedExperience());
 
@@ -227,7 +227,7 @@ describe('VariantResumePage - Content Overrides', () => {
 
   it('should render variant experience highlights', async () => {
     const mockVariant = createMockVariant();
-    vi.mocked(loadVariant).mockResolvedValue(mockVariant);
+    vi.mocked(useVariant).mockReturnValue({ data: mockVariant, isLoading: false });
     vi.mocked(mergeProfile).mockReturnValue(createMergedProfile(mockVariant));
     vi.mocked(getExperienceWithOverrides).mockReturnValue(createMergedExperience());
 
@@ -258,7 +258,7 @@ describe('VariantResumePage - ATS Formatting', () => {
     const mergedProfile = createMergedProfile(mockVariant);
     mergedProfile.about.bio = ['This is {{accent}}important{{/accent}} text'];
 
-    vi.mocked(loadVariant).mockResolvedValue(mockVariant);
+    vi.mocked(useVariant).mockReturnValue({ data: mockVariant, isLoading: false });
     vi.mocked(mergeProfile).mockReturnValue(mergedProfile);
     vi.mocked(getExperienceWithOverrides).mockReturnValue(createMergedExperience());
 
@@ -277,7 +277,7 @@ describe('VariantResumePage - ATS Formatting', () => {
     const experience = createMergedExperience();
     experience.jobs[0].highlights = ['[Link Text](http://example.com) is here'];
 
-    vi.mocked(loadVariant).mockResolvedValue(mockVariant);
+    vi.mocked(useVariant).mockReturnValue({ data: mockVariant, isLoading: false });
     vi.mocked(mergeProfile).mockReturnValue(createMergedProfile(mockVariant));
     vi.mocked(getExperienceWithOverrides).mockReturnValue(experience);
 
@@ -301,7 +301,7 @@ describe('VariantResumePage - Structure', () => {
 
   it('should have resume-page container class', async () => {
     const mockVariant = createMockVariant();
-    vi.mocked(loadVariant).mockResolvedValue(mockVariant);
+    vi.mocked(useVariant).mockReturnValue({ data: mockVariant, isLoading: false });
     vi.mocked(mergeProfile).mockReturnValue(createMergedProfile(mockVariant));
     vi.mocked(getExperienceWithOverrides).mockReturnValue(createMergedExperience());
 
@@ -314,7 +314,7 @@ describe('VariantResumePage - Structure', () => {
 
   it('should render all major sections', async () => {
     const mockVariant = createMockVariant();
-    vi.mocked(loadVariant).mockResolvedValue(mockVariant);
+    vi.mocked(useVariant).mockReturnValue({ data: mockVariant, isLoading: false });
     vi.mocked(mergeProfile).mockReturnValue(createMergedProfile(mockVariant));
     vi.mocked(getExperienceWithOverrides).mockReturnValue(createMergedExperience());
 
@@ -335,27 +335,27 @@ describe('VariantResumePage - URL Slug Generation', () => {
 
   it('should generate correct slug from company-role URL', async () => {
     const mockVariant = createMockVariant();
-    vi.mocked(loadVariant).mockResolvedValue(mockVariant);
+    vi.mocked(useVariant).mockReturnValue({ data: mockVariant, isLoading: false });
     vi.mocked(mergeProfile).mockReturnValue(createMergedProfile(mockVariant));
     vi.mocked(getExperienceWithOverrides).mockReturnValue(createMergedExperience());
 
     renderWithRouter('/cursor/tam/resume');
 
     await waitFor(() => {
-      expect(loadVariant).toHaveBeenCalledWith('cursor-tam');
+      expect(useVariant).toHaveBeenCalledWith('cursor-tam');
     });
   });
 
   it('should handle multi-word role slugs', async () => {
     const mockVariant = createMockVariant();
-    vi.mocked(loadVariant).mockResolvedValue(mockVariant);
+    vi.mocked(useVariant).mockReturnValue({ data: mockVariant, isLoading: false });
     vi.mocked(mergeProfile).mockReturnValue(createMergedProfile(mockVariant));
     vi.mocked(getExperienceWithOverrides).mockReturnValue(createMergedExperience());
 
     renderWithRouter('/microsoft/senior-pm/resume');
 
     await waitFor(() => {
-      expect(loadVariant).toHaveBeenCalledWith('microsoft-senior-pm');
+      expect(useVariant).toHaveBeenCalledWith('microsoft-senior-pm');
     });
   });
 
@@ -373,7 +373,7 @@ describe('VariantResumePage - URL Slug Generation', () => {
         applicationStatus: 'not_applied'
       }
     });
-    vi.mocked(loadVariant).mockResolvedValue(mockVariant);
+    vi.mocked(useVariant).mockReturnValue({ data: mockVariant, isLoading: false });
     vi.mocked(mergeProfile).mockReturnValue(createMergedProfile(mockVariant));
     vi.mocked(getExperienceWithOverrides).mockReturnValue(createMergedExperience());
 
@@ -381,7 +381,7 @@ describe('VariantResumePage - URL Slug Generation', () => {
 
     await waitFor(() => {
       // URL /cryptocom/pm-ai/resume should generate slug "cryptocom-pm-ai"
-      expect(loadVariant).toHaveBeenCalledWith('cryptocom-pm-ai');
+      expect(useVariant).toHaveBeenCalledWith('cryptocom-pm-ai');
     });
   });
 });

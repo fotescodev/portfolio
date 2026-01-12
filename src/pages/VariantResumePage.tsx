@@ -9,9 +9,8 @@
  * - Professional experience with action → outcome bullets
  */
 
-import { useState, useEffect } from 'react';
 import { useParams, Navigate } from 'react-router-dom';
-import { loadVariant, mergeProfile, getExperienceWithOverrides } from '../lib/variants';
+import { useVariant, mergeProfile, getExperienceWithOverrides } from '../lib/variants';
 import { skills, certifications } from '../lib/content';
 import type { Variant } from '../types/variant';
 import type { MergedProfile } from '../types/variant';
@@ -77,12 +76,8 @@ function ResumeContent({ profile, experience, variantSlug, variant }: ResumeCont
   // Clean tagline of accent markers
   const cleanTagline = stripAccentMarkers(profile.about.tagline);
 
-  // Build variant-aware summary
-  // Use the first bio paragraph if available, otherwise fall back to tagline + skills formula
-  const variantBio = variant.overrides?.about?.bio?.[0];
-  const summaryText = variantBio
-    ? stripAccentMarkers(stripMarkdownLinks(variantBio))
-    : `${cleanTagline} Expertise in ${topSkills} at ${companies}. ${statsSummary}.`;
+  // Build professional summary - tagline + expertise (no personal story)
+  const summaryText = `${cleanTagline} Expertise in ${topSkills} at ${companies}.`;
 
   return (
     <div className="resume-page">
@@ -181,41 +176,20 @@ function ResumeContent({ profile, experience, variantSlug, variant }: ResumeCont
 
 export default function VariantResumePage() {
   const { company, role } = useParams<{ company: string; role: string }>();
-  const [variant, setVariant] = useState<Variant | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [notFound, setNotFound] = useState(false);
 
-  useEffect(() => {
-    async function load() {
-      if (!company || !role) {
-        setNotFound(true);
-        setLoading(false);
-        return;
-      }
+  // Generate slug from URL params
+  const slug = company && role
+    ? `${company.toLowerCase()}-${role.toLowerCase()}`
+    : '';
 
-      // Generate slug from URL params
-      const slug = `${company.toLowerCase()}-${role.toLowerCase()}`;
+  // Load variant from Convex
+  const { data: variant, isLoading } = useVariant(slug);
 
-      try {
-        const loadedVariant = await loadVariant(slug);
+  if (!company || !role) {
+    return <Navigate to="/" replace />;
+  }
 
-        if (!loadedVariant) {
-          setNotFound(true);
-        } else {
-          setVariant(loadedVariant);
-        }
-      } catch (error) {
-        console.error('Error loading variant:', error);
-        setNotFound(true);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    load();
-  }, [company, role]);
-
-  if (loading) {
+  if (isLoading) {
     return (
       <div style={{
         display: 'flex',
@@ -230,7 +204,7 @@ export default function VariantResumePage() {
     );
   }
 
-  if (notFound || !variant) {
+  if (!variant) {
     return <Navigate to="/" replace />;
   }
 

@@ -396,6 +396,68 @@ Work one variant at a time through the pipeline:
 | `--color-text-primary` | #e8e6e3 | #050505 |
 | `--color-accent` | #c29a6c | #8a6642 |
 
+### CSS Utility Classes (globals.css)
+
+**Section Labels:**
+```tsx
+// Section eyebrow pattern - used for all section headers
+<span className="eyebrow">About</span>
+```
+
+**Typography:**
+```css
+.eyebrow { /* 11px, 600 weight, 0.15em tracking, uppercase, muted */ }
+.text-readable { max-width: 65ch; }
+.bullet-list { max-width: 600px; line-height: 1.6; }
+```
+
+**Tags:**
+```tsx
+// Unified tag styling for experience, case studies, blog
+<span className="tag">STAKING</span>
+```
+
+**Testimonials:**
+```tsx
+// Quote marks with consistent positioning
+<div className="quote-mark">"</div>        // Mobile: 0.3 opacity
+<div className="quote-mark-subtle">"</div> // Desktop: 0.18 opacity
+```
+
+**Cards:**
+```tsx
+// Light mode shadow enhancement
+<article className="light-card">...</article>
+```
+
+### Reusable Components (src/components/common/)
+
+| Component | Purpose | Usage |
+|-----------|---------|-------|
+| `TestimonialCard.tsx` | Testimonial card with quote, author, avatar | Mobile carousel + desktop list |
+| `Omnibar.tsx` | Floating action bar (Email/CV/Book) | Mobile bottom bar |
+| `Marquee.tsx` | Scrolling text banner | Optional decoration |
+
+### Style Patterns
+
+**1. Section Headers (eyebrow + divider):**
+```tsx
+<div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-lg)' }}>
+  <span className="eyebrow">Section Name</span>
+  <div style={{ flex: 1, height: '1px', background: 'var(--color-border-light)' }} />
+</div>
+```
+
+**2. Responsive Section Padding:**
+```tsx
+const sectionPadding = isMobile ? '48px 24px' : isTablet ? '64px 40px' : '80px 64px';
+```
+
+**3. Card Gradient Background:**
+```tsx
+background: 'linear-gradient(135deg, var(--color-background-secondary) 0%, var(--color-background-tertiary) 100%)'
+```
+
 ---
 
 ## Testing

@@ -87,13 +87,7 @@ export default function Blog({ isMobile, isTablet }: BlogProps) {
                     gap: 'var(--space-lg)',
                     marginBottom: isMobile ? 'var(--space-xl)' : '40px'
                 }}>
-                    <span style={{
-                        fontSize: '11px',
-                        fontWeight: 600,
-                        letterSpacing: '0.15em',
-                        textTransform: 'uppercase',
-                        color: 'var(--color-text-muted)'
-                    }}>
+                    <span className="eyebrow">
                         Insights
                     </span>
                     <div style={{
@@ -135,7 +129,7 @@ export default function Blog({ isMobile, isTablet }: BlogProps) {
                     flexDirection: 'column',
                     gap: '0'
                 }}>
-                    {posts.map((post, index) => (
+                    {posts.map((post) => (
                         <Link
                             key={post.slug}
                             to={`/blog/${post.slug}`}
@@ -143,8 +137,7 @@ export default function Blog({ isMobile, isTablet }: BlogProps) {
                         >
                         <article
                             style={{
-                                borderTop: index === 0 ? '1px solid var(--color-border)' : 'none',
-                                borderBottom: '1px solid var(--color-border)',
+                                borderTop: '1px solid var(--color-border)',
                                 padding: isMobile ? '28px 0' : '36px 0',
                                 cursor: 'pointer',
                                 transition: 'all 0.3s ease',
@@ -155,7 +148,7 @@ export default function Blog({ isMobile, isTablet }: BlogProps) {
                         >
                             <div style={{
                                 display: 'grid',
-                                gridTemplateColumns: isMobile ? '1fr' : isTablet ? '120px 1fr' : '140px 1fr auto',
+                                gridTemplateColumns: isMobile ? '1fr' : '140px 1fr',
                                 gap: isMobile ? 'var(--space-md)' : 'var(--space-xl)',
                                 alignItems: 'start'
                             }}>
@@ -215,11 +208,12 @@ export default function Blog({ isMobile, isTablet }: BlogProps) {
                                         {post.excerpt}
                                     </p>
 
-                                    {/* Tags */}
+                                    {/* Tags + inline Read link */}
                                     <div style={{
                                         display: 'flex',
                                         gap: 'var(--space-sm)',
-                                        flexWrap: 'wrap'
+                                        flexWrap: 'wrap',
+                                        alignItems: 'center'
                                     }}>
                                         {post.tags.map((tag, i) => (
                                             <span key={i} style={{
@@ -236,34 +230,29 @@ export default function Blog({ isMobile, isTablet }: BlogProps) {
                                                 {tag}
                                             </span>
                                         ))}
-                                    </div>
-                                </div>
 
-                                {/* Read link - desktop only */}
-                                {!isMobile && !isTablet && (
-                                    <div style={{
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        gap: 'var(--space-sm)',
-                                        color: hoveredPost === post.slug ? 'var(--color-accent)' : 'var(--color-text-muted)',
-                                        transition: 'color 0.2s ease',
-                                        alignSelf: 'center'
-                                    }}>
+                                        {/* Inline Read link */}
                                         <span style={{
+                                            display: 'inline-flex',
+                                            alignItems: 'center',
+                                            gap: '4px',
+                                            marginLeft: 'var(--space-sm)',
                                             fontSize: '13px',
                                             fontWeight: 500,
-                                            letterSpacing: '0.02em'
+                                            letterSpacing: '0.02em',
+                                            color: hoveredPost === post.slug ? 'var(--color-accent)' : 'var(--color-text-muted)',
+                                            transition: 'color 0.2s ease'
                                         }}>
                                             Read
+                                            <span style={{
+                                                transform: hoveredPost === post.slug ? 'translateX(4px)' : 'translateX(0)',
+                                                transition: 'transform 0.2s ease',
+                                                fontFamily: 'var(--font-serif)',
+                                                fontStyle: 'italic'
+                                            }}>→</span>
                                         </span>
-                                        <span style={{
-                                            transform: hoveredPost === post.slug ? 'translateX(4px)' : 'translateX(0)',
-                                            transition: 'transform 0.2s ease',
-                                            fontFamily: 'var(--font-serif)',
-                                            fontStyle: 'italic'
-                                        }}>→</span>
                                     </div>
-                                )}
+                                </div>
                             </div>
                         </article>
                         </Link>

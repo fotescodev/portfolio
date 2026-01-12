@@ -1,58 +1,41 @@
 /**
  * Variant loading and merging utilities
  *
- * Handles loading variant YAML files and merging them with base portfolio content
+ * Handles loading variants from Convex and merging them with base portfolio content
  */
 
-import { VariantSchema } from './schemas';
+import { useQuery } from 'convex/react';
+import { api } from '../../convex/_generated/api';
 import type { Variant, MergedProfile } from '../types/variant';
 import { profile as baseProfile, experience as baseExperience } from './content';
 
-// Import all variant JSON files at build time using Vite's glob import
-// We use JSON instead of YAML for easier client-side loading
-const variantFiles = import.meta.glob('../../content/variants/*.json', {
-  eager: false
-});
-
 /**
- * Load a specific variant by slug
+ * Hook to load a variant from Convex by slug
  * @param slug - The variant slug (e.g., "bloomberg-senior-engineer")
- * @returns The validated variant data or null if not found
+ * @returns { data, isLoading } - Variant data or null, and loading state
+ *
+ * Note: Data is validated with Zod on write (in generate.ts and CLI).
+ * We trust Convex data on read to avoid redundant validation overhead.
  */
-export async function loadVariant(slug: string): Promise<Variant | null> {
-  const filePath = `../../content/variants/${slug}.json`;
+export function useVariant(slug: string): {
+  data: Variant | null;
+  isLoading: boolean;
+} {
+  const result = useQuery(api.variants.getBySlug, { slug });
 
-  // Check if variant exists
-  const loader = variantFiles[filePath];
-  if (!loader) {
-    console.warn(`Variant not found: ${slug}`);
-    return null;
+  // result is undefined while loading, null if not found, or the data
+  if (result === undefined) {
+    return { data: null, isLoading: true };
   }
 
-  try {
-    // Dynamic import the JSON module
-    const module = await loader() as { default: Variant };
-    const variantData = module.default;
-
-    // Validate against schema
-    const validated = VariantSchema.parse(variantData);
-    return validated;
-
-  } catch (error) {
-    console.error(`Error loading variant ${slug}:`, error);
-    return null;
+  if (result === null) {
+    return { data: null, isLoading: false };
   }
+
+  // Data was validated on write - trust it on read
+  return { data: result as Variant, isLoading: false };
 }
 
-/**
- * Get list of all available variant slugs
- */
-export function getVariantSlugs(): string[] {
-  return Object.keys(variantFiles).map(path => {
-    const match = path.match(/\/([^/]+)\.yaml$/);
-    return match ? match[1] : '';
-  }).filter(slug => slug && !slug.startsWith('_')); // Exclude template files
-}
 
 /**
  * Merge base profile with variant overrides
@@ -140,13 +123,3 @@ export function getExperienceWithOverrides(variant: Variant | null) {
   return mergedExperience;
 }
 
-/**
- * Check if a variant exists for a given company and role
- * @param company - Company name (lowercase, hyphenated)
- * @param role - Role slug (lowercase, hyphenated)
- * @returns True if variant exists
- */
-export function variantExists(company: string, role: string): boolean {
-  const slug = `${company}-${role}`;
-  return getVariantSlugs().includes(slug);
-}

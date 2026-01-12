@@ -72,7 +72,7 @@ export default function HeroSection({ profile, isMobile, isTablet, isLoaded }: H
             <span style={{
               fontSize: '13px',
               fontWeight: 500,
-              letterSpacing: '0.1em',
+              letterSpacing: '0.15em',
               textTransform: 'uppercase',
               color: 'var(--color-text-tertiary)'
             }}>

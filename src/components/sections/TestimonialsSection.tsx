@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { testimonials as testimonialsData } from '../../lib/content';
+import TestimonialCard from '../common/TestimonialCard';
 
 interface TestimonialsSectionProps {
   isMobile: boolean;
@@ -41,15 +42,7 @@ export default function TestimonialsSection({ isMobile, isTablet, sectionPadding
           marginBottom: isMobile ? 'var(--space-xl)' : 'calc(var(--space-xl) + var(--space-sm))'
         }}
       >
-        <span
-          style={{
-            fontSize: '11px',
-            fontWeight: 600,
-            letterSpacing: '0.15em',
-            textTransform: 'uppercase',
-            color: 'var(--color-text-muted)'
-          }}
-        >
+        <span className="eyebrow">
           References
         </span>
         <div style={{ flex: 1, height: '1px', background: 'var(--color-border-light)' }} />
@@ -83,101 +76,21 @@ export default function TestimonialsSection({ isMobile, isTablet, sectionPadding
         </p>
       </div>
 
-      {/* Testimonials - Carousel on mobile, horizontal scroll on tablet/desktop */}
+      {/* Testimonials - Carousel on mobile, list on tablet/desktop */}
       {isMobile ? (
         /* Mobile Carousel */
         <div style={{ position: 'relative' }}>
-          {/* Current testimonial */}
           {featuredTestimonials.length > 0 && (
-            <article
-              className="light-card"
-              style={{
-                background:
-                  'linear-gradient(135deg, var(--color-background-secondary) 0%, var(--color-background-tertiary) 100%)',
-                border: '1px solid var(--color-border-light)',
-                padding: 'var(--space-lg)',
-                position: 'relative'
-              }}
-            >
-              {/* Quote mark */}
-              <div
-                aria-hidden="true"
-                style={{
-                  position: 'absolute',
-                  top: 'var(--space-md)',
-                  right: 'var(--space-md)',
-                  fontFamily: 'var(--font-serif)',
-                  fontSize: '54px',
-                  lineHeight: 1,
-                  color: 'var(--color-accent)',
-                  opacity: 0.18
-                }}
-              >
-                "
-              </div>
-
-              {/* Content */}
-              <p
-                style={{
-                  fontSize: '15px',
-                  lineHeight: 1.7,
-                  color: 'var(--color-text-secondary)',
-                  marginBottom: 'var(--space-lg)',
-                  position: 'relative',
-                  zIndex: 1,
-                  fontFamily: 'var(--font-serif)',
-                  fontStyle: 'italic'
-                }}
-              >
-                {featuredTestimonials[currentIndex].quote}
-              </p>
-
-              {/* Author */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-md)' }}>
-                <div
-                  style={{
-                    width: '44px',
-                    height: '44px',
-                    background: 'var(--color-background-tertiary)',
-                    border: '1px solid var(--color-border-light)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '14px',
-                    fontWeight: 600,
-                    letterSpacing: '0.02em',
-                    color: 'var(--color-text-primary)',
-                    flexShrink: 0
-                  }}
-                >
-                  {('initials' in featuredTestimonials[currentIndex])
-                    ? (featuredTestimonials[currentIndex] as { initials: string }).initials
-                    : featuredTestimonials[currentIndex].author.split(' ').slice(0, 2).map((n) => n[0]).join('')}
-                </div>
-
-                <div>
-                  <div
-                    style={{
-                      fontSize: '14px',
-                      fontWeight: 600,
-                      color: 'var(--color-text-primary)',
-                      marginBottom: 2
-                    }}
-                  >
-                    {featuredTestimonials[currentIndex].author}
-                  </div>
-                  <div
-                    style={{
-                      fontSize: '12px',
-                      color: 'var(--color-text-tertiary)',
-                      lineHeight: 1.4
-                    }}
-                  >
-                    {featuredTestimonials[currentIndex].role} · {featuredTestimonials[currentIndex].company}
-                  </div>
-                </div>
-              </div>
-            </article>
+            <TestimonialCard
+              quote={featuredTestimonials[currentIndex].quote}
+              author={featuredTestimonials[currentIndex].author}
+              role={featuredTestimonials[currentIndex].role}
+              company={featuredTestimonials[currentIndex].company}
+              initials={'initials' in featuredTestimonials[currentIndex]
+                ? (featuredTestimonials[currentIndex] as { initials: string }).initials
+                : undefined}
+              variant="mobile"
+            />
           )}
 
           {/* Navigation controls */}
@@ -254,119 +167,31 @@ export default function TestimonialsSection({ isMobile, isTablet, sectionPadding
           )}
         </div>
       ) : (
-        /* Tablet/Desktop - Horizontal scroll */
+        /* Tablet/Desktop - Single column layout for reading flow */
         <div
           style={{
             display: 'flex',
-            gap: 'var(--space-lg)',
-            overflowX: 'auto',
-            paddingBottom: 'var(--space-md)',
-            scrollSnapType: 'x mandatory'
+            flexDirection: 'column',
+            gap: 'var(--space-xl)',
+            maxWidth: '720px'
           }}
         >
-          {featuredTestimonials.map((testimonial, index) => {
-            const isHovered = hovered === index;
-
-            return (
-              <article
-                key={index}
-                className="light-card"
-                style={{
-                  flex: '0 0 auto',
-                  width: isTablet ? '420px' : '460px',
-                  scrollSnapAlign: 'start',
-                  background:
-                    'linear-gradient(135deg, var(--color-background-secondary) 0%, var(--color-background-tertiary) 100%)',
-                  border: isHovered ? '1px solid var(--color-border)' : '1px solid var(--color-border-light)',
-                  padding: 'var(--space-xl)',
-                  position: 'relative',
-                  transition: 'border-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast)',
-                  transform: isHovered ? 'translateY(-2px)' : 'translateY(0)'
-                }}
-                onMouseEnter={() => setHovered(index)}
-                onMouseLeave={() => setHovered(null)}
-              >
-                {/* Quote mark */}
-                <div
-                  aria-hidden="true"
-                  style={{
-                    position: 'absolute',
-                    top: 'var(--space-md)',
-                    right: 'var(--space-md)',
-                    fontFamily: 'var(--font-serif)',
-                    fontSize: '54px',
-                    lineHeight: 1,
-                    color: 'var(--color-accent)',
-                    opacity: 0.18
-                  }}
-                >
-                  "
-                </div>
-
-                {/* Content */}
-                <p
-                  style={{
-                    fontSize: '16px',
-                    lineHeight: 1.7,
-                    color: 'var(--color-text-secondary)',
-                    marginBottom: 'var(--space-lg)',
-                    position: 'relative',
-                    zIndex: 1,
-                    fontFamily: 'var(--font-serif)',
-                    fontStyle: 'italic'
-                  }}
-                >
-                  {testimonial.quote}
-                </p>
-
-                {/* Author */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-md)' }}>
-                  <div
-                    style={{
-                      width: '44px',
-                      height: '44px',
-                      background: 'var(--color-background-tertiary)',
-                      border: '1px solid var(--color-border-light)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontSize: '14px',
-                      fontWeight: 600,
-                      letterSpacing: '0.02em',
-                      color: 'var(--color-text-primary)',
-                      flexShrink: 0
-                    }}
-                  >
-                    {('initials' in testimonial)
-                      ? (testimonial as { initials: string }).initials
-                      : testimonial.author.split(' ').slice(0, 2).map((n) => n[0]).join('')}
-                  </div>
-
-                  <div>
-                    <div
-                      style={{
-                        fontSize: '14px',
-                        fontWeight: 600,
-                        color: 'var(--color-text-primary)',
-                        marginBottom: 2
-                      }}
-                    >
-                      {testimonial.author}
-                    </div>
-                    <div
-                      style={{
-                        fontSize: '12px',
-                        color: 'var(--color-text-tertiary)',
-                        lineHeight: 1.4
-                      }}
-                    >
-                      {testimonial.role} · {testimonial.company}
-                    </div>
-                  </div>
-                </div>
-              </article>
-            );
-          })}
+          {featuredTestimonials.map((testimonial, index) => (
+            <TestimonialCard
+              key={index}
+              quote={testimonial.quote}
+              author={testimonial.author}
+              role={testimonial.role}
+              company={testimonial.company}
+              initials={'initials' in testimonial
+                ? (testimonial as { initials: string }).initials
+                : undefined}
+              variant="desktop"
+              isHovered={hovered === index}
+              onMouseEnter={() => setHovered(index)}
+              onMouseLeave={() => setHovered(null)}
+            />
+          ))}
         </div>
       )}
     </section>
