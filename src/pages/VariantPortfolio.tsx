@@ -5,50 +5,26 @@
  * Example: /bloomberg/senior-engineer
  */
 
-import { useState, useEffect } from 'react';
 import { useParams, Navigate } from 'react-router-dom';
-import { loadVariant, mergeProfile } from '../lib/variants';
+import { useVariant, mergeProfile } from '../lib/variants';
 import { VariantProvider } from '../context/VariantContext';
 import Portfolio from '../components/Portfolio';
-import type { Variant } from '../types/variant';
 
 export default function VariantPortfolio() {
   const { company, role } = useParams<{ company: string; role: string }>();
-  const [variant, setVariant] = useState<Variant | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [notFound, setNotFound] = useState(false);
 
-  useEffect(() => {
-    async function load() {
-      if (!company || !role) {
-        setNotFound(true);
-        setLoading(false);
-        return;
-      }
+  // Generate slug from URL params
+  const slug = company && role ? `${company.toLowerCase()}-${role.toLowerCase()}` : '';
 
-      // Generate slug from URL params
-      const slug = `${company.toLowerCase()}-${role.toLowerCase()}`;
+  // Load variant from Convex using hook
+  const { data: variant, isLoading } = useVariant(slug);
 
-      try {
-        const loadedVariant = await loadVariant(slug);
+  // Handle missing params
+  if (!company || !role) {
+    return <Navigate to="/" replace />;
+  }
 
-        if (!loadedVariant) {
-          setNotFound(true);
-        } else {
-          setVariant(loadedVariant);
-        }
-      } catch (error) {
-        console.error('Error loading variant:', error);
-        setNotFound(true);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    load();
-  }, [company, role]);
-
-  if (loading) {
+  if (isLoading) {
     return (
       <div style={{
         display: 'flex',
@@ -63,7 +39,7 @@ export default function VariantPortfolio() {
     );
   }
 
-  if (notFound || !variant) {
+  if (!variant) {
     return <Navigate to="/" replace />;
   }
 
