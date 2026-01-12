@@ -27,6 +27,7 @@ jobs:
       - run: npm run build
         env:
           DASHBOARD_PASSWORD: ${{ secrets.DASHBOARD_PASSWORD }}
+          VITE_CONVEX_URL: ${{ secrets.VITE_CONVEX_URL }}
       - uses: actions/configure-pages@v4
       - uses: actions/upload-pages-artifact@v3
         with:
