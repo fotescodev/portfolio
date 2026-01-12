@@ -86,13 +86,7 @@ export default function ExperienceSection({ isMobile, isTablet, sectionPadding }
           gap: 'var(--space-lg)',
           marginBottom: isMobile ? 'var(--space-lg)' : '24px'
         }}>
-          <span style={{
-            fontSize: '11px',
-            fontWeight: 600,
-            letterSpacing: '0.15em',
-            textTransform: 'uppercase',
-            color: 'var(--color-text-muted)'
-          }}>
+          <span className="eyebrow">
             Experience
           </span>
           <div style={{

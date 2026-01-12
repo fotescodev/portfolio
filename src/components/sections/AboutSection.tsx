@@ -92,13 +92,7 @@ export default function AboutSection({ profile, isMobile, isTablet, sectionPaddi
         gap: 'var(--space-lg)',
         marginBottom: isMobile ? 'var(--space-xl)' : '40px'
       }}>
-        <span style={{
-          fontSize: '11px',
-          fontWeight: 600,
-          letterSpacing: '0.15em',
-          textTransform: 'uppercase',
-          color: 'var(--color-text-muted)'
-        }}>
+        <span className="eyebrow">
           About
         </span>
         <div style={{

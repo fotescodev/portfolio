@@ -740,6 +740,49 @@
 }
 
 /* ============================================
+   Design System: Typography Utilities
+   Readable text widths and common patterns
+   ============================================ */
+
+/* Optimal reading width for prose content */
+.text-readable {
+  max-width: 65ch;
+}
+
+/* Section eyebrow label pattern */
+.eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+/* Bullet list container with readable width */
+.bullet-list {
+  max-width: 600px;
+  line-height: 1.6;
+}
+
+/* Decorative quote mark for testimonials */
+.quote-mark {
+  font-family: var(--font-serif);
+  font-size: 54px;
+  line-height: 1;
+  color: var(--color-accent);
+  opacity: 0.3;
+}
+
+/* Quote mark in desktop testimonials (subtler) */
+.quote-mark-subtle {
+  font-family: var(--font-serif);
+  font-size: 54px;
+  line-height: 1;
+  color: var(--color-accent);
+  opacity: 0.18;
+}
+
+/* ============================================
    Accessibility: Focus States
    Matches hover effects for keyboard navigation
    ============================================ */

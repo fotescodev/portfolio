@@ -24,13 +24,7 @@ export default function SocialSection({ isMobile, sectionPadding }: SocialSectio
         gap: 'var(--space-lg)',
         marginBottom: isMobile ? 'var(--space-xl)' : '40px'
       }}>
-        <span style={{
-          fontSize: '11px',
-          fontWeight: 600,
-          letterSpacing: '0.15em',
-          textTransform: 'uppercase',
-          color: 'var(--color-text-muted)'
-        }}>
+        <span className="eyebrow">
           Writing & Speaking
         </span>
         <div style={{

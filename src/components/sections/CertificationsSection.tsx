@@ -58,15 +58,7 @@ export default function CertificationsSection({
           marginBottom: isMobile ? 'var(--space-lg)' : 'var(--space-xl)'
         }}
       >
-        <span
-          style={{
-            fontSize: '11px',
-            fontWeight: 600,
-            letterSpacing: '0.15em',
-            textTransform: 'uppercase',
-            color: 'var(--color-text-muted)'
-          }}
-        >
+        <span className="eyebrow">
           Credentials
         </span>
         <div style={{ flex: 1, height: '1px', background: 'var(--color-border-light)' }} />
@@ -217,15 +209,7 @@ export default function CertificationsSection({
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-md)' }}>
-            <span
-              style={{
-                fontSize: '11px',
-                fontWeight: 600,
-                letterSpacing: '0.15em',
-                textTransform: 'uppercase',
-                color: 'var(--color-text-muted)'
-              }}
-            >
+            <span className="eyebrow">
               On-chain
             </span>
             <span

@@ -40,13 +40,7 @@ export default function PassionProjectsSection({
           marginBottom: isMobile ? 'var(--space-lg)' : '24px'
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-lg)' }}>
-            <span style={{
-              fontSize: '11px',
-              fontWeight: 600,
-              letterSpacing: '0.15em',
-              textTransform: 'uppercase',
-              color: 'var(--color-text-muted)'
-            }}>
+            <span className="eyebrow">
               Side Projects
             </span>
           </div>
