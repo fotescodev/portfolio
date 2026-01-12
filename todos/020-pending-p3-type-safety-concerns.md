@@ -1,9 +1,10 @@
 ---
-status: pending
+status: completed
 priority: p3
 issue_id: "020"
 tags: [design-audit, typescript, type-safety]
 dependencies: []
+completed_at: 2026-01-11
 ---
 
 # Type Safety Concerns in Design Audit Fixes
