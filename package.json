@@ -41,6 +41,7 @@
   },
   "dependencies": {
     "@types/react-syntax-highlighter": "^15.5.13",
+    "convex": "^1.31.3",
     "framer-motion": "^12.23.26",
     "gray-matter": "^4.0.3",
     "puppeteer-extra": "^3.3.6",
