@@ -29,8 +29,14 @@ interface VariantProviderProps {
 export function VariantProvider({ children, profile, variant = null }: VariantProviderProps) {
   const getResumeUrl = (): string => {
     if (variant) {
-      // Return direct PDF path for immediate download
-      return `/resumes/${variant.metadata.slug}.pdf`;
+      // Use explicit resumePath if set (indicates resume was generated)
+      // Otherwise fall back to default resume
+      if (variant.metadata.resumePath) {
+        return variant.metadata.resumePath;
+      }
+      // Graceful fallback: if no resume was generated for this variant,
+      // use the default generic resume instead of a 404
+      return '/resume.pdf';
     }
     return '/resume.pdf';
   };
