@@ -51,9 +51,10 @@ interface ResumeContentProps {
   experience: { jobs: Array<{ company: string; role: string; period: string; location: string; highlights: string[]; tags: string[] }> };
   variantSlug: string;
   variant: Variant;
+  resumeUrl: string;
 }
 
-function ResumeContent({ profile, experience, variantSlug, variant }: ResumeContentProps) {
+function ResumeContent({ profile, experience, variantSlug, variant, resumeUrl }: ResumeContentProps) {
   // Build impact summary from profile stats
   const statsSummary = profile.about.stats
     .map(s => `${s.value} ${s.label}`)
@@ -83,7 +84,7 @@ function ResumeContent({ profile, experience, variantSlug, variant }: ResumeCont
     <div className="resume-page">
       {/* Download button - hidden when printing */}
       <a
-        href={`/resumes/${variantSlug}.pdf`}
+        href={resumeUrl}
         download={`${variantSlug}-resume.pdf`}
         className="resume-print-btn"
       >
@@ -174,12 +175,22 @@ function ResumeContent({ profile, experience, variantSlug, variant }: ResumeCont
   );
 }
 
+// Slugify must match convex/generate.ts and dashboard slugify
+function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/\s+/g, '-')
+    .replace(/[^a-z0-9-]/g, '')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '');
+}
+
 export default function VariantResumePage() {
   const { company, role } = useParams<{ company: string; role: string }>();
 
-  // Generate slug from URL params
+  // Generate slug from URL params (must match generate.ts slugify logic)
   const slug = company && role
-    ? `${company.toLowerCase()}-${role.toLowerCase()}`
+    ? `${slugify(company)}-${slugify(role)}`
     : '';
 
   // Load variant from Convex
@@ -212,5 +223,8 @@ export default function VariantResumePage() {
   const mergedProfile = mergeProfile(variant);
   const mergedExperience = getExperienceWithOverrides(variant);
 
-  return <ResumeContent profile={mergedProfile} experience={mergedExperience} variantSlug={variant.metadata.slug} variant={variant} />;
+  // Use explicit resumePath if set, otherwise fall back to default resume
+  const resumeUrl = variant.metadata.resumePath || '/resume.pdf';
+
+  return <ResumeContent profile={mergedProfile} experience={mergedExperience} variantSlug={variant.metadata.slug} variant={variant} resumeUrl={resumeUrl} />;
 }
