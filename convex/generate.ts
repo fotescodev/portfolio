@@ -125,7 +125,7 @@ export const extractJobDetails = action({
   args: {
     jobDescription: v.string(),
   },
-  handler: async (ctx, args) => {
+  handler: async (_ctx, args) => {
     const apiKey = process.env.ANTHROPIC_API_KEY;
     if (!apiKey) {
       throw new Error("ANTHROPIC_API_KEY not set in Convex environment");
