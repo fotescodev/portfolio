@@ -94,6 +94,12 @@ export const generateVariant = action({
       variant.metadata.slug ||
       `${args.company.toLowerCase().replace(/\s+/g, "-")}-${args.role.toLowerCase().replace(/\s+/g, "-")}`;
 
+    // Check if jobDescription was a URL and store it as sourceUrl
+    const urlPattern = /^https?:\/\/[^\s]+$/i;
+    if (urlPattern.test(args.jobDescription.trim())) {
+      variant.metadata.sourceUrl = args.jobDescription.trim();
+    }
+
     await ctx.runMutation(api.variants.upsert, {
       slug,
       publishStatus: "draft",
@@ -105,6 +111,113 @@ export const generateVariant = action({
       slug,
       message: `Variant created as draft: ${slug}`,
     };
+  },
+});
+
+/**
+ * Extract job details (company, role, values) from a job description or URL
+ * Used by dashboard wizard to pre-fill fields before generation
+ * Supports both:
+ *   - Direct job description text
+ *   - Job posting URLs (will fetch and parse)
+ */
+export const extractJobDetails = action({
+  args: {
+    jobDescription: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const apiKey = process.env.ANTHROPIC_API_KEY;
+    if (!apiKey) {
+      throw new Error("ANTHROPIC_API_KEY not set in Convex environment");
+    }
+
+    let jobContent = args.jobDescription;
+    let sourceUrl: string | undefined;
+
+    // Check if input is a URL - if so, fetch the page content
+    const urlPattern = /^https?:\/\/[^\s]+$/i;
+    if (urlPattern.test(args.jobDescription.trim())) {
+      sourceUrl = args.jobDescription.trim();
+      try {
+        const pageResponse = await fetch(sourceUrl, {
+          headers: {
+            "User-Agent":
+              "Mozilla/5.0 (compatible; JobParser/1.0; +https://dmitrii.fyi)",
+          },
+        });
+
+        if (!pageResponse.ok) {
+          throw new Error(`Failed to fetch URL: ${pageResponse.status}`);
+        }
+
+        const html = await pageResponse.text();
+
+        // Extract text content from HTML (basic extraction)
+        // Remove script and style tags, then strip HTML tags
+        jobContent = html
+          .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, "")
+          .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, "")
+          .replace(/<[^>]+>/g, " ")
+          .replace(/\s+/g, " ")
+          .trim();
+      } catch (fetchError) {
+        // If fetch fails, treat the URL as the job description text
+        // (user might have pasted a URL that's not accessible)
+        console.error("Failed to fetch URL, using as text:", fetchError);
+      }
+    }
+
+    const prompt = `Extract the following from this job posting:
+1. Company name
+2. Job title/role
+3. Key company values or culture points (brief, 1-2 sentences)
+
+Job posting:
+${jobContent.slice(0, 15000)}
+
+Respond ONLY with valid JSON in this exact format:
+{"company": "Company Name", "role": "Job Title", "companyValues": "Brief values/culture summary"}
+
+No markdown code blocks, no explanations, just the JSON object.`;
+
+    const response = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": apiKey,
+        "anthropic-version": "2023-06-01",
+      },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-20250514",
+        max_tokens: 512,
+        messages: [{ role: "user", content: prompt }],
+      }),
+    });
+
+    if (!response.ok) {
+      const error = await response.text();
+      throw new Error(`Claude API error: ${response.status} - ${error}`);
+    }
+
+    const data = await response.json();
+    const aiOutput = data.content[0].text;
+
+    // Parse JSON response
+    let clean = aiOutput.trim();
+    if (clean.startsWith("```json")) {
+      clean = clean.replace(/^```json\n?/, "").replace(/\n?```$/, "");
+    } else if (clean.startsWith("```")) {
+      clean = clean.replace(/^```\n?/, "").replace(/\n?```$/, "");
+    }
+
+    const result = JSON.parse(clean);
+
+    // Include source URL if we fetched from one
+    if (sourceUrl) {
+      result.sourceUrl = sourceUrl;
+    }
+
+    return result;
   },
 });
 
