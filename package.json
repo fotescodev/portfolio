@@ -35,6 +35,7 @@
     "check:coverage": "tsx scripts/check-coverage.ts",
     "analyze:jd": "tsx scripts/analyze-jd.ts",
     "search:evidence": "tsx scripts/search-evidence.ts",
+    "quick-variant": "tsx scripts/quick-variant.ts",
     "ucv-cli": "tsx scripts/cli/ucv/index.ts",
     "generate:dashboard": "tsx scripts/generate-dashboard.ts",
     "audit:cli": "tsx scripts/audit-cli-ux.ts"
