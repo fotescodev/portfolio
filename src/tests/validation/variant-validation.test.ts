@@ -162,13 +162,23 @@ describe('Circle PM Variant - Claims Verification', () => {
   });
 });
 
+// Slugify function must match generate.ts, VariantPortfolio.tsx, and dashboard
+function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/\s+/g, '-')
+    .replace(/[^a-z0-9-]/g, '')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '');
+}
+
 describe('Variant URL Slug Generation', () => {
   it('should generate correct slug for circle/pm URL', () => {
     // URL pattern: /:company/:role
     // circle/pm -> circle-pm
     const company = 'circle';
     const role = 'pm';
-    const expectedSlug = `${company}-${role}`;
+    const expectedSlug = `${slugify(company)}-${slugify(role)}`;
 
     expect(expectedSlug).toBe('circle-pm');
   });
@@ -176,8 +186,51 @@ describe('Variant URL Slug Generation', () => {
   it('should handle orca/pm URL correctly', () => {
     const company = 'orca';
     const role = 'pm';
-    const expectedSlug = `${company}-${role}`;
+    const expectedSlug = `${slugify(company)}-${slugify(role)}`;
 
     expect(expectedSlug).toBe('orca-pm');
+  });
+
+  it('should handle company names with special characters (e.g., Crypto.com)', () => {
+    const company = 'Crypto.com';
+    const role = 'Product Manager (AI)';
+    const expectedSlug = `${slugify(company)}-${slugify(role)}`;
+
+    // Dots and parens should be removed
+    expect(slugify(company)).toBe('cryptocom');
+    expect(slugify(role)).toBe('product-manager-ai');
+    expect(expectedSlug).toBe('cryptocom-product-manager-ai');
+  });
+
+  it('should handle company names with spaces', () => {
+    const company = 'Mysten Labs';
+    const role = 'Sr. Product Manager, Walrus (Distributed Storage)';
+
+    expect(slugify(company)).toBe('mysten-labs');
+    expect(slugify(role)).toBe('sr-product-manager-walrus-distributed-storage');
+  });
+
+  it('should handle OpenAI Lead Product Manager slug', () => {
+    const company = 'OpenAI';
+    const role = 'Lead Product Manager';
+    const expectedSlug = `${slugify(company)}-${slugify(role)}`;
+
+    expect(expectedSlug).toBe('openai-lead-product-manager');
+  });
+
+  it('should collapse multiple dashes', () => {
+    const company = 'Company---Name';
+    const role = 'Role--Title';
+
+    expect(slugify(company)).toBe('company-name');
+    expect(slugify(role)).toBe('role-title');
+  });
+
+  it('should trim leading and trailing dashes', () => {
+    const company = '-Leading';
+    const role = 'Trailing-';
+
+    expect(slugify(company)).toBe('leading');
+    expect(slugify(role)).toBe('trailing');
   });
 });

@@ -1,12 +1,25 @@
 import { query, mutation } from "./_generated/server";
 import { v } from "convex/values";
+import {
+  profileValidator,
+  experienceValidator,
+  skillsValidator,
+  projectsValidator,
+  caseStudiesValidator,
+} from "./validators";
 
-// Simple API key check for mutations
+/**
+ * Validates API key for mutations.
+ * FAIL-CLOSED: Throws error if ADMIN_API_KEY is not configured.
+ * This prevents accidental unprotected mutations in production.
+ */
 function requireAuth(apiKey: string | undefined) {
   const adminKey = process.env.ADMIN_API_KEY;
   if (!adminKey) {
-    // If no admin key is configured, allow access (development mode)
-    return;
+    throw new Error(
+      "ADMIN_API_KEY environment variable is not configured. " +
+      "Set it in Convex dashboard to enable mutations."
+    );
   }
   if (apiKey !== adminKey) {
     throw new Error("Unauthorized: Invalid API key");
@@ -35,17 +48,11 @@ export const get = query({
 export const upsert = mutation({
   args: {
     apiKey: v.optional(v.string()),
-    profile: v.any(),
-    experience: v.any(),
-    skills: v.any(),
-    projects: v.any(),
-    caseStudies: v.array(
-      v.object({
-        slug: v.string(),
-        title: v.string(),
-        headline: v.optional(v.string()),
-      })
-    ),
+    profile: profileValidator,
+    experience: experienceValidator,
+    skills: skillsValidator,
+    projects: projectsValidator,
+    caseStudies: caseStudiesValidator,
   },
   handler: async (ctx, args) => {
     requireAuth(args.apiKey);

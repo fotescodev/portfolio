@@ -10,6 +10,7 @@
 
 import type * as baseContent from "../baseContent.js";
 import type * as generate from "../generate.js";
+import type * as validators from "../validators.js";
 import type * as variants from "../variants.js";
 
 import type {
@@ -21,6 +22,7 @@ import type {
 declare const fullApi: ApiFromModules<{
   baseContent: typeof baseContent;
   generate: typeof generate;
+  validators: typeof validators;
   variants: typeof variants;
 }>;
 

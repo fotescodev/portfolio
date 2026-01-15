@@ -5,17 +5,108 @@ import { v } from "convex/values";
 import { api } from "./_generated/api";
 import { VariantSchema } from "../src/lib/schemas";
 
-// Simple API key check for actions
+/**
+ * Validates API key for actions.
+ * FAIL-CLOSED: Throws error if ADMIN_API_KEY is not configured.
+ * This prevents accidental unprotected mutations in production.
+ */
 function requireAuth(apiKey: string | undefined) {
   const adminKey = process.env.ADMIN_API_KEY;
   if (!adminKey) {
-    // If no admin key is configured, allow access (development mode)
-    return;
+    throw new Error(
+      "ADMIN_API_KEY environment variable is not configured. " +
+      "Set it in Convex dashboard to enable mutations."
+    );
   }
   if (apiKey !== adminKey) {
     throw new Error("Unauthorized: Invalid API key");
   }
 }
+
+/**
+ * Convert text to URL-safe slug
+ * Must match frontend slugify logic in dashboard and VariantPortfolio.tsx
+ */
+function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/\s+/g, "-") // spaces to dashes
+    .replace(/[^a-z0-9-]/g, "") // remove special chars (dots, parens, etc)
+    .replace(/-+/g, "-") // collapse multiple dashes
+    .replace(/^-|-$/g, ""); // trim dashes
+}
+
+/**
+ * Extract company, role, and values from a job description using AI
+ * Uses Claude Haiku for speed and cost efficiency
+ */
+export const extractJobDetails = action({
+  args: {
+    jobDescription: v.string(),
+  },
+  handler: async (_ctx, args) => {
+    const apiKey = process.env.ANTHROPIC_API_KEY;
+    if (!apiKey) {
+      throw new Error("ANTHROPIC_API_KEY not set in Convex environment");
+    }
+
+    const prompt = `Extract the following from this job posting. Return ONLY valid JSON with these exact fields:
+{
+  "company": "Company name",
+  "role": "Job title/role",
+  "companyValues": "Key company values or culture points, comma-separated (or empty string if not mentioned)"
+}
+
+Job posting:
+${args.jobDescription}
+
+Return ONLY the JSON object, nothing else.`;
+
+    const response = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": apiKey,
+        "anthropic-version": "2023-06-01",
+      },
+      body: JSON.stringify({
+        model: "claude-3-5-haiku-20241022",
+        max_tokens: 256,
+        messages: [{ role: "user", content: prompt }],
+      }),
+    });
+
+    if (!response.ok) {
+      const error = await response.text();
+      throw new Error(`Claude API error: ${response.status} - ${error}`);
+    }
+
+    const data = await response.json();
+    const output = data.content[0].text.trim();
+
+    // Parse JSON response
+    let parsed;
+    try {
+      // Handle potential code blocks
+      let clean = output;
+      if (clean.startsWith("```json")) {
+        clean = clean.replace(/^```json\n?/, "").replace(/\n?```$/, "");
+      } else if (clean.startsWith("```")) {
+        clean = clean.replace(/^```\n?/, "").replace(/\n?```$/, "");
+      }
+      parsed = JSON.parse(clean);
+    } catch {
+      // Return empty values if parsing fails
+      return { company: "", role: "", companyValues: "" };
+    }
+
+    return {
+      company: parsed.company || "",
+      role: parsed.role || "",
+      companyValues: parsed.companyValues || "",
+    };
+  },
+});
 
 /**
  * Generate a CV variant using AI
@@ -90,9 +181,9 @@ export const generateVariant = action({
     const variant = validationResult.data;
 
     // 6. Save to Convex as draft
-    const slug =
-      variant.metadata.slug ||
-      `${args.company.toLowerCase().replace(/\s+/g, "-")}-${args.role.toLowerCase().replace(/\s+/g, "-")}`;
+    // Slug format: company-role (URL: /company/role)
+    // Must match VariantPortfolio.tsx reconstruction: `${company}-${role}`
+    const slug = `${slugify(args.company)}-${slugify(args.role)}`;
 
     // Check if jobDescription was a URL and store it as sourceUrl
     const urlPattern = /^https?:\/\/[^\s]+$/i;

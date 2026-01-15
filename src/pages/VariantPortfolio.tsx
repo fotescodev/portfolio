@@ -10,11 +10,21 @@ import { useVariant, mergeProfile } from '../lib/variants';
 import { VariantProvider } from '../context/VariantContext';
 import Portfolio from '../components/Portfolio';
 
+// Slugify must match convex/generate.ts and dashboard slugify
+function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/\s+/g, '-')
+    .replace(/[^a-z0-9-]/g, '')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '');
+}
+
 export default function VariantPortfolio() {
   const { company, role } = useParams<{ company: string; role: string }>();
 
-  // Generate slug from URL params
-  const slug = company && role ? `${company.toLowerCase()}-${role.toLowerCase()}` : '';
+  // Generate slug from URL params (must match generate.ts slugify logic)
+  const slug = company && role ? `${slugify(company)}-${slugify(role)}` : '';
 
   // Load variant from Convex using hook
   const { data: variant, isLoading } = useVariant(slug);

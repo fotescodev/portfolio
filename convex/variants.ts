@@ -1,12 +1,19 @@
 import { query, mutation } from "./_generated/server";
 import { v } from "convex/values";
+import { variantDataValidator } from "./validators";
 
-// Simple API key check for mutations
+/**
+ * Validates API key for mutations.
+ * FAIL-CLOSED: Throws error if ADMIN_API_KEY is not configured.
+ * This prevents accidental unprotected mutations in production.
+ */
 function requireAuth(apiKey: string | undefined) {
   const adminKey = process.env.ADMIN_API_KEY;
   if (!adminKey) {
-    // If no admin key is configured, allow access (development mode)
-    return;
+    throw new Error(
+      "ADMIN_API_KEY environment variable is not configured. " +
+      "Set it in Convex dashboard to enable mutations."
+    );
   }
   if (apiKey !== adminKey) {
     throw new Error("Unauthorized: Invalid API key");
@@ -64,10 +71,10 @@ export const listAll = query({
       updatedAt: variant.updatedAt,
       company: variant.data?.metadata?.company,
       role: variant.data?.metadata?.role,
-      // Additional fields for dashboard
-      generatedAt: variant.data?.metadata?.generatedAt,
       applicationStatus: variant.data?.metadata?.applicationStatus || "not_applied",
+      appliedAt: variant.data?.metadata?.appliedAt,
       sourceUrl: variant.data?.metadata?.sourceUrl,
+      generatedAt: variant.data?.metadata?.generatedAt,
     }));
   },
 });
@@ -85,7 +92,7 @@ export const upsert = mutation({
     apiKey: v.optional(v.string()),
     slug: v.string(),
     publishStatus: v.union(v.literal("draft"), v.literal("published")),
-    data: v.any(),
+    data: variantDataValidator,
   },
   handler: async (ctx, args) => {
     requireAuth(args.apiKey);
@@ -145,15 +152,18 @@ export const updateStatus = mutation({
 });
 
 /**
- * Update application status (not_applied → applied)
- * Used by dashboard to track which jobs have been applied to
+ * Update application status for a variant
+ * Sets appliedAt timestamp when status changes to 'applied'
  */
 export const updateApplicationStatus = mutation({
   args: {
+    apiKey: v.optional(v.string()),
     slug: v.string(),
     applicationStatus: v.union(v.literal("not_applied"), v.literal("applied")),
   },
   handler: async (ctx, args) => {
+    requireAuth(args.apiKey);
+
     const variant = await ctx.db
       .query("variants")
       .withIndex("by_slug", (q) => q.eq("slug", args.slug))
@@ -164,13 +174,12 @@ export const updateApplicationStatus = mutation({
     }
 
     const now = new Date().toISOString();
-
-    // Update applicationStatus in nested data.metadata
     const updatedData = {
       ...variant.data,
       metadata: {
-        ...variant.data?.metadata,
+        ...variant.data.metadata,
         applicationStatus: args.applicationStatus,
+        // Set appliedAt when marking as applied, clear it when marking as not_applied
         appliedAt: args.applicationStatus === "applied" ? now : undefined,
       },
     };
@@ -179,6 +188,8 @@ export const updateApplicationStatus = mutation({
       data: updatedData,
       updatedAt: now,
     });
+
+    return { success: true, applicationStatus: args.applicationStatus };
   },
 });
 

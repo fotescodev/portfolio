@@ -1,0 +1,47 @@
+#!/bin/bash
+# Git pre-push hook: Prevent pushing draft variants to main branch
+#
+# This hook runs before pushing to ensure that the main branch
+# only contains published variants.
+#
+# Draft variants will return null from getBySlug() in production,
+# so pushing them is likely a mistake.
+#
+# To bypass (not recommended):
+#   git push --no-verify
+
+set -e
+
+# Get the current branch
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+
+# Only enforce on main branch
+if [ "$BRANCH" != "main" ]; then
+  exit 0
+fi
+
+echo "🔍 Checking variant publishing status before push..."
+echo ""
+
+# Run the variant check
+if ! npm run check:variants 2>/dev/null; then
+  echo ""
+  echo "❌ Push blocked: Draft variants found in main branch"
+  echo ""
+  echo "Before pushing main, ensure all variants have:"
+  echo "  publishStatus: 'published'"
+  echo ""
+  echo "To fix:"
+  echo "  1. Edit content/variants/<slug>.yaml"
+  echo "  2. Set publishStatus: 'published'"
+  echo "  3. Run: npm run variants:sync"
+  echo "  4. Commit the changes"
+  echo ""
+  echo "To bypass this check (not recommended):"
+  echo "  git push --no-verify"
+  echo ""
+  exit 1
+fi
+
+echo "✓ All variants are published. Push allowed."
+echo ""

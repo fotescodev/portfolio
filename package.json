@@ -16,6 +16,10 @@
     "test:design-system": "vitest run --reporter=verbose src/tests/design-system",
     "test:cli": "vitest run --config vitest.cli.config.ts",
     "test:cli:watch": "vitest --config vitest.cli.config.ts",
+    "test:convex": "vitest run --config vitest.convex.config.ts",
+    "test:convex:watch": "vitest --config vitest.convex.config.ts",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
     "validate": "tsx scripts/validate-content.ts",
     "generate:kb": "tsx scripts/generate-knowledge-base.ts",
     "generate:cv": "tsx scripts/generate-cv.ts",
@@ -38,7 +42,10 @@
     "quick-variant": "tsx scripts/quick-variant.ts",
     "ucv-cli": "tsx scripts/cli/ucv/index.ts",
     "generate:dashboard": "tsx scripts/generate-dashboard.ts",
-    "audit:cli": "tsx scripts/audit-cli-ux.ts"
+    "audit:cli": "tsx scripts/audit-cli-ux.ts",
+    "check:variants": "tsx scripts/check-variant-publishing.ts",
+    "report:variants": "tsx scripts/variant-status-report.ts",
+    "verify:convex": "tsx scripts/verify-convex-url.ts"
   },
   "dependencies": {
     "@types/react-syntax-highlighter": "^15.5.13",
@@ -63,8 +70,10 @@
     }
   },
   "devDependencies": {
+    "@edge-runtime/vm": "^5.0.0",
     "@eslint/js": "^9.39.1",
     "@inkjs/ui": "^2.0.0",
+    "@playwright/test": "^1.57.0",
     "@rollup/plugin-yaml": "^4.1.2",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",
@@ -75,6 +84,7 @@
     "@types/testing-library__jest-dom": "^5.14.9",
     "@vitejs/plugin-react": "^5.1.1",
     "chalk": "^5.6.2",
+    "convex-test": "^0.0.41",
     "eslint": "^9.39.1",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",
@@ -84,6 +94,7 @@
     "ora": "^9.0.0",
     "puppeteer": "^24.34.0",
     "react": "19.2.0",
+    "serve": "^14.2.5",
     "tsx": "^4.21.0",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.46.4",
