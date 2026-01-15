@@ -1,0 +1,182 @@
+/**
+ * Convex validators for typed schema definitions
+ * Mirrors src/lib/schemas.ts but uses Convex v.* validators
+ */
+import { v } from "convex/values";
+
+// ------------------------------------------------------------------
+// VARIANT DATA VALIDATORS
+// ------------------------------------------------------------------
+
+const headlineSegmentValidator = v.object({
+  text: v.string(),
+  style: v.optional(v.union(
+    v.literal("italic"),
+    v.literal("muted"),
+    v.literal("accent"),
+    v.literal("normal")
+  )),
+});
+
+const statValidator = v.object({
+  value: v.string(),
+  label: v.string(),
+});
+
+const variantMetadataValidator = v.object({
+  company: v.string(),
+  role: v.string(),
+  generatedAt: v.string(),
+  jobDescription: v.string(),
+  generationModel: v.optional(v.string()),
+  slug: v.string(),
+  publishStatus: v.optional(v.union(v.literal("draft"), v.literal("published"))),
+  publishedAt: v.optional(v.string()),
+  applicationStatus: v.optional(v.union(v.literal("not_applied"), v.literal("applied"))),
+  appliedAt: v.optional(v.string()),
+  sourceUrl: v.optional(v.string()),
+  resumePath: v.optional(v.string()),
+});
+
+const experienceOverrideValidator = v.object({
+  company: v.string(),
+  highlights: v.optional(v.array(v.string())),
+  tags: v.optional(v.array(v.string())),
+});
+
+const variantOverridesValidator = v.object({
+  hero: v.optional(v.object({
+    status: v.optional(v.string()),
+    headline: v.optional(v.array(headlineSegmentValidator)),
+    subheadline: v.optional(v.string()),
+    companyAccent: v.optional(v.array(headlineSegmentValidator)),
+  })),
+  about: v.optional(v.object({
+    tagline: v.optional(v.string()),
+    bio: v.optional(v.array(v.string())),
+    stats: v.optional(v.array(statValidator)),
+  })),
+  sections: v.optional(v.object({
+    beyondWork: v.optional(v.boolean()),
+    blog: v.optional(v.boolean()),
+    onchainIdentity: v.optional(v.boolean()),
+    skills: v.optional(v.boolean()),
+    passionProjects: v.optional(v.boolean()),
+  })),
+  experience: v.optional(v.array(experienceOverrideValidator)),
+});
+
+const relevanceItemValidator = v.object({
+  slug: v.string(),
+  relevanceScore: v.number(),
+  reasoning: v.optional(v.string()),
+});
+
+const skillRelevanceValidator = v.object({
+  category: v.string(),
+  relevanceScore: v.number(),
+});
+
+const variantRelevanceValidator = v.optional(v.object({
+  caseStudies: v.optional(v.array(relevanceItemValidator)),
+  skills: v.optional(v.array(skillRelevanceValidator)),
+  projects: v.optional(v.array(relevanceItemValidator)),
+}));
+
+/**
+ * Complete variant data validator
+ * Matches VariantSchema in src/lib/schemas.ts
+ */
+export const variantDataValidator = v.object({
+  metadata: variantMetadataValidator,
+  overrides: variantOverridesValidator,
+  relevance: variantRelevanceValidator,
+});
+
+// ------------------------------------------------------------------
+// BASE CONTENT VALIDATORS
+// ------------------------------------------------------------------
+
+const ctaButtonValidator = v.object({
+  label: v.string(),
+  href: v.string(),
+});
+
+export const profileValidator = v.object({
+  name: v.string(),
+  ens: v.string(),
+  email: v.string(),
+  location: v.string(),
+  timezone: v.string(),
+  photo: v.string(),
+  hero: v.object({
+    status: v.string(),
+    headline: v.array(headlineSegmentValidator),
+    subheadline: v.string(),
+    cta: v.object({
+      primary: ctaButtonValidator,
+      secondary: ctaButtonValidator,
+    }),
+  }),
+  about: v.object({
+    tagline: v.string(),
+    bio: v.array(v.string()),
+    stats: v.array(statValidator),
+  }),
+  sections: v.object({
+    beyondWork: v.boolean(),
+    blog: v.boolean(),
+    onchainIdentity: v.boolean(),
+    skills: v.boolean(),
+    passionProjects: v.boolean(),
+  }),
+});
+
+const jobValidator = v.object({
+  company: v.string(),
+  role: v.string(),
+  period: v.string(),
+  location: v.string(),
+  logo: v.optional(v.union(v.string(), v.null())),
+  highlights: v.array(v.string()),
+  tags: v.array(v.string()),
+  url: v.optional(v.union(v.string(), v.null())),
+});
+
+export const experienceValidator = v.object({
+  jobs: v.array(jobValidator),
+});
+
+const skillCategoryValidator = v.object({
+  name: v.string(),
+  skills: v.array(v.string()),
+});
+
+export const skillsValidator = v.object({
+  categories: v.array(skillCategoryValidator),
+});
+
+const passionProjectValidator = v.object({
+  id: v.number(),
+  slug: v.string(),
+  title: v.string(),
+  tagline: v.string(),
+  year: v.string(),
+  tags: v.array(v.string()),
+  thumbnail: v.optional(v.union(v.string(), v.null())),
+  githubUrl: v.optional(v.union(v.string(), v.null())),
+  liveUrl: v.optional(v.union(v.string(), v.null())),
+  docsUrl: v.optional(v.union(v.string(), v.null())),
+});
+
+export const projectsValidator = v.object({
+  projects: v.array(passionProjectValidator),
+});
+
+const caseStudySummaryValidator = v.object({
+  slug: v.string(),
+  title: v.string(),
+  headline: v.optional(v.string()),
+});
+
+export const caseStudiesValidator = v.array(caseStudySummaryValidator);
