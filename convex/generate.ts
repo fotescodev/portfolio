@@ -37,6 +37,42 @@ function slugify(text: string): string {
 }
 
 /**
+ * Abbreviate role title for shorter slugs
+ * "Senior Product Manager, AI Financial Services" → "senior-pm-ai"
+ */
+function abbreviateRole(role: string): string {
+  let abbreviated = role.toLowerCase();
+
+  // Common role abbreviations
+  abbreviated = abbreviated
+    .replace(/product manager/gi, "pm")
+    .replace(/program manager/gi, "tpm")
+    .replace(/technical account manager/gi, "tam")
+    .replace(/software engineer/gi, "swe")
+    .replace(/engineering manager/gi, "em")
+    .replace(/senior/gi, "sr")
+    .replace(/principal/gi, "prin")
+    .replace(/staff/gi, "staff")
+    .replace(/lead/gi, "lead");
+
+  // Slugify the result
+  abbreviated = slugify(abbreviated);
+
+  // Limit to ~30 chars max for readability
+  if (abbreviated.length > 30) {
+    const parts = abbreviated.split("-");
+    let result = "";
+    for (const part of parts) {
+      if ((result + "-" + part).length > 30) break;
+      result = result ? result + "-" + part : part;
+    }
+    abbreviated = result || parts[0];
+  }
+
+  return abbreviated;
+}
+
+/**
  * Generate a CV variant using AI
  *
  * This action:
@@ -108,10 +144,10 @@ export const generateVariant = action({
     }
     const variant = validationResult.data;
 
-    // 6. Save to Convex as draft
+    // 6. Save to Convex
     // Slug format: company-role (URL: /company/role)
-    // Must match VariantPortfolio.tsx reconstruction: `${company}-${role}`
-    const slug = `${slugify(args.company)}-${slugify(args.role)}`;
+    // Role is abbreviated for shorter URLs (e.g., "Senior Product Manager" → "sr-pm")
+    const slug = `${slugify(args.company)}-${abbreviateRole(args.role)}`;
 
     // Check if jobDescription was a URL and store it as sourceUrl
     const urlPattern = /^https?:\/\/[^\s]+$/i;

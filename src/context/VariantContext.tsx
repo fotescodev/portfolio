@@ -29,16 +29,19 @@ interface VariantProviderProps {
 export function VariantProvider({ children, profile, variant = null }: VariantProviderProps) {
   const getResumeUrl = (): string => {
     if (variant) {
-      // Use explicit resumePath if set (indicates resume was generated)
-      // Otherwise fall back to default resume
-      if (variant.metadata.resumePath) {
-        return variant.metadata.resumePath;
+      // Build resume page URL from slug: /company/role/resume
+      // Slug format: {company}-{role} where company is first segment
+      const slug = variant.metadata.slug;
+      const firstDash = slug.indexOf('-');
+      if (firstDash === -1) {
+        return `/${slug}/resume`;
       }
-      // Graceful fallback: if no resume was generated for this variant,
-      // use the default generic resume instead of a 404
-      return '/resume.pdf';
+      const company = slug.substring(0, firstDash);
+      const role = slug.substring(firstDash + 1);
+      return `/${company}/${role}/resume`;
     }
-    return '/resume.pdf';
+    // Base portfolio uses generic resume
+    return '/resume';
   };
 
   const value: VariantContextType = {
@@ -74,7 +77,7 @@ export function useVariantSafe() {
       profile: null,
       variant: null,
       isVariant: false,
-      getResumeUrl: () => '/resume.pdf'
+      getResumeUrl: () => '/resume'
     };
   }
   return context;
