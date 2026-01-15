@@ -1,0 +1,196 @@
+name: Deploy to GitHub Pages (With Safety Checks)
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  safety-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # ========================================================================
+      # 1. Environment Variable Validation
+      # ========================================================================
+
+      - name: Verify VITE_CONVEX_URL secret is configured
+        run: |
+          if [ -z "${{ secrets.VITE_CONVEX_URL }}" ]; then
+            echo "❌ ERROR: VITE_CONVEX_URL secret is not configured"
+            echo ""
+            echo "Fix: Set the secret in Settings → Secrets and variables → Actions"
+            exit 1
+          fi
+          echo "✓ VITE_CONVEX_URL secret is configured"
+
+      - name: Validate VITE_CONVEX_URL format
+        env:
+          VITE_CONVEX_URL: ${{ secrets.VITE_CONVEX_URL }}
+        run: |
+          URL="$VITE_CONVEX_URL"
+
+          # Should be https://something.convex.cloud
+          if ! [[ $URL =~ ^https://[a-z0-9-]+\.convex\.cloud/?$ ]]; then
+            echo "❌ ERROR: Invalid Convex URL format"
+            echo "   Got: $URL"
+            echo "   Expected: https://something.convex.cloud"
+            exit 1
+          fi
+
+          # Detect if it's likely a dev URL (warn only)
+          if [[ $URL == *"dev"* ]] || [[ $URL == *"staging"* ]]; then
+            echo "⚠️  WARNING: URL appears to be a dev/staging deployment"
+            echo "   URL: $URL"
+            echo "   Confirm this is intentional!"
+          fi
+
+          echo "✓ Convex URL format is valid: $URL"
+
+      # ========================================================================
+      # 2. Variant Publishing Validation
+      # ========================================================================
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check variant publishing status
+        run: |
+          npm run check:variants
+
+      - name: Generate variant status report
+        if: always()
+        run: |
+          npm run report:variants
+
+  build:
+    needs: safety-checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      # ========================================================================
+      # 3. Pre-Build Validation
+      # ========================================================================
+
+      - name: Validate content and variants
+        run: npm run validate
+
+      - name: Verify Convex URL configuration
+        env:
+          VITE_CONVEX_URL: ${{ secrets.VITE_CONVEX_URL }}
+        run: npm run verify:convex
+
+      # ========================================================================
+      # 4. Build
+      # ========================================================================
+
+      - name: Build project
+        run: npm run build
+        env:
+          DASHBOARD_PASSWORD: ${{ secrets.DASHBOARD_PASSWORD }}
+          VITE_CONVEX_URL: ${{ secrets.VITE_CONVEX_URL }}
+
+      # ========================================================================
+      # 5. Post-Build Verification
+      # ========================================================================
+
+      - name: Verify Convex URL embedded in build artifacts
+        env:
+          VITE_CONVEX_URL: ${{ secrets.VITE_CONVEX_URL }}
+        run: |
+          EXPECTED_URL="$VITE_CONVEX_URL"
+          BUILT_FILE="dist/index.html"
+
+          if ! grep -q "$EXPECTED_URL" "$BUILT_FILE"; then
+            echo "❌ ERROR: Convex URL not found in built HTML"
+            echo "   Expected: $EXPECTED_URL"
+            echo ""
+            echo "   Built HTML contains:"
+            grep -o "https://[a-z0-9-]*\.convex\.cloud" "$BUILT_FILE" || echo "   (no Convex URLs found)"
+            exit 1
+          fi
+
+          echo "✓ Correct Convex URL embedded in build artifacts"
+          echo "   URL: $EXPECTED_URL"
+
+      - name: Verify build artifacts exist
+        run: |
+          [ -f "dist/index.html" ] || exit 1
+          [ -d "dist/assets" ] || exit 1
+          echo "✓ All build artifacts are present"
+
+      # ========================================================================
+      # 6. Prepare for deployment
+      # ========================================================================
+
+      - uses: actions/configure-pages@v4
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
+
+      # ========================================================================
+      # 7. Post-Deploy Verification
+      # ========================================================================
+
+      - name: Verify production deployment accessibility
+        run: |
+          PROD_URL="${{ steps.deployment.outputs.page_url }}"
+          MAX_RETRIES=5
+          RETRY_DELAY=10
+
+          echo "🌐 Verifying production deployment..."
+          echo "   URL: $PROD_URL"
+          echo ""
+
+          for ((i=1; i<=MAX_RETRIES; i++)); do
+            echo "Attempt $i/$MAX_RETRIES..."
+
+            if curl -s "$PROD_URL" | grep -q "React\|Vite" 2>/dev/null; then
+              echo ""
+              echo "✓ Production deployment is accessible"
+              exit 0
+            fi
+
+            if [ $i -lt $MAX_RETRIES ]; then
+              echo "  Waiting ${RETRY_DELAY}s before retry..."
+              sleep $RETRY_DELAY
+            fi
+          done
+
+          echo ""
+          echo "⚠️  WARNING: Could not verify production deployment"
+          echo "Recommended: Manually verify at $PROD_URL"

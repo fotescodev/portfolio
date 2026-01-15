@@ -4,7 +4,6 @@ export default function AmbientBackground() {
             <div className="orb-primary" />
             <div className="orb-secondary" />
             <div className="orb-tertiary" />
-
         </>
     );
 }
