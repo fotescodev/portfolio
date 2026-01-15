@@ -30,6 +30,8 @@
     "variants:sync": "tsx scripts/sync-variants.ts",
     "variants:sync:dashboard": "tsx scripts/sync-variants.ts && tsx scripts/generate-dashboard.ts",
     "variants:check": "tsx scripts/sync-variants.ts --check",
+    "variants:cleanup": "tsx scripts/cleanup-orphaned-pdfs.ts",
+    "variants:cleanup:delete": "tsx scripts/cleanup-orphaned-pdfs.ts --delete",
     "eval:variant": "tsx scripts/evaluate-variants.ts",
     "eval:all": "tsx scripts/evaluate-variants.ts --all",
     "eval:check": "tsx scripts/evaluate-variants.ts --check --all",
