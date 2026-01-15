@@ -37,78 +37,6 @@ function slugify(text: string): string {
 }
 
 /**
- * Extract company, role, and values from a job description using AI
- * Uses Claude Haiku for speed and cost efficiency
- */
-export const extractJobDetails = action({
-  args: {
-    jobDescription: v.string(),
-  },
-  handler: async (_ctx, args) => {
-    const apiKey = process.env.ANTHROPIC_API_KEY;
-    if (!apiKey) {
-      throw new Error("ANTHROPIC_API_KEY not set in Convex environment");
-    }
-
-    const prompt = `Extract the following from this job posting. Return ONLY valid JSON with these exact fields:
-{
-  "company": "Company name",
-  "role": "Job title/role",
-  "companyValues": "Key company values or culture points, comma-separated (or empty string if not mentioned)"
-}
-
-Job posting:
-${args.jobDescription}
-
-Return ONLY the JSON object, nothing else.`;
-
-    const response = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": apiKey,
-        "anthropic-version": "2023-06-01",
-      },
-      body: JSON.stringify({
-        model: "claude-3-5-haiku-20241022",
-        max_tokens: 256,
-        messages: [{ role: "user", content: prompt }],
-      }),
-    });
-
-    if (!response.ok) {
-      const error = await response.text();
-      throw new Error(`Claude API error: ${response.status} - ${error}`);
-    }
-
-    const data = await response.json();
-    const output = data.content[0].text.trim();
-
-    // Parse JSON response
-    let parsed;
-    try {
-      // Handle potential code blocks
-      let clean = output;
-      if (clean.startsWith("```json")) {
-        clean = clean.replace(/^```json\n?/, "").replace(/\n?```$/, "");
-      } else if (clean.startsWith("```")) {
-        clean = clean.replace(/^```\n?/, "").replace(/\n?```$/, "");
-      }
-      parsed = JSON.parse(clean);
-    } catch {
-      // Return empty values if parsing fails
-      return { company: "", role: "", companyValues: "" };
-    }
-
-    return {
-      company: parsed.company || "",
-      role: parsed.role || "",
-      companyValues: parsed.companyValues || "",
-    };
-  },
-});
-
-/**
  * Generate a CV variant using AI
  *
  * This action:
@@ -192,6 +120,7 @@ export const generateVariant = action({
     }
 
     await ctx.runMutation(api.variants.upsert, {
+      apiKey: args.apiKey,
       slug,
       publishStatus: "draft",
       data: variant,

@@ -1229,6 +1229,8 @@
       const input = document.getElementById('password').value;
       if (simpleHash(input) === HASH) {
         localStorage.setItem('dashboard_auth', 'true');
+        // Store password for API key authentication
+        sessionStorage.setItem('dashboard_apikey', input);
         showDashboard();
       } else {
         document.getElementById('error').style.display = 'block';
@@ -1415,6 +1417,7 @@
 
     function logout() {
       localStorage.removeItem('dashboard_auth');
+      sessionStorage.removeItem('dashboard_apikey');
       location.reload();
     }
 
@@ -1587,7 +1590,9 @@
       updateWizardUI();
 
       try {
+        const apiKey = sessionStorage.getItem('dashboard_apikey');
         const result = await client.action("generate:generateVariant", {
+          apiKey: apiKey,
           company: wizardData.company,
           role: wizardData.role,
           jobDescription: wizardData.jobDescription,
@@ -1638,8 +1643,15 @@
       if (e.target.classList.contains('modal-overlay')) closeWizard();
     });
 
+    // Auto-login if previously authenticated AND apiKey is still in session
+    // If apiKey is missing, require re-authentication
     if (localStorage.getItem('dashboard_auth') === 'true') {
-      showDashboard();
+      if (sessionStorage.getItem('dashboard_apikey')) {
+        showDashboard();
+      } else {
+        // Clear stale auth and require password again
+        localStorage.removeItem('dashboard_auth');
+      }
     }
   </script>
 </body>
