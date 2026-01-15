@@ -16,14 +16,16 @@ Generate portfolio variants and resumes from the browser dashboard.
 - [x] Type `v.any()` with proper Convex validators
 - [x] Fix fail-open auth (ADMIN_API_KEY required)
 
+### Already Built
+- ucv-cli (`npm run ucv-cli`) - Full TUI dashboard with eval/redteam
+
 ### Won't Have (v1)
-- ucv-cli (defer)
 - Resume PDF generation (manual for now)
-- Eval/redteam pipeline (defer)
 - Mobile-specific UI (responsive sufficient)
 
 ## Files
-- `public/cv-dashboard/index.html` - Dashboard
+- `public/cv-dashboard/index.html` - Web dashboard (browser)
+- `scripts/cli/ucv/index.ts` - CLI dashboard (terminal)
 - `convex/variants.ts` - CRUD operations
 - `convex/generate.ts` - AI generation
 - `src/pages/VariantPortfolio.tsx` - Render variant
