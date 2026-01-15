@@ -189,7 +189,7 @@
   color: var(--resume-text-subtle);
 }
 
-/* Print button - screen only */
+/* Print/Download button - screen only */
 .resume-print-btn {
   position: fixed;
   top: 1rem;
@@ -206,17 +206,37 @@
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
-  transition: background 0.15s ease;
+  transition: background 0.15s ease, opacity 0.15s ease;
   z-index: 1000;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  text-decoration: none;
 }
 
-.resume-print-btn:hover {
+.resume-print-btn:hover:not(:disabled) {
   background: #333;
+}
+
+.resume-print-btn:disabled {
+  opacity: 0.7;
+  cursor: wait;
 }
 
 .resume-print-btn svg {
   opacity: 0.8;
+}
+
+/* Spinner animation for generating state */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.resume-print-btn .animate-spin {
+  animation: spin 1s linear infinite;
 }
 
 /* Print-specific styles */

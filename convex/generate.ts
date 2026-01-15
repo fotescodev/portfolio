@@ -122,7 +122,7 @@ export const generateVariant = action({
     await ctx.runMutation(api.variants.upsert, {
       apiKey: args.apiKey,
       slug,
-      publishStatus: "draft",
+      publishStatus: "published",
       data: variant,
     });
 

@@ -1319,9 +1319,18 @@
         .replace(/^-|-$/g, '');         // trim dashes
     }
 
-    // Build variant URL from company and role
-    function buildVariantUrl(company, role) {
-      return `${BASE_URL}/${slugify(company)}/${slugify(role)}`;
+    // Build variant URL from slug
+    // Slug format: {company}-{role} where company is the first segment before the hyphen
+    // Examples: "galaxy-pm" → /galaxy/pm, "mysten-walrus-senior-pm" → /mysten/walrus-senior-pm
+    // NOTE: Company names in slugs are pre-shortened (e.g., "mysten" not "mysten-labs")
+    function buildVariantUrlFromSlug(slug) {
+      const firstDash = slug.indexOf('-');
+      if (firstDash === -1) {
+        return `${BASE_URL}/${slug}`;
+      }
+      const company = slug.substring(0, firstDash);
+      const role = slug.substring(firstDash + 1);
+      return `${BASE_URL}/${company}/${role}`;
     }
 
     function renderVariants() {
@@ -1331,7 +1340,7 @@
         const isApplied = v.applicationStatus === 'applied';
         const badgeClass = isApplied ? 'badge-success' : 'badge-neutral';
         const badgeText = isApplied ? 'Applied' : 'Pending';
-        const variantUrl = buildVariantUrl(v.company, v.role);
+        const variantUrl = buildVariantUrlFromSlug(v.slug);
 
         return `
           <div class="card" data-company="${(v.company || '').toLowerCase()}" data-role="${(v.role || '').toLowerCase()}" data-applied="${isApplied}" data-slug="${v.slug}">
@@ -1656,8 +1665,10 @@
           wizardStep = 'success';
           document.getElementById('success-message').textContent =
             `Portfolio variant for ${wizardData.company} is ready.`;
+          // Construct slug same way as generate.ts does
+          const generatedSlug = `${slugify(wizardData.company)}-${slugify(wizardData.role)}`;
           document.getElementById('view-variant-btn').href =
-            buildVariantUrl(wizardData.company, wizardData.role);
+            buildVariantUrlFromSlug(generatedSlug);
           updateWizardUI();
         } else {
           throw new Error('Generation failed');

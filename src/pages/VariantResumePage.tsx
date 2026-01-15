@@ -1,7 +1,7 @@
 /**
  * Variant Resume Page - Print-optimized single-page resume with variant overrides
  *
- * Designed for PDF export via Puppeteer.
+ * Supports client-side PDF generation via html2canvas + jsPDF.
  * Uses merged profile/experience from variant data.
  * Follows ATS-friendly format with:
  * - Header: Name / Role + contact
@@ -9,9 +9,12 @@
  * - Professional experience with action → outcome bullets
  */
 
+import { useState, useRef } from 'react';
 import { useParams, Navigate } from 'react-router-dom';
 import { useVariant, mergeProfile, getExperienceWithOverrides } from '../lib/variants';
 import { skills, certifications } from '../lib/content';
+import html2canvas from 'html2canvas';
+import { jsPDF } from 'jspdf';
 import type { Variant } from '../types/variant';
 import type { MergedProfile } from '../types/variant';
 import './ResumePage.css';
@@ -51,10 +54,72 @@ interface ResumeContentProps {
   experience: { jobs: Array<{ company: string; role: string; period: string; location: string; highlights: string[]; tags: string[] }> };
   variantSlug: string;
   variant: Variant;
-  resumeUrl: string;
 }
 
-function ResumeContent({ profile, experience, variantSlug, variant, resumeUrl }: ResumeContentProps) {
+function ResumeContent({ profile, experience, variantSlug, variant }: ResumeContentProps) {
+  const resumeRef = useRef<HTMLDivElement>(null);
+  const [isGenerating, setIsGenerating] = useState(false);
+
+  // Generate PDF from the resume content
+  const generatePDF = async () => {
+    if (!resumeRef.current) return;
+
+    setIsGenerating(true);
+    try {
+      // Hide the button during capture
+      const button = resumeRef.current.querySelector('.resume-print-btn') as HTMLElement;
+      if (button) button.style.display = 'none';
+
+      // Capture the resume as canvas with high quality
+      const canvas = await html2canvas(resumeRef.current, {
+        scale: 2, // Higher resolution for print quality
+        useCORS: true,
+        logging: false,
+        backgroundColor: '#ffffff',
+      });
+
+      // Restore the button
+      if (button) button.style.display = '';
+
+      // Create PDF with Letter size (8.5 x 11 inches)
+      const pdf = new jsPDF({
+        orientation: 'portrait',
+        unit: 'in',
+        format: 'letter',
+      });
+
+      // Calculate dimensions to fit the page
+      const pageWidth = 8.5;
+      const pageHeight = 11;
+      const imgWidth = pageWidth;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+      // Add image to PDF, scaling to fit if needed
+      const finalHeight = Math.min(imgHeight, pageHeight);
+      const finalWidth = (finalHeight === pageHeight) ? (canvas.width * pageHeight) / canvas.height : imgWidth;
+      const xOffset = (pageWidth - finalWidth) / 2;
+
+      pdf.addImage(
+        canvas.toDataURL('image/png'),
+        'PNG',
+        xOffset,
+        0,
+        finalWidth,
+        finalHeight,
+        undefined,
+        'FAST'
+      );
+
+      // Download the PDF
+      pdf.save(`${variantSlug}-resume.pdf`);
+    } catch (error) {
+      console.error('Failed to generate PDF:', error);
+      alert('Failed to generate PDF. Please try again.');
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
   // Build impact summary from profile stats
   const statsSummary = profile.about.stats
     .map(s => `${s.value} ${s.label}`)
@@ -81,20 +146,31 @@ function ResumeContent({ profile, experience, variantSlug, variant, resumeUrl }:
   const summaryText = `${cleanTagline} Expertise in ${topSkills} at ${companies}.`;
 
   return (
-    <div className="resume-page">
-      {/* Download button - hidden when printing */}
-      <a
-        href={resumeUrl}
-        download={`${variantSlug}-resume.pdf`}
+    <div className="resume-page" ref={resumeRef}>
+      {/* Download button - generates PDF client-side, hidden when printing */}
+      <button
+        onClick={generatePDF}
+        disabled={isGenerating}
         className="resume-print-btn"
       >
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-          <polyline points="7 10 12 15 17 10" />
-          <line x1="12" y1="15" x2="12" y2="3" />
-        </svg>
-        Download PDF
-      </a>
+        {isGenerating ? (
+          <>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="animate-spin">
+              <circle cx="12" cy="12" r="10" strokeDasharray="32" strokeDashoffset="12" />
+            </svg>
+            Generating...
+          </>
+        ) : (
+          <>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="7 10 12 15 17 10" />
+              <line x1="12" y1="15" x2="12" y2="3" />
+            </svg>
+            Download PDF
+          </>
+        )}
+      </button>
 
       {/* Header */}
       <header className="resume-header">
@@ -223,8 +299,5 @@ export default function VariantResumePage() {
   const mergedProfile = mergeProfile(variant);
   const mergedExperience = getExperienceWithOverrides(variant);
 
-  // Use explicit resumePath if set, otherwise fall back to default resume
-  const resumeUrl = variant.metadata.resumePath || '/resume.pdf';
-
-  return <ResumeContent profile={mergedProfile} experience={mergedExperience} variantSlug={variant.metadata.slug} variant={variant} resumeUrl={resumeUrl} />;
+  return <ResumeContent profile={mergedProfile} experience={mergedExperience} variantSlug={variant.metadata.slug} variant={variant} />;
 }
