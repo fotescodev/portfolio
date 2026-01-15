@@ -1665,10 +1665,9 @@
           wizardStep = 'success';
           document.getElementById('success-message').textContent =
             `Portfolio variant for ${wizardData.company} is ready.`;
-          // Construct slug same way as generate.ts does
-          const generatedSlug = `${slugify(wizardData.company)}-${slugify(wizardData.role)}`;
+          // Use slug returned from API (includes abbreviateRole transformation)
           document.getElementById('view-variant-btn').href =
-            buildVariantUrlFromSlug(generatedSlug);
+            buildVariantUrlFromSlug(result.slug);
           updateWizardUI();
         } else {
           throw new Error('Generation failed');
