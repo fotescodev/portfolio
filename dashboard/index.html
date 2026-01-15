@@ -14,6 +14,8 @@
       --text-muted: #71717a;
       --accent: #3b82f6;
       --accent-hover: #2563eb;
+      --green: #22c55e;
+      --green-muted: #166534;
     }
 
     * {
@@ -98,7 +100,7 @@
     #dashboard {
       display: none;
       padding: 2rem;
-      max-width: 900px;
+      max-width: 1100px;
       margin: 0 auto;
     }
 
@@ -239,7 +241,73 @@
       letter-spacing: 0.05em;
     }
 
-    @media (max-width: 640px) {
+    /* Status Toggle */
+    .status-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.375rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+      white-space: nowrap;
+    }
+
+    .status-toggle.not-applied {
+      background: rgba(113, 113, 122, 0.2);
+      color: var(--text-muted);
+    }
+
+    .status-toggle.not-applied:hover {
+      background: rgba(34, 197, 94, 0.2);
+      color: var(--green);
+    }
+
+    .status-toggle.applied {
+      background: rgba(34, 197, 94, 0.2);
+      color: var(--green);
+    }
+
+    .status-toggle.applied:hover {
+      background: rgba(113, 113, 122, 0.2);
+      color: var(--text-muted);
+    }
+
+    .status-toggle:disabled {
+      opacity: 0.5;
+      cursor: wait;
+    }
+
+    .status-toggle .icon {
+      font-size: 0.875rem;
+    }
+
+    /* Loading state */
+    #loading {
+      text-align: center;
+      padding: 3rem;
+      color: var(--text-muted);
+    }
+
+    .spinner {
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      border: 2px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin-bottom: 0.5rem;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 768px) {
       #dashboard {
         padding: 1rem;
       }
@@ -256,6 +324,11 @@
 
       th:nth-child(2),
       td.date {
+        display: none;
+      }
+
+      th:nth-child(3),
+      td:nth-child(3) {
         display: none;
       }
     }
@@ -281,12 +354,16 @@
 
     <div class="stats">
       <div class="stat">
-        <div class="stat-value">11</div>
+        <div class="stat-value" id="total-count">-</div>
         <div class="stat-label">Total Variants</div>
       </div>
       <div class="stat">
-        <div class="stat-value">11</div>
-        <div class="stat-label">Companies</div>
+        <div class="stat-value" id="applied-count">-</div>
+        <div class="stat-label">Applied</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value" id="pending-count">-</div>
+        <div class="stat-label">Not Applied</div>
       </div>
     </div>
 
@@ -294,178 +371,47 @@
       <input type="text" id="search" placeholder="Search by company or role..." oninput="filterVariants()">
     </div>
 
-    <table>
+    <div id="loading">
+      <div class="spinner"></div>
+      <div>Loading variants...</div>
+    </div>
+
+    <table id="variants-table" style="display: none;">
       <thead>
         <tr>
           <th>Variant</th>
           <th>Created</th>
+          <th>Status</th>
           <th></th>
         </tr>
       </thead>
-      <tbody>
-        
-      <tr class="variant-row" data-company="plaid" data-role="senior staff product manager, api & developer experience">
-        <td>
-          <div class="company">Plaid</div>
-          <div class="role">Senior Staff Product Manager, API & Developer Experience</div>
-        </td>
-        <td class="date">Dec 24, 2025</td>
-        <td class="actions">
-          <a href="https://fotescodev.github.io/portfolio/plaid/api-devex-pm" target="_blank" class="btn btn-primary">View</a>
-          <a href="https://plaid.com/careers/openings/product/san-francisco/senior-staff-product-manager-api-developer-experience/" target="_blank" class="btn btn-secondary">Job Post</a>
-        </td>
-      </tr>
-    
-
-      <tr class="variant-row" data-company="anaconda" data-role="principal product manager, gen ai developer tools">
-        <td>
-          <div class="company">Anaconda</div>
-          <div class="role">Principal Product Manager, Gen AI Developer Tools</div>
-        </td>
-        <td class="date">Dec 22, 2025</td>
-        <td class="actions">
-          <a href="https://fotescodev.github.io/portfolio/anaconda/genai-pm" target="_blank" class="btn btn-primary">View</a>
-          <a href="https://ats.rippling.com/anaconda/jobs/f37e2651-58a7-4198-94cf-6ec8bb2cca30" target="_blank" class="btn btn-secondary">Job Post</a>
-        </td>
-      </tr>
-    
-
-      <tr class="variant-row" data-company="anthropic" data-role="ai safety fellow">
-        <td>
-          <div class="company">Anthropic</div>
-          <div class="role">AI Safety Fellow</div>
-        </td>
-        <td class="date">Dec 22, 2025</td>
-        <td class="actions">
-          <a href="https://fotescodev.github.io/portfolio/anthropic/ai-safety-fellow" target="_blank" class="btn btn-primary">View</a>
-          <a href="https://job-boards.greenhouse.io/anthropic/jobs/5023394008" target="_blank" class="btn btn-secondary">Job Post</a>
-        </td>
-      </tr>
-    
-
-      <tr class="variant-row" data-company="figma" data-role="product manager, developer tools">
-        <td>
-          <div class="company">Figma</div>
-          <div class="role">Product Manager, Developer Tools</div>
-        </td>
-        <td class="date">Dec 22, 2025</td>
-        <td class="actions">
-          <a href="https://fotescodev.github.io/portfolio/figma/pm-dev-tools" target="_blank" class="btn btn-primary">View</a>
-          <a href="https://job-boards.greenhouse.io/figma/jobs/5740760004" target="_blank" class="btn btn-secondary">Job Post</a>
-        </td>
-      </tr>
-    
-
-      <tr class="variant-row" data-company="microsoft" data-role="senior product manager">
-        <td>
-          <div class="company">Microsoft</div>
-          <div class="role">Senior Product Manager</div>
-        </td>
-        <td class="date">Dec 22, 2025</td>
-        <td class="actions">
-          <a href="https://fotescodev.github.io/portfolio/microsoft/senior-pm" target="_blank" class="btn btn-primary">View</a>
-          <a href="https://apply.careers.microsoft.com/careers?query=product&start=0&pid=1970393556619182&sort_by=match" target="_blank" class="btn btn-secondary">Job Post</a>
-        </td>
-      </tr>
-    
-
-      <tr class="variant-row" data-company="galaxy" data-role="director, technical program manager">
-        <td>
-          <div class="company">Galaxy</div>
-          <div class="role">Director, Technical Program Manager</div>
-        </td>
-        <td class="date">Dec 22, 2025</td>
-        <td class="actions">
-          <a href="https://fotescodev.github.io/portfolio/galaxy/pm" target="_blank" class="btn btn-primary">View</a>
-          <a href="https://job-boards.greenhouse.io/galaxydigitalservices/jobs/5591908004" target="_blank" class="btn btn-secondary">Job Post</a>
-        </td>
-      </tr>
-    
-
-      <tr class="variant-row" data-company="meta" data-role="product manager, business ai">
-        <td>
-          <div class="company">Meta</div>
-          <div class="role">Product Manager, Business AI</div>
-        </td>
-        <td class="date">Dec 22, 2025</td>
-        <td class="actions">
-          <a href="https://fotescodev.github.io/portfolio/meta/business-ai-pm" target="_blank" class="btn btn-primary">View</a>
-          <a href="https://www.metacareers.com/profile/job_details/1851836246209831" target="_blank" class="btn btn-secondary">Job Post</a>
-        </td>
-      </tr>
-    
-
-      <tr class="variant-row" data-company="coinbase" data-role="product manager ii - ai automation">
-        <td>
-          <div class="company">Coinbase</div>
-          <div class="role">Product Manager II - AI Automation</div>
-        </td>
-        <td class="date">Dec 21, 2025</td>
-        <td class="actions">
-          <a href="https://fotescodev.github.io/portfolio/coinbase/product-manager-ii-ai-automation" target="_blank" class="btn btn-primary">View</a>
-          
-        </td>
-      </tr>
-    
-
-      <tr class="variant-row" data-company="mysten labs" data-role="sr. product manager, walrus (distributed storage)">
-        <td>
-          <div class="company">Mysten Labs</div>
-          <div class="role">Sr. Product Manager, Walrus (Distributed Storage)</div>
-        </td>
-        <td class="date">Dec 19, 2025</td>
-        <td class="actions">
-          <a href="https://fotescodev.github.io/portfolio/mysten/walrus-senior-pm" target="_blank" class="btn btn-primary">View</a>
-          <a href="https://jobs.ashbyhq.com/mystenlabs/5d434241-ef7f-44e8-ad3a-6f17376866d7" target="_blank" class="btn btn-secondary">Job Post</a>
-        </td>
-      </tr>
-    
-
-      <tr class="variant-row" data-company="stripe" data-role="crypto product manager">
-        <td>
-          <div class="company">Stripe</div>
-          <div class="role">Crypto Product Manager</div>
-        </td>
-        <td class="date">Dec 18, 2025</td>
-        <td class="actions">
-          <a href="https://fotescodev.github.io/portfolio/stripe/crypto" target="_blank" class="btn btn-primary">View</a>
-          
-        </td>
-      </tr>
-    
-
-      <tr class="variant-row" data-company="gensyn" data-role="technical product manager">
-        <td>
-          <div class="company">Gensyn</div>
-          <div class="role">Technical Product Manager</div>
-        </td>
-        <td class="date">Dec 16, 2025</td>
-        <td class="actions">
-          <a href="https://fotescodev.github.io/portfolio/gensyn/technical-product-manager" target="_blank" class="btn btn-primary">View</a>
-          
-        </td>
-      </tr>
-    
-
-      <tr class="variant-row" data-company="bloomberg" data-role="technical product manager">
-        <td>
-          <div class="company">Bloomberg</div>
-          <div class="role">Technical Product Manager</div>
-        </td>
-        <td class="date">Dec 16, 2025</td>
-        <td class="actions">
-          <a href="https://fotescodev.github.io/portfolio/bloomberg/technical-product-manager" target="_blank" class="btn btn-primary">View</a>
-          
-        </td>
-      </tr>
-    
+      <tbody id="variants-body">
       </tbody>
     </table>
   </div>
 
-  <script>
+  <script type="module">
+    import { ConvexHttpClient } from "https://esm.sh/convex@1.22.0/browser";
+
+    // Convex setup
+    const CONVEX_URL = "https://scintillating-husky-549.convex.cloud";
+    const client = new ConvexHttpClient(CONVEX_URL);
+
     // Simple hash function for password (not cryptographically secure, just obscurity)
     const HASH = 'nxt2ji';
+
+    // Store variants in memory for filtering
+    let variants = [];
+
+    // Track in-flight mutations to prevent race conditions
+    const pendingMutations = new Set();
+
+    // Store pending filter query for filter-during-load race condition
+    let pendingFilterQuery = null;
+
+    // Track initialization state to prevent multiple showDashboard calls
+    let isInitializing = false;
+    let isInitialized = false;
 
     function simpleHash(str) {
       let hash = 0;
@@ -487,14 +433,172 @@
       }
     }
 
-    function showDashboard() {
+    async function showDashboard() {
+      // Prevent multiple calls (race condition during rapid auth)
+      if (isInitializing || isInitialized) return;
+      isInitializing = true;
+
       document.getElementById('gate').style.display = 'none';
       document.getElementById('dashboard').style.display = 'block';
+
+      try {
+        await loadVariants();
+        isInitialized = true;
+      } finally {
+        isInitializing = false;
+      }
     }
+
+    async function loadVariants(retryCount = 0) {
+      const MAX_RETRIES = 3;
+      const RETRY_DELAY_MS = 1000;
+
+      try {
+        variants = await client.query("variants:listAll");
+
+        // Sort by generatedAt date (newest first)
+        variants.sort((a, b) => {
+          const dateA = new Date(a.generatedAt || a.updatedAt || 0);
+          const dateB = new Date(b.generatedAt || b.updatedAt || 0);
+          return dateB - dateA;
+        });
+
+        renderVariants();
+        updateStats();
+      } catch (error) {
+        console.error(`Failed to load variants (attempt ${retryCount + 1}/${MAX_RETRIES + 1}):`, error);
+
+        if (retryCount < MAX_RETRIES) {
+          // Show retry status
+          document.getElementById('loading').innerHTML =
+            `<div class="spinner"></div><div>Retrying... (${retryCount + 1}/${MAX_RETRIES})</div>`;
+
+          // Wait and retry
+          await new Promise(resolve => setTimeout(resolve, RETRY_DELAY_MS * (retryCount + 1)));
+          return loadVariants(retryCount + 1);
+        }
+
+        // Max retries exceeded
+        document.getElementById('loading').innerHTML =
+          '<div style="color: #ef4444;">Failed to load variants after multiple attempts.</div>' +
+          '<button onclick="location.reload()" style="margin-top: 1rem; padding: 0.5rem 1rem; ' +
+          'background: var(--accent); border: none; border-radius: 6px; color: white; cursor: pointer;">' +
+          'Retry</button>';
+      }
+    }
+
+    function formatDate(dateStr) {
+      if (!dateStr) return '-';
+      const date = new Date(dateStr);
+      return date.toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric'
+      });
+    }
+
+    function renderVariants() {
+      const tbody = document.getElementById('variants-body');
+      const baseUrl = 'https://fotescodev.github.io/portfolio';
+
+      tbody.innerHTML = variants.map(v => {
+        const statusClass = v.applicationStatus === 'applied' ? 'applied' : 'not-applied';
+        const statusLabel = v.applicationStatus === 'applied' ? 'Applied' : 'Not Applied';
+        const statusIcon = v.applicationStatus === 'applied' ? '&#10003;' : '&#9675;';
+
+        return `
+          <tr class="variant-row" data-company="${(v.company || '').toLowerCase()}" data-role="${(v.role || '').toLowerCase()}" data-slug="${v.slug}">
+            <td>
+              <div class="company">${v.company || 'Unknown'}</div>
+              <div class="role">${v.role || 'Unknown Role'}</div>
+            </td>
+            <td class="date">${formatDate(v.generatedAt)}</td>
+            <td>
+              <button
+                class="status-toggle ${statusClass}"
+                onclick="window.toggleStatus('${v.slug}', '${v.applicationStatus}')"
+                title="Click to toggle status"
+              >
+                <span class="icon">${statusIcon}</span>
+                ${statusLabel}
+              </button>
+            </td>
+            <td class="actions">
+              <a href="${baseUrl}/${v.slug}" target="_blank" class="btn btn-primary">View</a>
+              ${v.sourceUrl ? `<a href="${v.sourceUrl}" target="_blank" class="btn btn-secondary">Job Post</a>` : ''}
+            </td>
+          </tr>
+        `;
+      }).join('');
+
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('variants-table').style.display = 'table';
+
+      // Apply any pending filter query from filter-during-load
+      if (pendingFilterQuery !== null) {
+        const savedQuery = pendingFilterQuery;
+        pendingFilterQuery = null;
+        // Set the search input value and apply filter
+        document.getElementById('search').value = savedQuery;
+        filterVariants();
+      }
+    }
+
+    function updateStats() {
+      const total = variants.length;
+      const applied = variants.filter(v => v.applicationStatus === 'applied').length;
+      const pending = total - applied;
+
+      document.getElementById('total-count').textContent = total;
+      document.getElementById('applied-count').textContent = applied;
+      document.getElementById('pending-count').textContent = pending;
+    }
+
+    window.toggleStatus = async function(slug, currentStatus) {
+      // Prevent concurrent mutations on the same variant
+      if (pendingMutations.has(slug)) return;
+      pendingMutations.add(slug);
+
+      const newStatus = currentStatus === 'applied' ? 'not_applied' : 'applied';
+
+      // Optimistic update - update UI immediately
+      const variant = variants.find(v => v.slug === slug);
+      if (variant) {
+        variant.applicationStatus = newStatus;
+      }
+      renderVariants();
+      updateStats();
+
+      try {
+        await client.mutation("variants:updateApplicationStatus", {
+          slug,
+          applicationStatus: newStatus
+        });
+      } catch (error) {
+        console.error('Failed to update status:', error);
+        // Rollback on failure
+        if (variant) {
+          variant.applicationStatus = currentStatus;
+        }
+        renderVariants();
+        updateStats();
+        alert('Failed to update status. Please try again.');
+      } finally {
+        pendingMutations.delete(slug);
+      }
+    };
 
     function filterVariants() {
       const query = document.getElementById('search').value.toLowerCase();
-      document.querySelectorAll('.variant-row').forEach(row => {
+      const rows = document.querySelectorAll('.variant-row');
+
+      // If no rows exist yet (still loading), store query for later
+      if (rows.length === 0) {
+        pendingFilterQuery = query;
+        return;
+      }
+
+      rows.forEach(row => {
         const company = row.dataset.company;
         const role = row.dataset.role;
         const matches = company.includes(query) || role.includes(query);
@@ -502,10 +606,16 @@
       });
     }
 
+    // Make filterVariants available globally for the oninput handler
+    window.filterVariants = filterVariants;
+
     // Check if already authenticated
     document.getElementById('password').addEventListener('keypress', (e) => {
       if (e.key === 'Enter') checkPassword();
     });
+
+    // Make checkPassword available globally
+    window.checkPassword = checkPassword;
 
     if (localStorage.getItem('dashboard_auth') === 'true') {
       showDashboard();
