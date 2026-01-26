@@ -227,6 +227,20 @@ jobs:
     notes: "Former Anchorage partner company"
     status: "new"  # new | applied | interviewing | rejected | offer
 
+    # Hiring manager research (Phase 7)
+    hiringManager:
+      name: "Jane Smith"
+      title: "Director of Product, Staking"
+      linkedin: "https://linkedin.com/in/janesmith"
+      evidence: "Posted 'hiring for my team' on LinkedIn"
+      contactType: "hiring_manager"  # hiring_manager | team_contact | peer_intro
+
+    teamContacts:
+      - name: "John Doe"
+        title: "Senior PM, Staking"
+        linkedin: "https://linkedin.com/in/johndoe"
+        contactType: "peer_intro"
+
   # ... more jobs
 ```
 
@@ -321,6 +335,150 @@ npm run search:evidence -- --jd-analysis capstone/develop/jd-analysis/{slug}.yam
 
 ---
 
+## Phase 7: Hiring Manager Research
+
+**CRITICAL:** For each PRIORITY tier job, identify the **actual hiring manager** — NOT executives (VP, CPO, CEO). The hiring manager is the person who will:
+- Review your resume
+- Conduct the hiring manager interview
+- Make the final hiring decision
+
+### Who to Find (in order of priority)
+
+| Type | Title Pattern | Why Contact |
+|------|---------------|-------------|
+| **Hiring Manager** | Director of PM, Group PM, Senior PM (hiring) | Direct decision maker |
+| **Team Contact** | PM on same team, Sales/BD in same area | Can intro to hiring manager |
+| **Peer Intro** | PM on adjacent team | Knows hiring manager, can refer |
+
+### Who to AVOID
+
+- Chief Product Officer (too senior)
+- VP of Product (too senior, unless <100 employees)
+- CEO (unless company <50 employees or CEO was a PM)
+- Recruiters (go direct to hiring manager instead)
+
+### LinkedIn Search Strategy
+
+For each PRIORITY job, execute these searches:
+
+```
+# Find hiring manager
+site:linkedin.com/in "[Company]" "product manager" "hiring" OR "we're hiring"
+site:linkedin.com/in "[Company]" "director product" OR "group product manager"
+"[Company]" "[Team/Domain]" "product" LinkedIn
+
+# Find team members
+site:linkedin.com/in "[Company]" "[specific product area]" product
+"[Company]" product manager [city if hybrid role]
+
+# Find people posting about hiring
+"[Company]" "hiring" "product manager" site:linkedin.com
+```
+
+### Research Signals
+
+**Confirmed Hiring Manager** (best):
+- Posts "we're hiring" or "my team is hiring" for the specific role
+- LinkedIn shows they manage PMs
+- Title is Director/GPM/Senior PM in exact domain
+
+**Likely Hiring Manager** (good):
+- Title matches team (e.g., "PM, Staking" for staking role)
+- 3+ years at company in same domain
+- Posts about the product area frequently
+
+**Team Contact** (backup):
+- Works in same department (Sales, BD, Engineering)
+- Can provide intro or name the hiring manager
+- Useful when PM org structure is unclear
+
+### Outreach Document Format
+
+Save to `source-data/job-pipeline/[DATE]-outreach.md`:
+
+```markdown
+## [COMPANY] - [Role Name]
+
+### HIRING MANAGER: [Name]
+**Title:** [Exact title]
+**LinkedIn:** [URL]
+**Background:** [2-3 relevant points]
+**Evidence:** [Why you think they're the hiring manager]
+
+#### Connection Request (300 chars max):
+[Short, specific message referencing role + your relevant experience]
+
+#### Full Message (after connection accepted):
+[Longer message with specific achievements that match role requirements]
+
+---
+
+### TEAM CONTACT: [Name] (if hiring manager unclear)
+**Title:** [Title]
+**LinkedIn:** [URL]
+**Why contact:** [How they can help]
+
+#### Message:
+[Ask who leads product hiring for this team]
+```
+
+### Outreach Message Framework
+
+**Connection Request (300 char limit):**
+```
+Hi [Name] - [saw you're hiring / noticed your work on X]. I [specific relevant achievement in 10 words]. Interested in the [Role]. Would love to connect.
+```
+
+**Full Message Structure:**
+1. **Hook** (1 sentence): Reference their post/work or the specific role
+2. **Proof** (3-4 bullets): Your most relevant achievements with metrics
+3. **Bridge** (1 sentence): Why this role/company specifically
+4. **Ask** (1 sentence): Clear next step (chat, intro to hiring manager, etc.)
+
+**Example:**
+```
+Hi [Name],
+
+Saw your post about hiring for [Role]. My background aligns directly:
+
+- [Achievement 1 with metric]
+- [Achievement 2 with metric]
+- [Achievement 3 with metric]
+
+[Why this company/role matters to you in 1 sentence].
+
+Are you the right person to chat with, or could you point me to who's leading this search?
+
+[Your name]
+```
+
+### Action Sequence
+
+| Day | Action |
+|-----|--------|
+| 0 | Send connection requests to confirmed hiring managers |
+| 0 | Apply directly to all PRIORITY roles |
+| 3 | Send connection requests to team contacts |
+| 3 | Apply to STRONG tier roles |
+| 7 | Follow up on accepted connections with full message |
+| 7 | Send connection requests to peer intros |
+| 14 | Follow up on pending connections |
+| 14 | Try alternate contacts if no response |
+
+### Quality Checklist - Hiring Managers
+
+Before sending outreach:
+
+- [ ] Verified they're NOT a C-level/VP (unless small company)
+- [ ] Found evidence they're involved in hiring (posts, title, team)
+- [ ] Connection request is under 300 characters
+- [ ] Message references specific role, not generic
+- [ ] Included 2-3 achievements with metrics
+- [ ] Clear ask at the end
+- [ ] No typos in their name or company
+
+---
+
 ## Quality Checklist
 
 Before finalizing job list:
@@ -340,5 +498,25 @@ Before finalizing job list:
 
 - **generate-variant** — Trigger for PRIORITY tier jobs
 - **cv-knowledge-query** — Check alignment before applying
-- **dmitrii-writing-style** — For cover letters
+- **dmitrii-writing-style** — For cover letters and outreach messages
 </skill_compositions>
+
+---
+
+## Workflow Summary
+
+```
+Phase 1: Profile Alignment    → Confirm target roles/domains
+Phase 2: Job Board Strategy   → Identify sources to search
+Phase 3: Search Execution     → Run searches, filter results
+Phase 4: Relevance Scoring    → Score 0.0-1.0, assign tiers
+Phase 5: Output Format        → Save to job-pipeline YAML
+Phase 6: Variant Triggering   → Generate CV variants for PRIORITY
+Phase 7: Hiring Manager Research → Find ACTUAL hiring managers (not VPs)
+                               → Draft personalized outreach messages
+                               → Save to outreach markdown file
+```
+
+**Key Output Files:**
+- `source-data/job-pipeline/[DATE]-jobs.yaml` — Job list with scores
+- `source-data/job-pipeline/[DATE]-outreach.md` — Hiring managers + messages
