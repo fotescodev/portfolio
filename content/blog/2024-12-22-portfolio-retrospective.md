@@ -76,7 +76,7 @@ What three months of building produced:
 
 ### Tier 4: Meta Learnings
 
-**ADHD patterns are predictable.** I built a skill that diagnoses drift: tooling rabbit holes, perfect setup syndrome, research loops, scope creep. The system catches me when I'm avoiding the real work.
+**Drift is predictable.** I built a skill that diagnoses it: tooling rabbit holes, perfect setup syndrome, research loops, scope creep. The system catches me when I'm avoiding the real work.
 
 **Multi-perspective briefings work.** Sprint sync outputs from four angles: PM (priorities), Designer (system health), Architect (dependencies), Engineer (recent changes). Different lenses, same project.
 
